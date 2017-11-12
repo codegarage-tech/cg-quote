@@ -1,39 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/root_layout"
-    android:layout_width="match_parent"
-    android:layout_height="120dp"
-    android:layout_marginBottom="5dp"
-    android:layout_marginLeft="5dp"
-    android:layout_marginRight="5dp"
-    android:orientation="vertical">
+<com.daimajia.androidviewhover.BlurLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/blur_layout_favourite_quote"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
 
-    <Button
-        android:id="@+id/btn_favourite"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_gravity="right"
-        android:layout_margin="8dp"
-        android:background="@drawable/icn_6" />
-
-    <LinearLayout
-        android:id="@+id/item_view"
+    <FrameLayout
+        android:id="@+id/root_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/dropshadow"
-        android:gravity="center_vertical"
+        android:layout_height="120dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/tv_quote_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:text=""
-            android:textColor="@color/colorPrimary"
-            android:textSize="@dimen/medium_font_size"
-            android:textStyle="bold" />
+<!--        <Button
+            android:id="@+id/btn_favourite"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="right"
+            android:layout_margin="8dp"
+            android:background="@drawable/icn_6" />-->
 
-    </LinearLayout>
-</FrameLayout>
+        <LinearLayout
+            android:id="@+id/item_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/dropshadow"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_quote_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:text=""
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/medium_font_size"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+    </FrameLayout>
+</com.daimajia.androidviewhover.BlurLayout>

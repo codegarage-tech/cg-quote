@@ -3,15 +3,16 @@ package com.reversecoder.quote.viewholder;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.daimajia.androidviewhover.BlurLayout;
 import com.jude.easyrecyclerview.adapter.BaseViewHolder;
 import com.reversecoder.library.bang.SmallBang;
 import com.reversecoder.library.bang.SmallBangListener;
-import com.reversecoder.library.event.OnSingleClickListener;
 import com.reversecoder.quote.R;
 import com.reversecoder.quote.activity.HomeActivity;
 import com.reversecoder.quote.adapter.FavouriteAuthorDetailAdapter;
@@ -27,13 +28,19 @@ import com.reversecoder.quote.util.FragmentUtilsManager;
 public class FavouriteQuoteViewHolder extends BaseViewHolder<Quote> {
 
     TextView txtPersonName;
-    Button btnFavourite;
+//    Button btnFavourite;
+    BlurLayout blurLayout;
+    View hover;
 
     public FavouriteQuoteViewHolder(ViewGroup parent) {
         super(parent, R.layout.recyclerview_item_favourite_quote);
 
         txtPersonName = $(R.id.tv_quote_name);
-        btnFavourite = $(R.id.btn_favourite);
+//        btnFavourite = $(R.id.btn_favourite);
+        blurLayout = $(R.id.blur_layout_favourite_quote);
+
+        hover = LayoutInflater.from(getContext()).inflate(R.layout.layout_hover_favourite_quote, null);
+        blurLayout.setHoverView(hover);
     }
 
     @Override
@@ -43,15 +50,18 @@ public class FavouriteQuoteViewHolder extends BaseViewHolder<Quote> {
         final int mPosition = mAdpater.getPosition(data);
 
         txtPersonName.setText(data.getQuoteDescription());
-        if (data.isFavourite()) {
-            btnFavourite.setBackgroundResource(R.drawable.icn_6);
-        } else {
-            btnFavourite.setBackgroundResource(R.drawable.icn_4);
-        }
+//        if (data.isFavourite()) {
+//            btnFavourite.setBackgroundResource(R.drawable.icn_6);
+//        } else {
+//            btnFavourite.setBackgroundResource(R.drawable.icn_4);
+//        }
 
-        btnFavourite.setOnClickListener(new OnSingleClickListener() {
+        hover.findViewById(R.id.iv_favourite).setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onSingleClick(View view) {
+            public void onClick(View view) {
+//                YoYo.with(Techniques.Tada)
+//                        .duration(550)
+//                        .playOn(view);
 
                 SmallBang smallBang = SmallBang.attach2Window(((HomeActivity) getContext()));
                 smallBang.bang(view, new SmallBangListener() {
@@ -76,6 +86,34 @@ public class FavouriteQuoteViewHolder extends BaseViewHolder<Quote> {
                 });
             }
         });
+
+//        btnFavourite.setOnClickListener(new OnSingleClickListener() {
+//            @Override
+//            public void onSingleClick(View view) {
+//
+//                SmallBang smallBang = SmallBang.attach2Window(((HomeActivity) getContext()));
+//                smallBang.bang(view, new SmallBangListener() {
+//                    @Override
+//                    public void onAnimationStart() {
+//                        data.setFavourite(false);
+//                        //update data into database
+//                        new UpdateQuoteIntoDatabase(getContext().getApplicationContext(), data).execute();
+//                    }
+//
+//                    @Override
+//                    public void onAnimationEnd() {
+//                        //Update removed data into adapter
+//                        Quote updatedData = mAdpater.update(data, mPosition);
+//                        Log.d("UpdatedQuote:", updatedData.toString());
+//                        mAdpater.remove(mPosition);
+//                        mAdpater.notifyDataSetChanged();
+//                        if (mAdpater.getCount() == 0) {
+//                            ((FavouriteFragmentNew) FragmentUtilsManager.getVisibleSupportFragment(((HomeActivity) getContext()), getContext().getString(R.string.ribble_menu_item_favourite))).onFragmentBackPressed();
+//                        }
+//                    }
+//                });
+//            }
+//        });
     }
 
     class UpdateQuoteIntoDatabase extends AsyncTask<String, String, Quote> {
