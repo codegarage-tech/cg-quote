@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/glazyviewpager_bg"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/title_bar"
+        layout="@layout/toolbar_ribble" />
+
+    <com.kannan.glazy.pager.GlazyViewPager
+        android:id="@+id/pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/tv_indicator_number"
+        android:layout_below="@+id/title_bar"
+        android:paddingLeft="50dp"
+        android:paddingRight="50dp"
+        android:paddingTop="10dp" />
+
+    <TextView
+        android:id="@+id/tv_indicator_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:fontFamily="sans-serif-smallcaps"
+        android:padding="5dp"
+        android:text=""
+        android:textColor="@color/colorAccent"
+        android:textSize="15sp"
+        android:textStyle="bold" />
+
+
+</RelativeLayout>

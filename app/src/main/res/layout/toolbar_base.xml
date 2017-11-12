@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/toolbar"
+    style="@style/toolbar_base"
+    app:contentInsetStart="0dp"
+    app:popupTheme="@style/AppTheme.PopupOverlay">
+
+    <ImageView
+        android:id="@+id/content_hamburger"
+        style="@style/ImageView.Hamburger"
+        android:src="@drawable/ic_hamburger"
+        android:visibility="gone" />
+
+    <com.reversecoder.quote.view.CanaroTextView
+        android:id="@+id/text_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Activity Name"
+        android:textColor="@color/white"
+        android:textSize="@dimen/activity_title_text_size" />
+
+    <ImageView
+        android:id="@+id/btn_help"
+        android:layout_width="35dp"
+        android:layout_height="30dp"
+        android:layout_gravity="end"
+        android:layout_marginBottom="5dp"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/ic_hamburger"
+        android:visibility="gone" />
+
+</android.support.v7.widget.Toolbar>

@@ -1,0 +1,37 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/title_bar"
+        layout="@layout/toolbar_ribble" />
+
+    <com.alexvasilkov.foldablelayout.FoldableListLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/foldable_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/title_bar" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/arc_left_blue"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextSwitcher
+            android:id="@+id/ts_quote_counter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:gravity="center"
+            android:textColor="@android:color/white" />
+    </LinearLayout>
+
+</RelativeLayout>

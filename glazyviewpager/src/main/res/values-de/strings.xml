@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Glazy</string>
+
+    <!-- text -->
+    <string name="txt_occupation">Occupation:</string>
+    <string name="txt_nationality">Nationality:</string>
+    <string name="txt_life_span">Life Span:</string>
+    <string name="txt_quote">Quote:</string>
+    <string name="txt_view_all_quotes">View All Quotes</string>
+
+</resources>

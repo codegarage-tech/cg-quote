@@ -1,0 +1,4 @@
+include ':app', ':ribblemenu', ':easyrecyclerview', ':wavesidebar', ':sugar' , ':stickyindex',
+        ':glazyviewpager', ':foldablelayout', ':aboutbox', ':contextmenu', ':attributionpresenter',
+        ':sherlock', ':verticalappintro', ':tutors', ':shaperipple', ':cookiebar2', ':localechanger',
+        ':updatechecker', ':kenburnsview', ':arclayout', ':hoverview', ':multicolortextview'

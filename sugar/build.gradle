@@ -1,0 +1,24 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion appCompileSdkVersion
+    buildToolsVersion appBuildToolsVersion
+
+    defaultConfig {
+        minSdkVersion appMinSdkVersion
+        targetSdkVersion appTargetSdkVersion
+        versionCode 1
+        versionName "1.5"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+        }
+    }
+    lintOptions {
+        abortOnError false
+    }
+}
+
+dependencies {
+}

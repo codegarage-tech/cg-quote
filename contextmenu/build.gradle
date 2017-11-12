@@ -1,0 +1,24 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion appCompileSdkVersion
+    buildToolsVersion appBuildToolsVersion
+
+    defaultConfig {
+        minSdkVersion appMinSdkVersion
+        targetSdkVersion appTargetSdkVersion
+        versionCode 8
+        versionName "1.0.7"
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile "com.android.support:appcompat-v7:$supportlibraryVersion"
+    compile 'com.nineoldandroids:library:2.4.0'
+}

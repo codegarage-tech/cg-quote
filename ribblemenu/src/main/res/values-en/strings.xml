@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">ribblemenu</string>
+
+    <!-- Navigation drawer -->
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="navigation_drawer_icon">Navigation drawer icon</string>
+
+    <string name="user_avatar">User avatar</string>
+
+    <!--Arc view-->
+    <string name="arc_view_image">Arc view image</string>
+
+    <!-- Navigation drawer menu -->
+    <string name="ribble_menu_item_home">HOME</string>
+    <string name="ribble_menu_item_favourite">FAVOURITE</string>
+    <string name="ribble_menu_item_rate_us">RATE US</string>
+    <string name="ribble_menu_item_other_apps">OTHER APPS</string>
+    <string name="ribble_menu_item_about">ABOUT</string>
+</resources>

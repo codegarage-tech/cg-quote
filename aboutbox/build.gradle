@@ -1,0 +1,57 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+
+buildscript {
+    ext.kotlin_version = '1.1.51'
+
+    repositories {
+        jcenter()
+		google()
+    }
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.0.0'
+
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath "org.jetbrains.kotlin:kotlin-android-extensions:$kotlin_version"
+    }
+}
+
+android {
+
+    compileSdkVersion appCompileSdkVersion
+    buildToolsVersion appBuildToolsVersion
+
+    defaultConfig {
+        minSdkVersion appMinSdkVersion
+        targetSdkVersion appTargetSdkVersion
+        versionCode 7
+        versionName "1.3.1"
+
+        vectorDrawables.useSupportLibrary = true
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    lintOptions {
+        warningsAsErrors true
+        disable 'GradleDependency'
+        disable 'OldTargetApi'
+    }
+}
+
+dependencies {
+//    compile 'com.github.daniel-stoneuk:material-about-library:2.2.1'
+    compile "com.android.support:appcompat-v7:$supportlibraryVersion"
+    compile "com.android.support:cardview-v7:$supportlibraryVersion"
+    compile "com.android.support:design:$supportlibraryVersion"
+    compile "com.android.support:support-v4:$supportlibraryVersion"
+    compile "com.android.support.constraint:constraint-layout:$constraintLayoutVersion"
+
+    //Kotlin
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+}

@@ -1,0 +1,11 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.popalay.tutors">
+
+    <application>
+        <activity
+            android:name="com.popalay.activity.TutorsActivity"
+            android:theme="@style/AppTheme.Tutors" />
+    </application>
+
+</manifest>
+

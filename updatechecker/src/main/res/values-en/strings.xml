@@ -1,0 +1,5 @@
+<resources>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+    <string name="update_available">A new version of the app is available. You need to update the current version.</string>
+</resources>

@@ -1,0 +1,43 @@
+<resources>
+    <string name="app_name">Zitat</string>
+    <string name="app_version_text">Version</string>
+    <string name="app_version_name">1.0.0</string>
+    <string name="app_author">Md. Rashadul Alam</string>
+    <string name="app_author_email">rashed.droid@gmail.com</string>
+    <string name="app_contact_subject">""</string>
+    <string name="app_contact_body">""</string>
+    <string name="app_publisher">codegarage.tech.us</string>
+    <string name="app_publisher_facebook_id">rashed.droid</string>
+    <string name="app_publisher_twitter_id">splashed_rash</string>
+    <string name="app_publisher_profile_website">http://reversecoder.com/</string>
+    <string name="app_publisher_company_html_path">http://www.codegarage.tech/</string>
+    <string name="app_publisher_privacy_html_path">http://www.codegarage.tech/</string>
+    <string name="app_publisher_acknowledgment_html_path">http://www.codegarage.tech/</string>
+
+    <!-- Activity title -->
+    <string name="title_activity_author">Zuhause</string>
+    <string name="title_activity_author_detail">Autor</string>
+    <string name="title_activity_quote_detail">Zitat</string>
+
+    <!-- Context Menu -->
+    <string name="context_menu">Context menu</string>
+    <string name="context_menu_add_to_favourite">Add to Favorites</string>
+    <string name="context_menu_copy_to_clipboard">Copy to Clipboard</string>
+    <string name="share_to_friends">Share to Friends</string>
+
+    <!-- Ribble Menu -->
+    <string name="txt_publisher">reversecoder</string>
+
+    <!--App intro-->
+    <string name="txt_author_detail_title">Author Details</string>
+    <string name="txt_author_detail_description">From this application you can learn about the quote Author.</string>
+    <string name="txt_quote_detail_title">Quote Details</string>
+    <string name="txt_quote_detail_description">From this application you can check all quotes of specific Author.</string>
+    <string name="txt_favourite_quote_title">Favourite Quotes</string>
+    <string name="txt_favourite_quote_description">From this application you can pick any quote as your favourite quote.</string>
+
+    <!-- Message -->
+    <string name="txt_loading_message">Loading, please wait.</string>
+    <string name="txt_no_data_found">No data found.</string>
+
+</resources>
