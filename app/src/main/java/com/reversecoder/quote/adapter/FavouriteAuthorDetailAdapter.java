@@ -1,6 +1,7 @@
 package com.reversecoder.quote.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.ViewGroup;
 
 import com.jude.easyrecyclerview.adapter.BaseViewHolder;
@@ -47,4 +48,17 @@ public class FavouriteAuthorDetailAdapter extends RecyclerArrayAdapter<Quote> {
                 throw new InvalidParameterException();
         }
     }
+
+//    public void updateSelection(Quote quote, boolean isHover) {
+//        for (int i = 0; i < getAllData().size(); i++) {
+//            Quote quoteData = (Quote) getAllData().get(i);
+//            if (quoteData.getQuoteDescription().equalsIgnoreCase(quote.getQuoteDescription())) {
+//                quoteData.setHover(isHover);
+//                Log.d("updateSelection: ", quoteData.toString());
+//            } else {
+//                quoteData.setHover(false);
+//            }
+//        }
+//        notifyDataSetChanged();
+//    }
 }

@@ -18,6 +18,7 @@ import android.widget.RelativeLayout;
 
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
+import com.daimajia.androidviewhover.listener.OnHoverStateChangeListener;
 import com.daimajia.androidviewhover.proxy.AnimationProxy;
 import com.daimajia.androidviewhover.tools.Blur;
 import com.daimajia.androidviewhover.tools.Util;
@@ -30,6 +31,7 @@ public class BlurLayout extends RelativeLayout {
 
 
     private View mHoverView;
+    private OnHoverStateChangeListener mOnHoverStateChangeListener;
 
     private boolean enableBlurBackground = true;
     private int mBlurRadius = 10;
@@ -48,7 +50,7 @@ public class BlurLayout extends RelativeLayout {
     private boolean enableBackgroundZoom = false;
     private float mZoomRatio = 1.14f;
 
-    private boolean enableTouchEvent = true;
+    private boolean enableTouchEvent = false;
 
     private Animator mHoverAppearAnimator;
     private YoYo.AnimationComposer mHoverAppearAnimationComposer;
@@ -106,6 +108,11 @@ public class BlurLayout extends RelativeLayout {
         hover();
     }
 
+
+    public void setOnHoverStateChangeListener(OnHoverStateChangeListener onHoverStateChangeListener){
+        mOnHoverStateChangeListener = onHoverStateChangeListener;
+    }
+
     /**
      * Let hover show.
      * @return
@@ -141,6 +148,7 @@ public class BlurLayout extends RelativeLayout {
                     mHoverView.getViewTreeObserver().removeGlobalOnLayoutListener(this);
             }
         });
+
         return true;
 
     }
@@ -214,7 +222,7 @@ public class BlurLayout extends RelativeLayout {
     public void setHoverView(final View hover){
         mHoverView = hover;
 
-        if(mHoverView == null)  return;
+        if(mHoverView == null) return;
 
         if(mHoverAppearAnimator != null)
             mHoverAppearAnimator.setTarget(mHoverView);
@@ -372,6 +380,10 @@ public class BlurLayout extends RelativeLayout {
                     l.onEnd();
                 }
             }
+
+            if(mOnHoverStateChangeListener !=null){
+                mOnHoverStateChangeListener.onHoverStateChanged(true);
+            }
         }
 
         @Override
@@ -406,6 +418,10 @@ public class BlurLayout extends RelativeLayout {
                 removeView(mHoverView);
                 for(DisappearListener l : mDisappearListeners){
                     l.onEnd();
+                }
+
+                if(mOnHoverStateChangeListener !=null){
+                    mOnHoverStateChangeListener.onHoverStateChanged(false);
                 }
             }
         }

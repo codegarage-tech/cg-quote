@@ -6,7 +6,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 
 import com.daimajia.androidviewhover.BlurLayout;
@@ -27,69 +26,58 @@ import com.reversecoder.quote.util.FragmentUtilsManager;
  */
 public class FavouriteQuoteViewHolder extends BaseViewHolder<Quote> {
 
+    View parentView;
+
     TextView txtPersonName;
-//    Button btnFavourite;
     BlurLayout blurLayout;
     View hover;
+
+    Quote mQuote;
+    FavouriteAuthorDetailAdapter mAdpater;
+    int mPosition = -1;
 
     public FavouriteQuoteViewHolder(ViewGroup parent) {
         super(parent, R.layout.recyclerview_item_favourite_quote);
 
+        parentView = $(R.id.root_layout);
         txtPersonName = $(R.id.tv_quote_name);
-//        btnFavourite = $(R.id.btn_favourite);
         blurLayout = $(R.id.blur_layout_favourite_quote);
 
-        hover = LayoutInflater.from(getContext()).inflate(R.layout.layout_hover_favourite_quote, null);
-        blurLayout.setHoverView(hover);
+//        hover = LayoutInflater.from(getContext()).inflate(R.layout.layout_hover_favourite_quote, null);
+//        blurLayout.setHoverView(hover);
     }
 
     @Override
     public void setData(final Quote data) {
 
-        final FavouriteAuthorDetailAdapter mAdpater = (FavouriteAuthorDetailAdapter) getOwnerAdapter();
-        final int mPosition = mAdpater.getPosition(data);
+        mQuote = data;
+        mAdpater = (FavouriteAuthorDetailAdapter) getOwnerAdapter();
+        mPosition = mAdpater.getPosition(mQuote);
 
         txtPersonName.setText(data.getQuoteDescription());
-//        if (data.isFavourite()) {
-//            btnFavourite.setBackgroundResource(R.drawable.icn_6);
-//        } else {
-//            btnFavourite.setBackgroundResource(R.drawable.icn_4);
+
+        //Close hoverview of previous
+//        if(!data.isHover()){
+//            if (blurLayout.getHoverStatus() == BlurLayout.HOVER_STATUS.APPEARED) {
+//                blurLayout.dismissHover();
+//            }
 //        }
 
-        hover.findViewById(R.id.iv_favourite).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-//                YoYo.with(Techniques.Tada)
-//                        .duration(550)
-//                        .playOn(view);
-
-                SmallBang smallBang = SmallBang.attach2Window(((HomeActivity) getContext()));
-                smallBang.bang(view, new SmallBangListener() {
-                    @Override
-                    public void onAnimationStart() {
-                        data.setFavourite(false);
-                        //update data into database
-                        new UpdateQuoteIntoDatabase(getContext().getApplicationContext(), data).execute();
-                    }
-
-                    @Override
-                    public void onAnimationEnd() {
-                        //Update removed data into adapter
-                        Quote updatedData = mAdpater.update(data, mPosition);
-                        Log.d("UpdatedQuote:", updatedData.toString());
-                        mAdpater.remove(mPosition);
-                        mAdpater.notifyDataSetChanged();
-                        if (mAdpater.getCount() == 0) {
-                            ((FavouriteFragmentNew) FragmentUtilsManager.getVisibleSupportFragment(((HomeActivity) getContext()), getContext().getString(R.string.ribble_menu_item_favourite))).onFragmentBackPressed();
-                        }
-                    }
-                });
-            }
-        });
-
-//        btnFavourite.setOnClickListener(new OnSingleClickListener() {
+//        blurLayout.setOnHoverStateChangeListener(new OnHoverStateChangeListener() {
 //            @Override
-//            public void onSingleClick(View view) {
+//            public void onHoverStateChanged(boolean isHoverExist) {
+//                if(isHoverExist){
+//                    mAdpater.updateSelection(mQuote, isHoverExist);
+//                }
+//            }
+//        });
+
+//        hover.findViewById(R.id.iv_favourite).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+////                YoYo.with(Techniques.Tada)
+////                        .duration(550)
+////                        .playOn(view);
 //
 //                SmallBang smallBang = SmallBang.attach2Window(((HomeActivity) getContext()));
 //                smallBang.bang(view, new SmallBangListener() {

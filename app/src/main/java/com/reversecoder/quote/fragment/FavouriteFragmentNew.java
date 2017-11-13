@@ -15,12 +15,14 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.alexvasilkov.foldablelayout.UnfoldableView;
 import com.alexvasilkov.foldablelayout.shading.GlanceFoldShading;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
+import com.daimajia.androidviewhover.BlurLayout;
 import com.jude.easyrecyclerview.EasyRecyclerView;
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
 import com.lombokcyberlab.android.multicolortextview.MultiColorTextView;
@@ -438,7 +440,12 @@ public class FavouriteFragmentNew extends Fragment implements OnFragmentBackPres
         favouriteAuthorDetailAdapter.setOnItemClickListener(new RecyclerArrayAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
+                Toast.makeText(getActivity(),"Clicked "+position, Toast.LENGTH_SHORT).show();
 
+                BlurLayout blurLayout = (BlurLayout)view.findViewById(R.id.blur_layout_favourite_quote);
+                View hover = LayoutInflater.from(getActivity()).inflate(R.layout.layout_hover_favourite_quote, null);
+                blurLayout.setHoverView(hover);
+                blurLayout.showHover();
             }
         });
     }

@@ -4,6 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.orm.SugarRecord;
+import com.orm.annotation.Ignore;
 import com.orm.annotation.Unique;
 
 public class Quote extends SugarRecord implements Parcelable {
@@ -14,6 +15,9 @@ public class Quote extends SugarRecord implements Parcelable {
     private boolean isQuote = false;
     private Language language;
     private Author author;
+
+    @Ignore
+    private boolean isHover = false;
 
     public Quote() {
     }
@@ -66,6 +70,14 @@ public class Quote extends SugarRecord implements Parcelable {
         this.author = author;
     }
 
+    public boolean isHover() {
+        return isHover;
+    }
+
+    public void setHover(boolean hover) {
+        isHover = hover;
+    }
+
     @Override
     public String toString() {
         return "Quote{" +
@@ -74,6 +86,7 @@ public class Quote extends SugarRecord implements Parcelable {
                 ", isQuote=" + isQuote +
                 ", language=" + language +
                 ", author=" + author +
+                ", isHover=" + isHover +
                 '}';
     }
 
@@ -90,6 +103,7 @@ public class Quote extends SugarRecord implements Parcelable {
         dest.writeInt(isQuote ? 1 : 0);
         dest.writeParcelable(language, flags);
         dest.writeParcelable(author, flags);
+        dest.writeInt(isHover ? 1 : 0);
     }
 
     // Creator
@@ -106,10 +120,11 @@ public class Quote extends SugarRecord implements Parcelable {
 
     // "De-parcel object
     public Quote(Parcel in) {
-        quoteDescription = in.readString();
-        isFavourite = (in.readInt() == 0) ? false : true;
-        isQuote = (in.readInt() == 0) ? false : true;
+        this.quoteDescription = in.readString();
+        this.isFavourite = (in.readInt() == 0) ? false : true;
+        this.isQuote = (in.readInt() == 0) ? false : true;
         this.language = in.readParcelable(Language.class.getClassLoader());
         this.author = in.readParcelable(Author.class.getClassLoader());
+        this.isHover = (in.readInt() == 0) ? false : true;
     }
 }
