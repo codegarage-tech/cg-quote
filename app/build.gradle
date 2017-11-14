@@ -24,10 +24,6 @@ android {
         versionCode appVersionCode
         versionName appVersionName
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-
-        //For hoverview
-        renderscriptTargetApi 19
-        renderscriptSupportModeEnabled true
     }
 
     buildTypes {
@@ -72,7 +68,7 @@ dependencies {
     compile project(":updatechecker")
     compile project(":kenburnsview")
     compile project(":arclayout")
-    compile project(":hoverview")
+    compile project(":cardslider")
     compile project(":multicolortextview")
 
     compile 'com.reversecoder.permission:rc-permission:1.0.1-SNAPSHOT'
