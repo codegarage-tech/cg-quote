@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/diagonalLayout"
     android:layout_width="match_parent"
-    android:layout_height="250dp"
+    android:layout_height="match_parent"
     app:arc_cropDirection="cropOutside"
     app:arc_height="50dp"
     app:arc_position="bottom">
@@ -20,39 +20,9 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="150sp"
+            android:layout_height="200sp"
             android:layout_gravity="bottom"
             android:background="@drawable/image_text_shadow" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:layout_marginBottom="50dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/arclayout_title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:text=""
-                android:textColor="@color/white"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/arclayout_subtitle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text=""
-                android:textColor="@color/white"
-                android:textSize="18sp" />
-
-        </LinearLayout>
-
     </FrameLayout>
 
 </com.github.florent37.arclayout.ArcLayout>

@@ -26,6 +26,7 @@ import com.daimajia.androidviewhover.BlurLayout;
 import com.jude.easyrecyclerview.EasyRecyclerView;
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
 import com.lombokcyberlab.android.multicolortextview.MultiColorTextView;
+import com.ramotion.cardslider.CardSliderLayoutManager;
 import com.reversecoder.library.util.AllSettingsManager;
 import com.reversecoder.quote.R;
 import com.reversecoder.quote.activity.HomeActivity;
@@ -75,6 +76,9 @@ public class FavouriteFragmentNew extends Fragment implements OnFragmentBackPres
     EasyRecyclerView recyclerViewFavouriteAuthorDetail;
     FavouriteAuthorDetailAdapter favouriteAuthorDetailAdapter;
     LinearLayoutManager linearLayoutManager;
+
+    //Card slider
+    private CardSliderLayoutManager cardSliderLayoutManager;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

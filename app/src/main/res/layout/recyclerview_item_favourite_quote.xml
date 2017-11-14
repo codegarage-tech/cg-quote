@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/root_layout"
     android:layout_width="match_parent"
@@ -14,13 +15,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <!--        <Button
+        &lt;!&ndash;        <Button
                     android:id="@+id/btn_favourite"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:layout_gravity="right"
                     android:layout_margin="8dp"
-                    android:background="@drawable/icn_6" />-->
+                    android:background="@drawable/icn_6" />&ndash;&gt;
 
         <LinearLayout
             android:id="@+id/item_view"
@@ -43,4 +44,31 @@
         </LinearLayout>
     </com.daimajia.androidviewhover.BlurLayout>
 
-</LinearLayout>
+</LinearLayout>-->
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:cardCornerRadius="10dp"
+    app:cardPreventCornerOverlap="false">
+
+    <ImageView
+        android:id="@+id/image"
+        android:background="@drawable/background_rose"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"/>
+
+    <TextView
+        android:id="@+id/tv_quote_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:background="@color/white"
+        android:text="this is Rashed"
+        android:alpha="0"/>
+
+</android.support.v7.widget.CardView>

@@ -1,18 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/details_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
-    android:orientation="vertical"
-    android:visibility="visible">
+    android:background="@color/white">
 
-    <com.jude.easyrecyclerview.EasyRecyclerView
-        android:id="@+id/rv_favourite_author_detail"
+    <include layout="@layout/layout_header_favourite_author_detail" />
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_empty="@layout/view_empty"
-        app:layout_progress="@layout/view_progress" />
+        android:orientation="vertical">
 
-</LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight=".85">
+
+            <com.jude.easyrecyclerview.EasyRecyclerView
+                android:id="@+id/rv_favourite_author_detail"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="top"
+                android:clipChildren="false"
+                android:overScrollMode="never"
+                app:layoutManager="com.ramotion.cardslider.CardSliderLayoutManager"
+                app:viewUpdater="com.ramotion.cardslider.CardsUpdater" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight=".15"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_current_position"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="5"
+                android:textColor="@color/white"
+                android:textSize="40sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" / "
+                android:textColor="@color/Off_white"
+                android:textSize="40sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_total_position"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="6"
+                android:textColor="@color/Off_white"
+                android:textSize="40sp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+</FrameLayout>
