@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.github.florent37.arclayout.ArcLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/diagonalLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:arc_cropDirection="cropOutside"
-    app:arc_height="50dp"
+    app:arc_height="0dp"
     app:arc_position="bottom">
 
     <com.flaviofaria.kenburnsview.KenBurnsView

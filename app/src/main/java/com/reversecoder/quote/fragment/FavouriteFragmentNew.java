@@ -11,10 +11,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alexvasilkov.foldablelayout.UnfoldableView;
@@ -22,11 +21,11 @@ import com.alexvasilkov.foldablelayout.shading.GlanceFoldShading;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
-import com.daimajia.androidviewhover.BlurLayout;
 import com.jude.easyrecyclerview.EasyRecyclerView;
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
 import com.lombokcyberlab.android.multicolortextview.MultiColorTextView;
 import com.ramotion.cardslider.CardSliderLayoutManager;
+import com.ramotion.cardslider.CardSnapHelper;
 import com.reversecoder.library.util.AllSettingsManager;
 import com.reversecoder.quote.R;
 import com.reversecoder.quote.activity.HomeActivity;
@@ -68,14 +67,13 @@ public class FavouriteFragmentNew extends Fragment implements OnFragmentBackPres
 
     //foldablelayout
     private View listTouchInterceptor;
-    private LinearLayout detailsLayout;
+    private FrameLayout detailsLayout;
     private UnfoldableView unfoldableView;
     int mLastSelectedAuthor = -1;
 
     //Author detail in foldablelayout
-    EasyRecyclerView recyclerViewFavouriteAuthorDetail;
+    RecyclerView recyclerViewFavouriteAuthorDetail;
     FavouriteAuthorDetailAdapter favouriteAuthorDetailAdapter;
-    LinearLayoutManager linearLayoutManager;
 
     //Card slider
     private CardSliderLayoutManager cardSliderLayoutManager;
@@ -304,7 +302,7 @@ public class FavouriteFragmentNew extends Fragment implements OnFragmentBackPres
         listTouchInterceptor = (View) parentView.findViewById(R.id.touch_interceptor_view);
         listTouchInterceptor.setClickable(false);
 
-        detailsLayout = (LinearLayout) parentView.findViewById(R.id.details_layout);
+        detailsLayout = (FrameLayout) parentView.findViewById(R.id.details_layout);
         detailsLayout.setVisibility(View.INVISIBLE);
 
         unfoldableView = (UnfoldableView) parentView.findViewById(R.id.unfoldable_view);
@@ -414,42 +412,24 @@ public class FavouriteFragmentNew extends Fragment implements OnFragmentBackPres
      * EasyRecyclerView methods *
      ****************************/
     private void initAuthorDetailRecyclerView(View detailLayout, final MappedQuote mappedQuote) {
-        recyclerViewFavouriteAuthorDetail = (EasyRecyclerView) detailLayout.findViewById(R.id.rv_favourite_author_detail);
+        recyclerViewFavouriteAuthorDetail = (RecyclerView) detailLayout.findViewById(R.id.rv_favourite_author_detail);
         favouriteAuthorDetailAdapter = new FavouriteAuthorDetailAdapter(getActivity());
-        linearLayoutManager = new LinearLayoutManager(getActivity());
-        recyclerViewFavouriteAuthorDetail.setLayoutManager(linearLayoutManager);
-        recyclerViewFavouriteAuthorDetail.setAdapterWithProgress(favouriteAuthorDetailAdapter);
+        cardSliderLayoutManager = (CardSliderLayoutManager)recyclerViewFavouriteAuthorDetail.getLayoutManager();
+        new CardSnapHelper().attachToRecyclerView(recyclerViewFavouriteAuthorDetail);
+//        recyclerViewFavouriteAuthorDetail.setLayoutManager(cardSliderLayoutManager);
+        recyclerViewFavouriteAuthorDetail.setAdapter(favouriteAuthorDetailAdapter);
         favouriteAuthorDetailAdapter.addAll(mappedQuote.getQuotes());
-        favouriteAuthorDetailAdapter.addHeader(new RecyclerArrayAdapter.ItemView() {
-            @Override
-            public View onCreateView(ViewGroup parent) {
-                View headerView = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_header_favourite_author_detail, parent, false);
-
-                TextView tvDetailTitle = (TextView) headerView.findViewById(R.id.arclayout_title);
-                TextView tvDetailSubtitle = (TextView) headerView.findViewById(R.id.arclayout_subtitle);
-
-                tvDetailTitle.setText(mappedQuote.getAuthor().getAuthorName());
-                tvDetailSubtitle.setText(mappedQuote.getAuthor().getOccupation());
-
-                return headerView;
-            }
-
-            @Override
-            public void onBindView(View headerView) {
-
-            }
-        });
         favouriteAuthorDetailAdapter.notifyDataSetChanged();
 
         favouriteAuthorDetailAdapter.setOnItemClickListener(new RecyclerArrayAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                Toast.makeText(getActivity(),"Clicked "+position, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Clicked " + position, Toast.LENGTH_SHORT).show();
 
-                BlurLayout blurLayout = (BlurLayout)view.findViewById(R.id.blur_layout_favourite_quote);
-                View hover = LayoutInflater.from(getActivity()).inflate(R.layout.layout_hover_favourite_quote, null);
-                blurLayout.setHoverView(hover);
-                blurLayout.showHover();
+//                BlurLayout blurLayout = (BlurLayout)view.findViewById(R.id.blur_layout_favourite_quote);
+//                View hover = LayoutInflater.from(getActivity()).inflate(R.layout.layout_hover_favourite_quote, null);
+//                blurLayout.setHoverView(hover);
+//                blurLayout.showHover();
             }
         });
     }

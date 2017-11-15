@@ -26,9 +26,9 @@ import java.util.LinkedList;
 public class CardSliderLayoutManager extends RecyclerView.LayoutManager
         implements RecyclerView.SmoothScroller.ScrollVectorProvider {
 
-    private static final int DEFAULT_ACTIVE_CARD_LEFT_OFFSET = 20;
-    private static final int DEFAULT_CARD_WIDTH = 250;
-    private static final int DEFAULT_CARDS_GAP = 10;
+    private static final int DEFAULT_ACTIVE_CARD_LEFT_OFFSET = 15;
+    private static final int DEFAULT_CARD_WIDTH = 320;
+    private static final int DEFAULT_CARDS_GAP = 15;
     private static final int LEFT_CARD_COUNT = 1;
 
     private final SparseArray<View> viewCache = new SparseArray<>();

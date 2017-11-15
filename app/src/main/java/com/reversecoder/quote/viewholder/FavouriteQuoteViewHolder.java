@@ -3,22 +3,15 @@ package com.reversecoder.quote.viewholder;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
-import com.daimajia.androidviewhover.BlurLayout;
 import com.jude.easyrecyclerview.adapter.BaseViewHolder;
-import com.reversecoder.library.bang.SmallBang;
-import com.reversecoder.library.bang.SmallBangListener;
 import com.reversecoder.quote.R;
-import com.reversecoder.quote.activity.HomeActivity;
 import com.reversecoder.quote.adapter.FavouriteAuthorDetailAdapter;
-import com.reversecoder.quote.fragment.FavouriteFragmentNew;
 import com.reversecoder.quote.model.Quote;
 import com.reversecoder.quote.util.DataHandler;
-import com.reversecoder.quote.util.FragmentUtilsManager;
+import com.reversecoder.quote.view.CanaroTextView;
 
 /**
  * @author Md. Rashadul Alam
@@ -27,10 +20,7 @@ import com.reversecoder.quote.util.FragmentUtilsManager;
 public class FavouriteQuoteViewHolder extends BaseViewHolder<Quote> {
 
     View parentView;
-
-    TextView txtPersonName;
-    BlurLayout blurLayout;
-    View hover;
+    CanaroTextView txtPersonName;
 
     Quote mQuote;
     FavouriteAuthorDetailAdapter mAdpater;
@@ -41,7 +31,6 @@ public class FavouriteQuoteViewHolder extends BaseViewHolder<Quote> {
 
         parentView = $(R.id.root_layout);
         txtPersonName = $(R.id.tv_quote_name);
-        blurLayout = $(R.id.blur_layout_favourite_quote);
 
 //        hover = LayoutInflater.from(getContext()).inflate(R.layout.layout_hover_favourite_quote, null);
 //        blurLayout.setHoverView(hover);
