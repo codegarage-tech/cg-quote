@@ -43,7 +43,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <include layout="@layout/layout_favourite_author_detail" />
+    <include layout="@layout/layout_favourite_quote" />
 
     <com.alexvasilkov.foldablelayout.UnfoldableView
         android:id="@+id/unfoldable_view"

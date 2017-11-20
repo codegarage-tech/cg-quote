@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 
 import com.jude.easyrecyclerview.adapter.BaseViewHolder;
 import com.reversecoder.quote.R;
-import com.reversecoder.quote.adapter.FavouriteAuthorDetailAdapter;
+import com.reversecoder.quote.adapter.FavouriteQuoteAdapter;
 import com.reversecoder.quote.model.Quote;
 import com.reversecoder.quote.util.DataHandler;
 import com.reversecoder.quote.view.CanaroTextView;
@@ -23,7 +23,7 @@ public class FavouriteQuoteViewHolder extends BaseViewHolder<Quote> {
     CanaroTextView txtPersonName;
 
     Quote mQuote;
-    FavouriteAuthorDetailAdapter mAdpater;
+    FavouriteQuoteAdapter mAdpater;
     int mPosition = -1;
 
     public FavouriteQuoteViewHolder(ViewGroup parent) {
@@ -40,7 +40,7 @@ public class FavouriteQuoteViewHolder extends BaseViewHolder<Quote> {
     public void setData(final Quote data) {
 
         mQuote = data;
-        mAdpater = (FavouriteAuthorDetailAdapter) getOwnerAdapter();
+        mAdpater = (FavouriteQuoteAdapter) getOwnerAdapter();
         mPosition = mAdpater.getPosition(mQuote);
 
         txtPersonName.setText(data.getQuoteDescription());

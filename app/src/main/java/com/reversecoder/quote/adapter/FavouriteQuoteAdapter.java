@@ -16,13 +16,13 @@ import java.security.InvalidParameterException;
  * @author Md. Rashadul Alam
  *         Email: rashed.droid@gmail.com
  */
-public class FavouriteAuthorDetailAdapter extends RecyclerArrayAdapter<Quote> {
+public class FavouriteQuoteAdapter extends RecyclerArrayAdapter<Quote> {
 
     private static final int TYPE_INVALID = 0;
     private static final int TYPE_ADMOB = 1;
     private static final int TYPE_QUOTE = 2;
 
-    public FavouriteAuthorDetailAdapter(Context context) {
+    public FavouriteQuoteAdapter(Context context) {
         super(context);
     }
 

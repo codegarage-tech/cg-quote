@@ -14,14 +14,12 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import com.alexvasilkov.foldablelayout.UnfoldableView;
 import com.alexvasilkov.foldablelayout.shading.GlanceFoldShading;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
-import com.jude.easyrecyclerview.EasyRecyclerView;
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
 import com.lombokcyberlab.android.multicolortextview.MultiColorTextView;
 import com.ramotion.cardslider.CardSliderLayoutManager;
@@ -30,9 +28,8 @@ import com.reversecoder.library.util.AllSettingsManager;
 import com.reversecoder.quote.R;
 import com.reversecoder.quote.activity.HomeActivity;
 import com.reversecoder.quote.adapter.AuthorAdapter;
-import com.reversecoder.quote.adapter.FavouriteAuthorDetailAdapter;
+import com.reversecoder.quote.adapter.FavouriteQuoteAdapter;
 import com.reversecoder.quote.interfaces.OnFragmentBackPressedListener;
-import com.reversecoder.quote.interfaces.RecyclerViewOnItemClickListener;
 import com.reversecoder.quote.model.MappedQuote;
 import com.reversecoder.quote.model.Quote;
 import com.reversecoder.quote.util.DataHandler;
@@ -72,8 +69,8 @@ public class FavouriteFragmentNew extends Fragment implements OnFragmentBackPres
     int mLastSelectedAuthor = -1;
 
     //Author detail in foldablelayout
-    RecyclerView recyclerViewFavouriteAuthorDetail;
-    FavouriteAuthorDetailAdapter favouriteAuthorDetailAdapter;
+    RecyclerView recyclerViewFavouriteQuote;
+    FavouriteQuoteAdapter favouriteQuoteAdapter;
 
     //Card slider
     private CardSliderLayoutManager cardSliderLayoutManager;
@@ -174,12 +171,15 @@ public class FavouriteFragmentNew extends Fragment implements OnFragmentBackPres
      * Recyclerview action
      ***************/
     private void implementsRecyclerViewOnItemClickListener() {
-        recyclerViewFavouriteAuthor.addOnItemTouchListener(new RecyclerViewOnItemClickListener(getActivity(),
-                new RecyclerViewOnItemClickListener.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(View view, int position) {
-                        mLastSelectedAuthor = position;
-                        MappedQuote mappedQuote = favouriteAuthorAdapter.getItem(position);
+//        recyclerViewFavouriteAuthor.addOnItemTouchListener(new RecyclerViewOnItemClickListener(getActivity(),
+//                new RecyclerViewOnItemClickListener.OnItemClickListener() {
+//                    @Override
+//                    public void onItemClick(View view, int position) {
+        favouriteAuthorAdapter.setOnItemClickListener(new RecyclerArrayAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                mLastSelectedAuthor = position;
+                MappedQuote mappedQuote = favouriteAuthorAdapter.getItem(position);
 //                        if (mappedQuote.getAuthor().isAuthor()) {
 //                            Language language = getLanguage(SELECTED_LANGUAGE);
 //                            Log.d(TAG, mappedQuote.toString() + "\nId: " + mappedQuote.getAuthor().getId() + "");
@@ -192,9 +192,9 @@ public class FavouriteFragmentNew extends Fragment implements OnFragmentBackPres
 //                            getActivity().startActivityForResult(intentQuoteList, REQUEST_CODE_FAVOURITE_FRAGMENT);
 //                        }
 
-                        openAuthorDetails(detailsLayout, (view.findViewById(R.id.item_view)), mappedQuote);
-                    }
-                }));
+                openAuthorDetails(detailsLayout, (view.findViewById(R.id.item_view)), mappedQuote);
+            }
+        });
     }
 
     /*@Override
@@ -368,14 +368,14 @@ public class FavouriteFragmentNew extends Fragment implements OnFragmentBackPres
     public void updateFavouriteAuthorList() {
         if (mLastSelectedAuthor != -1) {
             Log.d("AuthorAdapter: ", favouriteAuthorAdapter.getItem(mLastSelectedAuthor).getQuotes().size() + "");
-            Log.d("AuthorAdapterDetail: ", favouriteAuthorDetailAdapter.getCount() + "");
+            Log.d("AuthorAdapterDetail: ", favouriteQuoteAdapter.getCount() + "");
             //If favourite data are changed for the selected author
-            if (favouriteAuthorAdapter.getItem(mLastSelectedAuthor).getQuotes().size() != favouriteAuthorDetailAdapter.getCount()) {
+            if (favouriteAuthorAdapter.getItem(mLastSelectedAuthor).getQuotes().size() != favouriteQuoteAdapter.getCount()) {
                 //update favourite data into specific author
-                favouriteAuthorAdapter.getItem(mLastSelectedAuthor).setQuotes(new ArrayList<Quote>(favouriteAuthorDetailAdapter.getAllData()));
+                favouriteAuthorAdapter.getItem(mLastSelectedAuthor).setQuotes(new ArrayList<Quote>(favouriteQuoteAdapter.getAllData()));
 
                 //If favourite item are empty for the selected author
-                if (favouriteAuthorDetailAdapter.getCount() == 0) {
+                if (favouriteQuoteAdapter.getCount() == 0) {
                     favouriteAuthorAdapter.remove(mLastSelectedAuthor);
                     favouriteAuthorAdapter.notifyDataSetChanged();
 
@@ -397,7 +397,10 @@ public class FavouriteFragmentNew extends Fragment implements OnFragmentBackPres
     public void onFragmentBackPressed() {
         if (unfoldableView.isUnfolded() || unfoldableView.isUnfolding()) {
             unfoldableView.foldBack();
-
+            //release detail view from recyclerview
+            if (recyclerViewFavouriteQuote != null) {
+                new CardSnapHelper().setOnFlingListener(recyclerViewFavouriteQuote, null);
+            }
             updateFavouriteAuthorList();
 
             //Change title and action of hamburger
@@ -412,25 +415,35 @@ public class FavouriteFragmentNew extends Fragment implements OnFragmentBackPres
      * EasyRecyclerView methods *
      ****************************/
     private void initAuthorDetailRecyclerView(View detailLayout, final MappedQuote mappedQuote) {
-        recyclerViewFavouriteAuthorDetail = (RecyclerView) detailLayout.findViewById(R.id.rv_favourite_author_detail);
-        favouriteAuthorDetailAdapter = new FavouriteAuthorDetailAdapter(getActivity());
-        cardSliderLayoutManager = (CardSliderLayoutManager)recyclerViewFavouriteAuthorDetail.getLayoutManager();
-        new CardSnapHelper().attachToRecyclerView(recyclerViewFavouriteAuthorDetail);
-//        recyclerViewFavouriteAuthorDetail.setLayoutManager(cardSliderLayoutManager);
-        recyclerViewFavouriteAuthorDetail.setAdapter(favouriteAuthorDetailAdapter);
-        favouriteAuthorDetailAdapter.addAll(mappedQuote.getQuotes());
-        favouriteAuthorDetailAdapter.notifyDataSetChanged();
+        recyclerViewFavouriteQuote = (RecyclerView) detailLayout.findViewById(R.id.rv_favourite_quote);
+        favouriteQuoteAdapter = new FavouriteQuoteAdapter(getActivity());
+        recyclerViewFavouriteQuote.setAdapter(favouriteQuoteAdapter);
+        favouriteQuoteAdapter.addAll(mappedQuote.getQuotes());
+        favouriteQuoteAdapter.notifyDataSetChanged();
+        recyclerViewFavouriteQuote.setHasFixedSize(true);
+        cardSliderLayoutManager = new CardSliderLayoutManager(getActivity());
+        recyclerViewFavouriteQuote.setLayoutManager(cardSliderLayoutManager);
+        new CardSnapHelper().attachToRecyclerView(recyclerViewFavouriteQuote);
 
-        favouriteAuthorDetailAdapter.setOnItemClickListener(new RecyclerArrayAdapter.OnItemClickListener() {
+        recyclerViewFavouriteQuote.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
-            public void onItemClick(View view, int position) {
-                Toast.makeText(getActivity(), "Clicked " + position, Toast.LENGTH_SHORT).show();
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+//                    onActiveCardChange();
+                }
+            }
+        });
 
+//        favouriteQuoteAdapter.setOnItemClickListener(new RecyclerArrayAdapter.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(View view, int position) {
+//                Toast.makeText(getActivity(), "Clicked " + position, Toast.LENGTH_SHORT).show();
+//
 //                BlurLayout blurLayout = (BlurLayout)view.findViewById(R.id.blur_layout_favourite_quote);
 //                View hover = LayoutInflater.from(getActivity()).inflate(R.layout.layout_hover_favourite_quote, null);
 //                blurLayout.setHoverView(hover);
 //                blurLayout.showHover();
-            }
-        });
+//            }
+//        });
     }
 }

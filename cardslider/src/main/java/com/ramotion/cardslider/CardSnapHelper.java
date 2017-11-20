@@ -26,13 +26,10 @@ public class CardSnapHelper extends LinearSnapHelper {
      * @param recyclerView The RecyclerView instance to which you want to add this helper or
      *                     {@code null} if you want to remove SnapHelper from the current
      *                     RecyclerView.
-     *
-     * @throws IllegalArgumentException if there is already a {@link RecyclerView.OnFlingListener}
-     * attached to the provided {@link RecyclerView}.
-     *
+     * @throws IllegalArgumentException  if there is already a {@link RecyclerView.OnFlingListener}
+     *                                   attached to the provided {@link RecyclerView}.
      * @throws InvalidParameterException if provided RecyclerView has LayoutManager which is not
-     * instance of CardSliderLayoutManager
-     *
+     *                                   instance of CardSliderLayoutManager
      */
     @Override
     public void attachToRecyclerView(@Nullable RecyclerView recyclerView) throws IllegalStateException {
@@ -43,6 +40,10 @@ public class CardSnapHelper extends LinearSnapHelper {
         }
 
         this.recyclerView = recyclerView;
+    }
+
+    public void setOnFlingListener(RecyclerView recyclerView, RecyclerView.OnFlingListener onFlingListener) {
+        recyclerView.setOnFlingListener(onFlingListener);
     }
 
     @Override
@@ -97,20 +98,19 @@ public class CardSnapHelper extends LinearSnapHelper {
 
     @Override
     public View findSnapView(RecyclerView.LayoutManager layoutManager) {
-        return ((CardSliderLayoutManager)layoutManager).getTopView();
+        return ((CardSliderLayoutManager) layoutManager).getTopView();
     }
 
     @Override
     public int[] calculateDistanceToFinalSnap(@NonNull RecyclerView.LayoutManager layoutManager,
-                                              @NonNull View targetView)
-    {
-        final CardSliderLayoutManager lm = (CardSliderLayoutManager)layoutManager;
+                                              @NonNull View targetView) {
+        final CardSliderLayoutManager lm = (CardSliderLayoutManager) layoutManager;
         final int viewLeft = lm.getDecoratedLeft(targetView);
         final int activeCardLeft = lm.getActiveCardLeft();
         final int activeCardCenter = lm.getActiveCardLeft() + lm.getCardWidth() / 2;
         final int activeCardRight = lm.getActiveCardLeft() + lm.getCardWidth();
 
-        int[] out = new int[] {0, 0};
+        int[] out = new int[]{0, 0};
         if (viewLeft < activeCardCenter) {
             final int targetPos = lm.getPosition(targetView);
             final int activeCardPos = lm.getActiveCardPosition();
@@ -127,13 +127,13 @@ public class CardSnapHelper extends LinearSnapHelper {
             recyclerView.smoothScrollBy(out[0], 0, new AccelerateInterpolator());
         }
 
-        return new int[] {0, 0};
+        return new int[]{0, 0};
     }
 
     @Nullable
     @Override
     protected LinearSmoothScroller createSnapScroller(RecyclerView.LayoutManager layoutManager) {
-        return ((CardSliderLayoutManager)layoutManager).getSmoothScroller(recyclerView);
+        return ((CardSliderLayoutManager) layoutManager).getSmoothScroller(recyclerView);
     }
 
 }
