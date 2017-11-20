@@ -1,17 +1,26 @@
 package com.reversecoder.quote.viewholder;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.jude.easyrecyclerview.adapter.BaseViewHolder;
+import com.reversecoder.library.bang.SmallBang;
+import com.reversecoder.library.bang.SmallBangListener;
 import com.reversecoder.quote.R;
+import com.reversecoder.quote.activity.HomeActivity;
 import com.reversecoder.quote.adapter.FavouriteQuoteAdapter;
+import com.reversecoder.quote.fragment.FavouriteFragmentNew;
 import com.reversecoder.quote.model.Quote;
 import com.reversecoder.quote.util.DataHandler;
+import com.reversecoder.quote.util.FragmentUtilsManager;
 import com.reversecoder.quote.view.CanaroTextView;
+
+import java.util.Random;
 
 /**
  * @author Md. Rashadul Alam
@@ -21,6 +30,7 @@ public class FavouriteQuoteViewHolder extends BaseViewHolder<Quote> {
 
     View parentView;
     CanaroTextView txtPersonName;
+    Button btnFavouriteQuoteLike, btnFavouriteQuoteCopyToClipboard, btnFavouriteQuoteShare;
 
     Quote mQuote;
     FavouriteQuoteAdapter mAdpater;
@@ -29,11 +39,16 @@ public class FavouriteQuoteViewHolder extends BaseViewHolder<Quote> {
     public FavouriteQuoteViewHolder(ViewGroup parent) {
         super(parent, R.layout.recyclerview_item_favourite_quote);
 
-        parentView = $(R.id.root_layout);
+        parentView = $(R.id.rl_slider_card);
         txtPersonName = $(R.id.tv_quote_name);
+        btnFavouriteQuoteLike = $(R.id.btn_favourite_quote_like);
+        btnFavouriteQuoteCopyToClipboard = $(R.id.btn_favourite_quote_copy_to_clipboard);
+        btnFavouriteQuoteShare = $(R.id.btn_favourite_quote_share);
 
-//        hover = LayoutInflater.from(getContext()).inflate(R.layout.layout_hover_favourite_quote, null);
-//        blurLayout.setHoverView(hover);
+        TypedArray images = getContext().getResources().obtainTypedArray(R.array.paintings_images);
+        final int imageId = images.getResourceId(new Random().nextInt(images.length()), -1);
+        parentView.setBackgroundResource(imageId);
+        images.recycle();
     }
 
     @Override
@@ -45,52 +60,32 @@ public class FavouriteQuoteViewHolder extends BaseViewHolder<Quote> {
 
         txtPersonName.setText(data.getQuoteDescription());
 
-        //Close hoverview of previous
-//        if(!data.isHover()){
-//            if (blurLayout.getHoverStatus() == BlurLayout.HOVER_STATUS.APPEARED) {
-//                blurLayout.dismissHover();
-//            }
-//        }
+        btnFavouriteQuoteLike.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SmallBang smallBang = SmallBang.attach2Window(((HomeActivity) getContext()));
+                smallBang.bang(view, new SmallBangListener() {
+                    @Override
+                    public void onAnimationStart() {
+                        data.setFavourite(false);
+                        //update data into database
+                        new UpdateQuoteIntoDatabase(getContext().getApplicationContext(), data).execute();
+                    }
 
-//        blurLayout.setOnHoverStateChangeListener(new OnHoverStateChangeListener() {
-//            @Override
-//            public void onHoverStateChanged(boolean isHoverExist) {
-//                if(isHoverExist){
-//                    mAdpater.updateSelection(mQuote, isHoverExist);
-//                }
-//            }
-//        });
-
-//        hover.findViewById(R.id.iv_favourite).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-////                YoYo.with(Techniques.Tada)
-////                        .duration(550)
-////                        .playOn(view);
-//
-//                SmallBang smallBang = SmallBang.attach2Window(((HomeActivity) getContext()));
-//                smallBang.bang(view, new SmallBangListener() {
-//                    @Override
-//                    public void onAnimationStart() {
-//                        data.setFavourite(false);
-//                        //update data into database
-//                        new UpdateQuoteIntoDatabase(getContext().getApplicationContext(), data).execute();
-//                    }
-//
-//                    @Override
-//                    public void onAnimationEnd() {
-//                        //Update removed data into adapter
-//                        Quote updatedData = mAdpater.update(data, mPosition);
-//                        Log.d("UpdatedQuote:", updatedData.toString());
-//                        mAdpater.remove(mPosition);
-//                        mAdpater.notifyDataSetChanged();
-//                        if (mAdpater.getCount() == 0) {
-//                            ((FavouriteFragmentNew) FragmentUtilsManager.getVisibleSupportFragment(((HomeActivity) getContext()), getContext().getString(R.string.ribble_menu_item_favourite))).onFragmentBackPressed();
-//                        }
-//                    }
-//                });
-//            }
-//        });
+                    @Override
+                    public void onAnimationEnd() {
+                        //Update removed data into adapter
+                        Quote updatedData = mAdpater.update(data, mPosition);
+                        Log.d("UpdatedQuote:", updatedData.toString());
+                        mAdpater.remove(mPosition);
+                        mAdpater.notifyDataSetChanged();
+                        if (mAdpater.getCount() == 0) {
+                            ((FavouriteFragmentNew) FragmentUtilsManager.getVisibleSupportFragment(((HomeActivity) getContext()), getContext().getString(R.string.ribble_menu_item_favourite))).onFragmentBackPressed();
+                        }
+                    }
+                });
+            }
+        });
     }
 
     class UpdateQuoteIntoDatabase extends AsyncTask<String, String, Quote> {

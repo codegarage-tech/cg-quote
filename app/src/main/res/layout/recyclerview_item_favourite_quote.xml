@@ -6,26 +6,66 @@
     app:cardCornerRadius="10dp"
     app:cardPreventCornerOverlap="false">
 
-    <LinearLayout
+    <RelativeLayout
+        android:id="@+id/rl_slider_card"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
         android:orientation="vertical">
 
-        <com.reversecoder.quote.view.CanaroTextView
-            android:id="@+id/tv_quote_name"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/ll_menu"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginBottom="15dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="40dp"
-            android:layout_marginTop="15dp"
+            android:layout_alignParentTop="true"
+            android:layout_margin="15dp"
             android:gravity="center"
-            android:textColor="@color/black"
-            android:textSize="@dimen/extra_large_font_size"
-            android:textStyle="bold" />
+            android:orientation="horizontal">
 
-    </LinearLayout>
+            <Button
+                android:id="@+id/btn_favourite_quote_like"
+                android:layout_width="38dp"
+                android:layout_height="38dp"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/icn_6" />
+
+            <Button
+                android:id="@+id/btn_favourite_quote_copy_to_clipboard"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/icn_1" />
+
+            <Button
+                android:id="@+id/btn_favourite_quote_share"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/icn_3" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/ll_menu"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <com.reversecoder.quote.view.CanaroTextView
+                android:id="@+id/tv_quote_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="40dp"
+                android:layout_marginTop="15dp"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textSize="@dimen/extra_large_font_size"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+    </RelativeLayout>
 
 </android.support.v7.widget.CardView>
