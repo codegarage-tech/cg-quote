@@ -3,6 +3,7 @@ package com.reversecoder.quote.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.google.gson.Gson;
 import com.orm.SugarRecord;
 import com.orm.annotation.Ignore;
 import com.orm.annotation.Unique;
@@ -80,8 +81,9 @@ public class Quote extends SugarRecord implements Parcelable {
 
     @Override
     public String toString() {
-        return "Quote{" +
-                "quoteDescription='" + quoteDescription + '\'' +
+        return "{" +
+                "id=" + getId() +
+                ", quoteDescription=" + quoteDescription +
                 ", isFavourite=" + isFavourite +
                 ", isQuote=" + isQuote +
                 ", language=" + language +
@@ -90,7 +92,9 @@ public class Quote extends SugarRecord implements Parcelable {
                 '}';
     }
 
-    //parcelable methods
+    /**************************
+     * Methods for parcelable *
+     **************************/
     @Override
     public int describeContents() {
         return 0;
@@ -98,6 +102,7 @@ public class Quote extends SugarRecord implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeLong(getId());
         dest.writeString(quoteDescription);
         dest.writeInt(isFavourite ? 1 : 0);
         dest.writeInt(isQuote ? 1 : 0);
@@ -120,11 +125,25 @@ public class Quote extends SugarRecord implements Parcelable {
 
     // "De-parcel object
     public Quote(Parcel in) {
+        setId(in.readLong());
         this.quoteDescription = in.readString();
         this.isFavourite = (in.readInt() == 0) ? false : true;
         this.isQuote = (in.readInt() == 0) ? false : true;
         this.language = in.readParcelable(Language.class.getClassLoader());
         this.author = in.readParcelable(Author.class.getClassLoader());
         this.isHover = (in.readInt() == 0) ? false : true;
+    }
+
+    /**************************
+     * Methods for convertion *
+     **************************/
+    public static <T> T convertFromStringToObject(String jsonString, Class<T> clazz) {
+        Gson gson = new Gson();
+        return gson.fromJson(jsonString, clazz);
+    }
+
+    public static <T> String convertFromObjectToString(T object) {
+        Gson gson = new Gson();
+        return gson.toJson(object);
     }
 }

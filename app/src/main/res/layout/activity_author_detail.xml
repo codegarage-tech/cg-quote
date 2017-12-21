@@ -14,7 +14,6 @@
         android:id="@+id/pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/tv_indicator_number"
         android:layout_below="@+id/title_bar" />
 
 </RelativeLayout>

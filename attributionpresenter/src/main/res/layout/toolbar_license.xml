@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.franmontiel.attributionpresenter.view.ArcView
+        <com.reversecoder.attributionpresenter.view.ArcView
             android:id="@+id/arcView"
             android:layout_width="70dp"
             android:layout_height="match_parent"
@@ -22,7 +22,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <com.franmontiel.attributionpresenter.view.AnimatedImageView
+        <com.reversecoder.attributionpresenter.view.AnimatedImageView
             android:id="@+id/arcImage"
             android:layout_width="28dp"
             android:layout_height="0dp"
@@ -38,7 +38,7 @@
             app:layout_constraintTop_toTopOf="@+id/toolbarTitle"
             app:layout_constraintVertical_bias="0.50" />
 
-        <com.franmontiel.attributionpresenter.view.AnimatedTextView
+        <com.reversecoder.attributionpresenter.view.AnimatedTextView
             android:id="@+id/toolbarTitle"
             android:layout_width="0dp"
             android:layout_height="0dp"

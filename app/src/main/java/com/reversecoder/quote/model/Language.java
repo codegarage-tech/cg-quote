@@ -3,6 +3,7 @@ package com.reversecoder.quote.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.google.gson.Gson;
 import com.orm.SugarRecord;
 import com.orm.annotation.Table;
 import com.orm.annotation.Unique;
@@ -29,12 +30,15 @@ public class Language  extends SugarRecord implements Parcelable {
 
     @Override
     public String toString() {
-        return "Language{" +
-                "languageName='" + languageName + '\'' +
+        return "{" +
+                "id=" + getId() +
+                ", languageName='" + languageName + '\'' +
                 '}';
     }
 
-    //parcelable methods
+    /**************************
+     * Methods for parcelable *
+     **************************/
     @Override
     public int describeContents() {
         return 0;
@@ -42,6 +46,7 @@ public class Language  extends SugarRecord implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeLong(getId());
         dest.writeString(languageName);
     }
 
@@ -59,6 +64,20 @@ public class Language  extends SugarRecord implements Parcelable {
 
     // "De-parcel object
     public Language(Parcel in) {
+        setId(in.readLong());
         languageName = in.readString();
+    }
+
+    /**************************
+     * Methods for convertion *
+     **************************/
+    public static <T> T convertFromStringToObject(String jsonString, Class<T> clazz) {
+        Gson gson = new Gson();
+        return gson.fromJson(jsonString, clazz);
+    }
+
+    public static <T> String convertFromObjectToString(T object) {
+        Gson gson = new Gson();
+        return gson.toJson(object);
     }
 }

@@ -1,11 +1,14 @@
 package com.reversecoder.quote.application;
 
 import android.app.Application;
+import android.content.Context;
 import android.content.res.Configuration;
 import android.graphics.Typeface;
 
-import com.franmontiel.localechanger.LocaleChanger;
 import com.orm.SugarContext;
+import com.reversecoder.library.storage.SessionManager;
+import com.reversecoder.library.util.AllSettingsManager;
+import com.reversecoder.localechanger.LocaleChanger;
 import com.reversecoder.logger.LogType;
 import com.reversecoder.logger.Logger;
 import com.reversecoder.quote.BuildConfig;
@@ -18,17 +21,25 @@ import com.singhajit.sherlock.util.AppInfoUtil;
 import java.util.List;
 import java.util.Locale;
 
-import static com.franmontiel.localechanger.data.Locales.getAllLocales;
-import static com.reversecoder.quote.util.AllConstants.SELECTED_LANGUAGE;
+import static com.reversecoder.localechanger.data.Locales.getAllLocales;
+import static com.reversecoder.quote.util.AllConstants.SESSION_FREE_APP;
+import static com.reversecoder.quote.util.AllConstants.SESSION_SELECTED_LANGUAGE;
 
+/**
+ * @author Md. Rashadul Alam
+ *         Email: rashed.droid@gmail.com
+ */
 public class QuoteApp extends Application {
 
+    private static Context mContext;
     private static final String CANARO_EXTRA_BOLD_PATH = "fonts/canaro_extra_bold.otf";
     public static Typeface canaroExtraBold;
 
     @Override
     public void onCreate() {
         super.onCreate();
+
+        mContext = this;
 
         //initialize crash log handler
         Sherlock.init(this);
@@ -56,11 +67,15 @@ public class QuoteApp extends Application {
                 .build();
 
         //Initialize Locale
-        List<Locale> locales = getAllLocales();
-        LocaleChanger.initialize(getApplicationContext(), locales);
-        Locale selectedLocale = locales.get(0);
-        LocaleChanger.setLocale(selectedLocale);
-        SELECTED_LANGUAGE = selectedLocale.getLanguage();
+//        if (AllSettingsManager.isNullOrEmpty(SessionManager.getStringSetting(getGlobalContext(), SESSION_SELECTED_LANGUAGE))) {
+            List<Locale> locales = getAllLocales();
+            LocaleChanger.initialize(getApplicationContext(), locales);
+            Locale selectedLocale = locales.get(0);
+            LocaleChanger.setLocale(selectedLocale);
+            SessionManager.setStringSetting(getGlobalContext(), SESSION_SELECTED_LANGUAGE, selectedLocale.getLanguage());
+            //Initialize app type(Now the app is in paid mode for testing)
+            SessionManager.setBooleanSetting(getGlobalContext(), SESSION_FREE_APP, false);
+//        }
     }
 
     @Override
@@ -78,5 +93,9 @@ public class QuoteApp extends Application {
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         LocaleChanger.onConfigurationChanged();
+    }
+
+    public static Context getGlobalContext() {
+        return mContext;
     }
 }

@@ -37,11 +37,11 @@ public class AuthorViewHolder extends BaseViewHolder<MappedQuote> {
     public void setData(final MappedQuote data) {
         tvAuthorName.setText(data.getAuthor().getAuthorName());
         tvAuthorSubtitle.setText(data.getAuthor().getOccupation());
-        viewColorBar.setBackgroundColor(AppUtils.getRandomColor());
+        viewColorBar.setBackgroundColor(AppUtils.getRandomPastelColor());
 
         Glide
                 .with(getContext())
-                .load(R.drawable.ic_rashed)
+                .load((data.getAuthor().getProfileImage() != -1) ? data.getAuthor().getProfileImage() : R.drawable.avatar_male)
                 .apply(new RequestOptions().diskCacheStrategy(DiskCacheStrategy.AUTOMATIC))
                 .apply(new RequestOptions().circleCropTransform())
                 .into(ivPersonThumbnail);

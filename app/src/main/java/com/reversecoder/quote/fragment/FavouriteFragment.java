@@ -12,17 +12,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
+import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
+import com.lombokcyberlab.android.multicolortextview.MultiColorTextView;
 import com.reversecoder.quote.R;
-import com.reversecoder.quote.activity.FavouriteAuthorDetailActivity;
+import com.reversecoder.quote.activity.FavouriteQuoteDetailActivity;
 import com.reversecoder.quote.adapter.AuthorAdapter;
-import com.reversecoder.quote.interfaces.RecyclerViewOnItemClickListener;
-import com.reversecoder.quote.model.Language;
+import com.reversecoder.quote.interfaces.OnFragmentBackPressedListener;
 import com.reversecoder.quote.model.MappedQuote;
+import com.reversecoder.quote.model.Quote;
 import com.reversecoder.quote.util.AllConstants;
 import com.reversecoder.quote.util.DataHandler;
 
@@ -32,29 +33,25 @@ import br.com.stickyindex.StickyIndex;
 import cc.solart.wave.WaveSideBarView;
 
 import static android.app.Activity.RESULT_OK;
-import static com.reversecoder.quote.util.AllConstants.INTENT_KEY_FAVOURITE_UPDATED_AUTHOR_BACK_PRESSED_AUTOMATICALLY;
+import static com.reversecoder.quote.util.AllConstants.INTENT_KEY_FAVOURITE_UPDATED_QUOTES;
 import static com.reversecoder.quote.util.AllConstants.REQUEST_CODE_FAVOURITE_FRAGMENT;
-import static com.reversecoder.quote.util.AllConstants.SELECTED_LANGUAGE;
-import static com.reversecoder.quote.util.DataHandler.getLanguage;
-import static com.reversecoder.quote.util.DataHandler.isFavouriteItemFound;
 import static com.reversecoder.quote.util.DataHandler.mAllMappedFavouriteQuotes;
 
 /**
  * @author Md. Rashadul Alam
  *         Email: rashed.droid@gmail.com
  */
-public class FavouriteFragment extends Fragment {
+public class FavouriteFragment extends Fragment implements OnFragmentBackPressedListener {
 
     private View parentView;
-
-    TextView tvLoadingMessage;
+    MultiColorTextView tvLoadingMessage;
     ImageView ivLoading;
     RelativeLayout rlLoadingView;
-    RecyclerView recyclerViewPersonInfo;
-    AuthorAdapter personAdapter;
-    //    GridLayoutManager gridLayoutManager;
+    RecyclerView recyclerViewFavouriteAuthor;
+    AuthorAdapter favouriteAuthorAdapter;
     InputData inputData;
     private static String TAG = FavouriteFragment.class.getSimpleName();
+    private int mLastSelectedAuthor = -1;
 
     //sticky index
     StickyIndex indexContainer;
@@ -81,43 +78,55 @@ public class FavouriteFragment extends Fragment {
                 .apply(new RequestOptions().diskCacheStrategy(DiskCacheStrategy.AUTOMATIC))
                 .into(ivLoading);
 
-        tvLoadingMessage = (TextView) parentView.findViewById(R.id.tv_loading_message);
+        tvLoadingMessage = (MultiColorTextView) parentView.findViewById(R.id.tv_loading_message);
         tvLoadingMessage.setText(getString(R.string.txt_loading_message));
 
         //Activity content view
-        recyclerViewPersonInfo = (RecyclerView) parentView.findViewById(R.id.rv_person_info);
+        recyclerViewFavouriteAuthor = (RecyclerView) parentView.findViewById(R.id.rv_person_info);
         indexContainer = (StickyIndex) parentView.findViewById(R.id.sticky_index_container);
         mSideBarView = (WaveSideBarView) parentView.findViewById(R.id.wave_sidebar);
-        personAdapter = new AuthorAdapter(getActivity());
-//        gridLayoutManager = new GridLayoutManager(getActivity(), 1);
-        recyclerViewPersonInfo.setLayoutManager(new LinearLayoutManager(getActivity()));
-        recyclerViewPersonInfo.setAdapter(personAdapter);
+        favouriteAuthorAdapter = new AuthorAdapter(getActivity());
+        recyclerViewFavouriteAuthor.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerViewFavouriteAuthor.setAdapter(favouriteAuthorAdapter);
     }
 
-    private void initData() {
-        personAdapter.addAll(mAllMappedFavouriteQuotes);
-        personAdapter.notifyDataSetChanged();
+    private void initData(ArrayList<MappedQuote> mappedQuotes) {
+        favouriteAuthorAdapter.clear();
+        favouriteAuthorAdapter.addAll(mappedQuotes);
+        favouriteAuthorAdapter.notifyDataSetChanged();
 
         //sticky header
-        if (mAllMappedFavouriteQuotes.size() > 1) {
-            indexContainer.setDataSet(getIndexList(mAllMappedFavouriteQuotes));
-            indexContainer.setOnScrollListener(recyclerViewPersonInfo);
-        }
+        setStickyIndex(mappedQuotes);
 
         //waveside bar
-        mSideBarView.setOnTouchLetterChangeListener(new WaveSideBarView.OnTouchLetterChangeListener() {
-            @Override
-            public void onLetterChange(String letter) {
-                for (int i = 0; i < mAllMappedFavouriteQuotes.size(); i++) {
-                    if (String.valueOf(mAllMappedFavouriteQuotes.get(i).getAuthor().getAuthorName().charAt(0)).equals(letter)) {
-                        ((LinearLayoutManager) recyclerViewPersonInfo.getLayoutManager()).scrollToPositionWithOffset(i, 0);
-                        return;
-                    }
-                }
-            }
-        });
+        setWaveSideBar(mappedQuotes);
 
         initActions();
+    }
+
+    private void setStickyIndex(ArrayList<MappedQuote> stickyIndexes) {
+        if (stickyIndexes.size() > 1) {
+            indexContainer.setDataSet(getIndexList(stickyIndexes));
+            indexContainer.setOnScrollListener(recyclerViewFavouriteAuthor);
+        } else if (stickyIndexes.size() == 1) {
+            indexContainer.setVisibility(View.INVISIBLE);
+        }
+    }
+
+    private void setWaveSideBar(final ArrayList<MappedQuote> waveSideBar) {
+        if (waveSideBar.size() > 0) {
+            mSideBarView.setOnTouchLetterChangeListener(new WaveSideBarView.OnTouchLetterChangeListener() {
+                @Override
+                public void onLetterChange(String letter) {
+                    for (int i = 0; i < waveSideBar.size(); i++) {
+                        if (String.valueOf(waveSideBar.get(i).getAuthor().getAuthorName().charAt(0)).equals(letter)) {
+                            ((LinearLayoutManager) recyclerViewFavouriteAuthor.getLayoutManager()).scrollToPositionWithOffset(i, 0);
+                            return;
+                        }
+                    }
+                }
+            });
+        }
     }
 
     private void initActions() {
@@ -152,28 +161,24 @@ public class FavouriteFragment extends Fragment {
         inputData.execute();
     }
 
-    /***********
-     * Recyclerview action
-     ***************/
+    /***********************
+     * Recyclerview action *
+     ***********************/
     private void implementsRecyclerViewOnItemClickListener() {
-        recyclerViewPersonInfo.addOnItemTouchListener(new RecyclerViewOnItemClickListener(getActivity(),
-                new RecyclerViewOnItemClickListener.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(View view, int position) {
-                        MappedQuote mappedQuote = ((AuthorAdapter) recyclerViewPersonInfo.getAdapter()).getItem(position);
-                        if (mappedQuote.getAuthor().isAuthor()) {
-                            Language language = getLanguage(SELECTED_LANGUAGE);
-                            Log.d(TAG, mappedQuote.toString() + "\nId: " + mappedQuote.getAuthor().getId() + "");
-                            Log.d(TAG, language.toString() + "\nId: " + language.getId() + "");
 
-                            Intent intentQuoteList = new Intent(getActivity(), FavouriteAuthorDetailActivity.class);
-                            intentQuoteList.putExtra(AllConstants.INTENT_KEY_FAVOURITE_AUTHOR, mappedQuote.getAuthor());
-//                            intentQuoteList.putParcelableArrayListExtra(AllConstants.INTENT_KEY_MAPPED_QUOTE, mAllMappedQuotes);
-                            intentQuoteList.putExtra(AllConstants.INTENT_KEY_FAVOURITE_AUTHOR_POSITION, position);
-                            getActivity().startActivityForResult(intentQuoteList, REQUEST_CODE_FAVOURITE_FRAGMENT);
-                        }
-                    }
-                }));
+        favouriteAuthorAdapter.setOnItemClickListener(new RecyclerArrayAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                //set selected items info globally
+                mLastSelectedAuthor = position;
+                MappedQuote mappedQuote = favouriteAuthorAdapter.getItem(mLastSelectedAuthor);
+
+                Intent intentFavouriteQuoteDetail = new Intent(getActivity(), FavouriteQuoteDetailActivity.class);
+                intentFavouriteQuoteDetail.putExtra(AllConstants.INTENT_KEY_FAVOURITE_AUTHOR_POSITION, mLastSelectedAuthor);
+                intentFavouriteQuoteDetail.putExtra(AllConstants.INTENT_KEY_FAVOURITE_AUTHOR_MAPPED_QUOTE, mappedQuote);
+                startActivityForResult(intentFavouriteQuoteDetail, REQUEST_CODE_FAVOURITE_FRAGMENT);
+            }
+        });
     }
 
     @Override
@@ -187,36 +192,34 @@ public class FavouriteFragment extends Fragment {
                 if (data != null && resultCode == RESULT_OK) {
                     Log.d(TAG, "RESULT_OK");
 
-                    boolean isBackPressedAutomatically = data.getBooleanExtra(INTENT_KEY_FAVOURITE_UPDATED_AUTHOR_BACK_PRESSED_AUTOMATICALLY, false);
-                    Log.d(TAG, "isBackPressedAutomatically: " + isBackPressedAutomatically);
+                    ArrayList<Quote> tempUpdatedQuoted = data.getParcelableArrayListExtra(INTENT_KEY_FAVOURITE_UPDATED_QUOTES);
+                    if (tempUpdatedQuoted != null) {
+                        if (tempUpdatedQuoted.size() > 0) {
+                            for (int i = 0; i < tempUpdatedQuoted.size(); i++) {
+                                Log.d(TAG, "tempUpdatedQuoted " + i + ": " + tempUpdatedQuoted.get(i).toString());
+                            }
 
-//                    Author updatedAuthorResult = data.getParcelableExtra(INTENT_KEY_FAVOURITE_UPDATED_AUTHOR_DETAIL);
-//                    Log.d(TAG, "updatedAuthorResult: " + updatedAuthorResult.toString());
-//
-//                    if (isBackPressedAutomatically) {
-//                        favouriteAuthorAdapter.remove(favouriteAuthorAdapter.getItemPosition(updatedAuthorResult));
-//                    }else{
-//                    }
+                            //set updated favourite quote into the author list
+                            favouriteAuthorAdapter.getItem(mLastSelectedAuthor).setQuotes(tempUpdatedQuoted);
+                        } else if (tempUpdatedQuoted.size() == 0) {
+                            //remove author if there is no favourite quotes
+                            favouriteAuthorAdapter.remove(mLastSelectedAuthor);
+                            favouriteAuthorAdapter.notifyDataSetChanged();
 
-                    ArrayList<MappedQuote> removedItem = new ArrayList<>();
-                    for (int i = 0; i < personAdapter.getAllData().size(); i++) {
-                        if (isFavouriteItemFound(personAdapter.getAllData().get(i).getAuthor()) == null) {
-                            removedItem.add(personAdapter.getAllData().get(i));
+                            //Refresh author listview
+                            ArrayList<MappedQuote> tempMappedQuotes = new ArrayList<>(favouriteAuthorAdapter.getAllData());
+                            initData(tempMappedQuotes);
+
+                            //show empty author list if there is not author
+                            if (favouriteAuthorAdapter.getCount() == 0) {
+                                indexContainer.setVisibility(View.GONE);
+                                rlLoadingView.setVisibility(View.VISIBLE);
+                                ivLoading.setVisibility(View.GONE);
+                                tvLoadingMessage.setVisibility(View.VISIBLE);
+                                tvLoadingMessage.setText(getString(R.string.txt_no_data_found));
+                            }
                         }
                     }
-
-                    for (int i = 0; i < removedItem.size(); i++) {
-                        personAdapter.remove(removedItem.get(i));
-                    }
-
-                    if (personAdapter.getCount() == 0) {
-                        indexContainer.setVisibility(View.GONE);
-                        rlLoadingView.setVisibility(View.VISIBLE);
-                        ivLoading.setVisibility(View.GONE);
-                        tvLoadingMessage.setVisibility(View.VISIBLE);
-                        tvLoadingMessage.setText(getString(R.string.txt_no_data_found));
-                    }
-
                 }
                 break;
             }
@@ -249,7 +252,7 @@ public class FavouriteFragment extends Fragment {
                 //This checking for avoiding "Fragment not attached to Activity when finish AsyncTask & Fragment"
                 if (getActivity() != null && isAdded() && (!isCancelled())) {
                     rlLoadingView.setVisibility(View.GONE);
-                    initData();
+                    initData(result);
                 }
             } else {
                 //This checking for avoiding "Fragment not attached to Activity when finish AsyncTask & Fragment"
@@ -271,5 +274,10 @@ public class FavouriteFragment extends Fragment {
         }
 
         super.onDestroy();
+    }
+
+    @Override
+    public void onFragmentBackPressed() {
+        getActivity().finish();
     }
 }

@@ -40,7 +40,6 @@ public class AuthorDetailActivity extends BaseActivity implements FragmentItemCl
     private GlazyViewPager mPager;
     private GlazyFragmentPagerAdapter mPagerAdapter;
     private ArrayList<GlazyCard> mAllGlazyCards = new ArrayList<GlazyCard>();
-//    TextView tvIndicatorNumber;
 
     //toolbar
     ArcView arcMenuView;
@@ -64,7 +63,6 @@ public class AuthorDetailActivity extends BaseActivity implements FragmentItemCl
         initToolBar();
 
         //glazyview pager
-//        tvIndicatorNumber = (TextView) findViewById(R.id.tv_indicator_number);
         mPager = (GlazyViewPager) findViewById(R.id.pager);
         mPagerAdapter = new GlazyFragmentPagerAdapter(getSupportFragmentManager(), AuthorDetailActivity.this);
 
@@ -131,7 +129,6 @@ public class AuthorDetailActivity extends BaseActivity implements FragmentItemCl
 
             @Override
             public void onPageSelected(int position) {
-//                tvIndicatorNumber.setText((position + 1) + "/" + mPagerAdapter.getCount());
             }
 
             @Override
@@ -160,7 +157,6 @@ public class AuthorDetailActivity extends BaseActivity implements FragmentItemCl
         protected void onPreExecute() {
             mSelectedPosition = mIntent.getIntExtra(AllConstants.INTENT_KEY_AUTHOR_POSITION, -1);
             mAuthor = mIntent.getParcelableExtra(AllConstants.INTENT_KEY_AUTHOR);
-//            mAllMappedQuotes = mIntent.getParcelableArrayListExtra(AllConstants.INTENT_KEY_MAPPED_QUOTE);
         }
 
         @Override
@@ -183,7 +179,6 @@ public class AuthorDetailActivity extends BaseActivity implements FragmentItemCl
 
                 mPagerAdapter.setData(result);
                 mPager.setCurrentItem(mSelectedPosition);
-//                tvIndicatorNumber.setText((mPager.getCurrentItem() + 1) + "/" + mPagerAdapter.getCount());
 
                 switchCounter(mPager.getCurrentItem(), mPagerAdapter.getCount());
             }
@@ -195,7 +190,6 @@ public class AuthorDetailActivity extends BaseActivity implements FragmentItemCl
         Intent intentQuoteDetail = new Intent(AuthorDetailActivity.this, QuoteDetailActivity.class);
         intentQuoteDetail.putExtra(AllConstants.INTENT_KEY_AUTHOR_POSITION, mPager.getCurrentItem());
         intentQuoteDetail.putExtra(AllConstants.INTENT_KEY_AUTHOR, mAllMappedQuotes.get(mPager.getCurrentItem()).getAuthor());
-//        intentQuoteDetail.putParcelableArrayListExtra(AllConstants.INTENT_KEY_MAPPED_QUOTE, mAllMappedQuotes);
         startActivity(intentQuoteDetail);
     }
 }

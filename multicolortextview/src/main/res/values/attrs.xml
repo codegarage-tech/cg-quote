@@ -6,7 +6,7 @@
         <attr name="textStyle" format="string" />
         <attr name="textSize" format="float" />
         <attr name="spacing" format="integer" />
-        <attr name="colorScheme" format="enum">
+        <attr name="multiColorScheme" format="enum">
             <enum name="lively" value="1"/>
             <enum name="google" value="2"/>
             <enum name="bootstrap" value="3"/>

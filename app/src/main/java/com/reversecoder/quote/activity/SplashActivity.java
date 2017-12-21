@@ -13,6 +13,8 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.lombokcyberlab.android.multicolortextview.MultiColorTextView;
+import com.reversecoder.gcm.task.RegisterApp;
+import com.reversecoder.library.network.NetworkManager;
 import com.reversecoder.library.storage.SessionManager;
 import com.reversecoder.permission.activity.PermissionListActivity;
 import com.reversecoder.quote.R;
@@ -46,8 +48,12 @@ public class SplashActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_splash);
+
+        //Register app for push notification
+        if (NetworkManager.isConnected(SplashActivity.this)) {
+            new RegisterApp(SplashActivity.this).execute();
+        }
 
         initSplashUI();
     }

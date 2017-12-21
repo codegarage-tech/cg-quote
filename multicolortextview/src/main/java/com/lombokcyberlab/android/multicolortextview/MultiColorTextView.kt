@@ -25,7 +25,7 @@ class MultiColorTextView: LinearLayoutCompat {
             e.printStackTrace()
         }
         try {
-            val scheme = arr.getInt(R.styleable.MultiColorTextView_colorScheme, 0)
+            val scheme = arr.getInt(R.styleable.MultiColorTextView_multiColorScheme, 0)
             if (scheme != 0) {
                 colors = resources.getTextArray(when (scheme) {
                     1 -> R.array.lively

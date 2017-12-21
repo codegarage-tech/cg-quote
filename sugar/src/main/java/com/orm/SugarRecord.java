@@ -50,13 +50,13 @@ public class SugarRecord {
     }
 
     @SuppressWarnings("deprecation")
-    public static <T> void saveInTx(Collection<T> objects) {
+    public static <T> Collection<T> saveInTx(Collection<T> objects) {
         SQLiteDatabase sqLiteDatabase = getSugarDataBase();
         try {
             sqLiteDatabase.beginTransaction();
             sqLiteDatabase.setLockingEnabled(false);
             for (T object: objects) {
-                save(object);
+                ((SugarRecord) object).setId(save(object));
             }
             sqLiteDatabase.setTransactionSuccessful();
         } catch (Exception e) {
@@ -67,6 +67,7 @@ public class SugarRecord {
             sqLiteDatabase.endTransaction();
             sqLiteDatabase.setLockingEnabled(true);
         }
+        return objects;
     }
 
     @SuppressWarnings("deprecation")

@@ -7,9 +7,13 @@ import com.kannan.glazy.views.GlazyImageView;
 import com.orm.SugarRecord;
 import com.orm.query.Condition;
 import com.orm.query.Select;
+import com.reversecoder.library.storage.SessionManager;
+import com.reversecoder.library.util.AllSettingsManager;
 import com.reversecoder.quote.R;
 import com.reversecoder.quote.model.Author;
-import com.reversecoder.quote.model.FoldableQuote;
+import com.reversecoder.quote.model.DataAuthor;
+import com.reversecoder.quote.model.DataLanguage;
+import com.reversecoder.quote.model.DataQuote;
 import com.reversecoder.quote.model.Language;
 import com.reversecoder.quote.model.MappedQuote;
 import com.reversecoder.quote.model.Quote;
@@ -18,15 +22,21 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-import static com.franmontiel.localechanger.data.Locales.getAllLocales;
-import static com.reversecoder.quote.util.AllConstants.IS_FREE_APP;
-import static com.reversecoder.quote.util.AllConstants.SELECTED_LANGUAGE;
+import static com.reversecoder.localechanger.data.Locales.getAllLocales;
+import static com.reversecoder.quote.application.QuoteApp.getGlobalContext;
+import static com.reversecoder.quote.util.AllConstants.SESSION_DATA_AUTHORS;
+import static com.reversecoder.quote.util.AllConstants.SESSION_DATA_LANGUAGES;
+import static com.reversecoder.quote.util.AllConstants.SESSION_DATA_QUOTES;
+import static com.reversecoder.quote.util.AllConstants.SESSION_FREE_APP;
+import static com.reversecoder.quote.util.AllConstants.SESSION_SELECTED_LANGUAGE;
 
 /**
- * Created by rashed on 10/13/17.
+ * @author Md. Rashadul Alam
+ *         Email: rashed.droid@gmail.com
  */
-
 public class DataHandler {
+
+    private static String TAG = DataHandler.class.getSimpleName();
 
     public static ArrayList<MappedQuote> initDataBase() {
         if (mAllMappedQuotes.size() == 0) {
@@ -47,31 +57,6 @@ public class DataHandler {
      * Data for all quotes *
      ***********************/
     public static ArrayList<MappedQuote> mAllMappedQuotes = new ArrayList<MappedQuote>();
-
-    public static FoldableQuote setFavouriteForAuthorFragment(FoldableQuote foldableQuote, boolean isFavourite) {
-//        MappedQuote mMappedQuote;
-        for (MappedQuote mappedQuote : mAllMappedQuotes) {
-//            mMappedQuote = mappedQuote;
-            if (mappedQuote.getAuthor().getAuthorName().equalsIgnoreCase(foldableQuote.getAuthor().getAuthorName())) {
-                for (Quote quote : mappedQuote.getQuotes()) {
-                    if (quote.getQuoteDescription().equalsIgnoreCase(foldableQuote.getQuoteDescription())) {
-                        Quote updatedQuote = Quote.findById(Quote.class, quote.getId());
-                        if (updatedQuote.isFavourite() != isFavourite) {
-                            updatedQuote.setFavourite(isFavourite);
-                            updatedQuote.save();
-                            quote.setFavourite(isFavourite);
-                            foldableQuote.setFavourite(isFavourite);
-
-//                            Quote tagQuote = Quote.findById(Quote.class, updatedQuote.getId());
-//                            Log.d("setFavourite", "updatedQuote: " + tagQuote.toString());
-//                            Log.d("setFavourite", "foldableQuote: " + foldableQuote.toString());
-                        }
-                    }
-                }
-            }
-        }
-        return foldableQuote;
-    }
 
     public static Quote setFavouriteForAuthorFragment(Quote quote, boolean isFavourite) {
 //        MappedQuote mMappedQuote;
@@ -98,514 +83,543 @@ public class DataHandler {
         return quote;
     }
 
-    public static void initAllLanguages() {
+    public static ArrayList<Language> initAllLanguages() {
+
+        ArrayList<Language> languages = new ArrayList<Language>();
         List<Locale> locales = getAllLocales();
+
         for (int i = 0; i < locales.size(); i++) {
             Language language = new Language(locales.get(i).getLanguage());
-            language.save();
+            language.setId(language.save());
+
+            languages.add(language);
         }
-    }
 
-    public static void initAllAuthors() {
-        ArrayList<Author> authors = new ArrayList<Author>();
+        DataLanguage dataLanguage = new DataLanguage(languages);
+        SessionManager.setStringSetting(getGlobalContext(), SESSION_DATA_LANGUAGES, dataLanguage.toString());
 
-        Author APJAbulKalam = new Author("A. P. J. Abdul Kalam", "October 15, 1931", "July 27, 2015", "Statesman", "Indian", -1, true);
-        authors.add(APJAbulKalam);
-
-        Author albertCamus = new Author("Albert Camus", "November 7, 1913", "January 4, 1960", "Philosopher", "French", -1, true);
-        authors.add(albertCamus);
-
-        Author aristotle = new Author("Aristotle", "384 BC", "322 BC", "Philosopher", "Greek", -1, true);
-        authors.add(aristotle);
-
-        Author audreyHepburn = new Author("Audrey Hepburn", "May 4, 1929", "January 20, 1993", "Actress", "Belgian", -1, true);
-        authors.add(audreyHepburn);
-
-        Author abrahamLincoln = new Author("Abraham Lincoln", "February 12, 1809", "April 15, 1865", "President", "American", -1, true);
-        authors.add(abrahamLincoln);
-
-        Author aldousHuxley = new Author("Aldous Huxley", "July 26, 1894", "November 22, 1963", "Novelist", "English", -1, true);
-        authors.add(aldousHuxley);
-
-        Author alexanderHamilton = new Author("Alexander Hamilton", "January 11, 1755", "July 12, 1804", "Politician", "American", -1, true);
-        authors.add(alexanderHamilton);
-
-        Author alexanderPope = new Author("Alexander Pope", "May 21, 1688", "May 30, 1744", "Poet", "English", -1, true);
-        authors.add(alexanderPope);
-
-        Author arnoldSchwarzenegger = new Author("Arnold Schwarzenegger", "July 30, 1947", "", "Actor", "Austrian", -1, true);
-        authors.add(arnoldSchwarzenegger);
-
-        Author barackObama = new Author("Barack Obama", "August 4, 1961", "", "President", "American", -1, true);
-        authors.add(barackObama);
-
-        Author benShapiro = new Author("Ben Shapiro", "January 15, 1984", "", "Author", "American", -1, true);
-        authors.add(benShapiro);
-
-        Author benjaminDisraeli = new Author("Benjamin Disraeli", "December 21, 1804", "April 19, 1881", "Statesman", "British", -1, true);
-        authors.add(benjaminDisraeli);
-
-        Author benjaminFranklin = new Author("Benjamin Franklin", "January 17, 1706", "April 17, 1790", "Politician", "American", -1, true);
-        authors.add(benjaminFranklin);
-
-        Author bertrandRussell = new Author("Bertrand Russell", "May 18, 1872", "February 2, 1970", "Philosopher", "British", -1, true);
-        authors.add(bertrandRussell);
-
-        Author beyonceKnowles = new Author("Beyonce Knowles", "September 4, 1981", "", "Musician", "American", -1, true);
-        authors.add(beyonceKnowles);
-
-        Author billGates = new Author("Bill Gates", "October 28, 1955", "", "Businessman", "American", -1, true);
-        authors.add(billGates);
-
-        Author billyGraham = new Author("Billy Graham", "November 7, 1918", "", "Clergyman", "American", -1, true);
-        authors.add(billyGraham);
-
-        Author blaisePascal = new Author("Blaise Pascal", "June 19, 1623", "August 19, 1662", "Philosopher", "French", -1, true);
-        authors.add(blaisePascal);
-
-        Author bobDylan = new Author("Bob Dylan", "May 24, 1941", "Present", "Musician", "American", -1, true);
-        authors.add(bobDylan);
-
-        Author CSLewis = new Author("C. S. Lewis", "November 29, 1898", "November 22, 1963", "Author", "Irish", -1, true);
-        authors.add(CSLewis);
-
-        Author carlJung = new Author("Carl Jung", "July 26, 1875", "June 6, 1961", "Psychologist", "Swiss", -1, true);
-        authors.add(carlJung);
-
-        Author carlSagan = new Author("Carl Sagan", "November 9, 1934", "December 20, 1996", "Scientist", "American", -1, true);
-        authors.add(carlSagan);
-
-        Author carlBurnett = new Author("Carl Burnett", "April 26, 1933", "", "Actress", "American", -1, true);
-        authors.add(carlBurnett);
-
-        Author charlesDickens = new Author("Charles Dickens", "February 12, 1809", "April 19, 1882", "Scientist", "English", -1, true);
-        authors.add(charlesDickens);
-
-        Author charlesRSwindoll = new Author("Charles R. Swindoll", "October 18, 1934", "", "Clergyman", "American", -1, true);
-        authors.add(charlesRSwindoll);
-
-        Author cheGuevara = new Author("Che Guevara", "June 14, 1928", "October 9, 1967", "Revolutionary", "Argentinian", -1, true);
-        authors.add(cheGuevara);
-
-        Author christopherHitchens = new Author("Christopher Hitchens", "April 13, 1949", "December 15, 2011", "Author", "American", -1, true);
-        authors.add(christopherHitchens);
-
-        Author clintEastwood = new Author("Clint Eastwood", "May 31, 1930", "Present", "Actor", "American", -1, true);
-        authors.add(clintEastwood);
-
-        Author conorMcGregor = new Author("Conor McGregor", "July 14, 1988", "", "Athlete", "Irish", -1, true);
-        authors.add(conorMcGregor);
-
-        Author dalaiLama = new Author("Dalai Lama", "July 6, 1935", "", "Leader", "Tibetan", -1, true);
-        authors.add(dalaiLama);
-
-        Author douglasAdams = new Author("Douglas Adams", "March 11, 1952", "May 11, 2001", "Writer", "English", -1, true);
-        authors.add(douglasAdams);
-
-        Author dickGregory = new Author("Dick Gregory", "October 12, 1932", "", "Comedian", "American", -1, true);
-        authors.add(dickGregory);
-
-        Author dollyParton = new Author("Dolly Parton", "January 19, 1946", "", "Musician", "American", -1, true);
-        authors.add(dollyParton);
-
-        Author donaldTrump = new Author("Donald Trump", "June 14, 1946", "", "President", "American", -1, true);
-        authors.add(donaldTrump);
-
-        Author DrSeuss = new Author("Dr. Seuss", "March 2, 1904", "September 24, 1991", "Writer", "American", -1, true);
-        authors.add(DrSeuss);
-
-        Author drake = new Author("Drake", "October 24, 1986", "", "Musician", "Canadian", -1, true);
-        authors.add(drake);
-
-        Author dwightDEisenhower = new Author("Dwight D. Eisenhower", "October 14, 1890", "March 28, 1969", "President", "American", -1, true);
-        authors.add(dwightDEisenhower);
-
-        Author elieWiesel = new Author("Elie Wiesel", "September 30, 1928", "", "Novelist", "American", -1, true);
-        authors.add(elieWiesel);
-
-        Author elizabethI = new Author("Elizabeth I", "September 7, 1533", "March 24, 1603", "Royalty", "English", -1, true);
-        authors.add(elizabethI);
-
-        Author ellenDeGeneres = new Author("Ellen DeGeneres", "January 26, 1958", "", "Comedian", "American", -1, true);
-        authors.add(ellenDeGeneres);
-
-        Author elonMusk = new Author("Elon Musk", "June 28, 1971", "", "Businessman", "American", -1, true);
-        authors.add(elonMusk);
-
-        Author elvisPresley = new Author("Elvis Presley", "January 8, 1935", "August 16, 1977", "Musician", "American", -1, true);
-        authors.add(elvisPresley);
-
-        Author eminem = new Author("Eminem", "October 17, 1972", "", "Musician", "American", -1, true);
-        authors.add(eminem);
-
-        Author ermaBombeck = new Author("Erma Bombeck", "February 21, 1927", "April 22, 1996", "Journalist", "American", -1, true);
-        authors.add(ermaBombeck);
-
-        Author ernestHemingway = new Author("Ernest Hemingway", "July 21, 1899", "July 2, 1961", "Novelist", "American", -1, true);
-        authors.add(ernestHemingway);
-
-        Author edgarAllanPoe = new Author("Edgar Allan Poe", "January 19, 1809", "October 7, 1849", "Poet", "American", -1, true);
-        authors.add(edgarAllanPoe);
-
-        Author francisofAssisi = new Author("Francis of Assisi", "1182", "1226", "Saint", "Italian", -1, true);
-        authors.add(francisofAssisi);
-
-        Author frankLloydWright = new Author("Frank Lloyd Wright", "June 8, 1867", "April 9, 1959", "Architect", "American", -1, true);
-        authors.add(frankLloydWright);
-
-        Author frankSinatra = new Author("Frank Sinatra", "December 12, 1915", "May 14, 1998", "Musician", "American", -1, true);
-        authors.add(frankSinatra);
-
-        Author franklinDRoosevelt = new Author("Franklin D. Roosevelt", "January 30, 1882", "April 12, 1945", "President", "American", -1, true);
-        authors.add(franklinDRoosevelt);
-
-        Author franzKafka = new Author("Franz Kafka", "July 3, 1883", "June 3, 1924", "Novelist", "", -1, true);
-        authors.add(franzKafka);
-
-        Author frederickDouglass = new Author("Frederick Douglass", "February 14, 1817", "February 20, 1895", "Author", "American", -1, true);
-        authors.add(frederickDouglass);
-
-        Author fridaKahlo = new Author("Frida Kahlo", "July 6, 1907", "July 13, 1954", "Artist", "Mexican", -1, true);
-        authors.add(fridaKahlo);
-
-        Author friedrichNietzsche = new Author("Friedrich Nietzsche", "October 15, 1844", "August 25, 1900", "Philosopher", "German", -1, true);
-        authors.add(friedrichNietzsche);
-
-        Author fyodorDostoevsky = new Author("Fyodor Dostoevsky", "November 11, 1821", "February 9, 1881", "Novelist", "Russian", -1, true);
-        authors.add(fyodorDostoevsky);
-
-        Author georgeBernardShaw = new Author("George Bernard Shaw", "July 26, 1856", "November 2, 1950", "Dramatist", "Irish", -1, true);
-        authors.add(georgeBernardShaw);
-
-        Author galileoGalilei = new Author("Galileo Galilei", "February 15, 1564", "January 8, 1642", "Scientist", "Italian", -1, true);
-        authors.add(galileoGalilei);
-
-        Author georgeCarlin = new Author("George Carlin", "May 12, 1937", "June 22, 2008", "Comedian", "American", -1, true);
-        authors.add(georgeCarlin);
-
-        Author georgeOrwell = new Author("George Orwell", "June 25, 1903", "January 21, 1950", "Author", "British", -1, true);
-        authors.add(georgeOrwell);
-
-        Author georgeSPatton = new Author("George S. Patton", "November 11, 1885", "December 21, 1945", "Soldier", "American", -1, true);
-        authors.add(georgeSPatton);
-
-        Author georgeWBush = new Author("George W. Bush", "July 6, 1946", "", "President", "American", -1, true);
-        authors.add(georgeWBush);
-
-        Author georgeWashington = new Author("George Washington", "February 22, 1732", "December 14, 1799", "President", "American", -1, true);
-        authors.add(georgeWashington);
-
-        Author helenKeller = new Author("Helen Keller", "June 27, 1880", "June 1, 1968", "Author", "American", -1, true);
-        authors.add(helenKeller);
-
-        Author HJacksonBrownJr = new Author("H. Jackson Brown, Jr.", "1940", "", "Author", "Author", -1, true);
-        authors.add(HJacksonBrownJr);
-
-        Author HLMencken = new Author("H. L. Mencken", "September 12, 1880", "January 29, 1956", "Writer", "American", -1, true);
-        authors.add(HLMencken);
-
-        Author HPLovecraft = new Author("H. P. Lovecraft", "August 20, 1890", "March 15, 1937", "Novelist", "American", -1, true);
-        authors.add(HPLovecraft);
-
-        Author harrietTubman = new Author("Harriet Tubman", "1820", "1913", "Activist", "American", -1, true);
-        authors.add(harrietTubman);
-
-        Author harrySTruman = new Author("Harry S Truman", "May 8, 1884", "December 26, 1972", "President", "American", -1, true);
-        authors.add(harrySTruman);
-
-        Author henryDavidThoreau = new Author("Henry David Thoreau", "July 12, 1817", "May 6, 1862", "Author", "American", -1, true);
-        authors.add(henryDavidThoreau);
-
-        Author henryFord = new Author("Henry Ford", "July 30, 1863", "April 7, 1947", "Businessman", "American", -1, true);
-        authors.add(henryFord);
-
-        Author henryKissinger = new Author("Henry Kissinger", "May 27, 1923", "", "Statesman", "American", -1, true);
-        authors.add(henryKissinger);
-
-        Author iceCube = new Author("Ice Cube", "June 15, 1969", "", "Musician", "American", -1, true);
-        authors.add(iceCube);
-
-        Author idaBWells = new Author("Ida B. Wells", "July 16, 1862", "March 25, 1931", "Activist", "American", -1, true);
-        authors.add(idaBWells);
-
-        Author immanuelKant = new Author("Immanuel Kant", "April 22, 1724", "February 12, 1804", "Philosopher", "German", -1, true);
-        authors.add(immanuelKant);
-
-        Author indiraGandhi = new Author("Indira Gandhi", "November 19, 1917", "October 31, 1984", "Statesman", "Indian", -1, true);
-        authors.add(indiraGandhi);
-
-        Author indraNooyi = new Author("Indra Nooyi", "October 28, 1955", "", "Businesswoman", "Indian", -1, true);
-        authors.add(indraNooyi);
-
-        Author irisApfel = new Author("Iris Apfel", "August 29, 1921", "", "Businesswoman", "American", -1, true);
-        authors.add(irisApfel);
-
-        Author isaacNewton = new Author("Isaac Newton", "December 25, 1642", "March 20, 1727", "Mathematician", "English", -1, true);
-        authors.add(isaacNewton);
-
-        Author isaacAsimov = new Author("Isaac Asimov", "January 2, 1920", "April 6, 1992", "Scientist", "American", -1, true);
-        authors.add(isaacAsimov);
-
-        Author jesusChrist = new Author("Jesus Christ", "", "", "Leader", "", -1, true);
-        authors.add(jesusChrist);
-
-        Author JKRowling = new Author("J. K. Rowling", "July 31, 1965", "Present", "Author", "English", -1, true);
-        authors.add(JKRowling);
-
-        Author janeAusten = new Author("Jane Austen", "December 16, 1775", "July 28, 1817", "Writer", "British", -1, true);
-        authors.add(janeAusten);
-
-        Author jackWelch = new Author("Jack Welch", "November 19, 1935", "", "Businessman", "American", -1, true);
-        authors.add(jackWelch);
-
-        Author jamesABaldwin = new Author("James A. Baldwin", "August 2, 1924", "December 1, 1987", "Author", "American", -1, true);
-        authors.add(jamesABaldwin);
-
-        Author johnCMaxwell = new Author("John C. Maxwell", "1947", "", "Clergyman", "American", -1, true);
-        authors.add(johnCMaxwell);
-
-        Author johnFKennedy = new Author("John F. Kennedy", "May 29, 1917", "November 22, 1963", "President", "American", -1, true);
-        authors.add(johnFKennedy);
-
-        Author johannWolfgangvonGoethe = new Author("Johann Wolfgang von Goethe", "August 28, 1749", "March 22, 1832", "Poet", "German", -1, true);
-        authors.add(johannWolfgangvonGoethe);
-
-        Author kanyeWest = new Author("Kanye West", "June 8, 1977", "", "Musician", "American", -1, true);
-        authors.add(kanyeWest);
-
-        Author karlMarx = new Author("Karl Marx", "May 5, 1818", "March 14, 1883", "Philosopher", "German", -1, true);
-        authors.add(karlMarx);
-
-        Author kendrickLamar = new Author("Kendrick Lamar", "June 17, 1987", "", "Musician", "American", -1, true);
-        authors.add(kendrickLamar);
-
-        Author keanuReeves = new Author("Keanu Reeves", "September 2, 1964", "", "Actor", "Canadian", -1, true);
-        authors.add(keanuReeves);
-
-        Author karlPilkington = new Author("Karl Pilkington", "September 23, 1972", "", "Actor", "British", -1, true);
-        authors.add(karlPilkington);
-
-        Author laoTzu = new Author("Lao Tzu", "", "", "Philosopher", "Chinese", -1, true);
-        authors.add(laoTzu);
-
-        Author leBronJames = new Author("LeBron James", "December 30, 1984", "", "Athlete", "American", -1, true);
-        authors.add(leBronJames);
-
-        Author leoTolstoy = new Author("Leo Tolstoy", "September 9, 1828", "November 20, 1910", "Novelist", "Russian", -1, true);
-        authors.add(leoTolstoy);
-
-        Author leonardodaVinci = new Author("Leonardo da Vinci", "April 15, 1452", "May 2, 1519", "Artist", "Italian", -1, true);
-        authors.add(leonardodaVinci);
-
-        Author lilUziVert = new Author("Lil Uzi Vert", "July 31, 1994", "", "Musician", "American", -1, true);
-        authors.add(lilUziVert);
-
-        Author malcolmX = new Author("Malcolm X", "May 19, 1925", "February 21, 1965", "Activist", "American", -1, true);
-        authors.add(malcolmX);
-
-        Author motherTeresa = new Author("Mother Teresa", "August 26, 1910", "September 5, 1997", "Saint", "Albanian", -1, true);
-        authors.add(motherTeresa);
-
-        Author mahatmaGandhi = new Author("Mahatma Gandhi", "October 2, 1869", "January 30, 1948", "Leader", "Indian", -1, true);
-        authors.add(mahatmaGandhi);
-
-        Author marcusTulliusCicero = new Author("Marcus Tullius Cicero", "106 BC", "43 BC", "Statesman", "Roman", -1, true);
-        authors.add(marcusTulliusCicero);
-
-        Author marilynMonroe = new Author("Marilyn Monroe", "June 1, 1926", "August 5, 1962", "Actress", "American", -1, true);
-        authors.add(marilynMonroe);
-
-        Author napoleonBonaparte = new Author("Napoleon Bonaparte", "August 15, 1769", "May 5, 1821", "Leader", "French", -1, true);
-        authors.add(napoleonBonaparte);
-
-        Author napoleonHill = new Author("Napoleon Hill", "October 26, 1883", "November 8, 1970", "Writer", "American", -1, true);
-        authors.add(napoleonHill);
-
-        Author nas = new Author("Nas", "September 14, 1973", "", "Musician", "American", -1, true);
-        authors.add(nas);
-
-        Author neilArmstrong = new Author("Neil Armstrong", "August 5, 1930", "August 25, 2012", "Astronaut", "American", -1, true);
-        authors.add(neilArmstrong);
-
-        Author neildeGrasse = new Author("Neil deGrasse", "October 5, 1958", "", "Scientist", "American", -1, true);
-        authors.add(neildeGrasse);
-
-        Author oscarWilde = new Author("Oscar Wilde", "October 16, 1854", "November 30, 1900", "Dramatist", "Irish", -1, true);
-        authors.add(oscarWilde);
-
-        Author OJSimpson = new Author("O. J. Simpson", "July 9, 1947", "", "Athlete", "American", -1, true);
-        authors.add(OJSimpson);
-
-        Author OSheaJacksonJr = new Author("O'Shea Jackson, Jr.", "February 24, 1991", "", "Actor", "American", -1, true);
-        authors.add(OSheaJacksonJr);
-
-        Author OWinstonLink = new Author("O. Winston Link", "December 16, 1914", "January 30, 2001", "Photographer", "American", -1, true);
-        authors.add(OWinstonLink);
-
-        Author obiageliEzekwesili = new Author("Obiageli Ezekwesili", "April 28, 1963", "", "Public Servant", "Nigerian", -1, true);
-        authors.add(obiageliEzekwesili);
-
-        Author plato = new Author("Plato", "427 BC", "347 BC", "Philosopher", "Greek", -1, true);
-        authors.add(plato);
-
-        Author pabloPicasso = new Author("Pablo Picasso", "October 25, 1881", "April 8, 1973", "Artist", "Spanish", -1, true);
-        authors.add(pabloPicasso);
-
-        Author patrickHenry = new Author("Patrick Henry", "May 29, 1736", "June 6, 1799", "Politician", "American", -1, true);
-        authors.add(patrickHenry);
-
-        Author pauloCoelho = new Author("Paulo Coelho", "August 24, 1947", "", "Novelist", "Brazilian", -1, true);
-        authors.add(pauloCoelho);
-
-        Author pele = new Author("Pele", "October 23, 1940", "", "Athlete", "Brazilian", -1, true);
-        authors.add(pele);
-
-        Author QoriankaKilcher = new Author("Q'orianka Kilcher", "February 11, 1990", "", "Actress", "German", -1, true);
-        authors.add(QoriankaKilcher);
-
-        Author QTip = new Author("Q-Tip", "April 10, 1970", "", "Musician", "American", -1, true);
-        authors.add(QTip);
-
-        Author qandeelBaloch = new Author("Qandeel Baloch", "March 1, 1990", "July 15, 2016", "Actress", "Pakistani", -1, true);
-        authors.add(qandeelBaloch);
-
-        Author quavo = new Author("Quavo", "April 2, 1991", "", "Musician", "American", -1, true);
-        authors.add(quavo);
-
-        Author queenChristina = new Author("Queen Christina", "1626", "1689", "Royalty", "Swedish", -1, true);
-        authors.add(queenChristina);
-
-        Author robinWilliams = new Author("Robin Williams", "July 21, 1951", "August 11, 2014", "Comedian", "American", -1, true);
-        authors.add(robinWilliams);
-
-        Author rumi = new Author("Rumi", "September 30, 1207", "December 17, 1273", "Poet", "", -1, true);
-        authors.add(rumi);
-
-        Author ralphWaldoEmerson = new Author("Ralph Waldo Emerson", "May 25, 1803", "April 27, 1882", "Poet", "American", -1, true);
-        authors.add(ralphWaldoEmerson);
-
-        Author reneDescartes = new Author("Rene Descartes", "March 31, 1596", "February 11, 1650", "Mathematician", "French", -1, true);
-        authors.add(reneDescartes);
-
-        Author richardBranson = new Author("Richard Branson", "July 18, 1950", "", "Businessman", "British", -1, true);
-        authors.add(richardBranson);
-
-        Author socrates = new Author("Socrates", "469 BC", "399 BC", "Philosopher", "Greek", -1, true);
-        authors.add(socrates);
-
-        Author saintAugustine = new Author("Saint Augustine", "354", "430", "", "", -1, true);
-        authors.add(saintAugustine);
-
-        Author sigmundFreud = new Author("Sigmund Freud", "May 6, 1856", "September 23, 1939", "Psychologist", "Austrian", -1, true);
-        authors.add(sigmundFreud);
-
-        Author simonSinek = new Author("Simon Sinek", "October 9, 1973", "", "Author", "English", -1, true);
-        authors.add(simonSinek);
-
-        Author sorenKierkegaard = new Author("Soren Kierkegaard", "May 5, 1813", "November 11, 1855", "Philosopher", "Danish", -1, true);
-        authors.add(sorenKierkegaard);
-
-        Author theodoreRoosevelt = new Author("Theodore Roosevelt", "October 27, 1858", "January 6, 1919", "President", "American", -1, true);
-        authors.add(theodoreRoosevelt);
-
-        Author TSEliot = new Author("T. S. Eliot", "September 26, 1888", "January 4, 1965", "Poet", "American", -1, true);
-        authors.add(TSEliot);
-
-        Author taylorSwift = new Author("Taylor Swift", "December 13, 1989", "", "Musician", "American", -1, true);
-        authors.add(taylorSwift);
-
-        Author thomasAquinas = new Author("Thomas Aquinas", "1225", "1274", "Theologian", "Italian", -1, true);
-        authors.add(thomasAquinas);
-
-        Author thomasHobbes = new Author("Thomas Hobbes", "April 5, 1588", "December 4, 1679", "Philosopher", "English", -1, true);
-        authors.add(thomasHobbes);
-
-        Author voltaire = new Author("Voltaire", "November 21, 1694", "May 30, 1778", "Writer", "French", -1, true);
-        authors.add(voltaire);
-
-        Author valentinoRossi = new Author("Valentino Rossi", "February 16, 1979", "", "Athlete", "Italian", -1, true);
-        authors.add(valentinoRossi);
-
-        Author victorHugo = new Author("Victor Hugo", "February 26, 1802", "May 22, 1885", "Author", "French", -1, true);
-        authors.add(victorHugo);
-
-        Author viktorEFrankl = new Author("Viktor E. Frankl", "March 26, 1905", "September 2, 1997", "Psychologist", "Austrian", -1, true);
-        authors.add(viktorEFrankl);
-
-        Author vinScully = new Author("Vin Scully", "November 29, 1927", "", "Celebrity", "American", -1, true);
-        authors.add(vinScully);
-
-        Author vinceLombardi = new Author("Vince Lombardi", "June 11, 1913", "September 3, 1970", "Coach", "American", -1, true);
-        authors.add(vinceLombardi);
-
-        Author vincentVanGogh = new Author("Vincent Van Gogh", "March 30, 1853", "July 29, 1890", "Artist", "Dutch", -1, true);
-        authors.add(vincentVanGogh);
-
-        Author waltDisney = new Author("Walt Disney", "December 5, 1901", "December 15, 1966", "Cartoonist", "American", -1, true);
-        authors.add(waltDisney);
-
-        Author WCFields = new Author("W. C. Fields", "January 29, 1880", "December 25, 1946", "Comedian", "American", -1, true);
-        authors.add(WCFields);
-
-        Author WEBDuBois = new Author("W. E. B. Du Bois", "February 23, 1868", "August 27, 1963", "Writer", "American", -1, true);
-        authors.add(WEBDuBois);
-
-        Author waltWhitman = new Author("Walt Whitman", "May 31, 1819", "March 26, 1892", "Poet", "American", -1, true);
-        authors.add(waltWhitman);
-
-        Author wayneDyer = new Author("Wayne Dyer", "May 10, 1940", "August 29, 2015", "Psychologist", "American", -1, true);
-        authors.add(wayneDyer);
-
-        Author yaelNaim = new Author("Yael Naim", "February 6, 1978", "", "Musician", "French", -1, true);
-        authors.add(yaelNaim);
-
-        Author yaelStone = new Author("Yael Stone", "March 6, 1985", "", "Actress", "Australian", -1, true);
-        authors.add(yaelStone);
-
-        Author yahooSerious = new Author("Yahoo Serious", "July 27, 1953", "", "Director", "Australian", -1, true);
-        authors.add(yahooSerious);
-
-        Author yairLapid = new Author("Yair Lapid", "November 5, 1963", "", "Politician", "Israeli", -1, true);
-        authors.add(yairLapid);
-
-        Author yotamOttolenghi = new Author("Yotam Ottolenghi", "December 14, 1968", "", "Chef", "Israeli", -1, true);
-        authors.add(yotamOttolenghi);
-
-        Author zigZiglar = new Author("Zig Ziglar", "November 6, 1926", "November 28, 2012", "Author", "American", -1, true);
-        authors.add(zigZiglar);
-
-        Author zacGoldsmith = new Author("Zac Goldsmith", "January 20, 1975", "", "Politician", "British", -1, true);
-        authors.add(zacGoldsmith);
-
-        Author zacHanson = new Author("Zac Hanson", "October 22, 1985", "", "Musician", "American", -1, true);
-        authors.add(zacHanson);
-
-        Author zhuZhu = new Author("Zhu Zhu", "July 19, 1984", "", "Actress", "Chinese", -1, true);
-        authors.add(zhuZhu);
-
-        Author zoeKazan = new Author("Zoe Kazan", "September 9, 1983", "", "Actress", "American", -1, true);
-        authors.add(zoeKazan);
-
-        Author zooeyDeschanel = new Author("Zooey Deschanel", "January 17, 1980", "", "Actress", "American", -1, true);
-        authors.add(zooeyDeschanel);
-
-        Author zuleikhaRobinson = new Author("Zuleikha Robinson", "June 29, 1977", "", "Actress", "British", -1, true);
-        authors.add(zuleikhaRobinson);
-
-        Author zygmuntBauman = new Author("Zygmunt Bauman", "November 19, 1925", "January 9, 2017", "Sociologist", "Polish", -1, true);
-        authors.add(zygmuntBauman);
-
-        SugarRecord.saveInTx(authors);
+        return languages;
     }
 
     public static ArrayList<Language> getAllLanguages() {
-        List<Language> languages = Language.listAll(Language.class);
-        return new ArrayList<Language>(languages);
+        if (AllSettingsManager.isNullOrEmpty(SessionManager.getStringSetting(getGlobalContext(), SESSION_DATA_LANGUAGES))) {
+            List<Language> languages = Language.listAll(Language.class);
+            DataLanguage dataLanguage = new DataLanguage(new ArrayList<Language>(languages));
+            SessionManager.setStringSetting(getGlobalContext(), SESSION_DATA_LANGUAGES, dataLanguage.toString());
+        }
+
+        DataLanguage mDataLanguage = DataLanguage.convertFromStringToObject(SessionManager.getStringSetting(getGlobalContext(), SESSION_DATA_LANGUAGES), DataLanguage.class);
+
+        return mDataLanguage.getLanguages();
+    }
+
+    public static ArrayList<Author> initAllAuthors() {
+
+        ArrayList<Author> authors = new ArrayList<Author>();
+
+        Author APJAbulKalam = new Author("A. P. J. Abdul Kalam", "October 15, 1931", "July 27, 2015", "Statesman", "Indian", AppUtils.getDrawableResourceId(R.drawable.apj_abdul_kalam), true);
+        authors.add(APJAbulKalam);
+
+        Author albertCamus = new Author("Albert Camus", "November 7, 1913", "January 4, 1960", "Philosopher", "French", AppUtils.getDrawableResourceId(R.drawable.albert_camus), true);
+        authors.add(albertCamus);
+
+        Author aristotle = new Author("Aristotle", "384 BC", "322 BC", "Philosopher", "Greek", AppUtils.getDrawableResourceId(R.drawable.aristotle), true);
+        authors.add(aristotle);
+
+        Author audreyHepburn = new Author("Audrey Hepburn", "May 4, 1929", "January 20, 1993", "Actress", "Belgian", AppUtils.getDrawableResourceId(R.drawable.audrey_hepburn), true);
+        authors.add(audreyHepburn);
+
+        Author abrahamLincoln = new Author("Abraham Lincoln", "February 12, 1809", "April 15, 1865", "President", "American", AppUtils.getDrawableResourceId(R.drawable.abraham_lincoln), true);
+        authors.add(abrahamLincoln);
+
+        Author aldousHuxley = new Author("Aldous Huxley", "July 26, 1894", "November 22, 1963", "Novelist", "English", AppUtils.getDrawableResourceId(R.drawable.aldous_huxley), true);
+        authors.add(aldousHuxley);
+
+        Author alexanderHamilton = new Author("Alexander Hamilton", "January 11, 1755", "July 12, 1804", "Politician", "American", AppUtils.getDrawableResourceId(R.drawable.alexander_hamilton), true);
+        authors.add(alexanderHamilton);
+
+        Author alexanderPope = new Author("Alexander Pope", "May 21, 1688", "May 30, 1744", "Poet", "English", AppUtils.getDrawableResourceId(R.drawable.alexander_pope), true);
+        authors.add(alexanderPope);
+
+        Author arnoldSchwarzenegger = new Author("Arnold Schwarzenegger", "July 30, 1947", "", "Actor", "Austrian", AppUtils.getDrawableResourceId(R.drawable.arnold_schwarzenegger), true);
+        authors.add(arnoldSchwarzenegger);
+
+        Author barackObama = new Author("Barack Obama", "August 4, 1961", "", "President", "American", AppUtils.getDrawableResourceId(R.drawable.barac_obama), true);
+        authors.add(barackObama);
+
+        Author benShapiro = new Author("Ben Shapiro", "January 15, 1984", "", "Author", "American", AppUtils.getDrawableResourceId(R.drawable.ben_shapiro), true);
+        authors.add(benShapiro);
+
+        Author benjaminDisraeli = new Author("Benjamin Disraeli", "December 21, 1804", "April 19, 1881", "Statesman", "British", AppUtils.getDrawableResourceId(R.drawable.benjamin_disraeli), true);
+        authors.add(benjaminDisraeli);
+
+        Author benjaminFranklin = new Author("Benjamin Franklin", "January 17, 1706", "April 17, 1790", "Politician", "American", AppUtils.getDrawableResourceId(R.drawable.benjamin_franklin), true);
+        authors.add(benjaminFranklin);
+
+        Author bertrandRussell = new Author("Bertrand Russell", "May 18, 1872", "February 2, 1970", "Philosopher", "British", AppUtils.getDrawableResourceId(R.drawable.bertrand_russell), true);
+        authors.add(bertrandRussell);
+
+        Author beyonceKnowles = new Author("Beyonce Knowles", "September 4, 1981", "", "Musician", "American", AppUtils.getDrawableResourceId(R.drawable.beyonce_knowles), true);
+        authors.add(beyonceKnowles);
+
+        Author billGates = new Author("Bill Gates", "October 28, 1955", "", "Businessman", "American", AppUtils.getDrawableResourceId(R.drawable.bill_gates), true);
+        authors.add(billGates);
+
+        Author billyGraham = new Author("Billy Graham", "November 7, 1918", "", "Clergyman", "American", AppUtils.getDrawableResourceId(R.drawable.billy_graham), true);
+        authors.add(billyGraham);
+
+        Author blaisePascal = new Author("Blaise Pascal", "June 19, 1623", "August 19, 1662", "Philosopher", "French", AppUtils.getDrawableResourceId(R.drawable.blaise_pascal), true);
+        authors.add(blaisePascal);
+
+        Author bobDylan = new Author("Bob Dylan", "May 24, 1941", "Present", "Musician", "American", AppUtils.getDrawableResourceId(R.drawable.bob_dylan), true);
+        authors.add(bobDylan);
+
+        Author CSLewis = new Author("C. S. Lewis", "November 29, 1898", "November 22, 1963", "Author", "Irish", AppUtils.getDrawableResourceId(R.drawable.cslewis), true);
+        authors.add(CSLewis);
+
+        Author carlJung = new Author("Carl Jung", "July 26, 1875", "June 6, 1961", "Psychologist", "Swiss", AppUtils.getDrawableResourceId(R.drawable.carl_jung), true);
+        authors.add(carlJung);
+
+        Author carlSagan = new Author("Carl Sagan", "November 9, 1934", "December 20, 1996", "Scientist", "American", AppUtils.getDrawableResourceId(R.drawable.carl_sagan), true);
+        authors.add(carlSagan);
+
+        Author carlBurnett = new Author("Carl Burnett", "April 26, 1933", "", "Actress", "American", AppUtils.getDrawableResourceId(R.drawable.carl_burnett), true);
+        authors.add(carlBurnett);
+
+        Author charlesDickens = new Author("Charles Dickens", "February 12, 1809", "April 19, 1882", "Scientist", "English", AppUtils.getDrawableResourceId(R.drawable.charles_dickens), true);
+        authors.add(charlesDickens);
+
+        Author charlesRSwindoll = new Author("Charles R. Swindoll", "October 18, 1934", "", "Clergyman", "American", AppUtils.getDrawableResourceId(R.drawable.charles_r_swindoll), true);
+        authors.add(charlesRSwindoll);
+
+        Author cheGuevara = new Author("Che Guevara", "June 14, 1928", "October 9, 1967", "Revolutionary", "Argentinian", AppUtils.getDrawableResourceId(R.drawable.che_guevara), true);
+        authors.add(cheGuevara);
+
+        Author christopherHitchens = new Author("Christopher Hitchens", "April 13, 1949", "December 15, 2011", "Author", "American", AppUtils.getDrawableResourceId(R.drawable.christopher_hitchens), true);
+        authors.add(christopherHitchens);
+
+        Author clintEastwood = new Author("Clint Eastwood", "May 31, 1930", "Present", "Actor", "American", AppUtils.getDrawableResourceId(R.drawable.clint_eastwood), true);
+        authors.add(clintEastwood);
+
+        Author conorMcGregor = new Author("Conor McGregor", "July 14, 1988", "", "Athlete", "Irish", AppUtils.getDrawableResourceId(R.drawable.conor_mcgregor), true);
+        authors.add(conorMcGregor);
+
+        Author dalaiLama = new Author("Dalai Lama", "July 6, 1935", "", "Leader", "Tibetan", AppUtils.getDrawableResourceId(R.drawable.dalai_lama), true);
+        authors.add(dalaiLama);
+
+        Author douglasAdams = new Author("Douglas Adams", "March 11, 1952", "May 11, 2001", "Writer", "English", AppUtils.getDrawableResourceId(R.drawable.douglas_adams), true);
+        authors.add(douglasAdams);
+
+        Author dickGregory = new Author("Dick Gregory", "October 12, 1932", "", "Comedian", "American", AppUtils.getDrawableResourceId(R.drawable.dick_gregory), true);
+        authors.add(dickGregory);
+
+        Author dollyParton = new Author("Dolly Parton", "January 19, 1946", "", "Musician", "American", AppUtils.getDrawableResourceId(R.drawable.dolly_parton), true);
+        authors.add(dollyParton);
+
+        Author donaldTrump = new Author("Donald Trump", "June 14, 1946", "", "President", "American", AppUtils.getDrawableResourceId(R.drawable.donald_trump), true);
+        authors.add(donaldTrump);
+
+        Author DrSeuss = new Author("Dr. Seuss", "March 2, 1904", "September 24, 1991", "Writer", "American", AppUtils.getDrawableResourceId(R.drawable.dr_seuss), true);
+        authors.add(DrSeuss);
+
+        Author drake = new Author("Drake", "October 24, 1986", "", "Musician", "Canadian", AppUtils.getDrawableResourceId(R.drawable.drake), true);
+        authors.add(drake);
+
+        Author dwightDEisenhower = new Author("Dwight D. Eisenhower", "October 14, 1890", "March 28, 1969", "President", "American", AppUtils.getDrawableResourceId(R.drawable.dwight_d_eisenhower), true);
+        authors.add(dwightDEisenhower);
+
+        Author elieWiesel = new Author("Elie Wiesel", "September 30, 1928", "", "Novelist", "American", AppUtils.getDrawableResourceId(R.drawable.elie_wiesel), true);
+        authors.add(elieWiesel);
+
+        Author elizabethI = new Author("Elizabeth I", "September 7, 1533", "March 24, 1603", "Royalty", "English", AppUtils.getDrawableResourceId(R.drawable.elizabeth_i), true);
+        authors.add(elizabethI);
+
+        Author ellenDeGeneres = new Author("Ellen DeGeneres", "January 26, 1958", "", "Comedian", "American", AppUtils.getDrawableResourceId(R.drawable.ellen_degenres), true);
+        authors.add(ellenDeGeneres);
+
+        Author elonMusk = new Author("Elon Musk", "June 28, 1971", "", "Businessman", "American", AppUtils.getDrawableResourceId(R.drawable.elon_musk), true);
+        authors.add(elonMusk);
+
+        Author elvisPresley = new Author("Elvis Presley", "January 8, 1935", "August 16, 1977", "Musician", "American", AppUtils.getDrawableResourceId(R.drawable.elvis_presley), true);
+        authors.add(elvisPresley);
+
+        Author eminem = new Author("Eminem", "October 17, 1972", "", "Musician", "American", AppUtils.getDrawableResourceId(R.drawable.eminem), true);
+        authors.add(eminem);
+
+        Author ermaBombeck = new Author("Erma Bombeck", "February 21, 1927", "April 22, 1996", "Journalist", "American", AppUtils.getDrawableResourceId(R.drawable.erma_bombesck), true);
+        authors.add(ermaBombeck);
+
+        Author ernestHemingway = new Author("Ernest Hemingway", "July 21, 1899", "July 2, 1961", "Novelist", "American", AppUtils.getDrawableResourceId(R.drawable.ernest_hemingway), true);
+        authors.add(ernestHemingway);
+
+        Author edgarAllanPoe = new Author("Edgar Allan Poe", "January 19, 1809", "October 7, 1849", "Poet", "American", AppUtils.getDrawableResourceId(R.drawable.edgar_allan_poe), true);
+        authors.add(edgarAllanPoe);
+
+        Author francisofAssisi = new Author("Francis of Assisi", "1182", "1226", "Saint", "Italian", AppUtils.getDrawableResourceId(R.drawable.francis_of_assisi), true);
+        authors.add(francisofAssisi);
+
+        Author frankLloydWright = new Author("Frank Lloyd Wright", "June 8, 1867", "April 9, 1959", "Architect", "American", AppUtils.getDrawableResourceId(R.drawable.frank_lloyd_wright), true);
+        authors.add(frankLloydWright);
+
+        Author frankSinatra = new Author("Frank Sinatra", "December 12, 1915", "May 14, 1998", "Musician", "American", AppUtils.getDrawableResourceId(R.drawable.frank_sinatra), true);
+        authors.add(frankSinatra);
+
+        Author franklinDRoosevelt = new Author("Franklin D. Roosevelt", "January 30, 1882", "April 12, 1945", "President", "American", AppUtils.getDrawableResourceId(R.drawable.franklin_d_roosevelt), true);
+        authors.add(franklinDRoosevelt);
+
+        Author franzKafka = new Author("Franz Kafka", "July 3, 1883", "June 3, 1924", "Novelist", "", AppUtils.getDrawableResourceId(R.drawable.franz_kafka), true);
+        authors.add(franzKafka);
+
+        Author frederickDouglass = new Author("Frederick Douglass", "February 14, 1817", "February 20, 1895", "Author", "American", AppUtils.getDrawableResourceId(R.drawable.frederic_doughlass), true);
+        authors.add(frederickDouglass);
+
+        Author fridaKahlo = new Author("Frida Kahlo", "July 6, 1907", "July 13, 1954", "Artist", "Mexican", AppUtils.getDrawableResourceId(R.drawable.frida_kahlo), true);
+        authors.add(fridaKahlo);
+
+        Author friedrichNietzsche = new Author("Friedrich Nietzsche", "October 15, 1844", "August 25, 1900", "Philosopher", "German", AppUtils.getDrawableResourceId(R.drawable.friedrich_nietzsche), true);
+        authors.add(friedrichNietzsche);
+
+        Author fyodorDostoevsky = new Author("Fyodor Dostoevsky", "November 11, 1821", "February 9, 1881", "Novelist", "Russian", AppUtils.getDrawableResourceId(R.drawable.fyodor_dostoevsky), true);
+        authors.add(fyodorDostoevsky);
+
+        Author georgeBernardShaw = new Author("George Bernard Shaw", "July 26, 1856", "November 2, 1950", "Dramatist", "Irish", AppUtils.getDrawableResourceId(R.drawable.george_bernard_shaw), true);
+        authors.add(georgeBernardShaw);
+
+        Author galileoGalilei = new Author("Galileo Galilei", "February 15, 1564", "January 8, 1642", "Scientist", "Italian", AppUtils.getDrawableResourceId(R.drawable.galileo_galilei), true);
+        authors.add(galileoGalilei);
+
+        Author georgeCarlin = new Author("George Carlin", "May 12, 1937", "June 22, 2008", "Comedian", "American", AppUtils.getDrawableResourceId(R.drawable.goerge_carlin), true);
+        authors.add(georgeCarlin);
+
+        Author georgeOrwell = new Author("George Orwell", "June 25, 1903", "January 21, 1950", "Author", "British", AppUtils.getDrawableResourceId(R.drawable.george_orwell), true);
+        authors.add(georgeOrwell);
+
+        Author georgeSPatton = new Author("George S. Patton", "November 11, 1885", "December 21, 1945", "Soldier", "American", AppUtils.getDrawableResourceId(R.drawable.george_s_patton), true);
+        authors.add(georgeSPatton);
+
+        Author georgeWBush = new Author("George W. Bush", "July 6, 1946", "", "President", "American", AppUtils.getDrawableResourceId(R.drawable.george_w_bush), true);
+        authors.add(georgeWBush);
+
+        Author georgeWashington = new Author("George Washington", "February 22, 1732", "December 14, 1799", "President", "American", AppUtils.getDrawableResourceId(R.drawable.goerge_washington), true);
+        authors.add(georgeWashington);
+
+        Author helenKeller = new Author("Helen Keller", "June 27, 1880", "June 1, 1968", "Author", "American", AppUtils.getDrawableResourceId(R.drawable.helen_keller), true);
+        authors.add(helenKeller);
+
+        Author HJacksonBrownJr = new Author("H. Jackson Brown, Jr.", "1940", "", "Author", "Author", AppUtils.getDrawableResourceId(R.drawable.jackson_brown_jr), true);
+        authors.add(HJacksonBrownJr);
+
+        Author HLMencken = new Author("H. L. Mencken", "September 12, 1880", "January 29, 1956", "Writer", "American", AppUtils.getDrawableResourceId(R.drawable.hl_mencken), true);
+        authors.add(HLMencken);
+
+        Author HPLovecraft = new Author("H. P. Lovecraft", "August 20, 1890", "March 15, 1937", "Novelist", "American", AppUtils.getDrawableResourceId(R.drawable.h_p_lovecraft), true);
+        authors.add(HPLovecraft);
+
+        Author harrietTubman = new Author("Harriet Tubman", "1820", "1913", "Activist", "American", AppUtils.getDrawableResourceId(R.drawable.harriet_tubman), true);
+        authors.add(harrietTubman);
+
+        Author harrySTruman = new Author("Harry S Truman", "May 8, 1884", "December 26, 1972", "President", "American", AppUtils.getDrawableResourceId(R.drawable.harry_s_truman), true);
+        authors.add(harrySTruman);
+
+        Author henryDavidThoreau = new Author("Henry David Thoreau", "July 12, 1817", "May 6, 1862", "Author", "American", AppUtils.getDrawableResourceId(R.drawable.henry_david_thoreau), true);
+        authors.add(henryDavidThoreau);
+
+        Author henryFord = new Author("Henry Ford", "July 30, 1863", "April 7, 1947", "Businessman", "American", AppUtils.getDrawableResourceId(R.drawable.henry_ford), true);
+        authors.add(henryFord);
+
+        Author henryKissinger = new Author("Henry Kissinger", "May 27, 1923", "", "Statesman", "American", AppUtils.getDrawableResourceId(R.drawable.henry_kissinger), true);
+        authors.add(henryKissinger);
+
+        Author iceCube = new Author("Ice Cube", "June 15, 1969", "", "Musician", "American", AppUtils.getDrawableResourceId(R.drawable.ice_cube), true);
+        authors.add(iceCube);
+
+        Author idaBWells = new Author("Ida B. Wells", "July 16, 1862", "March 25, 1931", "Activist", "American", AppUtils.getDrawableResourceId(R.drawable.ida_b_wells), true);
+        authors.add(idaBWells);
+
+        Author immanuelKant = new Author("Immanuel Kant", "April 22, 1724", "February 12, 1804", "Philosopher", "German", AppUtils.getDrawableResourceId(R.drawable.immanuel_kant), true);
+        authors.add(immanuelKant);
+
+        Author indiraGandhi = new Author("Indira Gandhi", "November 19, 1917", "October 31, 1984", "Statesman", "Indian", AppUtils.getDrawableResourceId(R.drawable.indira_gandhi), true);
+        authors.add(indiraGandhi);
+
+        Author indraNooyi = new Author("Indra Nooyi", "October 28, 1955", "", "Businesswoman", "Indian", AppUtils.getDrawableResourceId(R.drawable.indra_nooyi), true);
+        authors.add(indraNooyi);
+
+        Author irisApfel = new Author("Iris Apfel", "August 29, 1921", "", "Businesswoman", "American", AppUtils.getDrawableResourceId(R.drawable.iris_apfel), true);
+        authors.add(irisApfel);
+
+        Author isaacNewton = new Author("Isaac Newton", "December 25, 1642", "March 20, 1727", "Mathematician", "English", AppUtils.getDrawableResourceId(R.drawable.isaac_newton), true);
+        authors.add(isaacNewton);
+
+        Author isaacAsimov = new Author("Isaac Asimov", "January 2, 1920", "April 6, 1992", "Scientist", "American", AppUtils.getDrawableResourceId(R.drawable.isaac_asimov), true);
+        authors.add(isaacAsimov);
+
+        Author jesusChrist = new Author("Jesus Christ", "", "", "Leader", "", AppUtils.getDrawableResourceId(R.drawable.jesus_christ), true);
+        authors.add(jesusChrist);
+
+        Author JKRowling = new Author("J. K. Rowling", "July 31, 1965", "Present", "Author", "English", AppUtils.getDrawableResourceId(R.drawable.j_k_rowling), true);
+        authors.add(JKRowling);
+
+        Author janeAusten = new Author("Jane Austen", "December 16, 1775", "July 28, 1817", "Writer", "British", AppUtils.getDrawableResourceId(R.drawable.jane_austen), true);
+        authors.add(janeAusten);
+
+        Author jackWelch = new Author("Jack Welch", "November 19, 1935", "", "Businessman", "American", AppUtils.getDrawableResourceId(R.drawable.jack_welch), true);
+        authors.add(jackWelch);
+
+        Author jamesABaldwin = new Author("James A. Baldwin", "August 2, 1924", "December 1, 1987", "Author", "American", AppUtils.getDrawableResourceId(R.drawable.james_a_baldwin), true);
+        authors.add(jamesABaldwin);
+
+        Author johnCMaxwell = new Author("John C. Maxwell", "1947", "", "Clergyman", "American", AppUtils.getDrawableResourceId(R.drawable.john_c_maxwell), true);
+        authors.add(johnCMaxwell);
+
+        Author johnFKennedy = new Author("John F. Kennedy", "May 29, 1917", "November 22, 1963", "President", "American", AppUtils.getDrawableResourceId(R.drawable.john_f_kennedy), true);
+        authors.add(johnFKennedy);
+
+        Author johannWolfgangvonGoethe = new Author("Johann Wolfgang von Goethe", "August 28, 1749", "March 22, 1832", "Poet", "German", AppUtils.getDrawableResourceId(R.drawable.johann_wolfgang_von_goethe), true);
+        authors.add(johannWolfgangvonGoethe);
+
+        Author kanyeWest = new Author("Kanye West", "June 8, 1977", "", "Musician", "American", AppUtils.getDrawableResourceId(R.drawable.kanye_west), true);
+        authors.add(kanyeWest);
+
+        Author karlMarx = new Author("Karl Marx", "May 5, 1818", "March 14, 1883", "Philosopher", "German", AppUtils.getDrawableResourceId(R.drawable.karl_marx), true);
+        authors.add(karlMarx);
+
+        Author kendrickLamar = new Author("Kendrick Lamar", "June 17, 1987", "", "Musician", "American", AppUtils.getDrawableResourceId(R.drawable.kendrick_lamar), true);
+        authors.add(kendrickLamar);
+
+        Author keanuReeves = new Author("Keanu Reeves", "September 2, 1964", "", "Actor", "Canadian", AppUtils.getDrawableResourceId(R.drawable.keanu_reeves), true);
+        authors.add(keanuReeves);
+
+        Author karlPilkington = new Author("Karl Pilkington", "September 23, 1972", "", "Actor", "British", AppUtils.getDrawableResourceId(R.drawable.karl_pilkington), true);
+        authors.add(karlPilkington);
+
+        Author laoTzu = new Author("Lao Tzu", "", "", "Philosopher", "Chinese", AppUtils.getDrawableResourceId(R.drawable.lao_tzu), true);
+        authors.add(laoTzu);
+
+        Author leBronJames = new Author("LeBron James", "December 30, 1984", "", "Athlete", "American", AppUtils.getDrawableResourceId(R.drawable.lebron_james), true);
+        authors.add(leBronJames);
+
+        Author leoTolstoy = new Author("Leo Tolstoy", "September 9, 1828", "November 20, 1910", "Novelist", "Russian", AppUtils.getDrawableResourceId(R.drawable.leo_tolstoy), true);
+        authors.add(leoTolstoy);
+
+        Author leonardodaVinci = new Author("Leonardo da Vinci", "April 15, 1452", "May 2, 1519", "Artist", "Italian", AppUtils.getDrawableResourceId(R.drawable.leonardo_da_vinci), true);
+        authors.add(leonardodaVinci);
+
+        Author lilUziVert = new Author("Lil Uzi Vert", "July 31, 1994", "", "Musician", "American", AppUtils.getDrawableResourceId(R.drawable.lil_uzi_vert), true);
+        authors.add(lilUziVert);
+
+        Author malcolmX = new Author("Malcolm X", "May 19, 1925", "February 21, 1965", "Activist", "American", AppUtils.getDrawableResourceId(R.drawable.malcolm_x), true);
+        authors.add(malcolmX);
+
+        Author motherTeresa = new Author("Mother Teresa", "August 26, 1910", "September 5, 1997", "Saint", "Albanian", AppUtils.getDrawableResourceId(R.drawable.mother_teresa), true);
+        authors.add(motherTeresa);
+
+        Author mahatmaGandhi = new Author("Mahatma Gandhi", "October 2, 1869", "January 30, 1948", "Leader", "Indian", AppUtils.getDrawableResourceId(R.drawable.mahatma_gandhi), true);
+        authors.add(mahatmaGandhi);
+
+        Author marcusTulliusCicero = new Author("Marcus Tullius Cicero", "106 BC", "43 BC", "Statesman", "Roman", AppUtils.getDrawableResourceId(R.drawable.marcus_tullius_cicero), true);
+        authors.add(marcusTulliusCicero);
+
+        Author marilynMonroe = new Author("Marilyn Monroe", "June 1, 1926", "August 5, 1962", "Actress", "American", AppUtils.getDrawableResourceId(R.drawable.marilyn_monroe), true);
+        authors.add(marilynMonroe);
+
+        Author napoleonBonaparte = new Author("Napoleon Bonaparte", "August 15, 1769", "May 5, 1821", "Leader", "French", AppUtils.getDrawableResourceId(R.drawable.napoleon_bonaprte), true);
+        authors.add(napoleonBonaparte);
+
+        Author napoleonHill = new Author("Napoleon Hill", "October 26, 1883", "November 8, 1970", "Writer", "American", AppUtils.getDrawableResourceId(R.drawable.napoleon_hill), true);
+        authors.add(napoleonHill);
+
+        Author nas = new Author("Nas", "September 14, 1973", "", "Musician", "American", AppUtils.getDrawableResourceId(R.drawable.nas), true);
+        authors.add(nas);
+
+        Author neilArmstrong = new Author("Neil Armstrong", "August 5, 1930", "August 25, 2012", "Astronaut", "American", AppUtils.getDrawableResourceId(R.drawable.neil_armstrong), true);
+        authors.add(neilArmstrong);
+
+        Author neildeGrasse = new Author("Neil deGrasse", "October 5, 1958", "", "Scientist", "American", AppUtils.getDrawableResourceId(R.drawable.neil_de_grasse), true);
+        authors.add(neildeGrasse);
+
+        Author oscarWilde = new Author("Oscar Wilde", "October 16, 1854", "November 30, 1900", "Dramatist", "Irish", AppUtils.getDrawableResourceId(R.drawable.oscar_wilde), true);
+        authors.add(oscarWilde);
+
+        Author OJSimpson = new Author("O. J. Simpson", "July 9, 1947", "", "Athlete", "American", AppUtils.getDrawableResourceId(R.drawable.o_j_simpson), true);
+        authors.add(OJSimpson);
+//
+        Author OSheaJacksonJr = new Author("O\\'Shea Jackson, Jr.", "February 24, 1991", "", "Actor", "American", AppUtils.getDrawableResourceId(R.drawable.o_shea_jackson_jr), true);
+        authors.add(OSheaJacksonJr);
+
+        Author OWinstonLink = new Author("O. Winston Link", "December 16, 1914", "January 30, 2001", "Photographer", "American", AppUtils.getDrawableResourceId(R.drawable.o_winston_link), true);
+        authors.add(OWinstonLink);
+
+        Author obiageliEzekwesili = new Author("Obiageli Ezekwesili", "April 28, 1963", "", "Public Servant", "Nigerian", AppUtils.getDrawableResourceId(R.drawable.obiageli_ezekwesili), true);
+        authors.add(obiageliEzekwesili);
+
+        Author plato = new Author("Plato", "427 BC", "347 BC", "Philosopher", "Greek", AppUtils.getDrawableResourceId(R.drawable.plato), true);
+        authors.add(plato);
+
+        Author pabloPicasso = new Author("Pablo Picasso", "October 25, 1881", "April 8, 1973", "Artist", "Spanish", AppUtils.getDrawableResourceId(R.drawable.pablo_picasso), true);
+        authors.add(pabloPicasso);
+
+        Author patrickHenry = new Author("Patrick Henry", "May 29, 1736", "June 6, 1799", "Politician", "American", AppUtils.getDrawableResourceId(R.drawable.patrick_henry), true);
+        authors.add(patrickHenry);
+
+        Author pauloCoelho = new Author("Paulo Coelho", "August 24, 1947", "", "Novelist", "Brazilian", AppUtils.getDrawableResourceId(R.drawable.paulo_coelho), true);
+        authors.add(pauloCoelho);
+
+        Author pele = new Author("Pele", "October 23, 1940", "", "Athlete", "Brazilian", AppUtils.getDrawableResourceId(R.drawable.pele), true);
+        authors.add(pele);
+//
+        Author QoriankaKilcher = new Author("Q\\'orianka Kilcher", "February 11, 1990", "", "Actress", "German", AppUtils.getDrawableResourceId(R.drawable.q_orianka_kilcher), true);
+        authors.add(QoriankaKilcher);
+
+        Author QTip = new Author("Q-Tip", "April 10, 1970", "", "Musician", "American", AppUtils.getDrawableResourceId(R.drawable.q_tip), true);
+        authors.add(QTip);
+
+        Author qandeelBaloch = new Author("Qandeel Baloch", "March 1, 1990", "July 15, 2016", "Actress", "Pakistani", AppUtils.getDrawableResourceId(R.drawable.qandeel_baloch), true);
+        authors.add(qandeelBaloch);
+
+        Author quavo = new Author("Quavo", "April 2, 1991", "", "Musician", "American", AppUtils.getDrawableResourceId(R.drawable.quavo), true);
+        authors.add(quavo);
+
+        Author queenChristina = new Author("Queen Christina", "1626", "1689", "Royalty", "Swedish", AppUtils.getDrawableResourceId(R.drawable.queen_christina), true);
+        authors.add(queenChristina);
+
+        Author robinWilliams = new Author("Robin Williams", "July 21, 1951", "August 11, 2014", "Comedian", "American", AppUtils.getDrawableResourceId(R.drawable.robin_williams), true);
+        authors.add(robinWilliams);
+
+        Author rumi = new Author("Rumi", "September 30, 1207", "December 17, 1273", "Poet", "", AppUtils.getDrawableResourceId(R.drawable.rumi), true);
+        authors.add(rumi);
+
+        Author ralphWaldoEmerson = new Author("Ralph Waldo Emerson", "May 25, 1803", "April 27, 1882", "Poet", "American", AppUtils.getDrawableResourceId(R.drawable.ralph_waldo_emerson), true);
+        authors.add(ralphWaldoEmerson);
+
+        Author reneDescartes = new Author("Rene Descartes", "March 31, 1596", "February 11, 1650", "Mathematician", "French", AppUtils.getDrawableResourceId(R.drawable.rene_descartes), true);
+        authors.add(reneDescartes);
+
+        Author richardBranson = new Author("Richard Branson", "July 18, 1950", "", "Businessman", "British", AppUtils.getDrawableResourceId(R.drawable.richard_branson), true);
+        authors.add(richardBranson);
+
+        Author socrates = new Author("Socrates", "469 BC", "399 BC", "Philosopher", "Greek", AppUtils.getDrawableResourceId(R.drawable.socrates), true);
+        authors.add(socrates);
+
+        Author saintAugustine = new Author("Saint Augustine", "354", "430", "", "", AppUtils.getDrawableResourceId(R.drawable.saint_augustin), true);
+        authors.add(saintAugustine);
+
+        Author sigmundFreud = new Author("Sigmund Freud", "May 6, 1856", "September 23, 1939", "Psychologist", "Austrian", AppUtils.getDrawableResourceId(R.drawable.sigmund_freud), true);
+        authors.add(sigmundFreud);
+
+        Author simonSinek = new Author("Simon Sinek", "October 9, 1973", "", "Author", "English", AppUtils.getDrawableResourceId(R.drawable.simon_sinek), true);
+        authors.add(simonSinek);
+
+        Author sorenKierkegaard = new Author("Soren Kierkegaard", "May 5, 1813", "November 11, 1855", "Philosopher", "Danish", AppUtils.getDrawableResourceId(R.drawable.soren_kierkegaard), true);
+        authors.add(sorenKierkegaard);
+
+        Author theodoreRoosevelt = new Author("Theodore Roosevelt", "October 27, 1858", "January 6, 1919", "President", "American", AppUtils.getDrawableResourceId(R.drawable.theodore_roosevelt), true);
+        authors.add(theodoreRoosevelt);
+
+        Author TSEliot = new Author("T. S. Eliot", "September 26, 1888", "January 4, 1965", "Poet", "American", AppUtils.getDrawableResourceId(R.drawable.t_s_elliot), true);
+        authors.add(TSEliot);
+
+        Author taylorSwift = new Author("Taylor Swift", "December 13, 1989", "", "Musician", "American", AppUtils.getDrawableResourceId(R.drawable.taylor_swift), true);
+        authors.add(taylorSwift);
+
+        Author thomasAquinas = new Author("Thomas Aquinas", "1225", "1274", "Theologian", "Italian", AppUtils.getDrawableResourceId(R.drawable.thomas_aquinas), true);
+        authors.add(thomasAquinas);
+
+        Author thomasHobbes = new Author("Thomas Hobbes", "April 5, 1588", "December 4, 1679", "Philosopher", "English", AppUtils.getDrawableResourceId(R.drawable.thomas_hobbes), true);
+        authors.add(thomasHobbes);
+
+        Author voltaire = new Author("Voltaire", "November 21, 1694", "May 30, 1778", "Writer", "French", AppUtils.getDrawableResourceId(R.drawable.voltair), true);
+        authors.add(voltaire);
+
+        Author valentinoRossi = new Author("Valentino Rossi", "February 16, 1979", "", "Athlete", "Italian", AppUtils.getDrawableResourceId(R.drawable.valentino_rossi), true);
+        authors.add(valentinoRossi);
+
+        Author victorHugo = new Author("Victor Hugo", "February 26, 1802", "May 22, 1885", "Author", "French", AppUtils.getDrawableResourceId(R.drawable.victor_hugo), true);
+        authors.add(victorHugo);
+
+        Author viktorEFrankl = new Author("Viktor E. Frankl", "March 26, 1905", "September 2, 1997", "Psychologist", "Austrian", AppUtils.getDrawableResourceId(R.drawable.viktor_e_frankl), true);
+        authors.add(viktorEFrankl);
+
+        Author vinScully = new Author("Vin Scully", "November 29, 1927", "", "Celebrity", "American", AppUtils.getDrawableResourceId(R.drawable.vin_scully), true);
+        authors.add(vinScully);
+
+        Author vinceLombardi = new Author("Vince Lombardi", "June 11, 1913", "September 3, 1970", "Coach", "American", AppUtils.getDrawableResourceId(R.drawable.vince_lombardi), true);
+        authors.add(vinceLombardi);
+
+        Author vincentVanGogh = new Author("Vincent Van Gogh", "March 30, 1853", "July 29, 1890", "Artist", "Dutch", AppUtils.getDrawableResourceId(R.drawable.vincent_van_gogh), true);
+        authors.add(vincentVanGogh);
+
+        Author waltDisney = new Author("Walt Disney", "December 5, 1901", "December 15, 1966", "Cartoonist", "American", AppUtils.getDrawableResourceId(R.drawable.walt_disney), true);
+        authors.add(waltDisney);
+
+        Author WCFields = new Author("W. C. Fields", "January 29, 1880", "December 25, 1946", "Comedian", "American", AppUtils.getDrawableResourceId(R.drawable.w_c_fields), true);
+        authors.add(WCFields);
+
+        Author WEBDuBois = new Author("W. E. B. Du Bois", "February 23, 1868", "August 27, 1963", "Writer", "American", AppUtils.getDrawableResourceId(R.drawable.w_e_b_du_bois), true);
+        authors.add(WEBDuBois);
+
+        Author waltWhitman = new Author("Walt Whitman", "May 31, 1819", "March 26, 1892", "Poet", "American", AppUtils.getDrawableResourceId(R.drawable.walt_whitman), true);
+        authors.add(waltWhitman);
+
+        Author wayneDyer = new Author("Wayne Dyer", "May 10, 1940", "August 29, 2015", "Psychologist", "American", AppUtils.getDrawableResourceId(R.drawable.wayne_dyer), true);
+        authors.add(wayneDyer);
+
+        Author yaelNaim = new Author("Yael Naim", "February 6, 1978", "", "Musician", "French", AppUtils.getDrawableResourceId(R.drawable.yael_naim), true);
+        authors.add(yaelNaim);
+
+        Author yaelStone = new Author("Yael Stone", "March 6, 1985", "", "Actress", "Australian", AppUtils.getDrawableResourceId(R.drawable.yael_stone), true);
+        authors.add(yaelStone);
+
+        Author yahooSerious = new Author("Yahoo Serious", "July 27, 1953", "", "Director", "Australian", AppUtils.getDrawableResourceId(R.drawable.yahoo_seriuos), true);
+        authors.add(yahooSerious);
+
+        Author yairLapid = new Author("Yair Lapid", "November 5, 1963", "", "Politician", "Israeli", AppUtils.getDrawableResourceId(R.drawable.yair_lapid), true);
+        authors.add(yairLapid);
+
+        Author yotamOttolenghi = new Author("Yotam Ottolenghi", "December 14, 1968", "", "Chef", "Israeli", AppUtils.getDrawableResourceId(R.drawable.yotam_ottolenghi), true);
+        authors.add(yotamOttolenghi);
+
+        Author zigZiglar = new Author("Zig Ziglar", "November 6, 1926", "November 28, 2012", "Author", "American", AppUtils.getDrawableResourceId(R.drawable.zig_ziglar), true);
+        authors.add(zigZiglar);
+
+        Author zacGoldsmith = new Author("Zac Goldsmith", "January 20, 1975", "", "Politician", "British", AppUtils.getDrawableResourceId(R.drawable.zac_goldsmith), true);
+        authors.add(zacGoldsmith);
+
+        Author zacHanson = new Author("Zac Hanson", "October 22, 1985", "", "Musician", "American", AppUtils.getDrawableResourceId(R.drawable.zac_hanson), true);
+        authors.add(zacHanson);
+
+        Author zhuZhu = new Author("Zhu Zhu", "July 19, 1984", "", "Actress", "Chinese", AppUtils.getDrawableResourceId(R.drawable.zhu_zhu), true);
+        authors.add(zhuZhu);
+
+        Author zoeKazan = new Author("Zoe Kazan", "September 9, 1983", "", "Actress", "American", AppUtils.getDrawableResourceId(R.drawable.zoe_kazan), true);
+        authors.add(zoeKazan);
+
+        Author zooeyDeschanel = new Author("Zooey Deschanel", "January 17, 1980", "", "Actress", "American", AppUtils.getDrawableResourceId(R.drawable.zooey_deschanel), true);
+        authors.add(zooeyDeschanel);
+
+        Author zuleikhaRobinson = new Author("Zuleikha Robinson", "June 29, 1977", "", "Actress", "British", AppUtils.getDrawableResourceId(R.drawable.zuleikha_robinson), true);
+        authors.add(zuleikhaRobinson);
+
+        Author zygmuntBauman = new Author("Zygmunt Bauman", "November 19, 1925", "January 9, 2017", "Sociologist", "Polish", AppUtils.getDrawableResourceId(R.drawable.zigmunt_bauman), true);
+        authors.add(zygmuntBauman);
+
+        ArrayList<Author> mAuthors = new ArrayList<>(SugarRecord.saveInTx(authors));
+        DataAuthor dataAuthor = new DataAuthor(authors);
+        SessionManager.setStringSetting(getGlobalContext(), SESSION_DATA_AUTHORS, dataAuthor.toString());
+
+        return mAuthors;
     }
 
     public static ArrayList<Author> getAllAuthors() {
-        List<Author> authors = Author.listAll(Author.class);
-        return new ArrayList<Author>(authors);
+        if (AllSettingsManager.isNullOrEmpty(SessionManager.getStringSetting(getGlobalContext(), SESSION_DATA_AUTHORS))) {
+            List<Author> authors = Author.listAll(Author.class);
+            DataAuthor dataAuthor = new DataAuthor(new ArrayList<Author>(authors));
+            SessionManager.setStringSetting(getGlobalContext(), SESSION_DATA_AUTHORS, dataAuthor.toString());
+        }
+
+        DataAuthor mDataAuthor = DataAuthor.convertFromStringToObject(SessionManager.getStringSetting(getGlobalContext(), SESSION_DATA_AUTHORS), DataAuthor.class);
+
+        return mDataAuthor.getAuthors();
     }
 
     public static Language getLanguage(String languageName) {
@@ -628,9 +642,10 @@ public class DataHandler {
         return null;
     }
 
-    public static void initAllQuotes() {
+    public static ArrayList<Quote> initAllQuotes() {
+
         ArrayList<Quote> quotes = new ArrayList<Quote>();
-        Language english = getLanguage(SELECTED_LANGUAGE);
+        Language english = getLanguage(SessionManager.getStringSetting(getGlobalContext(), SESSION_SELECTED_LANGUAGE));
 
         Author APJAbdulKalam = getAuthor("A. P. J. Abdul Kalam");
         quotes.add(new Quote("Teaching is a very noble profession that shapes the character, caliber, and future of an individual. If the people remember me as a good teacher, that will be the biggest honour for me.", false, true, english, APJAbdulKalam));
@@ -1196,7 +1211,14 @@ public class DataHandler {
         quotes.add(new Quote("For it is in giving that we receive.", false, true, english, francisofAssisi));
         quotes.add(new Quote("Lord, grant that I might not so much seek to be loved as to love.", false, true, english, francisofAssisi));
 
-        SugarRecord.saveInTx(quotes);
+        ArrayList<Quote> mQuotes = new ArrayList<>(SugarRecord.saveInTx(quotes));
+//        DataQuote dataQuote = new DataQuote(mQuotes);
+//        SessionManager.setStringSetting(getGlobalContext(), SESSION_DATA_QUOTES, dataQuote.toString());
+//
+//        ArrayList<Quote> tempQuotes=DataQuote.convertFromStringToObject(SessionManager.getStringSetting(getGlobalContext(), SESSION_DATA_QUOTES),DataQuote.class).getQuotes();
+//        for(int i=0;i<){}
+
+        return mQuotes;
     }
 
     public static ArrayList<Quote> getAllQuoteAdvertises() {
@@ -1223,7 +1245,7 @@ public class DataHandler {
         List<Quote> quotes = Select.from(Quote.class)
                 .where(Condition.prop("author").eq(author.getId()), Condition.prop("language").eq(language.getId()))
                 .list();
-////        List<Quote> quotes = Quote.find(Quote.class, "author = ?", new String[]{author1.getId()+""});
+//        List<Quote> quotes = Quote.find(Quote.class, "author = ?", new String[]{author1.getId()+""});
         return new ArrayList<Quote>(quotes);
     }
 
@@ -1241,7 +1263,7 @@ public class DataHandler {
         ArrayList<Author> arrAll = new ArrayList<Author>();
         ArrayList<Author> tempAll = authorArrayList;
         if (tempAll.size() > 0) {
-            if (IS_FREE_APP) {
+            if (SessionManager.getBooleanSetting(getGlobalContext(),SESSION_FREE_APP,false)) {
                 ArrayList<Author> arrAd = DataHandler.getAllAuthorAdvertises();
                 int index = 0;
                 for (Author author : tempAll) {
@@ -1267,7 +1289,7 @@ public class DataHandler {
         ArrayList<Quote> arrAll = new ArrayList<Quote>();
         ArrayList<Quote> tempAll = getAllQuotes(author, language);
         if (tempAll.size() > 0) {
-            if (IS_FREE_APP) {
+            if (SessionManager.getBooleanSetting(getGlobalContext(),SESSION_FREE_APP,false)) {
                 ArrayList<Quote> arrAd = DataHandler.getAllQuoteAdvertises();
                 int index = 0;
                 for (Quote quote : tempAll) {
@@ -1291,7 +1313,7 @@ public class DataHandler {
 
         ArrayList<MappedQuote> mData = new ArrayList<MappedQuote>();
         ArrayList<Author> mAuthors = getAllAuthors();
-        Language language = getLanguage(SELECTED_LANGUAGE);
+        Language language = getLanguage(SessionManager.getStringSetting(getGlobalContext(), SESSION_SELECTED_LANGUAGE));
 
         for (int i = 0; i < mAuthors.size(); i++) {
             Author author = mAuthors.get(i);
@@ -1308,10 +1330,10 @@ public class DataHandler {
         ArrayList<MappedQuote> mData = new ArrayList<MappedQuote>();
         ArrayList<MappedQuote> mTempData = mappedQuoteArrayList;
         if (mTempData.size() > 0) {
-            if (IS_FREE_APP) {
+            if (SessionManager.getBooleanSetting(getGlobalContext(),SESSION_FREE_APP,false)) {
                 ArrayList<MappedQuote> arrAd = DataHandler.getAllMappedQuoteAdvertises();
                 int index = 0;
-                Language language = getLanguage(SELECTED_LANGUAGE);
+                Language language = getLanguage(SessionManager.getStringSetting(getGlobalContext(), SESSION_SELECTED_LANGUAGE));
                 for (MappedQuote author : mTempData) {
                     mData.add(author);
                     Double randomNumber = Math.random();
@@ -1334,7 +1356,7 @@ public class DataHandler {
     public static ArrayList<MappedQuote> getAllData() {
         ArrayList<MappedQuote> mappedQuotes = new ArrayList<MappedQuote>();
         ArrayList<MappedQuote> tempMappedQuotes = DataHandler.getAllMappedQuotesWithAdvertise(DataHandler.getAllMappedQuotes());
-        Language language = getLanguage(SELECTED_LANGUAGE);
+        Language language = getLanguage(SessionManager.getStringSetting(getGlobalContext(), SESSION_SELECTED_LANGUAGE));
 
         for (int i = 0; i < tempMappedQuotes.size(); i++) {
             MappedQuote mappedQuote = tempMappedQuotes.get(i);
@@ -1376,7 +1398,7 @@ public class DataHandler {
                     .withBirthDate(quote.isMappedQuote() ? quote.getAuthor().getBirthDate() : "")
                     .withDeathDate(quote.isMappedQuote() ? quote.getAuthor().getDeathDate() : "")
                     .withDescription(quote.isMappedQuote() ? (quote.getQuotes().size() > 0 ? quote.getQuotes().get(0).getQuoteDescription() : "") : "")
-                    .withImageRes(R.drawable.ic_rashed)
+                    .withImageRes((quote.getAuthor().getProfileImage() != -1) ? quote.getAuthor().getProfileImage() : R.drawable.avatar_male)
                     .withImageCutType(lastTransitionType)
                     .withImageCutHeightDP(50);
             glazyCards.add(glazyCard);
@@ -1413,7 +1435,7 @@ public class DataHandler {
         ArrayList<MappedQuote> mappedQuotes = new ArrayList<MappedQuote>();
         ArrayList<MappedQuote> tempMappedQuotes = DataHandler.getAllMappedFavouriteQuotesWithAdvertise(DataHandler.getAllMappedFavouriteQuotes());
 
-        Language language = getLanguage(SELECTED_LANGUAGE);
+        Language language = getLanguage(SessionManager.getStringSetting(getGlobalContext(), SESSION_SELECTED_LANGUAGE));
         for (int i = 0; i < tempMappedQuotes.size(); i++) {
             MappedQuote mappedQuote = tempMappedQuotes.get(i);
             Author author = tempMappedQuotes.get(i).getAuthor();
@@ -1442,7 +1464,7 @@ public class DataHandler {
         ArrayList<MappedQuote> mData = new ArrayList<MappedQuote>();
         ArrayList<Author> mAuthors = getAllAuthors();
 
-        Language language = getLanguage(SELECTED_LANGUAGE);
+        Language language = getLanguage(SessionManager.getStringSetting(getGlobalContext(), SESSION_SELECTED_LANGUAGE));
         for (int i = 0; i < mAuthors.size(); i++) {
             Author author = mAuthors.get(i);
             ArrayList<Quote> mQuotes = getAllFavouriteQuotes(author, language);
@@ -1460,10 +1482,10 @@ public class DataHandler {
         ArrayList<MappedQuote> mData = new ArrayList<MappedQuote>();
         ArrayList<MappedQuote> mTempData = mappedQuoteArrayList;
         if (mTempData.size() > 0) {
-            if (IS_FREE_APP) {
+            if (SessionManager.getBooleanSetting(getGlobalContext(),SESSION_FREE_APP,false)) {
                 ArrayList<MappedQuote> arrAd = DataHandler.getAllMappedQuoteAdvertises();
                 int index = 0;
-                Language language = getLanguage(SELECTED_LANGUAGE);
+                Language language = getLanguage(SessionManager.getStringSetting(getGlobalContext(), SESSION_SELECTED_LANGUAGE));
 
                 for (MappedQuote author : mTempData) {
                     mData.add(author);
@@ -1488,7 +1510,7 @@ public class DataHandler {
         ArrayList<Quote> arrAll = new ArrayList<Quote>();
         ArrayList<Quote> tempAll = getAllFavouriteQuotes(author, language);
         if (tempAll.size() > 0) {
-            if (IS_FREE_APP) {
+            if (SessionManager.getBooleanSetting(getGlobalContext(),SESSION_FREE_APP,false)) {
                 ArrayList<Quote> arrAd = DataHandler.getAllQuoteAdvertises();
                 int index = 0;
                 for (Quote quote : tempAll) {
@@ -1508,23 +1530,6 @@ public class DataHandler {
         return arrAll;
     }
 
-    public static FoldableQuote setFavouriteForFavouriteFragment(FoldableQuote foldableQuote, boolean isFavourite) {
-        FoldableQuote mFoldableQuote = setFavouriteForAuthorFragment(foldableQuote, isFavourite);
-        if ((mFoldableQuote != null) && (mFoldableQuote.isFavourite() == isFavourite)) {
-            for (MappedQuote mappedQuote : mAllMappedFavouriteQuotes) {
-                if (mappedQuote.getAuthor().getAuthorName().equalsIgnoreCase(foldableQuote.getAuthor().getAuthorName())) {
-                    for (Quote quote : mappedQuote.getQuotes()) {
-                        if (quote.getQuoteDescription().equalsIgnoreCase(foldableQuote.getQuoteDescription())) {
-
-                            quote.setFavourite(isFavourite);
-                        }
-                    }
-                }
-            }
-        }
-        return foldableQuote;
-    }
-
     public static Quote setFavouriteForFavouriteFragment(Quote quote, boolean isFavourite) {
         Quote mFoldableQuote = setFavouriteForAuthorFragment(quote, isFavourite);
         if ((mFoldableQuote != null) && (mFoldableQuote.isFavourite() == isFavourite)) {
@@ -1540,16 +1545,5 @@ public class DataHandler {
             }
         }
         return quote;
-    }
-
-    public static MappedQuote getFavouriteMappedQuote(FoldableQuote foldableQuote) {
-        if (mAllMappedFavouriteQuotes.size() > 0) {
-            for (MappedQuote mappedQuote : mAllMappedFavouriteQuotes) {
-                if (mappedQuote.getAuthor().getAuthorName().equalsIgnoreCase(foldableQuote.getAuthor().getAuthorName())) {
-                    return mappedQuote;
-                }
-            }
-        }
-        return null;
     }
 }

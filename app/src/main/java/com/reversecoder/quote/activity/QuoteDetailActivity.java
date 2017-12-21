@@ -2,7 +2,6 @@ package com.reversecoder.quote.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.TypedArray;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
@@ -14,16 +13,17 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextSwitcher;
 
-import com.alexvasilkov.foldablelayout.FoldableListLayout;
 import com.reversecoder.library.event.OnSingleClickListener;
 import com.reversecoder.quote.R;
-import com.reversecoder.quote.adapter.QuoteDetailAdapter;
+import com.reversecoder.quote.adapter.QuoteFlipViewAdapter;
 import com.reversecoder.quote.factory.TextViewFactory;
 import com.reversecoder.quote.model.Author;
-import com.reversecoder.quote.model.FoldableQuote;
 import com.reversecoder.quote.model.Quote;
 import com.reversecoder.quote.util.AllConstants;
+import com.reversecoder.quote.util.AppUtils;
+import com.reversecoder.quote.util.ClipboardHandler;
 import com.reversecoder.quote.util.DataHandler;
+import com.reversecoder.quote.util.IntentManager;
 import com.yalantis.contextmenu.lib.ContextMenuDialogFragment;
 import com.yalantis.contextmenu.lib.MenuObject;
 import com.yalantis.contextmenu.lib.MenuParams;
@@ -31,11 +31,12 @@ import com.yalantis.contextmenu.lib.interfaces.OnMenuItemClickListener;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import io.armcha.ribble.presentation.widget.AnimatedImageView;
 import io.armcha.ribble.presentation.widget.AnimatedTextView;
 import io.armcha.ribble.presentation.widget.ArcView;
+import se.emilsjolander.flipview.FlipView;
+import se.emilsjolander.flipview.OverFlipMode;
 
 import static com.reversecoder.quote.util.AppUtils.flashingView;
 import static com.reversecoder.quote.util.DataHandler.mAllMappedQuotes;
@@ -45,13 +46,12 @@ public class QuoteDetailActivity extends BaseActivity {
     Author mAuthor;
     int mSelectedPosition = -1;
     private ArrayList<Quote> mAllQuotes = new ArrayList<Quote>();
-    //    private ArrayList<MappedQuote> mAllMappedQuotes = new ArrayList<MappedQuote>();
     private String TAG = QuoteDetailActivity.class.getSimpleName();
     TextSwitcher tsQuoteCounter;
 
-    //FoldableListLayout
-    FoldableListLayout foldableListLayout;
-    QuoteDetailAdapter quoteDetailAdapter;
+    //Flipview
+    FlipView mQuoteFlipView;
+    QuoteFlipViewAdapter mQuoteAdapter;
     private int lastPagePosition = 0;
 
     //toolbar
@@ -77,12 +77,9 @@ public class QuoteDetailActivity extends BaseActivity {
     public void initView() {
         initToolBar();
 
+        //counter text switcher
         tsQuoteCounter = (TextSwitcher) findViewById(R.id.ts_quote_counter);
         tsQuoteCounter.setFactory(new TextViewFactory(QuoteDetailActivity.this, R.style.CounterTextView, true));
-
-        foldableListLayout = findViewById(R.id.foldable_list);
-
-        initMenuFragment(false);
 
         //get quote list in background
         Intent intent = getIntent();
@@ -105,30 +102,20 @@ public class QuoteDetailActivity extends BaseActivity {
             animV[1] = R.anim.slide_out_top;
         }
 
-        tsQuoteCounter.setInAnimation(QuoteDetailActivity.this, animV[0]);
-        tsQuoteCounter.setOutAnimation(QuoteDetailActivity.this, animV[1]);
+        tsQuoteCounter.setInAnimation(QuoteDetailActivity.this, animH[0]);
+        tsQuoteCounter.setOutAnimation(QuoteDetailActivity.this, animH[1]);
         tsQuoteCounter.setText((currentPosition + 1) + "/" + totalCount);
 
         lastPagePosition = currentPosition;
     }
 
     private void initActions() {
-        foldableListLayout.setOnFoldRotationListener(new FoldableListLayout.OnFoldRotationListener() {
-            @Override
-            public void onFoldRotation(float rotation, boolean isFromUser) {
-                if (lastPagePosition == foldableListLayout.getPosition()) {
-                    return;
-                }
-                switchCounter(foldableListLayout.getPosition(), quoteDetailAdapter.getCount());
-            }
-        });
-
         btnContextMenu.setOnClickListener(new OnSingleClickListener() {
             @Override
             public void onSingleClick(View view) {
-                FoldableQuote foldableQuote = quoteDetailAdapter.getItem(foldableListLayout.getPosition());
-                if (foldableQuote.isQuote()) {
-                    initMenuFragment(foldableQuote.isFavourite());
+                Quote quote = mQuoteAdapter.getItem(mQuoteFlipView.getCurrentPage());
+                if (quote.isQuote()) {
+                    initMenuFragment(quote.isFavourite());
                     mMenuDialogFragment.show(fragmentManager, ContextMenuDialogFragment.TAG);
                 }
             }
@@ -159,7 +146,7 @@ public class QuoteDetailActivity extends BaseActivity {
         fragmentManager = getSupportFragmentManager();
     }
 
-    public class GetQuoteTask extends AsyncTask<String, String, FoldableQuote[]> {
+    public class GetQuoteTask extends AsyncTask<String, String, ArrayList<Quote>> {
 
         private Context mContext;
         private Intent mIntent;
@@ -173,7 +160,6 @@ public class QuoteDetailActivity extends BaseActivity {
         protected void onPreExecute() {
             mSelectedPosition = mIntent.getIntExtra(AllConstants.INTENT_KEY_AUTHOR_POSITION, -1);
             mAuthor = mIntent.getParcelableExtra(AllConstants.INTENT_KEY_AUTHOR);
-//            mAllMappedQuotes = mIntent.getParcelableArrayListExtra(AllConstants.INTENT_KEY_MAPPED_QUOTE);
 
             if (mAuthor != null) {
                 toolbarTitle.setAnimatedText(mAuthor.getAuthorName(), 0L);
@@ -181,37 +167,20 @@ public class QuoteDetailActivity extends BaseActivity {
         }
 
         @Override
-        protected FoldableQuote[] doInBackground(String... params) {
-            FoldableQuote[] foldableQuotes = new FoldableQuote[10];
-
+        protected ArrayList<Quote> doInBackground(String... params) {
             if (mAllMappedQuotes != null && mAuthor != null) {
                 if (mAllMappedQuotes.size() > 0) {
                     mAllQuotes = DataHandler.getAllQuotes(mAuthor, mAllMappedQuotes);
-
-                    int size = mAllQuotes.size();
-                    foldableQuotes = new FoldableQuote[size];
-                    TypedArray images = mContext.getResources().obtainTypedArray(R.array.paintings_images);
-
-                    for (int i = 0; i < size; i++) {
-                        Quote quote = mAllQuotes.get(i);
-                        final int imageId = images.getResourceId(new Random().nextInt(images.length()), -1);
-                        foldableQuotes[i] = new FoldableQuote(quote.getQuoteDescription(), quote.isFavourite(), quote.isQuote(), quote.getLanguage(), quote.getAuthor(), imageId);
-                    }
-
-                    images.recycle();
                 }
             }
 
-            return foldableQuotes;
+            return mAllQuotes;
         }
 
         @Override
-        protected void onPostExecute(FoldableQuote[] result) {
-            if (result != null && result.length > 0) {
-                quoteDetailAdapter = new QuoteDetailAdapter(mContext, result);
-                foldableListLayout.setAdapter(quoteDetailAdapter);
-
-                switchCounter(foldableListLayout.getPosition(), quoteDetailAdapter.getCount());
+        protected void onPostExecute(ArrayList<Quote> result) {
+            if (result != null && result.size() > 0) {
+                initQuoteDetailFlipView(result);
             }
         }
     }
@@ -228,30 +197,34 @@ public class QuoteDetailActivity extends BaseActivity {
         mMenuDialogFragment.setItemClickListener(new OnMenuItemClickListener() {
             @Override
             public void onMenuItemClick(View clickedView, int position) {
+
+                Quote quote = mQuoteAdapter.getItem(mQuoteFlipView.getCurrentPage());
+                Log.d(TAG, "FoldableItemPosition: " + mQuoteFlipView.getCurrentPage() + "");
+                Log.d(TAG, "FoldableItem: " + quote.toString());
+
                 switch (position) {
+
                     case 0:
                         break;
+
                     case 1: {
-                        Log.d(TAG, "FoldableItemPosition: " + foldableListLayout.getPosition() + "");
-                        FoldableQuote foldableQuote = quoteDetailAdapter.getItem(foldableListLayout.getPosition());
-                        Log.d(TAG, "FoldableItem: " + foldableQuote.toString());
-                        FoldableQuote updatedFoldableQuote;
-                        if (foldableQuote.isFavourite()) {
-                            updatedFoldableQuote = DataHandler.setFavouriteForAuthorFragment(foldableQuote, false);
-                            Log.d(TAG, "if favourite: " + foldableQuote.toString());
+                        if (quote.isFavourite()) {
+                            quote.setFavourite(false);
                         } else {
-                            updatedFoldableQuote = DataHandler.setFavouriteForAuthorFragment(foldableQuote, true);
-                            Log.d(TAG, "else favourite: " + foldableQuote.toString());
+                            quote.setFavourite(true);
                         }
-                        Log.d(TAG, "FoldableItem updated: " + updatedFoldableQuote.toString());
-
-                        //Update current foldable list
-                        quoteDetailAdapter.updateItem(foldableListLayout.getPosition(), updatedFoldableQuote);
-
+                        new UpdateQuoteIntoDatabase(QuoteDetailActivity.this, quote).execute();
                         break;
                     }
+
                     case 2:
+                        ClipboardHandler.copyToClipboard(QuoteDetailActivity.this, quote.getQuoteDescription());
                         break;
+
+                    case 3:
+                        IntentManager.shareToAllAvailableApps(QuoteDetailActivity.this, "", AppUtils.getShareQuoted(QuoteDetailActivity.this, quote));
+                        break;
+
                     default:
                         break;
                 }
@@ -305,6 +278,98 @@ public class QuoteDetailActivity extends BaseActivity {
             mMenuDialogFragment.dismiss();
         } else {
             finish();
+        }
+    }
+
+    /****************************
+     * FlipView methods *
+     ****************************/
+    private void initQuoteDetailFlipView(ArrayList<Quote> data) {
+
+        mQuoteFlipView = (FlipView) findViewById(R.id.flipview_quote_detail);
+        mQuoteAdapter = new QuoteFlipViewAdapter(QuoteDetailActivity.this);
+        mQuoteAdapter.setData(getModifiedQuotes(data));
+        mQuoteAdapter.setCallback(new QuoteFlipViewAdapter.Callback() {
+            @Override
+            public void onPageRequested(int page) {
+                mQuoteFlipView.smoothFlipTo(page);
+            }
+        });
+        mQuoteFlipView.setAdapter(mQuoteAdapter);
+        mQuoteFlipView.setOnFlipListener(new FlipView.OnFlipListener() {
+            @Override
+            public void onFlippedToPage(FlipView v, int position, long id) {
+                //invisible context menu for last item, as it is the end.
+                if (position == mQuoteAdapter.getCount() - 1) {
+                    btnContextMenu.setVisibility(View.GONE);
+                    tsQuoteCounter.setVisibility(View.GONE);
+                } else {
+                    btnContextMenu.setVisibility(View.VISIBLE);
+                    tsQuoteCounter.setVisibility(View.VISIBLE);
+
+                    //switch counter of the flipview
+                    switchCounter(position, (mQuoteAdapter.getCount() - 1));
+                }
+            }
+        });
+        mQuoteFlipView.peakNext(false);
+        mQuoteFlipView.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+        mQuoteFlipView.setOverFlipMode(OverFlipMode.RUBBER_BAND);
+        mQuoteFlipView.setEmptyView(findViewById(R.id.empty_view));
+        mQuoteFlipView.setOnOverFlipListener(new FlipView.OnOverFlipListener() {
+            @Override
+            public void onOverFlip(FlipView v, OverFlipMode mode, boolean overFlippingPrevious, float overFlipDistance, float flipDistancePerPage) {
+                Log.d(TAG, "overflip overFlipDistance = " + overFlipDistance);
+            }
+        });
+
+        switchCounter(mQuoteFlipView.getCurrentPage(), (mQuoteAdapter.getCount() - 1));
+    }
+
+    private ArrayList<Quote> getModifiedQuotes(ArrayList<Quote> quotes) {
+        boolean isDummyDataFound = false;
+        for (Quote quote : quotes) {
+            if (quote.getQuoteDescription().equalsIgnoreCase(getString(R.string.txt_dummy_quote))) {
+                isDummyDataFound = true;
+                break;
+            }
+        }
+
+        if (!isDummyDataFound) {
+            Quote dummyQuote = new Quote(getString(R.string.txt_dummy_quote), false, false, null, null);
+            dummyQuote.setId(4200000L);
+            quotes.add(dummyQuote);
+        }
+
+        return quotes;
+    }
+
+    class UpdateQuoteIntoDatabase extends AsyncTask<String, String, Quote> {
+
+        private Context mContext;
+        private Quote mQuote;
+
+        UpdateQuoteIntoDatabase(Context context, Quote updatedQuote) {
+            mContext = context;
+            mQuote = updatedQuote;
+        }
+
+        @Override
+        protected void onPreExecute() {
+        }
+
+        @Override
+        protected Quote doInBackground(String... params) {
+            Quote updatedDataIntoDatabase = DataHandler.setFavouriteForAuthorFragment(mQuote, mQuote.isFavourite());
+            Log.d(TAG, "updatedDataIntoDatabase" + updatedDataIntoDatabase.toString());
+            return updatedDataIntoDatabase;
+        }
+
+        @Override
+        protected void onPostExecute(Quote result) {
+            if (result != null) {
+                mQuoteAdapter.updateItem(mQuoteFlipView.getCurrentPage(), result);
+            }
         }
     }
 }

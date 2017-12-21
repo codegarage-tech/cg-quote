@@ -22,7 +22,6 @@ import com.reversecoder.quote.activity.AuthorDetailActivity;
 import com.reversecoder.quote.adapter.AuthorAdapter;
 import com.reversecoder.quote.interfaces.OnFragmentBackPressedListener;
 import com.reversecoder.quote.interfaces.RecyclerViewOnItemClickListener;
-import com.reversecoder.quote.model.Language;
 import com.reversecoder.quote.model.MappedQuote;
 import com.reversecoder.quote.util.AllConstants;
 import com.reversecoder.quote.util.DataHandler;
@@ -32,8 +31,6 @@ import java.util.ArrayList;
 import br.com.stickyindex.StickyIndex;
 import cc.solart.wave.WaveSideBarView;
 
-import static com.reversecoder.quote.util.AllConstants.SELECTED_LANGUAGE;
-import static com.reversecoder.quote.util.DataHandler.getLanguage;
 import static com.reversecoder.quote.util.DataHandler.mAllMappedQuotes;
 
 /**
@@ -63,11 +60,6 @@ public class AuthorFragment extends Fragment implements OnFragmentBackPressedLis
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         parentView = inflater.inflate(R.layout.fragment_author, container, false);
 
-        //Check update of the application
-//        if (NetworkManager.isConnected(getActivity())) {
-//            new GoogleChecker("com.google.android.street", getActivity(), false);
-//        }
-
         initDatabase();
 
         return parentView;
@@ -91,33 +83,47 @@ public class AuthorFragment extends Fragment implements OnFragmentBackPressedLis
         indexContainer = (StickyIndex) parentView.findViewById(R.id.sticky_index_container);
         mSideBarView = (WaveSideBarView) parentView.findViewById(R.id.wave_sidebar);
         personAdapter = new AuthorAdapter(getActivity());
-//        gridLayoutManager = new GridLayoutManager(getActivity(), 1);
         recyclerViewPersonInfo.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerViewPersonInfo.setAdapter(personAdapter);
     }
 
-    private void initData() {
-        personAdapter.addAll(mAllMappedQuotes);
+    private void initData(ArrayList<MappedQuote> mappedQuotes) {
+        personAdapter.clear();
+        personAdapter.addAll(mappedQuotes);
         personAdapter.notifyDataSetChanged();
 
         //sticky header
-        indexContainer.setDataSet(getIndexList(mAllMappedQuotes));
-        indexContainer.setOnScrollListener(recyclerViewPersonInfo);
+        setStickyIndex(mappedQuotes);
 
         //waveside bar
-        mSideBarView.setOnTouchLetterChangeListener(new WaveSideBarView.OnTouchLetterChangeListener() {
-            @Override
-            public void onLetterChange(String letter) {
-                for (int i = 0; i < mAllMappedQuotes.size(); i++) {
-                    if (String.valueOf(mAllMappedQuotes.get(i).getAuthor().getAuthorName().charAt(0)).equals(letter)) {
-                        ((LinearLayoutManager) recyclerViewPersonInfo.getLayoutManager()).scrollToPositionWithOffset(i, 0);
-                        return;
-                    }
-                }
-            }
-        });
+        setWaveSideBar(mappedQuotes);
 
         initActions();
+    }
+
+    private void setStickyIndex(ArrayList<MappedQuote> stickyIndexes) {
+        if (stickyIndexes.size() > 1) {
+            indexContainer.setDataSet(getIndexList(stickyIndexes));
+            indexContainer.setOnScrollListener(recyclerViewPersonInfo);
+        } else if (stickyIndexes.size() == 1) {
+            indexContainer.setVisibility(View.INVISIBLE);
+        }
+    }
+
+    private void setWaveSideBar(final ArrayList<MappedQuote> waveSideBar) {
+        if (waveSideBar.size() > 0) {
+            mSideBarView.setOnTouchLetterChangeListener(new WaveSideBarView.OnTouchLetterChangeListener() {
+                @Override
+                public void onLetterChange(String letter) {
+                    for (int i = 0; i < waveSideBar.size(); i++) {
+                        if (String.valueOf(waveSideBar.get(i).getAuthor().getAuthorName().charAt(0)).equals(letter)) {
+                            ((LinearLayoutManager) recyclerViewPersonInfo.getLayoutManager()).scrollToPositionWithOffset(i, 0);
+                            return;
+                        }
+                    }
+                }
+            });
+        }
     }
 
     private void initActions() {
@@ -147,9 +153,9 @@ public class AuthorFragment extends Fragment implements OnFragmentBackPressedLis
         inputData.execute();
     }
 
-    /***********
-     * Recyclerview action
-     ***************/
+    /***********************
+     * Recyclerview action *
+     ***********************/
     private void implementsRecyclerViewOnItemClickListener() {
         recyclerViewPersonInfo.addOnItemTouchListener(new RecyclerViewOnItemClickListener(getActivity(),
                 new RecyclerViewOnItemClickListener.OnItemClickListener() {
@@ -157,13 +163,8 @@ public class AuthorFragment extends Fragment implements OnFragmentBackPressedLis
                     public void onItemClick(View view, int position) {
                         MappedQuote mappedQuote = ((AuthorAdapter) recyclerViewPersonInfo.getAdapter()).getItem(position);
                         if (mappedQuote.getAuthor().isAuthor()) {
-                            Language language = getLanguage(SELECTED_LANGUAGE);
-                            Log.d(TAG, mappedQuote.toString() + "\nId: " + mappedQuote.getAuthor().getId() + "");
-                            Log.d(TAG, language.toString() + "\nId: " + language.getId() + "");
-
                             Intent intentQuoteList = new Intent(getActivity(), AuthorDetailActivity.class);
                             intentQuoteList.putExtra(AllConstants.INTENT_KEY_AUTHOR, mappedQuote.getAuthor());
-//                            intentQuoteList.putParcelableArrayListExtra(AllConstants.INTENT_KEY_MAPPED_QUOTE, mAllMappedQuotes);
                             intentQuoteList.putExtra(AllConstants.INTENT_KEY_AUTHOR_POSITION, position);
                             getActivity().startActivity(intentQuoteList);
                         }
@@ -195,7 +196,7 @@ public class AuthorFragment extends Fragment implements OnFragmentBackPressedLis
                 //This checking for avoiding "Fragment not attached to Activity when finish AsyncTask & Fragment"
                 if (getActivity() != null && isAdded() && (!isCancelled())) {
                     rlLoadingView.setVisibility(View.GONE);
-                    initData();
+                    initData(result);
                 }
             } else {
                 //This checking for avoiding "Fragment not attached to Activity when finish AsyncTask & Fragment"

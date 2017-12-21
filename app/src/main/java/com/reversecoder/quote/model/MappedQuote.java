@@ -3,6 +3,8 @@ package com.reversecoder.quote.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.google.gson.Gson;
+
 import java.util.ArrayList;
 
 public class MappedQuote implements Parcelable {
@@ -53,7 +55,7 @@ public class MappedQuote implements Parcelable {
 
     @Override
     public String toString() {
-        return "MappedQuote{" +
+        return "{" +
                 "author=" + author +
                 ", language=" + language +
                 ", quotes=" + quotes +
@@ -61,7 +63,9 @@ public class MappedQuote implements Parcelable {
                 '}';
     }
 
-    //parcelable methods
+    /**************************
+     * Methods for parcelable *
+     **************************/
     @Override
     public int describeContents() {
         return 0;
@@ -92,5 +96,18 @@ public class MappedQuote implements Parcelable {
         this.language = in.readParcelable(Language.class.getClassLoader());
         this.quotes = in.readArrayList(Quote.class.getClassLoader());
         isMappedQuote = (in.readInt() == 0) ? false : true;
+    }
+
+    /**************************
+     * Methods for convertion *
+     **************************/
+    public static <T> T convertFromStringToObject(String jsonString, Class<T> clazz) {
+        Gson gson = new Gson();
+        return gson.fromJson(jsonString, clazz);
+    }
+
+    public static <T> String convertFromObjectToString(T object) {
+        Gson gson = new Gson();
+        return gson.toJson(object);
     }
 }

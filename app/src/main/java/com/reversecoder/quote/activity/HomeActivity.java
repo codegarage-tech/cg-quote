@@ -12,6 +12,7 @@ import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -22,11 +23,11 @@ import com.eggheadgames.aboutbox.AboutBoxUtils;
 import com.eggheadgames.aboutbox.AboutConfig;
 import com.eggheadgames.aboutbox.activity.AboutActivity;
 import com.eggheadgames.aboutbox.listener.LicenseClickListener;
-import com.franmontiel.attributionpresenter.activity.LicenseActivity;
+import com.reversecoder.attributionpresenter.activity.LicenseActivity;
 import com.reversecoder.library.storage.SessionManager;
 import com.reversecoder.quote.R;
 import com.reversecoder.quote.fragment.AuthorFragment;
-import com.reversecoder.quote.fragment.FavouriteFragmentNew;
+import com.reversecoder.quote.fragment.FavouriteFragment;
 import com.reversecoder.quote.interfaces.OnFragmentBackPressedListener;
 import com.reversecoder.quote.util.AllConstants;
 import com.reversecoder.quote.util.AppUtils;
@@ -60,6 +61,7 @@ public class HomeActivity extends BaseActivity {
     public ArcView arcMenuView;
     public AnimatedImageView arcMenuImage;
     AnimatedTextView toolbarTitle;
+    public Button btnContextMenu;
     ImageView userAvatar;
     TextView userName;
     TextView userInfo;
@@ -122,7 +124,7 @@ public class HomeActivity extends BaseActivity {
                             if (item.getId().getName().equalsIgnoreCase(NavigationId.HOME.INSTANCE.getName())) {
                                 handleFragmentChanges(HomeActivity.this, getString(R.string.ribble_menu_item_home), new AuthorFragment());
                             } else if (item.getId().getName().equalsIgnoreCase(NavigationId.FAVOURITE.INSTANCE.getName())) {
-                                handleFragmentChanges(HomeActivity.this, getString(R.string.ribble_menu_item_favourite), new FavouriteFragmentNew());
+                                handleFragmentChanges(HomeActivity.this, getString(R.string.ribble_menu_item_favourite), new FavouriteFragment());
                             } else if (item.getId().getName().equalsIgnoreCase(NavigationId.RATE_US.INSTANCE.getName())) {
                                 AboutBoxUtils.openApp(HomeActivity.this, AboutConfig.BuildType.GOOGLE, getApplicationContext().getPackageName());
                             } else if (item.getId().getName().equalsIgnoreCase(NavigationId.OTHER_APPS.INSTANCE.getName())) {
@@ -182,12 +184,9 @@ public class HomeActivity extends BaseActivity {
         arcMenuImage = (AnimatedImageView) findViewById(R.id.arcImage);
         arcMenuView = (ArcView) findViewById(R.id.arcView);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-
-//        setSupportActionBar(toolbar);
-//        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        btnContextMenu = (Button) findViewById(R.id.btn_context_menu);
 
         toolbarTitle.setAnimatedText(getString(R.string.title_activity_author), 0L);
-
         arcMenuImage.setAnimatedImage(R.drawable.arrow_left, 0L);
         arcMenuView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -348,7 +347,7 @@ public class HomeActivity extends BaseActivity {
                 if (data != null && resultCode == RESULT_OK) {
                     Log.d(TAG, "RESULT_OK");
 
-                    FavouriteFragmentNew favouriteFragment = (FavouriteFragmentNew) FragmentUtilsManager.getVisibleSupportFragment(HomeActivity.this, NavigationId.FAVOURITE.INSTANCE.getName());
+                    FavouriteFragment favouriteFragment = (FavouriteFragment) FragmentUtilsManager.getVisibleSupportFragment(HomeActivity.this, NavigationId.FAVOURITE.INSTANCE.getName());
                     if (favouriteFragment != null) {
                         Log.d(TAG, "onActivityResult sending to favourite fragment");
                         favouriteFragment.onActivityResult(requestCode, resultCode, data);

@@ -9,8 +9,8 @@ import android.os.Build;
 import android.util.Log;
 import android.view.View;
 
-import com.franmontiel.localechanger.LocaleChanger;
-import com.franmontiel.localechanger.utils.ActivityRecreationHelper;
+import com.reversecoder.localechanger.LocaleChanger;
+import com.reversecoder.localechanger.utils.ActivityRecreationHelper;
 import com.luseen.verticalintrolibrary.VerticalIntro;
 import com.luseen.verticalintrolibrary.VerticalIntroItem;
 import com.reversecoder.library.storage.SessionManager;

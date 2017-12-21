@@ -42,11 +42,6 @@
             android:theme="@style/AppTheme.NoActionBar" />
 
         <activity
-            android:name="com.reversecoder.quote.activity.FavouriteAuthorDetailActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" />
-
-        <activity
             android:name="com.reversecoder.quote.activity.QuoteDetailActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -56,6 +51,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
 
+        <!-- for database -->
         <meta-data
             android:name="DATABASE"
             android:value="quote.db" />

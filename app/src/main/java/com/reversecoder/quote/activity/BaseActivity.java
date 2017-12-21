@@ -8,8 +8,8 @@ import android.support.v7.app.AppCompatActivity;
 import com.eggheadgames.aboutbox.AboutConfig;
 import com.eggheadgames.aboutbox.IAnalytic;
 import com.eggheadgames.aboutbox.IDialog;
-import com.franmontiel.localechanger.LocaleChanger;
-import com.franmontiel.localechanger.utils.ActivityRecreationHelper;
+import com.reversecoder.localechanger.LocaleChanger;
+import com.reversecoder.localechanger.utils.ActivityRecreationHelper;
 import com.reversecoder.quote.R;
 
 public class BaseActivity extends AppCompatActivity {
