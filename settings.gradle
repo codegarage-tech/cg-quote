@@ -2,4 +2,4 @@ include ':app', ':ribblemenu', ':easyrecyclerview', ':wavesidebar', ':sugar' , '
         ':glazyviewpager', ':foldablelayout', ':aboutbox', ':contextmenu', ':attributionpresenter',
         ':sherlock', ':verticalappintro', ':tutors', ':shaperipple', ':cookiebar2', ':localechanger',
         ':updatechecker', ':kenburnsview', ':arclayout', ':cardslider', ':multicolortextview',
-        ':flipview', ':gcm'
+        ':flipview', ':gcm', ':androidviewanimations'

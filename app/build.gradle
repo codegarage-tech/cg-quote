@@ -84,4 +84,5 @@ dependencies {
     compile project(":multicolortextview")
     compile project(":flipview")
     compile project(":gcm")
+    compile project(":androidviewanimations")
 }
