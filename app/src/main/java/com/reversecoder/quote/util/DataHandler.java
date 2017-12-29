@@ -105,7 +105,7 @@ public class DataHandler {
         if (AllSettingsManager.isNullOrEmpty(SessionManager.getStringSetting(getGlobalContext(), SESSION_DATA_LANGUAGES))) {
             List<Language> languages = Language.listAll(Language.class);
             DataLanguage dataLanguage = new DataLanguage(new ArrayList<Language>(languages));
-            SessionManager.setStringSetting(getGlobalContext(), SESSION_DATA_LANGUAGES, dataLanguage.toString());
+            SessionManager.setStringSetting(getGlobalContext(), SESSION_DATA_LANGUAGES, DataLanguage.convertFromObjectToString(dataLanguage));
         }
 
         DataLanguage mDataLanguage = DataLanguage.convertFromStringToObject(SessionManager.getStringSetting(getGlobalContext(), SESSION_DATA_LANGUAGES), DataLanguage.class);
