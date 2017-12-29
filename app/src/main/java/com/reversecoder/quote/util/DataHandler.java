@@ -13,6 +13,7 @@ import com.reversecoder.quote.R;
 import com.reversecoder.quote.model.Author;
 import com.reversecoder.quote.model.DataAuthor;
 import com.reversecoder.quote.model.DataLanguage;
+import com.reversecoder.quote.model.DataQuote;
 import com.reversecoder.quote.model.Language;
 import com.reversecoder.quote.model.MappedQuote;
 import com.reversecoder.quote.model.Quote;
@@ -25,6 +26,7 @@ import static com.reversecoder.localechanger.data.Locales.getAllLocales;
 import static com.reversecoder.quote.application.QuoteApp.getGlobalContext;
 import static com.reversecoder.quote.util.AllConstants.SESSION_DATA_AUTHORS;
 import static com.reversecoder.quote.util.AllConstants.SESSION_DATA_LANGUAGES;
+import static com.reversecoder.quote.util.AllConstants.SESSION_DATA_QUOTES;
 import static com.reversecoder.quote.util.AllConstants.SESSION_FREE_APP;
 import static com.reversecoder.quote.util.AllConstants.SESSION_SELECTED_LANGUAGE;
 
@@ -441,8 +443,8 @@ public class DataHandler {
 
         Author OJSimpson = new Author("O. J. Simpson", "July 9, 1947", "", "Athlete", "American", AppUtils.getDrawableResourceId(R.drawable.o_j_simpson), true);
         authors.add(OJSimpson);
-//
-        Author OSheaJacksonJr = new Author("O\\'Shea Jackson, Jr.", "February 24, 1991", "", "Actor", "American", AppUtils.getDrawableResourceId(R.drawable.o_shea_jackson_jr), true);
+
+        Author OSheaJacksonJr = new Author("O'Shea Jackson, Jr.", "February 24, 1991", "", "Actor", "American", AppUtils.getDrawableResourceId(R.drawable.o_shea_jackson_jr), true);
         authors.add(OSheaJacksonJr);
 
         Author OWinstonLink = new Author("O. Winston Link", "December 16, 1914", "January 30, 2001", "Photographer", "American", AppUtils.getDrawableResourceId(R.drawable.o_winston_link), true);
@@ -465,8 +467,8 @@ public class DataHandler {
 
         Author pele = new Author("Pele", "October 23, 1940", "", "Athlete", "Brazilian", AppUtils.getDrawableResourceId(R.drawable.pele), true);
         authors.add(pele);
-//
-        Author QoriankaKilcher = new Author("Q\\'orianka Kilcher", "February 11, 1990", "", "Actress", "German", AppUtils.getDrawableResourceId(R.drawable.q_orianka_kilcher), true);
+
+        Author QoriankaKilcher = new Author("Q'orianka Kilcher", "February 11, 1990", "", "Actress", "German", AppUtils.getDrawableResourceId(R.drawable.q_orianka_kilcher), true);
         authors.add(QoriankaKilcher);
 
         Author QTip = new Author("Q-Tip", "April 10, 1970", "", "Musician", "American", AppUtils.getDrawableResourceId(R.drawable.q_tip), true);
@@ -603,7 +605,7 @@ public class DataHandler {
 
         ArrayList<Author> mAuthors = new ArrayList<>(SugarRecord.saveInTx(authors));
         DataAuthor dataAuthor = new DataAuthor(authors);
-        SessionManager.setStringSetting(getGlobalContext(), SESSION_DATA_AUTHORS, dataAuthor.toString());
+        SessionManager.setStringSetting(getGlobalContext(), SESSION_DATA_AUTHORS, DataAuthor.convertFromObjectToString(dataAuthor));
 
         return mAuthors;
     }
@@ -2509,11 +2511,14 @@ public class DataHandler {
         quotes.add(new Quote("I was leftwing, I am leftwing, and I will die leftwing.", false, true, english, zygmuntBauman));
 
         ArrayList<Quote> mQuotes = new ArrayList<>(SugarRecord.saveInTx(quotes));
-//        DataQuote dataQuote = new DataQuote(mQuotes);
-//        SessionManager.setStringSetting(getGlobalContext(), SESSION_DATA_QUOTES, dataQuote.toString());
-//
-//        ArrayList<Quote> tempQuotes=DataQuote.convertFromStringToObject(SessionManager.getStringSetting(getGlobalContext(), SESSION_DATA_QUOTES),DataQuote.class).getQuotes();
-//        for(int i=0;i<){}
+        DataQuote mDataQuote = new DataQuote(mQuotes);
+        SessionManager.setStringSetting(getGlobalContext(), SESSION_DATA_QUOTES, DataQuote.convertFromObjectToString(mDataQuote));
+
+//        Log.d(TAG, "dataQuote: " + SessionManager.getStringSetting(getGlobalContext(), SESSION_DATA_QUOTES));
+//        DataQuote finalDataQuote = DataQuote.convertFromStringToObject(SessionManager.getStringSetting(getGlobalContext(), SESSION_DATA_QUOTES), DataQuote.class);
+//        ArrayList<Quote> tempQuotes = finalDataQuote.getQuotes();
+//        Log.d(TAG, "dataQuote final: " + finalDataQuote.toString());
+//        Log.d(TAG, "dataQuote size: " + tempQuotes.size());
 
         return mQuotes;
     }

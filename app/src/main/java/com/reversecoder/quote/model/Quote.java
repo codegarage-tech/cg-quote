@@ -17,9 +17,6 @@ public class Quote extends SugarRecord implements Parcelable {
     private Language language;
     private Author author;
 
-    @Ignore
-    private boolean isHover = false;
-
     public Quote() {
     }
 
@@ -71,14 +68,6 @@ public class Quote extends SugarRecord implements Parcelable {
         this.author = author;
     }
 
-    public boolean isHover() {
-        return isHover;
-    }
-
-    public void setHover(boolean hover) {
-        isHover = hover;
-    }
-
     @Override
     public String toString() {
         return "{" +
@@ -88,7 +77,6 @@ public class Quote extends SugarRecord implements Parcelable {
                 ", isQuote=" + isQuote +
                 ", language=" + language +
                 ", author=" + author +
-                ", isHover=" + isHover +
                 '}';
     }
 
@@ -108,7 +96,6 @@ public class Quote extends SugarRecord implements Parcelable {
         dest.writeInt(isQuote ? 1 : 0);
         dest.writeParcelable(language, flags);
         dest.writeParcelable(author, flags);
-        dest.writeInt(isHover ? 1 : 0);
     }
 
     // Creator
@@ -131,7 +118,6 @@ public class Quote extends SugarRecord implements Parcelable {
         this.isQuote = (in.readInt() == 0) ? false : true;
         this.language = in.readParcelable(Language.class.getClassLoader());
         this.author = in.readParcelable(Author.class.getClassLoader());
-        this.isHover = (in.readInt() == 0) ? false : true;
     }
 
     /**************************
