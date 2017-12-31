@@ -17,6 +17,7 @@ import com.reversecoder.quote.model.DataQuote;
 import com.reversecoder.quote.model.Language;
 import com.reversecoder.quote.model.MappedQuote;
 import com.reversecoder.quote.model.Quote;
+import com.reversecoder.quote.model.Tag;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -632,8 +633,26 @@ public class DataHandler {
         return null;
     }
 
+    public static Language getLanguage(List<Language> languages, String languageName) {
+        for (int i = 0; i < languages.size(); i++) {
+            if (languages.get(i).getLanguageName().equalsIgnoreCase(languageName)) {
+                return languages.get(i);
+            }
+        }
+        return null;
+    }
+
     public static Author getAuthor(String authorName) {
         List<Author> authors = getAllAuthors();
+        for (int i = 0; i < authors.size(); i++) {
+            if (authors.get(i).getAuthorName().equalsIgnoreCase(authorName)) {
+                return authors.get(i);
+            }
+        }
+        return null;
+    }
+
+    public static Author getAuthor(List<Author> authors, String authorName) {
         for (int i = 0; i < authors.size(); i++) {
             if (authors.get(i).getAuthorName().equalsIgnoreCase(authorName)) {
                 return authors.get(i);
@@ -645,9 +664,11 @@ public class DataHandler {
     public static ArrayList<Quote> initAllQuotes() {
 
         ArrayList<Quote> quotes = new ArrayList<Quote>();
-        Language english = getLanguage(SessionManager.getStringSetting(getGlobalContext(), SESSION_SELECTED_LANGUAGE));
+        List<Author> authors = getAllAuthors();
+        List<Language> languages = getAllLanguages();
+        Language english = getLanguage(languages, SessionManager.getStringSetting(getGlobalContext(), SESSION_SELECTED_LANGUAGE));
 
-        Author APJAbdulKalam = getAuthor("A. P. J. Abdul Kalam");
+        Author APJAbdulKalam = getAuthor(authors, "A. P. J. Abdul Kalam");
         quotes.add(new Quote("Teaching is a very noble profession that shapes the character, caliber, and future of an individual. If the people remember me as a good teacher, that will be the biggest honour for me.", false, true, english, APJAbdulKalam));
         quotes.add(new Quote("We should not give up and we should not allow the problem to defeat us.", false, true, english, APJAbdulKalam));
         quotes.add(new Quote("Let us sacrifice our today so that our children can have a better tomorrow.", false, true, english, APJAbdulKalam));
@@ -659,7 +680,7 @@ public class DataHandler {
         quotes.add(new Quote("Science is a beautiful gift to humanity; we should not distort it.", false, true, english, APJAbdulKalam));
         quotes.add(new Quote("The bird is powered by its own life and by its motivation.", false, true, english, APJAbdulKalam));
 
-        Author albertCamus = getAuthor("Albert Camus");
+        Author albertCamus = getAuthor(authors, "Albert Camus");
         quotes.add(new Quote("Don't walk behind me; I may not lead. Don't walk in front of me; I may not follow. Just walk Autumn is a second spring when every leaf is a flower.", false, true, english, albertCamus));
         quotes.add(new Quote("Don't walk behind me; I may not lead. Don't walk in front of me; I may not follow. Just walk beside me and be my friend.", false, true, english, albertCamus));
         quotes.add(new Quote("Blessed are the hearts that can bend; they shall never be broken.", false, true, english, albertCamus));
@@ -671,7 +692,7 @@ public class DataHandler {
         quotes.add(new Quote("Real generosity toward the future lies in giving all to the present.", false, true, english, albertCamus));
         quotes.add(new Quote("The evil that is in the world almost always comes of ignorance, and good intentions may do as much harm as malevolence if they lack understanding.", false, true, english, albertCamus));
 
-        Author aristotle = getAuthor("Aristotle");
+        Author aristotle = getAuthor(authors, "Aristotle");
         quotes.add(new Quote("It is during our darkest moments that we must focus to see the light.", false, true, english, aristotle));
         quotes.add(new Quote("Quality is not an act, it is a habit.", false, true, english, aristotle));
         quotes.add(new Quote("The roots of education are bitter, but the fruit is sweet.", false, true, english, aristotle));
@@ -683,7 +704,7 @@ public class DataHandler {
         quotes.add(new Quote("The one exclusive sign of thorough knowledge is the power of teaching.", false, true, english, aristotle));
         quotes.add(new Quote("The worst form of inequality is to try to make unequal things equal.", false, true, english, aristotle));
 
-        Author audreyHepburn = getAuthor("Audrey Hepburn");
+        Author audreyHepburn = getAuthor(authors, "Audrey Hepburn");
         quotes.add(new Quote("Nothing is impossible, the word itself says 'I'm possible'!", false, true, english, audreyHepburn));
         quotes.add(new Quote("The beauty of a woman must be seen from in her eyes, because that is the doorway to her heart, the place where love resides.", false, true, english, audreyHepburn));
         quotes.add(new Quote("For beautiful eyes, look for the good in others; for beautiful lips, speak only words of kindness; and for poise, walk with the knowledge that you are never alone.", false, true, english, audreyHepburn));
@@ -695,7 +716,7 @@ public class DataHandler {
         quotes.add(new Quote("I believe in manicures. I believe in overdressing. I believe in primping at leisure and wearing lipstick. I believe in pink. I believe happy girls are the prettiest girls. I believe that tomorrow is another day, and... I believe in miracles.", false, true, english, audreyHepburn));
         quotes.add(new Quote("Let's face it, a nice creamy chocolate cake does a lot for a lot of people; it does for me.", false, true, english, audreyHepburn));
 
-        Author abrahamLincoln = getAuthor("Abraham Lincoln");
+        Author abrahamLincoln = getAuthor(authors, "Abraham Lincoln");
         quotes.add(new Quote("If this is coffee, please bring me some tea; but if this is tea, please bring me some coffee.", false, true, english, abrahamLincoln));
         quotes.add(new Quote("Character is like a tree and reputation like a shadow. The shadow is what we think of it; the tree is the real thing.", false, true, english, abrahamLincoln));
         quotes.add(new Quote("I am a slow walker, but I never walk back.", false, true, english, abrahamLincoln));
@@ -707,7 +728,7 @@ public class DataHandler {
         quotes.add(new Quote("Nearly all men can stand adversity, but if you want to test a man's character, give him power.", false, true, english, abrahamLincoln));
         quotes.add(new Quote("America will never be destroyed from the outside. If we falter and lose our freedoms, it will be because we destroyed ourselves.", false, true, english, abrahamLincoln));
 
-        Author aldousHuxley = getAuthor("Aldous Huxley");
+        Author aldousHuxley = getAuthor(authors, "Aldous Huxley");
         quotes.add(new Quote("There is only one corner of the universe you can be certain of improving, and that's your own self.", false, true, english, aldousHuxley));
         quotes.add(new Quote("There are things known and there are things unknown, and in between are the doors of perception.", false, true, english, aldousHuxley));
         quotes.add(new Quote("The secret of genius is to carry the spirit of the child into old age, which means never losing your enthusiasm.", false, true, english, aldousHuxley));
@@ -719,7 +740,7 @@ public class DataHandler {
         quotes.add(new Quote("All gods are homemade, and it is we who pull their strings, and so, give them the power to pull ours.", false, true, english, aldousHuxley));
         quotes.add(new Quote("A democracy which makes or even effectively prepares for modern, scientific war must necessarily cease to be democratic. No country can be really well prepared for modern war unless it is governed by a tyrant, at the head of a highly trained and perfectly obedient bureaucracy.", false, true, english, aldousHuxley));
 
-        Author AalexanderHamilton = getAuthor("Alexander Hamilton");
+        Author AalexanderHamilton = getAuthor(authors, "Alexander Hamilton");
         quotes.add(new Quote("Learn to think continentally.", false, true, english, AalexanderHamilton));
         quotes.add(new Quote("Real liberty is neither found in despotism or the extremes of democracy, but in moderate governments.", false, true, english, AalexanderHamilton));
         quotes.add(new Quote("In framing a government which is to be administered by men over men, the great difficulty lies in this: you must first enable the government to control the governed; and in the next place, oblige it to control itself.", false, true, english, AalexanderHamilton));
@@ -731,7 +752,7 @@ public class DataHandler {
         quotes.add(new Quote("Unless your government is respectable, foreigners will invade your rights; and to maintain tranquillity, it must be respectable - even to observe neutrality, you must have a strong government.", false, true, english, AalexanderHamilton));
         quotes.add(new Quote("There is a certain enthusiasm in liberty, that makes human nature rise above itself, in acts of bravery and heroism.", false, true, english, AalexanderHamilton));
 
-        Author alexanderPope = getAuthor("Alexander Pope");
+        Author alexanderPope = getAuthor(authors, "Alexander Pope");
         quotes.add(new Quote("The greatest magnifying glasses in the world are a man's own eyes when they look upon his own person.", false, true, english, alexanderPope));
         quotes.add(new Quote("Fools rush in where angels fear to tread.", false, true, english, alexanderPope));
         quotes.add(new Quote("All nature is but art unknown to thee.", false, true, english, alexanderPope));
@@ -743,7 +764,7 @@ public class DataHandler {
         quotes.add(new Quote("To be angry is to revenge the faults of others on ourselves.", false, true, english, alexanderPope));
         quotes.add(new Quote("To err is human; to forgive, divine.", false, true, english, alexanderPope));
 
-        Author arnoldSchwarzenegger = getAuthor("Arnold Schwarzenegger");
+        Author arnoldSchwarzenegger = getAuthor(authors, "Arnold Schwarzenegger");
         quotes.add(new Quote("The worst thing I can be is the same as everybody else. I hate that.", false, true, english, arnoldSchwarzenegger));
         quotes.add(new Quote("It's simple, if it jiggles, it's fat.", false, true, english, arnoldSchwarzenegger));
         quotes.add(new Quote("Bodybuilding is much like any other sport. To be successful, you must dedicate yourself 100% to your training, diet and mental approach.", false, true, english, arnoldSchwarzenegger));
@@ -755,7 +776,7 @@ public class DataHandler {
         quotes.add(new Quote("Just remember, you can't climb the ladder of success with your hands in your pockets.", false, true, english, arnoldSchwarzenegger));
         quotes.add(new Quote("Strength does not come from winning. Your struggles develop your strengths. When you go through hardships and decide not to surrender, that is strength.", false, true, english, arnoldSchwarzenegger));
 
-        Author barackObama = getAuthor("Barack Obama");
+        Author barackObama = getAuthor(authors, "Barack Obama");
         quotes.add(new Quote("Change will not come if we wait for some other person or some other time. We are the ones we've been waiting for. We are the change that we seek.", false, true, english, barackObama));
         quotes.add(new Quote("I see Americans of every party, every background, every faith who believe that we are stronger together: black, white, Latino, Asian, Native American; young, old; gay, straight; men, women, folks with disabilities, all pledging allegiance under the same proud flag to this big, bold country that we love. That's what I see. That's the America I know!", false, true, english, barackObama));
         quotes.add(new Quote("We need to reject any politics that targets people because of race or religion. This isn't a matter of political correctness. It's a matter of understanding what makes us strong. The world respects us not just for our arsenal; it respects us for our diversity and our openness and the way we respect every faith.", false, true, english, barackObama));
@@ -767,7 +788,7 @@ public class DataHandler {
         quotes.add(new Quote("America isn't Congress. America isn't Washington. America is the striving immigrant who starts a business, or the mom who works two low-wage jobs to give her kid a better life. America is the union leader and the CEO who put aside their differences to make the economy stronger.", false, true, english, barackObama));
         quotes.add(new Quote("After a century of striving, after a year of debate, after a historic vote, health care reform is no longer an unmet promise. It is the law of the land.", false, true, english, barackObama));
 
-        Author benShapiro = getAuthor("Ben Shapiro");
+        Author benShapiro = getAuthor(authors, "Ben Shapiro");
         quotes.add(new Quote("During the Great Depression, levels of crime actually dropped. During the 1920s, when life was free and easy, so was crime. During the 1930s, when the entire American economy fell into a government-owned alligator moat, crime was nearly non-existent. During the 1950s and 1960s, when the economy was excellent, crime rose again.", false, true, english, benShapiro));
         quotes.add(new Quote("Socialism violates at least three of the Ten Commandments: It turns government into God, it legalizes thievery and it elevates covetousness. Discussions of income inequality, after all, aren't about prosperity but about petty spite. Why should you care how much money I make, so long as you are happy?", false, true, english, benShapiro));
         quotes.add(new Quote("Distrust of government isn't baseless cynicism. It's realism.", false, true, english, benShapiro));
@@ -779,7 +800,7 @@ public class DataHandler {
         quotes.add(new Quote("Socialism states that you owe me something simply because I exist. Capitalism, by contrast, results in a sort of reality-forced altruism: I may not want to help you, I may dislike you, but if I don't give you a product or service you want, I will starve. Voluntary exchange is more moral than forced redistribution.", false, true, english, benShapiro));
         quotes.add(new Quote("Freedom of speech and thought matters, especially when it is speech and thought with which we disagree. The moment the majority decides to destroy people for engaging in thought it dislikes, thought crime becomes a reality.", false, true, english, benShapiro));
 
-        Author benjaminDisraeli = getAuthor("Benjamin Disraeli");
+        Author benjaminDisraeli = getAuthor(authors, "Benjamin Disraeli");
         quotes.add(new Quote("A great city, whose image dwells in the memory of man, is the type of some great idea. Rome represents conquest; Faith hovers over the towers of Jerusalem; and Athens embodies the pre-eminent quality of the antique world, Art.", false, true, english, benjaminDisraeli));
         quotes.add(new Quote("Power has only one duty - to secure the social welfare of the People.", false, true, english, benjaminDisraeli));
         quotes.add(new Quote("Never apologize for showing feeling. When you do so, you apologize for the truth.", false, true, english, benjaminDisraeli));
@@ -791,7 +812,7 @@ public class DataHandler {
         quotes.add(new Quote("Never complain and never explain.", false, true, english, benjaminDisraeli));
         quotes.add(new Quote("Courage is fire, and bullying is smoke.", false, true, english, benjaminDisraeli));
 
-        Author benjaminFranklin = getAuthor("Benjamin Franklin");
+        Author benjaminFranklin = getAuthor(authors, "Benjamin Franklin");
         quotes.add(new Quote("Without freedom of thought, there can be no such thing as wisdom - and no such thing as public liberty without freedom of speech.", false, true, english, benjaminFranklin));
         quotes.add(new Quote("Early to bed and early to rise makes a man healthy, wealthy and wise.", false, true, english, benjaminFranklin));
         quotes.add(new Quote("Either write something worth reading or do something worth writing.", false, true, english, benjaminFranklin));
@@ -803,7 +824,7 @@ public class DataHandler {
         quotes.add(new Quote("Tell me and I forget. Teach me and I remember. Involve me and I learn.", false, true, english, benjaminFranklin));
         quotes.add(new Quote("An investment in knowledge pays the best interest.", false, true, english, benjaminFranklin));
 
-        Author bertrandRussell = getAuthor("Bertrand Russell");
+        Author bertrandRussell = getAuthor(authors, "Bertrand Russell");
         quotes.add(new Quote("I would never die for my beliefs because I might be wrong.", false, true, english, bertrandRussell));
         quotes.add(new Quote("Science is what you know, philosophy is what you don't know.", false, true, english, bertrandRussell));
         quotes.add(new Quote("Men are born ignorant, not stupid. They are made stupid by education.", false, true, english, bertrandRussell));
@@ -815,7 +836,7 @@ public class DataHandler {
         quotes.add(new Quote("War does not determine who is right - only who is left.", false, true, english, bertrandRussell));
         quotes.add(new Quote("The good life is one inspired by love and guided by knowledge.", false, true, english, bertrandRussell));
 
-        Author beyonceKnowles = getAuthor("Beyonce Knowles");
+        Author beyonceKnowles = getAuthor(authors, "Beyonce Knowles");
         quotes.add(new Quote("If everything was perfect, you would never learn and you would never grow.", false, true, english, beyonceKnowles));
         quotes.add(new Quote("Who I am on stage is very, very different to who I am in real life.", false, true, english, beyonceKnowles));
         quotes.add(new Quote("I can never be safe; I always try and go against the grain. As soon as I accomplish one thing, I just set a higher goal. That's how I've gotten to where I am.", false, true, english, beyonceKnowles));
@@ -827,7 +848,7 @@ public class DataHandler {
         quotes.add(new Quote("I hold a lot of things in. I'm always making sure everybody is okay. I usually don't rage; I usually don't curse. So for me, it's a great thing to be able to scream and say whatever I want.", false, true, english, beyonceKnowles));
         quotes.add(new Quote("There's my personal life, my sensitive side, and then me as a performer, sexy and energised and fun.", false, true, english, beyonceKnowles));
 
-        Author billGates = getAuthor("Bill Gates");
+        Author billGates = getAuthor(authors, "Bill Gates");
         quotes.add(new Quote("The first rule of any technology used in a business is that automation applied to an efficient operation will magnify the efficiency. The second is that automation applied to an inefficient operation will magnify the inefficiency.", false, true, english, billGates));
         quotes.add(new Quote("Research shows that there is only half as much variation in student achievement between schools as there is among classrooms in the same school. If you want your child to get the best education possible, it is actually more important to get him assigned to a great teacher than to a great school.", false, true, english, billGates));
         quotes.add(new Quote("We all need people who will give us feedback. That's how we improve.", false, true, english, billGates));
@@ -839,7 +860,7 @@ public class DataHandler {
         quotes.add(new Quote("Technology is just a tool. In terms of getting the kids working together and motivating them, the teacher is the most important.", false, true, english, billGates));
         quotes.add(new Quote("Success is a lousy teacher. It seduces smart people into thinking they can't lose.", false, true, english, billGates));
 
-        Author billyGraham = getAuthor("Billy Graham");
+        Author billyGraham = getAuthor(authors, "Billy Graham");
         quotes.add(new Quote("Racial prejudice, anti-Semitism, or hatred of anyone with different beliefs has no place in the human mind or heart.", false, true, english, billyGraham));
         quotes.add(new Quote("Make sure of your commitment to Jesus Christ, and seek to follow Him every day. Don't be swayed by the false values and goals of this world, but put Christ and His will first in everything you do.", false, true, english, billyGraham));
         quotes.add(new Quote("When wealth is lost, nothing is lost; when health is lost, something is lost; when character is lost, all is lost.", false, true, english, billyGraham));
@@ -851,7 +872,7 @@ public class DataHandler {
         quotes.add(new Quote("A child who is allowed to be disrespectful to his parents will not have true respect for anyone.", false, true, english, billyGraham));
         quotes.add(new Quote("The greatest legacy one can pass on to one's children and grandchildren is not money or other material things accumulated in one's life, but rather a legacy of character and faith.", false, true, english, billyGraham));
 
-        Author blaisePascal = getAuthor("Blaise Pascal");
+        Author blaisePascal = getAuthor(authors, "Blaise Pascal");
         quotes.add(new Quote("We view things not only from different sides, but with different eyes; we have no wish to find them alike.", false, true, english, blaisePascal));
         quotes.add(new Quote("Belief is a wise wager. Granted that faith cannot be proved, what harm will come to you if you gamble on its truth and it proves false? If you gain, you gain all; if you lose, you lose nothing. Wager, then, without hesitation, that He exists.", false, true, english, blaisePascal));
         quotes.add(new Quote("Men never do evil so completely and cheerfully as when they do it from religious conviction.", false, true, english, blaisePascal));
@@ -863,7 +884,7 @@ public class DataHandler {
         quotes.add(new Quote("Human beings must be known to be loved; but Divine beings must be loved to be known.", false, true, english, blaisePascal));
         quotes.add(new Quote("Kind words do not cost much. Yet they accomplish much.", false, true, english, blaisePascal));
 
-        Author bobDylan = getAuthor("Bob Dylan");
+        Author bobDylan = getAuthor(authors, "Bob Dylan");
         quotes.add(new Quote("I'll let you be in my dreams if I can be in yours.", false, true, english, bobDylan));
         quotes.add(new Quote("I accept chaos, I'm not sure whether it accepts me.", false, true, english, bobDylan));
         quotes.add(new Quote("A mistake is to commit a misunderstanding.", false, true, english, bobDylan));
@@ -875,7 +896,7 @@ public class DataHandler {
         quotes.add(new Quote("Take care of all your memories. For you cannot relive them.", false, true, english, bobDylan));
         quotes.add(new Quote("A hero is someone who understands the responsibility that comes with his freedom.", false, true, english, bobDylan));
 
-        Author CSLewis = getAuthor("C. S. Lewis");
+        Author CSLewis = getAuthor(authors, "C. S. Lewis");
         quotes.add(new Quote("The task of the modern educator is not to cut down jungles, but to irrigate deserts.", false, true, english, CSLewis));
         quotes.add(new Quote("Education without values, as useful as it is, seems rather to make man a more clever devil.", false, true, english, CSLewis));
         quotes.add(new Quote("History isn't just the story of bad people doing bad things. It's quite as much a story of people trying to do good things. But somehow, something goes wrong.", false, true, english, CSLewis));
@@ -887,7 +908,7 @@ public class DataHandler {
         quotes.add(new Quote("Look for yourself, and you will find in the long run only hatred, loneliness, despair, rage, ruin, and decay. But look for Christ, and you will find Him, and with Him everything else thrown in.", false, true, english, CSLewis));
         quotes.add(new Quote("Courage is not simply one of the virtues, but the form of every virtue at the testing point.", false, true, english, CSLewis));
 
-        Author carlJung = getAuthor("Carl Jung");
+        Author carlJung = getAuthor(authors, "Carl Jung");
         quotes.add(new Quote("In all chaos there is a cosmos, in all disorder a secret order.", false, true, english, carlJung));
         quotes.add(new Quote("Every form of addiction is bad, no matter whether the narcotic be alcohol or morphine or idealism.", false, true, english, carlJung));
         quotes.add(new Quote("Children are educated by what the grown-up is and not by his talk.", false, true, english, carlJung));
@@ -899,7 +920,7 @@ public class DataHandler {
         quotes.add(new Quote("Even a happy life cannot be without a measure of darkness, and the word happy would lose its meaning if it were not balanced by sadness. It is far better take things as they come along with patience and equanimity.", false, true, english, carlJung));
         quotes.add(new Quote("The word 'happy' would lose its meaning if it were not balanced by sadness.", false, true, english, carlJung));
 
-        Author carlSagan = getAuthor("Carl Sagan");
+        Author carlSagan = getAuthor(authors, "Carl Sagan");
         quotes.add(new Quote("The universe is not required to be in perfect harmony with human ambition.", false, true, english, carlSagan));
         quotes.add(new Quote("It is far better to grasp the universe as it really is than to persist in delusion, however satisfying and reassuring.", false, true, english, carlSagan));
         quotes.add(new Quote("For small creatures such as we the vastness is bearable only through love.", false, true, english, carlSagan));
@@ -911,7 +932,7 @@ public class DataHandler {
         quotes.add(new Quote("We live in a society exquisitely dependent on science and technology, in which hardly anyone knows anything about science and technology.", false, true, english, carlSagan));
         quotes.add(new Quote("Science is a way of thinking much more than it is a body of knowledge.", false, true, english, carlSagan));
 
-        Author carlBurnett = getAuthor("Carl Burnett");
+        Author carlBurnett = getAuthor(authors, "Carl Burnett");
         quotes.add(new Quote("Only I can change my life. No one can do it for me.", false, true, english, carlBurnett));
         quotes.add(new Quote("When you have a dream, you've got to grab it and never let go.", false, true, english, carlBurnett));
         quotes.add(new Quote("Words, once they are printed, have a life of their own.", false, true, english, carlBurnett));
@@ -923,7 +944,7 @@ public class DataHandler {
         quotes.add(new Quote("'m not always optimistic. You wouldn't have all cylinders cooking if you were always like Mary Poppins.", false, true, english, carlBurnett));
         quotes.add(new Quote("I love to write. I have always loved writing. That was my first love.", false, true, english, carlBurnett));
 
-        Author charlesDickens = getAuthor("Charles Dickens");
+        Author charlesDickens = getAuthor(authors, "Charles Dickens");
         quotes.add(new Quote("A moral being is one who is capable of reflecting on his past actions and their motives - of approving of some and disapproving of others.", false, true, english, charlesDickens));
         quotes.add(new Quote("Man is descended from a hairy, tailed quadruped, probably arboreal in its habits.", false, true, english, charlesDickens));
         quotes.add(new Quote("The very essence of instinct is that it's followed independently of reason.", false, true, english, charlesDickens));
@@ -935,7 +956,7 @@ public class DataHandler {
         quotes.add(new Quote("A man's friendships are one of the best measures of his worth.", false, true, english, charlesDickens));
         quotes.add(new Quote("A man who dares to waste one hour of time has not discovered the value of life.", false, true, english, charlesDickens));
 
-        Author charlesRSwindoll = getAuthor("Charles R. Swindoll");
+        Author charlesRSwindoll = getAuthor(authors, "Charles R. Swindoll");
         quotes.add(new Quote("The remarkable thing is, we have a choice everyday regarding the attitude we will embrace for that day.", false, true, english, charlesRSwindoll));
         quotes.add(new Quote("A teardrop on earth summons the King of heaven.", false, true, english, charlesRSwindoll));
         quotes.add(new Quote("We are all faced with a series of great opportunities brilliantly disguised as impossible situations.", false, true, english, charlesRSwindoll));
@@ -947,7 +968,7 @@ public class DataHandler {
         quotes.add(new Quote("I cannot even imagine where I would be today were it not for that handful of friends who have given me a heart full of joy. Let's face it, friends make life a lot more fun.", false, true, english, charlesRSwindoll));
         quotes.add(new Quote("Life is 10% what happens to you and 90% how you react to it.", false, true, english, charlesRSwindoll));
 
-        Author cheGuevara = getAuthor("Che Guevara");
+        Author cheGuevara = getAuthor(authors, "Che Guevara");
         quotes.add(new Quote("The revolution is not an apple that falls when it is ripe. You have to make it fall.", false, true, english, cheGuevara));
         quotes.add(new Quote("I have a wish. It as a fear as well - that in my end will be my beginning.", false, true, english, cheGuevara));
         quotes.add(new Quote("The true revolutionary is guided by a great feeling of love. It is impossible to think of a genuine revolutionary lacking this quality.", false, true, english, cheGuevara));
@@ -959,7 +980,7 @@ public class DataHandler {
         quotes.add(new Quote("Study hard so that you can master technology, which allows us to master nature.", false, true, english, cheGuevara));
         quotes.add(new Quote("I am one of those people who believes that the solution to the world's problems is to be found behind the Iron Curtain.", false, true, english, cheGuevara));
 
-        Author christopherHitchens = getAuthor("Christopher Hitchens");
+        Author christopherHitchens = getAuthor(authors, "Christopher Hitchens");
         quotes.add(new Quote("The concept of loneliness and exile and self-sufficiency continually bucks me up.", false, true, english, christopherHitchens));
         quotes.add(new Quote("I don't think it's possible to have a sense of tragedy without having a sense of humor.", false, true, english, christopherHitchens));
         quotes.add(new Quote("To 'choose' dogma and faith over doubt and experience is to throw out the ripening vintage and to reach greedily for the Kool-Aid.", false, true, english, christopherHitchens));
@@ -971,7 +992,7 @@ public class DataHandler {
         quotes.add(new Quote("A gentleman is never rude except on purpose - I can honestly be nasty sober, believe you me.", false, true, english, christopherHitchens));
         quotes.add(new Quote("Owners of dogs will have noticed that, if you provide them with food and water and shelter and affection, they will think you are God. Whereas owners of cats are compelled to realize that, if you provide them with food and water and affection, they draw the conclusion that they are God.", false, true, english, christopherHitchens));
 
-        Author clintEastwood = getAuthor("Clint Eastwood");
+        Author clintEastwood = getAuthor(authors, "Clint Eastwood");
         quotes.add(new Quote("God gave you a brain. Do the best you can with it. And you don't have to be Einstein, but Einstein was mentally tough. He believed what he believed. And he worked out things. And he argued with people who disagreed with him. But I'm sure he didn't call everybody jerks.", false, true, english, clintEastwood));
         quotes.add(new Quote("I tried being reasonable, I didn't like it.", false, true, english, clintEastwood));
         quotes.add(new Quote("What you put into life is what you get out of it.", false, true, english, clintEastwood));
@@ -983,7 +1004,7 @@ public class DataHandler {
         quotes.add(new Quote("There's a rebel lying deep in my soul.", false, true, english, clintEastwood));
         quotes.add(new Quote("Respect your efforts, respect yourself. Self-respect leads to self-discipline. When you have both firmly under your belt, that's real power.", false, true, english, clintEastwood));
 
-        Author conorMcGregor = getAuthor("Conor McGregor");
+        Author conorMcGregor = getAuthor(authors, "Conor McGregor");
         quotes.add(new Quote("You might win some, you might lose some. But you go in, you challenge yourself, you become a better man, a better individual, a better fighter.", false, true, english, conorMcGregor));
         quotes.add(new Quote("I enjoy competition. I enjoy challenges. If a challenge is in front of me and it appeals to me, I will go ahead and conquer it.", false, true, english, conorMcGregor));
         quotes.add(new Quote("My success isn't a result of arrogance - it's a result of belief.", false, true, english, conorMcGregor));
@@ -995,7 +1016,7 @@ public class DataHandler {
         quotes.add(new Quote("The thing about the truth is, not a lot of people can handle it.", false, true, english, conorMcGregor));
         quotes.add(new Quote("I don't feel pressure in a negative way. I like pressure. I feel excitement and calm at the same time. No pressure, no diamonds. I want pressure: pressure creates drama, creates emotion.", false, true, english, conorMcGregor));
 
-        Author dalaiLama = getAuthor("Dalai Lama");
+        Author dalaiLama = getAuthor(authors, "Dalai Lama");
         quotes.add(new Quote("Happiness is not something ready made. It comes from your own actions.", false, true, english, dalaiLama));
         quotes.add(new Quote("Calm mind brings inner strength and self-confidence, so that's very important for good health.", false, true, english, dalaiLama));
         quotes.add(new Quote("In order to carry a positive action we must develop here a positive vision.", false, true, english, dalaiLama));
@@ -1007,7 +1028,7 @@ public class DataHandler {
         quotes.add(new Quote("When you practice gratefulness, there is a sense of respect toward others.", false, true, english, dalaiLama));
         quotes.add(new Quote("Our prime purpose in this life is to help others. And if you can't help them, at least don't hurt them.", false, true, english, dalaiLama));
 
-        Author douglasAdams = getAuthor("Douglas Adams");
+        Author douglasAdams = getAuthor(authors, "Douglas Adams");
         quotes.add(new Quote("In the beginning the Universe was created. This has made a lot of people very angry and been widely regarded as a bad move.", false, true, english, douglasAdams));
         quotes.add(new Quote("It is a well-known fact that those people who must want to rule people are, ipso facto, those least suited to do it... anyone who is capable of getting themselves made President should on no account be allowed to do the job.", false, true, english, douglasAdams));
         quotes.add(new Quote("This must be Thursday. I never could get the hang of Thursdays.", false, true, english, douglasAdams));
@@ -1019,7 +1040,7 @@ public class DataHandler {
         quotes.add(new Quote("I love deadlines. I like the whooshing sound they make as they fly by.", false, true, english, douglasAdams));
         quotes.add(new Quote("To give real service you must add something which cannot be bought or measured with money, and that is sincerity and integrity.", false, true, english, douglasAdams));
 
-        Author dickGregory = getAuthor("Dick Gregory");
+        Author dickGregory = getAuthor(authors, "Dick Gregory");
         quotes.add(new Quote("Political promises are much like marriage vows. They are made at the beginning of the relationship between candidate and voter, but are quickly forgotten.", false, true, english, dickGregory));
         quotes.add(new Quote("When I lost my rifle, the Army charged me 85 dollars. That is why in the Navy the Captain goes down with the ship.", false, true, english, dickGregory));
         quotes.add(new Quote("Riches do not delight us so much with their possession, as torment us with their loss.", false, true, english, dickGregory));
@@ -1031,7 +1052,7 @@ public class DataHandler {
         quotes.add(new Quote("We used to root for the Indians against the cavalry, because we didn't think it was fair in the history books that when the cavalry won it was a great victory, and when the Indians won it was a massacre.", false, true, english, dickGregory));
         quotes.add(new Quote("Coconut milk is the only thing on this planet that comes identically to mother's milk.", false, true, english, dickGregory));
 
-        Author dollyParton = getAuthor("Dolly Parton");
+        Author dollyParton = getAuthor(authors, "Dolly Parton");
         quotes.add(new Quote("When I wake up, I expect things to be good. If they're not, then I try to set about trying to make them as good as I can 'cause I know I'm gonna have to live that day anyway. So why not try to make the most of it if you can? Some days, they pan out a little better than others, but you still gotta always just try.", false, true, english, dollyParton));
         quotes.add(new Quote("You can be rich in spirit, kindness, love and all those things that you can't put a dollar sign on.", false, true, english, dollyParton));
         quotes.add(new Quote("I wanted to write a book that talked about the emotions of children, which is the rainbow. We all have moods. We talk about being blue when we're sad, and being yellow when we're cowards, and when we're mad, we're red.", false, true, english, dollyParton));
@@ -1043,7 +1064,7 @@ public class DataHandler {
         quotes.add(new Quote("If you don't like the road you're walking, start paving another one.", false, true, english, dollyParton));
         quotes.add(new Quote("The way I see it, if you want the rainbow, you gotta put up with the rain.", false, true, english, dollyParton));
 
-        Author donaldTrump = getAuthor("Donald Trump");
+        Author donaldTrump = getAuthor(authors, "Donald Trump");
         quotes.add(new Quote("When you open your heart to patriotism, there is no room for prejudice. The Bible tells us, 'How good and pleasant it is when God's people live together in unity.", false, true, english, donaldTrump));
         quotes.add(new Quote("When somebody challenges you, fight back. Be brutal, be tough.", false, true, english, donaldTrump));
         quotes.add(new Quote("I have embraced crying mothers who have lost their children because our politicians put their personal agendas before the national good. I have no patience for injustice, no tolerance for government incompetence, no sympathy for leaders who fail their citizens.", false, true, english, donaldTrump));
@@ -1055,7 +1076,7 @@ public class DataHandler {
         quotes.add(new Quote("No dream is too big. No challenge is too great. Nothing we want for our future is beyond our reach.", false, true, english, donaldTrump));
         quotes.add(new Quote("Sometimes by losing a battle you find a new way to win the war.", false, true, english, donaldTrump));
 
-        Author DrSeuss = getAuthor("Dr. Seuss");
+        Author DrSeuss = getAuthor(authors, "Dr. Seuss");
         quotes.add(new Quote("Think left and think right and think low and think high. Oh, the thinks you can think up if only you try!", false, true, english, DrSeuss));
         quotes.add(new Quote("The more that you read, the more things you will know. The more that you learn, the more places you'll go.", false, true, english, DrSeuss));
         quotes.add(new Quote("Unless someone like you cares a whole awful lot, nothing is going to get better. It's not.", false, true, english, DrSeuss));
@@ -1067,7 +1088,7 @@ public class DataHandler {
         quotes.add(new Quote("Don't cry because it's over. Smile because it happened.", false, true, english, DrSeuss));
         quotes.add(new Quote("Today you are you! That is truer than true! There is no one alive who is you-er than you!", false, true, english, DrSeuss));
 
-        Author drake = getAuthor("Drake");
+        Author drake = getAuthor(authors, "Drake");
         quotes.add(new Quote("Sometimes it's the journey that teaches you a lot about your destination.", false, true, english, drake));
         quotes.add(new Quote("Jealousy is just love and hate at the same time.", false, true, english, drake));
         quotes.add(new Quote("People like to build their own story about my life. I don't know if it makes them feel better, or if it makes it okay for them to not like me, but the last thing I grew up as was rich.", false, true, english, drake));
@@ -1079,7 +1100,7 @@ public class DataHandler {
         quotes.add(new Quote("My dad is a great writer. Naturally talented, naturally charming. He embodies that back-in-the-day cool.", false, true, english, drake));
         quotes.add(new Quote("I like Ryan Gosling as an actor. I watch all of his movies, and he's Canadian and I just like his swag. I read his interviews and I'm a big fan of his.", false, true, english, drake));
 
-        Author dwightDEisenhower = getAuthor("Dwight D. Eisenhower");
+        Author dwightDEisenhower = getAuthor(authors, "Dwight D. Eisenhower");
         quotes.add(new Quote("Leadership is the art of getting someone else to do something you want done because he wants to do it.", false, true, english, dwightDEisenhower));
         quotes.add(new Quote("A people that values its privileges above its principles soon loses both.", false, true, english, dwightDEisenhower));
         quotes.add(new Quote("Neither a wise man nor a brave man lies down on the tracks of history to wait for the train of the future to run over him.", false, true, english, dwightDEisenhower));
@@ -1091,7 +1112,7 @@ public class DataHandler {
         quotes.add(new Quote("How far you can go without destroying from within what you are trying to defend from without?", false, true, english, dwightDEisenhower));
         quotes.add(new Quote("The supreme quality for leadership is unquestionably integrity. Without it, no real success is possible, no matter whether it is on a section gang, a football field, in an army, or in an office.", false, true, english, dwightDEisenhower));
 
-        Author elieWiesel = getAuthor("Elie Wiesel");
+        Author elieWiesel = getAuthor(authors, "Elie Wiesel");
         quotes.add(new Quote("Just as despair can come to one only from other human beings, hope, too, can be given to one only by other human beings.", false, true, english, elieWiesel));
         quotes.add(new Quote("Wherever men and women are persecuted because of their race, religion, or political views, that place must - at that moment - become the center of the universe.", false, true, english, elieWiesel));
         quotes.add(new Quote("I marvel at the resilience of the Jewish people. Their best characteristic is their desire to remember. No other people has such an obsession with memory.", false, true, english, elieWiesel));
@@ -1103,7 +1124,7 @@ public class DataHandler {
         quotes.add(new Quote("We must take sides. Neutrality helps the oppressor, never the victim. Silence encourages the tormentor, never the tormented.", false, true, english, elieWiesel));
         quotes.add(new Quote("Without memory, there is no culture. Without memory, there would be no civilization, no society, no future.", false, true, english, elieWiesel));
 
-        Author elizabethI = getAuthor("Elizabeth I");
+        Author elizabethI = getAuthor(authors, "Elizabeth I");
         quotes.add(new Quote("I know I have the body of a weak and feeble woman, but I have the heart and stomach of a king, and of a king of England too.", false, true, english, elizabethI));
         quotes.add(new Quote("I do not want a husband who honours me as a queen, if he does not love me as a woman.", false, true, english, elizabethI));
         quotes.add(new Quote("Though the sex to which I belong is considered weak you will nevertheless find me a rock that bends to no wind.", false, true, english, elizabethI));
@@ -1115,7 +1136,7 @@ public class DataHandler {
         quotes.add(new Quote("Ye may have a greater prince, but ye shall never have a more loving prince.", false, true, english, elizabethI));
         quotes.add(new Quote("My mortal foe can no ways wish me a greater harm than England's hate; neither should death be less welcome unto me than such a mishap betide me.", false, true, english, elizabethI));
 
-        Author ellenDeGeneres = getAuthor("Ellen DeGeneres");
+        Author ellenDeGeneres = getAuthor(authors, "Ellen DeGeneres");
         quotes.add(new Quote("Sometimes you can't see yourself clearly until you see yourself through the eyes of others.", false, true, english, ellenDeGeneres));
         quotes.add(new Quote("It's our challenges and obstacles that give us layers of depth and make us interesting. Are they fun when they happen? No. But they are what make us unique. And that's what I know for sure... I think.", false, true, english, ellenDeGeneres));
         quotes.add(new Quote("Find out who you are and be that person. That's what your soul was put on this Earth to be. Find that truth, live that truth and everything else will come.", false, true, english, ellenDeGeneres));
@@ -1127,7 +1148,7 @@ public class DataHandler {
         quotes.add(new Quote("Here are the values that I stand for: honesty, equality, kindness, compassion, treating people the way you want to be treated and helping those in need. To me, those are traditional values.", false, true, english, ellenDeGeneres));
         quotes.add(new Quote("I was raised around heterosexuals, as all heterosexuals are, that's where us gay people come from... you heterosexuals.", false, true, english, ellenDeGeneres));
 
-        Author elonMusk = getAuthor("Elon Musk");
+        Author elonMusk = getAuthor(authors, "Elon Musk");
         quotes.add(new Quote("We're running the most dangerous experiment in history right now, which is to see how much carbon dioxide the atmosphere... can handle before there is an environmental catastrophe.", false, true, english, elonMusk));
         quotes.add(new Quote("If you get up in the morning and think the future is going to be better, it is a bright day. Otherwise, it's not.", false, true, english, elonMusk));
         quotes.add(new Quote("When I was in college, I wanted to be involved in things that would change the world.", false, true, english, elonMusk));
@@ -1139,7 +1160,7 @@ public class DataHandler {
         quotes.add(new Quote("I think it's very important to have a feedback loop, where you're constantly thinking about what you've done and how you could be doing it better. I think that's the single best piece of advice: constantly think about how you could be doing things better and questioning yourself.", false, true, english, elonMusk));
         quotes.add(new Quote("When something is important enough, you do it even if the odds are not in your favor.", false, true, english, elonMusk));
 
-        Author elvisPresley = getAuthor("Elvis Presley");
+        Author elvisPresley = getAuthor(authors, "Elvis Presley");
         quotes.add(new Quote("I'm not trying to be sexy. It's just my way of expressing myself when I move around.", false, true, english, elvisPresley));
         quotes.add(new Quote("Truth is like the sun. You can shut it out for a time, but it ain't goin' away.", false, true, english, elvisPresley));
         quotes.add(new Quote("Rock and roll music, if you like it, if you feel it, you can't help but move to it. That's what happens to me. I can't help it.'", false, true, english, elvisPresley));
@@ -1151,7 +1172,7 @@ public class DataHandler {
         quotes.add(new Quote("Man, that record came out and was real big in Memphis. They started playing it, and it got real big. Don't know why-the lyrics had no meaning.", false, true, english, elvisPresley));
         quotes.add(new Quote("It's human nature to gripe, but I'm going ahead and doing the best I can.", false, true, english, elvisPresley));
 
-        Author eminem = getAuthor("Eminem");
+        Author eminem = getAuthor(authors, "Eminem");
         quotes.add(new Quote("A lot of truth is said in jest.", false, true, english, eminem));
         quotes.add(new Quote("Sometimes I feel like rap music is almost the key to stopping racism.", false, true, english, eminem));
         quotes.add(new Quote("Dealing with backstabbers, there was one thing I learned. They're only powerful when you got your back turned.", false, true, english, eminem));
@@ -1163,7 +1184,7 @@ public class DataHandler {
         quotes.add(new Quote("Trust is hard to come by. That's why my circle is small and tight. I'm kind of funny about making new friends.", false, true, english, eminem));
         quotes.add(new Quote("The truth is you don't know what is going to happen tomorrow. Life is a crazy ride, and nothing is guaranteed.", false, true, english, eminem));
 
-        Author ermaBombeck = getAuthor("Erma Bombeck");
+        Author ermaBombeck = getAuthor(authors, "Erma Bombeck");
         quotes.add(new Quote("Don't confuse fame with success. Madonna is one; Helen Keller is the other.", false, true, english, ermaBombeck));
         quotes.add(new Quote("For years my wedding ring has done its job. It has led me not into temptation. It has reminded my husband numerous times at parties that it's time to go home. It has been a source of relief to a dinner companion. It has been a status symbol in the maternity ward.", false, true, english, ermaBombeck));
         quotes.add(new Quote("When your mother asks, 'Do you want a piece of advice?' it is a mere formality. It doesn't matter if you answer yes or no. You're going to get it anyway.", false, true, english, ermaBombeck));
@@ -1175,7 +1196,7 @@ public class DataHandler {
         quotes.add(new Quote("There is a thin line that separates laughter and pain, comedy and tragedy, humor and hurt.", false, true, english, ermaBombeck));
         quotes.add(new Quote("A grandmother pretends she doesn't know who you are on Halloween.", false, true, english, ermaBombeck));
 
-        Author ernestHemingway = getAuthor("Ernest Hemingway");
+        Author ernestHemingway = getAuthor(authors, "Ernest Hemingway");
         quotes.add(new Quote("There is no friend as loyal as a book.", false, true, english, ernestHemingway));
         quotes.add(new Quote("Courage is grace under pressure.", false, true, english, ernestHemingway));
         quotes.add(new Quote("There is nothing noble in being superior to your fellow men. True nobility lies in being superior to your former self.", false, true, english, ernestHemingway));
@@ -1187,7 +1208,7 @@ public class DataHandler {
         quotes.add(new Quote("The world breaks everyone, and afterward, some are strong at the broken places.", false, true, english, ernestHemingway));
         quotes.add(new Quote("The best way to find out if you can trust somebody is to trust them.", false, true, english, ernestHemingway));
 
-        Author edgarAllanPoe = getAuthor("Edgar Allan Poe");
+        Author edgarAllanPoe = getAuthor(authors, "Edgar Allan Poe");
         quotes.add(new Quote("Deep into that darkness peering, long I stood there, wondering, fearing, doubting, dreaming dreams no mortal ever dared to dream before.", false, true, english, edgarAllanPoe));
         quotes.add(new Quote("I would define, in brief, the poetry of words as the rhythmical creation of Beauty.", false, true, english, edgarAllanPoe));
         quotes.add(new Quote("Words have no power to impress the mind without the exquisite horror of their reality.", false, true, english, edgarAllanPoe));
@@ -1199,7 +1220,7 @@ public class DataHandler {
         quotes.add(new Quote("Once upon a midnight dreary, while I pondered weak and weary.", false, true, english, edgarAllanPoe));
         quotes.add(new Quote("Science has not yet taught us if madness is or is not the sublimity of the intelligence.", false, true, english, edgarAllanPoe));
 
-        Author francisofAssisi = getAuthor("Francis of Assisi");
+        Author francisofAssisi = getAuthor(authors, "Francis of Assisi");
         quotes.add(new Quote("Start by doing what's necessary; then do what's possible; and suddenly you are doing the impossible.", false, true, english, francisofAssisi));
         quotes.add(new Quote("Lord, make me an instrument of thy peace. Where there is hatred, let me sow love.", false, true, english, francisofAssisi));
         quotes.add(new Quote("A single sunbeam is enough to drive away many shadows.", false, true, english, francisofAssisi));
@@ -1211,7 +1232,7 @@ public class DataHandler {
         quotes.add(new Quote("For it is in giving that we receive.", false, true, english, francisofAssisi));
         quotes.add(new Quote("Lord, grant that I might not so much seek to be loved as to love.", false, true, english, francisofAssisi));
 
-        Author frankLloydWright = getAuthor("Frank Lloyd Wright");
+        Author frankLloydWright = getAuthor(authors, "Frank Lloyd Wright");
         quotes.add(new Quote("Less is only more where more is no good.", false, true, english, frankLloydWright));
         quotes.add(new Quote("Life always rides in strength to victory, not through internationalism... but only through the direct responsibility of the individual.", false, true, english, frankLloydWright));
         quotes.add(new Quote("Space is the breath of art.", false, true, english, frankLloydWright));
@@ -1223,7 +1244,7 @@ public class DataHandler {
         quotes.add(new Quote("Study nature, love nature, stay close to nature. It will never fail you.", false, true, english, frankLloydWright));
 
 
-        Author frankSinatra = getAuthor("Frank Sinatra");
+        Author frankSinatra = getAuthor(authors, "Frank Sinatra");
         quotes.add(new Quote("You gotta love livin', baby, 'cause dyin' is a pain in the ass.", false, true, english, frankSinatra));
         quotes.add(new Quote("People often remark that I'm pretty lucky. Luck is only important in so far as getting the chance to sell yourself at the right moment. After that, you've got to have talent and know how to use it.", false, true, english, frankSinatra));
         quotes.add(new Quote("Cock your hat - angles are attitudes.", false, true, english, frankSinatra));
@@ -1235,7 +1256,7 @@ public class DataHandler {
         quotes.add(new Quote("The best revenge is massive success.", false, true, english, frankSinatra));
         quotes.add(new Quote("Alcohol may be man's worst enemy, but the bible says love your enemy.", false, true, english, frankSinatra));
 
-        Author franklinDRoosevelt = getAuthor("Franklin D. Roosevelt");
+        Author franklinDRoosevelt = getAuthor(authors, "Franklin D. Roosevelt");
         quotes.add(new Quote("The point in history at which we stand is full of promise and danger. The world will either move forward toward unity and widely shared prosperity - or it will move apart.", false, true, english, franklinDRoosevelt));
         quotes.add(new Quote("Confidence... thrives on honesty, on honor, on the sacredness of obligations, on faithful protection and on unselfish performance. Without them it cannot live.", false, true, english, franklinDRoosevelt));
         quotes.add(new Quote("The only thing we have to fear is fear itself.", false, true, english, franklinDRoosevelt));
@@ -1247,7 +1268,7 @@ public class DataHandler {
         quotes.add(new Quote("Nobody will ever deprive the American people of the right to vote except the American people themselves and the only way they could do this is by not voting.", false, true, english, franklinDRoosevelt));
         quotes.add(new Quote("Happiness lies in the joy of achievement and the thrill of creative effort.", false, true, english, franklinDRoosevelt));
 
-        Author franzKafka = getAuthor("Franz Kafka");
+        Author franzKafka = getAuthor(authors, "Franz Kafka");
         quotes.add(new Quote("I have the true feeling of myself only when I am unbearably unhappy.", false, true, english, franzKafka));
         quotes.add(new Quote("Every revolution evaporates and leaves behind only the slime of a new bureaucracy.", false, true, english, franzKafka));
         quotes.add(new Quote("You do not need to leave your room. Remain sitting at your table and listen. Do not even listen, simply wait, be quiet still and solitary. The world will freely offer itself to you to be unmasked, it has no choice, it will roll in ecstasy at your feet.", false, true, english, franzKafka));
@@ -1260,7 +1281,7 @@ public class DataHandler {
         quotes.add(new Quote("Anyone who keeps the ability to see beauty never grows old.", false, true, english, franzKafka));
 
 
-        Author frederickDouglass = getAuthor("Frederick Douglass");
+        Author frederickDouglass = getAuthor(authors, "Frederick Douglass");
         quotes.add(new Quote("The soul that is within me no man can degrade.", false, true, english, frederickDouglass));
         quotes.add(new Quote("The thing worse than rebellion is the thing that causes rebellion.", false, true, english, frederickDouglass));
         quotes.add(new Quote("I didn't know I was a slave until I found out I couldn't do the things I wanted.", false, true, english, frederickDouglass));
@@ -1272,7 +1293,7 @@ public class DataHandler {
         quotes.add(new Quote("It is easier to build strong children than to repair broken men.", false, true, english, frederickDouglass));
         quotes.add(new Quote("If there is no struggle, there is no progress.", false, true, english, frederickDouglass));
 
-        Author fridaKahlo = getAuthor("Frida Kahlo");
+        Author fridaKahlo = getAuthor(authors, "Frida Kahlo");
         quotes.add(new Quote("I love you more than my own skin.", false, true, english, fridaKahlo));
         quotes.add(new Quote("I am my own muse, the subject I know best.", false, true, english, fridaKahlo));
         quotes.add(new Quote("I never paint dreams or nightmares. I paint my own reality.", false, true, english, fridaKahlo));
@@ -1284,7 +1305,7 @@ public class DataHandler {
         quotes.add(new Quote("I find that Americans completely lack sensibility and good taste. They are boring, and they all have faces like unbaked rolls.", false, true, english, fridaKahlo));
         quotes.add(new Quote("The most important part of the body is the brain. Of my face, I like the eyebrows and eyes. Aside from that, I like nothing. My head is too small.", false, true, english, fridaKahlo));
 
-        Author friedrichNietzsche = getAuthor("Friedrich Nietzsche");
+        Author friedrichNietzsche = getAuthor(authors, "Friedrich Nietzsche");
         quotes.add(new Quote("God is dead. God remains dead. And we have killed him. Yet his shadow still looms. How shall we comfort ourselves, the murderers of all murderers? What was holiest and mightiest of all that the world has yet owned has bled to death under our knives; who will wipe this blood off us? What water is there for us to clean ourselves?", false, true, english, friedrichNietzsche));
         quotes.add(new Quote("All truly great thoughts are conceived by walking.", false, true, english, friedrichNietzsche));
         quotes.add(new Quote("The individual has always had to struggle to keep from being overwhelmed by the tribe. If you try it, you will be lonely often, and sometimes frightened. But no price is too high to pay for the privilege of owning yourself.", false, true, english, friedrichNietzsche));
@@ -1296,7 +1317,7 @@ public class DataHandler {
         quotes.add(new Quote("To live is to suffer, to survive is to find some meaning in the suffering.", false, true, english, friedrichNietzsche));
         quotes.add(new Quote("It is not a lack of love, but a lack of friendship that makes unhappy marriages.", false, true, english, friedrichNietzsche));
 
-        Author fyodorDostoevsky = getAuthor("Fyodor Dostoevsky");
+        Author fyodorDostoevsky = getAuthor(authors, "Fyodor Dostoevsky");
         quotes.add(new Quote("If there is no God, everything is permitted.", false, true, english, fyodorDostoevsky));
         quotes.add(new Quote("A real gentleman, even if he loses everything he owns, must show no emotion. Money must be so far beneath a gentleman that it is hardly worth troubling about.", false, true, english, fyodorDostoevsky));
         quotes.add(new Quote("Much unhappiness has come into the world because of bewilderment and things left unsaid.", false, true, english, fyodorDostoevsky));
@@ -1308,7 +1329,7 @@ public class DataHandler {
         quotes.add(new Quote("We sometimes encounter people, even perfect strangers, who begin to interest us at first sight, somehow suddenly, all at once, before a word has been spoken.", false, true, english, fyodorDostoevsky));
         quotes.add(new Quote("Beauty is mysterious as well as terrible. God and devil are fighting there, and the battlefield is the heart of man.", false, true, english, fyodorDostoevsky));
 
-        Author georgeBernardShaw = getAuthor("George Bernard Shaw");
+        Author georgeBernardShaw = getAuthor(authors, "George Bernard Shaw");
         quotes.add(new Quote("Life isn't about finding yourself. Life is about creating yourself.", false, true, english, georgeBernardShaw));
         quotes.add(new Quote("Progress is impossible without change, and those who cannot change their minds cannot change anything.", false, true, english, georgeBernardShaw));
         quotes.add(new Quote("We are made wise not by the recollection of our past, but by the responsibility for our future.", false, true, english, georgeBernardShaw));
@@ -1320,7 +1341,7 @@ public class DataHandler {
         quotes.add(new Quote("Better keep yourself clean and bright; you are the window through which you must see the world.", false, true, english, georgeBernardShaw));
         quotes.add(new Quote("Imagination is the beginning of creation. You imagine what you desire, you will what you imagine and at last you create what you will.", false, true, english, georgeBernardShaw));
 
-        Author galileoGalilei = getAuthor("Galileo Galilei");
+        Author galileoGalilei = getAuthor(authors, "Galileo Galilei");
         quotes.add(new Quote("We cannot teach people anything; we can only help them discover it within themselves.", false, true, english, galileoGalilei));
         quotes.add(new Quote("All truths are easy to understand once they are discovered; the point is to discover them.", false, true, english, galileoGalilei));
         quotes.add(new Quote("The Bible shows the way to go to heaven, not the way the heavens go.", false, true, english, galileoGalilei));
@@ -1332,7 +1353,7 @@ public class DataHandler {
         quotes.add(new Quote("It is surely harmful to souls to make it a heresy to believe what is proved.", false, true, english, galileoGalilei));
         quotes.add(new Quote("I think that in the discussion of natural problems we ought to begin not with the Scriptures, but with experiments, and demonstrations.", false, true, english, galileoGalilei));
 
-        Author georgeCarlin = getAuthor("George Carlin");
+        Author georgeCarlin = getAuthor(authors, "George Carlin");
         quotes.add(new Quote("Frisbeetarianism is the belief that when you die, your soul goes up on the roof and gets stuck.", false, true, english, georgeCarlin));
         quotes.add(new Quote("The main reason Santa is so jolly is because he knows where all the bad girls live.", false, true, english, georgeCarlin));
         quotes.add(new Quote("Have you ever noticed that anybody driving slower than you is an idiot, and anyone going faster than you is a maniac?", false, true, english, georgeCarlin));
@@ -1344,7 +1365,7 @@ public class DataHandler {
         quotes.add(new Quote("There are nights when the wolves are silent and only the moon howls.", false, true, english, georgeCarlin));
         quotes.add(new Quote("Weather forecast for tonight: dark.", false, true, english, georgeCarlin));
 
-        Author georgeOrwell = getAuthor("George Orwell");
+        Author georgeOrwell = getAuthor(authors, "George Orwell");
         quotes.add(new Quote("Power is not a means, it is an end. One does not establish a dictatorship in order to safeguard a revolution; one makes the revolution in order to establish the dictatorship.", false, true, english, georgeOrwell));
         quotes.add(new Quote("The essence of being human is that one does not seek perfection.", false, true, english, georgeOrwell));
         quotes.add(new Quote("The very concept of objective truth is fading out of the world. Lies will pass into history.", false, true, english, georgeOrwell));
@@ -1356,7 +1377,7 @@ public class DataHandler {
         quotes.add(new Quote("In our age there is no such thing as 'keeping out of politics.' All issues are political issues, and politics itself is a mass of lies, evasions, folly, hatred and schizophrenia.", false, true, english, georgeOrwell));
         quotes.add(new Quote("War is peace. Freedom is slavery. Ignorance is strength.", false, true, english, georgeOrwell));
 
-        Author georgeSPatton = getAuthor("George S. Patton");
+        Author georgeSPatton = getAuthor(authors, "George S. Patton");
         quotes.add(new Quote("Courage is fear holding on a minute longer.", false, true, english, georgeSPatton));
         quotes.add(new Quote("You need to overcome the tug of people against you as you reach for high goals.", false, true, english, georgeSPatton));
         quotes.add(new Quote("Wars may be fought with weapons, but they are won by men. It is the spirit of men who follow and of the man who leads that gains the victory.", false, true, english, georgeSPatton));
@@ -1368,7 +1389,7 @@ public class DataHandler {
         quotes.add(new Quote("A good plan violently executed now is better than a perfect plan executed next week.", false, true, english, georgeSPatton));
         quotes.add(new Quote("Accept the challenges so that you can feel the exhilaration of victory.", false, true, english, georgeSPatton));
 
-        Author georgeWBush = getAuthor("George W. Bush");
+        Author georgeWBush = getAuthor(authors, "George W. Bush");
         quotes.add(new Quote("This was not an act of terrorism, but it was an act of war.", false, true, english, georgeWBush));
         quotes.add(new Quote("On September 11 2001, America felt its vulnerability even to threats that gather on the other side of the Earth. We resolved then, and we are resolved today, to confront every threat from any source that could bring sudden terror and suffering to America.", false, true, english, georgeWBush));
         quotes.add(new Quote("To those of you who received honours, awards and distinctions, I say well done. And to the C students, I say you, too, can be president of the United States.", false, true, english, georgeWBush));
@@ -1380,7 +1401,7 @@ public class DataHandler {
         quotes.add(new Quote("Terrorist attacks can shake the foundations of our biggest buildings, but they cannot touch the foundation of America. These acts shatter steel, but they cannot dent the steel of American resolve.", false, true, english, georgeWBush));
         quotes.add(new Quote("America is the land of the second chance - and when the gates of the prison open, the path ahead should lead to a better life.", false, true, english, georgeWBush));
 
-        Author georgeWashington = getAuthor("George Washington");
+        Author georgeWashington = getAuthor(authors, "George Washington");
         quotes.add(new Quote("It is better to offer no excuse than a bad one.", false, true, english, georgeWashington));
         quotes.add(new Quote("We should not look back unless it is to derive useful lessons from past errors, and for the purpose of profiting by dearly bought experience.", false, true, english, georgeWashington));
         quotes.add(new Quote("Liberty, when it begins to take root, is a plant of rapid growth.", false, true, english, georgeWashington));
@@ -1392,7 +1413,7 @@ public class DataHandler {
         quotes.add(new Quote("If the freedom of speech is taken away then dumb and silent we may be led, like sheep to the slaughter.", false, true, english, georgeWashington));
         quotes.add(new Quote("It is far better to be alone, than to be in bad company.", false, true, english, georgeWashington));
 
-        Author helenKeller = getAuthor("Helen Keller");
+        Author helenKeller = getAuthor(authors, "Helen Keller");
         quotes.add(new Quote("The best and most beautiful things in the world cannot be seen or even touched - they must be felt with the heart.", false, true, english, helenKeller));
         quotes.add(new Quote("Optimism is the faith that leads to achievement. Nothing can be done without hope and confidence.", false, true, english, helenKeller));
         quotes.add(new Quote("Walking with a friend in the dark is better than walking alone in the light.", false, true, english, helenKeller));
@@ -1404,7 +1425,7 @@ public class DataHandler {
         quotes.add(new Quote("Life is either a great adventure or nothing.", false, true, english, helenKeller));
         quotes.add(new Quote("Never bend your head. Always hold it high. Look the world straight in the eye.", false, true, english, helenKeller));
 
-        Author HJacksonBrown = getAuthor("H. Jackson Brown");
+        Author HJacksonBrown = getAuthor(authors, "H. Jackson Brown");
         quotes.add(new Quote("Never forget the three powerful resources you always have available to you: love, prayer, and forgiveness.", false, true, english, HJacksonBrown));
         quotes.add(new Quote("Earn your success based on service to others, not at the expense of others.", false, true, english, HJacksonBrown));
         quotes.add(new Quote("Our character is what we do when we think no one is looking.", false, true, english, HJacksonBrown));
@@ -1416,7 +1437,7 @@ public class DataHandler {
         quotes.add(new Quote("Love is when the other person's happiness is more important than your own.", false, true, english, HJacksonBrown));
         quotes.add(new Quote("The best preparation for tomorrow is doing your best today.", false, true, english, HJacksonBrown));
 
-        Author HLMencken = getAuthor("H. L. Mencken");
+        Author HLMencken = getAuthor(authors, "H. L. Mencken");
         quotes.add(new Quote("The one permanent emotion of the inferior man is fear - fear of the unknown, the complex, the inexplicable. What he wants above everything else is safety.", false, true, english, HLMencken));
         quotes.add(new Quote("A judge is a law student who marks his own examination papers.", false, true, english, HLMencken));
         quotes.add(new Quote("Legend: A lie that has attained the dignity of age.", false, true, english, HLMencken));
@@ -1428,7 +1449,7 @@ public class DataHandler {
         quotes.add(new Quote("On some great and glorious day the plain folks of the land will reach their heart's desire at last, and the White House will be adorned by a downright moron.", false, true, english, HLMencken));
         quotes.add(new Quote("Democracy is the art and science of running the circus from the monkey cage.", false, true, english, HLMencken));
 
-        Author HPLovecraft = getAuthor("H. P. Lovecraft");
+        Author HPLovecraft = getAuthor(authors, "H. P. Lovecraft");
         quotes.add(new Quote("Blue, green, grey, white, or black; smooth, ruffled, or mountainous; that ocean is not silent.", false, true, english, HPLovecraft));
         quotes.add(new Quote("The most merciful thing in the world... is the inability of the human mind to correlate all its contents.", false, true, english, HPLovecraft));
         quotes.add(new Quote("It is absolutely necessary, for the peace and safety of mankind, that some of earth's dark, dead corners and unplumbed depths be let alone; lest sleeping abnormalities wake to resurgent life, and blasphemously surviving nightmares squirm and splash out of their black lairs to newer and wider conquests.", false, true, english, HPLovecraft));
@@ -1440,7 +1461,7 @@ public class DataHandler {
         quotes.add(new Quote("The oldest and strongest emotion of mankind is fear, and the oldest and strongest kind of fear is fear of the unknown.", false, true, english, HPLovecraft));
         quotes.add(new Quote("Ocean is more ancient than the mountains, and freighted with the memories and the dreams of Time.", false, true, english, HPLovecraft));
 
-        Author harrietTubman = getAuthor("Harriet Tubman");
+        Author harrietTubman = getAuthor(authors, "Harriet Tubman");
         quotes.add(new Quote("Read my letter to the old folks, and give my love to them, and tell my brothers to be always watching unto prayer, and when the good old ship of Zion comes along, to be ready to step aboard.", false, true, english, harrietTubman));
         quotes.add(new Quote("In my dreams and visions, I seemed to see a line, and on the other side of that line were green fields, and lovely flowers, and beautiful white ladies, who stretched out their arms to me over the line, but I couldn't reach them no-how. I always fell before I got to the line.", false, true, english, harrietTubman));
         quotes.add(new Quote("Never wound a snake; kill it.", false, true, english, harrietTubman));
@@ -1452,7 +1473,7 @@ public class DataHandler {
         quotes.add(new Quote("Now I've been free, I know what a dreadful condition slavery is. I have seen hundreds of escaped slaves, but I never saw one who was willing to go back and be a slave.", false, true, english, harrietTubman));
         quotes.add(new Quote("Now I've been free, I know what a dreadful condition slavery is. I have seen hundreds of escaped slaves, but I never saw one who was willing to go back and be a slave.", false, true, english, harrietTubman));
 
-        Author harrySTruman = getAuthor("Harry S Truman");
+        Author harrySTruman = getAuthor(authors, "Harry S Truman");
         quotes.add(new Quote("You want a friend in Washington? Get a dog.", false, true, english, harrySTruman));
         quotes.add(new Quote("The atom bomb was no 'great decision.' It was merely another powerful weapon in the arsenal of righteousness.", false, true, english, harrySTruman));
         quotes.add(new Quote("A pessimist is one who makes difficulties of his opportunities and an optimist is one who makes opportunities of his difficulties.", false, true, english, harrySTruman));
@@ -1464,7 +1485,7 @@ public class DataHandler {
         quotes.add(new Quote("Men make history and not the other way around. In periods where there is no leadership, society stands still. Progress occurs when courageous, skillful leaders seize the opportunity to change things for the better.", false, true, english, harrySTruman));
         quotes.add(new Quote("There is nothing new in the world except the history you do not know.", false, true, english, harrySTruman));
 
-        Author henryDavidThoreau = getAuthor("Henry David Thoreau");
+        Author henryDavidThoreau = getAuthor(authors, "Henry David Thoreau");
         quotes.add(new Quote("What lies behind us and what lies ahead of us are tiny matters compared to what lives within us.", false, true, english, henryDavidThoreau));
         quotes.add(new Quote("Pursue some path, however narrow and crooked, in which you can walk with love and reverence.", false, true, english, henryDavidThoreau));
         quotes.add(new Quote("Not until we are lost do we begin to understand ourselves.", false, true, english, henryDavidThoreau));
@@ -1476,7 +1497,7 @@ public class DataHandler {
         quotes.add(new Quote("Friends... they cherish one another's hopes. They are kind to one another's dreams.", false, true, english, henryDavidThoreau));
         quotes.add(new Quote("It's not what you look at that matters, it's what you see.", false, true, english, henryDavidThoreau));
 
-        Author henryFord = getAuthor("Henry Ford");
+        Author henryFord = getAuthor(authors, "Henry Ford");
         quotes.add(new Quote("Thinking is the hardest work there is, which is probably the reason why so few engage in it.", false, true, english, henryFord));
         quotes.add(new Quote("When everything seems to be going against you, remember that the airplane takes off against the wind, not with it.", false, true, english, henryFord));
         quotes.add(new Quote("Obstacles are those frightful things you see when you take your eyes off your goal.", false, true, english, henryFord));
@@ -1488,7 +1509,7 @@ public class DataHandler {
         quotes.add(new Quote("My best friend is the one who brings out the best in me.", false, true, english, henryFord));
         quotes.add(new Quote("Coming together is a beginning; keeping together is progress; working together is success.", false, true, english, henryFord));
 
-        Author henryKissinger = getAuthor("Henry Kissinger");
+        Author henryKissinger = getAuthor(authors, "Henry Kissinger");
         quotes.add(new Quote("It is, after all, the responsibility of the expert to operate the familiar and that of the leader to transcend it.", false, true, english, henryKissinger));
         quotes.add(new Quote("For other nations, utopia is a blessed past never to be recovered; for Americans it is just beyond the horizon.", false, true, english, henryKissinger));
         quotes.add(new Quote("My view of my role is that together with like-minded men and women, I could help contribute to a bipartisan view of American engagement in the world for another period; I could do my part to overcome this really, in a way, awful period in which we are turning history into personal recriminations, depriving our political system of a serious debate.", false, true, english, henryKissinger));
@@ -1500,7 +1521,7 @@ public class DataHandler {
         quotes.add(new Quote("The task of the leader is to get his people from where they are to where they have not been.", false, true, english, henryKissinger));
         quotes.add(new Quote("There cannot be a crisis next week. My schedule is already full.", false, true, english, henryKissinger));
 
-        Author iceCube = getAuthor("Ice Cube");
+        Author iceCube = getAuthor(authors, "Ice Cube");
         quotes.add(new Quote("I think, to me, reality is better than being fake.", false, true, english, iceCube));
         quotes.add(new Quote("Don't worry about being a star, worry about doing good work, and all that will come to you.", false, true, english, iceCube));
         quotes.add(new Quote("Truth is the ultimate power. When the truth comes around, all the lies have to run and hide.", false, true, english, iceCube));
@@ -1512,7 +1533,7 @@ public class DataHandler {
         quotes.add(new Quote("I have a really beautiful life right now, so there is no reason to be hostile. I'm a husband, a father and a man who tries to do the right thing in life and in my work.", false, true, english, iceCube));
         quotes.add(new Quote("Gangsta to us didn't have anything to do with Al Capone and stuff like that. It's just about living your life the way you want to live it. And you're not going to let nothing stop you.", false, true, english, iceCube));
 
-        Author idaBWells = getAuthor("Ida B. Wells");
+        Author idaBWells = getAuthor(authors, "Ida B. Wells");
         quotes.add(new Quote("The people must know before they can act, and there is no educator to compare with the press.", false, true, english, idaBWells));
         quotes.add(new Quote("Our country's national crime is lynching. It is not the creature of an hour, the sudden outburst of uncontrolled fury, or the unspeakable brutality of an insane mob.", false, true, english, idaBWells));
         quotes.add(new Quote("Somebody must show that the Afro-American race is more sinned against than sinning, and it seems to have fallen upon me to do so.", false, true, english, idaBWells));
@@ -1524,7 +1545,7 @@ public class DataHandler {
         quotes.add(new Quote("The alleged menace of universal suffrage having been avoided by the absolute suppression of the negro vote, the spirit of mob murder should have been satisfied and the butchery of negroes should have ceased.", false, true, english, idaBWells));
         quotes.add(new Quote("Brave men do not gather by thousands to torture and murder a single individual, so gagged and bound he cannot make even feeble resistance or defense.", false, true, english, idaBWells));
 
-        Author immanuelKant = getAuthor("Immanuel Kant");
+        Author immanuelKant = getAuthor(authors, "Immanuel Kant");
         quotes.add(new Quote("He who is cruel to animals becomes hard also in his dealings with men. We can judge the heart of a man by his treatment of animals.", false, true, english, immanuelKant));
         quotes.add(new Quote("Always recognize that human individuals are ends, and do not use them as means to your end.", false, true, english, immanuelKant));
         quotes.add(new Quote("All our knowledge begins with the senses, proceeds then to the understanding, and ends with reason. There is nothing higher than reason.", false, true, english, immanuelKant));
@@ -1536,7 +1557,7 @@ public class DataHandler {
         quotes.add(new Quote("In law a man is guilty when he violates the rights of others. In ethics he is guilty if he only thinks of doing so.", false, true, english, immanuelKant));
         quotes.add(new Quote("Science is organized knowledge. Wisdom is organized life.", false, true, english, immanuelKant));
 
-        Author indiraGandhi = getAuthor("Indira Gandhi");
+        Author indiraGandhi = getAuthor(authors, "Indira Gandhi");
         quotes.add(new Quote("There are two kinds of people, those who do the work and those who take the credit. Try to be in the first group; there is less competition there.", false, true, english, indiraGandhi));
         quotes.add(new Quote("Winning or losing of the election is less important than strengthening the country.", false, true, english, indiraGandhi));
         quotes.add(new Quote("I have lived a long life, and I am proud that I spend the whole of my life in the service of my people. I am only proud of this and nothing else. I shall continue to serve until my last breath, and when I die, I can say, that every drop of my blood will invigorate India and strengthen it.", false, true, english, indiraGandhi));
@@ -1548,7 +1569,7 @@ public class DataHandler {
         quotes.add(new Quote("Happiness is a state of mind, you know. I don't think you are permanently happy. One is happy about certain things and not so happy about others.", false, true, english, indiraGandhi));
         quotes.add(new Quote("I do not like carving the world into segments; we are one world.", false, true, english, indiraGandhi));
 
-        Author indraNooyi = getAuthor("Indra Nooyi");
+        Author indraNooyi = getAuthor(authors, "Indra Nooyi");
         quotes.add(new Quote("Leadership is hard to define and good leadership even harder. But if you can get people to follow you to the ends of the earth, you are a great leader.", false, true, english, indraNooyi));
         quotes.add(new Quote("At the end of the day, don't forget that you're a person, don't forget you're a mother, don't forget you're a wife, don't forget you're a daughter.", false, true, english, indraNooyi));
         quotes.add(new Quote("As a leader, I am tough on myself and I raise the standard for everybody; however, I am very caring because I want people to excel at what they are doing so that they can aspire to be me in the future.", false, true, english, indraNooyi));
@@ -1560,7 +1581,7 @@ public class DataHandler {
         quotes.add(new Quote("I'm very honest - brutally honest. I always look at things from their point of view as well as mine. And I know when to walk away.", false, true, english, indraNooyi));
         quotes.add(new Quote("Is Naked Juice a beverage, or is it a snack? I think we can liquefy snacks or snackify liquids.", false, true, english, indraNooyi));
 
-        Author irisApfel = getAuthor("Iris Apfel");
+        Author irisApfel = getAuthor(authors, "Iris Apfel");
         quotes.add(new Quote("Great personal style is an extreme curiosity about yourself.", false, true, english, irisApfel));
         quotes.add(new Quote("I don't happen to approve of plastic surgery. I think God put plastic surgeons on this earth for good reasons - people get burned or people might have a nose like Pinocchio and that has to be fixed. But to just chop yourself up to look a few years younger? You could come out looking like a Picasso picture.", false, true, english, irisApfel));
         quotes.add(new Quote("I mix everything up. A museum curator once said to me that there is a great jazz component to the way I do things because good jazz is improvisation and draws elements from all different cultures. And that's the way I do everything - the way I dress and decorate.", false, true, english, irisApfel));
@@ -1572,7 +1593,7 @@ public class DataHandler {
         quotes.add(new Quote("My father told me once not to expect anything from anybody so I wouldn't be disappointed. If somebody was nice and did nice things for me, I should be overjoyed, but I shouldn't go through life expecting it, which is very good advice.", false, true, english, irisApfel));
         quotes.add(new Quote("There's different shopping in Paris than there is at a bazaar in Istanbul, but they're all wonderful.", false, true, english, irisApfel));
 
-        Author isaacNewton = getAuthor("Isaac Newton");
+        Author isaacNewton = getAuthor(authors, "Isaac Newton");
         quotes.add(new Quote("Atheism is so senseless. When I look at the solar system, I see the earth at the right distance from the sun to receive the proper amounts of heat and light. This did not happen by chance.", false, true, english, isaacNewton));
         quotes.add(new Quote("Gravity may put the planets into motion, but without the divine Power, it could never put them into such a circulating motion as they have about the Sun; and therefore, for this as well as other reasons, I am compelled to ascribe the frame of this System to an intelligent Agent.", false, true, english, isaacNewton));
         quotes.add(new Quote("Genius is patience.", false, true, english, isaacNewton));
@@ -1584,7 +1605,7 @@ public class DataHandler {
         quotes.add(new Quote("We build too many walls and not enough bridges.", false, true, english, isaacNewton));
         quotes.add(new Quote("If I have seen further than others, it is by standing upon the shoulders of giants.", false, true, english, isaacNewton));
 
-        Author isaacAsimov = getAuthor("Isaac Asimov");
+        Author isaacAsimov = getAuthor(authors, "Isaac Asimov");
         quotes.add(new Quote("Never let your sense of morals get in the way of doing what's right.", false, true, english, isaacAsimov));
         quotes.add(new Quote("Humanity has the stars in its future, and that future is too important to be lost under the burden of juvenile folly and ignorant superstition.", false, true, english, isaacAsimov));
         quotes.add(new Quote("The true delight is in the finding out rather than in the knowing.", false, true, english, isaacAsimov));
@@ -1596,7 +1617,7 @@ public class DataHandler {
         quotes.add(new Quote("Life is pleasant. Death is peaceful. It's the transition that's troublesome.", false, true, english, isaacAsimov));
         quotes.add(new Quote("People who think they know everything are a great annoyance to those of us who do.", false, true, english, isaacAsimov));
 
-        Author jesusChrist = getAuthor("Jesus Christ");
+        Author jesusChrist = getAuthor(authors, "Jesus Christ");
         quotes.add(new Quote("Do not let your hearts be troubled. Trust in God; trust also in me.", false, true, english, jesusChrist));
         quotes.add(new Quote("I am the Way, the Truth, and the Life. No one comes to the Father except through me.", false, true, english, jesusChrist));
         quotes.add(new Quote("And know that I am with you always; yes, to the end of time.", false, true, english, jesusChrist));
@@ -1608,7 +1629,7 @@ public class DataHandler {
         quotes.add(new Quote("Do not be anxious about tomorrow, for tomorrow will be anxious for itself. Let the day's own trouble be sufficient for the day.", false, true, english, jesusChrist));
         quotes.add(new Quote("Let the one among you who is without sin be the first to cast a stone.", false, true, english, jesusChrist));
 
-        Author JKRowling = getAuthor("J. K. Rowling");
+        Author JKRowling = getAuthor(authors, "J. K. Rowling");
         quotes.add(new Quote("Imagination is not only the uniquely human capacity to envision that which is not, and therefore the fount of all invention and innovation. In its arguably most transformative and revelatory capacity, it is the power to that enables us to empathize with humans whose experiences we have never shared.", false, true, english, JKRowling));
         quotes.add(new Quote("Indifference and neglect often do much more damage than outright dislike.", false, true, english, JKRowling));
         quotes.add(new Quote("The most important thing is to read as much as you can, like I did. It will give you an understanding of what makes good writing and it will enlarge your vocabulary.", false, true, english, JKRowling));
@@ -1621,7 +1642,7 @@ public class DataHandler {
         quotes.add(new Quote("It is our choices... that show what we truly are, far more than our abilities.", false, true, english, JKRowling));
 
 
-        Author jackWelch = getAuthor("Jack Welch");
+        Author jackWelch = getAuthor(authors, "Jack Welch");
         quotes.add(new Quote("Giving people self-confidence is by far the most important thing that I can do. Because then they will act.", false, true, english, jackWelch));
         quotes.add(new Quote("If you pick the right people and give them the opportunity to spread their wings and put compensation as a carrier behind it you almost don't have to manage them.", false, true, english, jackWelch));
         quotes.add(new Quote("Management is all about managing in the short term, while developing the plans for the long ", false, true, english, jackWelch));
@@ -1633,7 +1654,7 @@ public class DataHandler {
         quotes.add(new Quote("Before you are a leader, success is all about growing yourself. When you become a leader, success is all about growing others.", false, true, english, jackWelch));
         quotes.add(new Quote("An organization's ability to learn, and translate that learning into action rapidly, is the ultimate competitive advantage.", false, true, english, jackWelch));
 
-        Author jamesABaldwin = getAuthor("James A. Baldwin");
+        Author jamesABaldwin = getAuthor(authors, "James A. Baldwin");
         quotes.add(new Quote("The power of the white world is threatened whenever a black man refuses to accept the white world's definitions.", false, true, english, jamesABaldwin));
         quotes.add(new Quote("Those who say it can't be done are usually interrupted by others doing it.", false, true, english, jamesABaldwin));
         quotes.add(new Quote("I imagine one of the reasons people cling to their hates so stubbornly is because they sense, once hate is gone, they will be forced to deal with pain.", false, true, english, jamesABaldwin));
@@ -1645,7 +1666,7 @@ public class DataHandler {
         quotes.add(new Quote("The paradox of education is precisely this - that as one begins to become conscious one begins to examine the society in which he is being educated.", false, true, english, jamesABaldwin));
         quotes.add(new Quote("It is certain, in any case, that ignorance, allied with power, is the most ferocious enemy justice can have.", false, true, english, jamesABaldwin));
 
-        Author johnCMaxwell = getAuthor("John C. Maxwell");
+        Author johnCMaxwell = getAuthor(authors, "John C. Maxwell");
         quotes.add(new Quote("Without failure there is no achievement.", false, true, english, johnCMaxwell));
         quotes.add(new Quote("Leaders must be close enough to relate to others, but far enough ahead to motivate them.", false, true, english, johnCMaxwell));
         quotes.add(new Quote("Family and friendships are two of the greatest facilitators of happiness.", false, true, english, johnCMaxwell));
@@ -1657,7 +1678,7 @@ public class DataHandler {
         quotes.add(new Quote("A leader is one who knows the way, goes the way, and shows the way.", false, true, english, johnCMaxwell));
         quotes.add(new Quote("Leadership is influence.", false, true, english, johnCMaxwell));
 
-        Author johnFKennedy = getAuthor("John F. Kennedy");
+        Author johnFKennedy = getAuthor(authors, "John F. Kennedy");
         quotes.add(new Quote("Conformity is the jailer of freedom and the enemy of growth.", false, true, english, johnFKennedy));
         quotes.add(new Quote("My brother Bob doesn't want to be in government - he promised Dad he'd go straight.", false, true, english, johnFKennedy));
         quotes.add(new Quote("Efforts and courage are not enough without purpose and direction.", false, true, english, johnFKennedy));
@@ -1669,7 +1690,7 @@ public class DataHandler {
         quotes.add(new Quote("Change is the law of life. And those who look only to the past or present are certain to miss the future.", false, true, english, johnFKennedy));
         quotes.add(new Quote("As we express our gratitude, we must never forget that the highest appreciation is not to utter words, but to live by them.", false, true, english, johnFKennedy));
 
-        Author johannWolfgangvonGoethe = getAuthor("Johann Wolfgang von Goethe");
+        Author johannWolfgangvonGoethe = getAuthor(authors, "Johann Wolfgang von Goethe");
         quotes.add(new Quote("I call architecture frozen music.", false, true, english, johannWolfgangvonGoethe));
         quotes.add(new Quote("A man's manners are a mirror in which he shows his portrait.", false, true, english, johannWolfgangvonGoethe));
         quotes.add(new Quote("One must ask children and birds how cherries and strawberries taste.", false, true, english, johannWolfgangvonGoethe));
@@ -1681,7 +1702,7 @@ public class DataHandler {
         quotes.add(new Quote("Knowing is not enough; we must apply. Willing is not enough; we must do.", false, true, english, johannWolfgangvonGoethe));
         quotes.add(new Quote("The soul that sees beauty may sometimes walk alone.", false, true, english, johannWolfgangvonGoethe));
 
-        Author kanyeWest = getAuthor("Kanye West");
+        Author kanyeWest = getAuthor(authors, "Kanye West");
         quotes.add(new Quote("George Bush doesn't care about black people.", false, true, english, kanyeWest));
         quotes.add(new Quote("Keep your nose out the sky, keep your heart to god, and keep your face to the raising sun.", false, true, english, kanyeWest));
         quotes.add(new Quote("I refuse to accept other people's ideas of happiness for me. As if there's a 'one size fits all' standard for happiness.", false, true, english, kanyeWest));
@@ -1693,7 +1714,7 @@ public class DataHandler {
         quotes.add(new Quote("I feel like I'm too busy writing history to read it.", false, true, english, kanyeWest));
         quotes.add(new Quote("If you have the opportunity to play this game of life you need to appreciate every moment. a lot of people don't appreciate the moment until it's passed.", false, true, english, kanyeWest));
 
-        Author karlMarx = getAuthor("Karl Marx");
+        Author karlMarx = getAuthor(authors, "Karl Marx");
         quotes.add(new Quote("Religion is the sigh of the oppressed creature, the heart of a heartless world, and the soul of soulless conditions. It is the opium of the people.", false, true, english, karlMarx));
         quotes.add(new Quote("Workers of the world unite; you have nothing to lose but your chains.C", false, true, english, karlMarx));
         quotes.add(new Quote("The theory of Communism may be summed up in one sentence: Abolish all private property.", false, true, english, karlMarx));
@@ -1705,7 +1726,7 @@ public class DataHandler {
         quotes.add(new Quote("Let the ruling classes tremble at a communist revolution. The proletarians have nothing to lose but their chains. They have a world to win. Workingmen of all countries, unite!", false, true, english, karlMarx));
         quotes.add(new Quote("History repeats itself, first as tragedy, second as farce.", false, true, english, karlMarx));
 
-        Author kendrickLamar = getAuthor("Kendrick Lamar");
+        Author kendrickLamar = getAuthor(authors, "Kendrick Lamar");
         quotes.add(new Quote("My moms always told me, 'How long you gonna play the victim?' I can say I'm mad and I hate everything, but nothing really changes until I change myself.", false, true, english, kendrickLamar));
         quotes.add(new Quote("I learned, when I look in the mirror and tell my story, that I should be myself and not peep whatever everybody is doing.", false, true, english, kendrickLamar));
         quotes.add(new Quote("If I'm gonna tell a real story, I'm gonna start with my name.", false, true, english, kendrickLamar));
@@ -1717,7 +1738,7 @@ public class DataHandler {
         quotes.add(new Quote("People are used to music that justifies street culture but something that's not touched on is why these kids act the way they act, live the way they live.", false, true, english, kendrickLamar));
         quotes.add(new Quote("My word will never be as strong as God's word. All I am is just a vessel, doing His work.", false, true, english, kendrickLamar));
 
-        Author keanuReeves = getAuthor("Keanu Reeves");
+        Author keanuReeves = getAuthor(authors, "Keanu Reeves");
         quotes.add(new Quote("Falling in love and having a relationship are two different things.", false, true, english, keanuReeves));
         quotes.add(new Quote("Grief changes shape, but it never ends.", false, true, english, keanuReeves));
         quotes.add(new Quote("I am not handsome or sexy. Of course, it's not like I am hopeless.", false, true, english, keanuReeves));
@@ -1729,7 +1750,7 @@ public class DataHandler {
         quotes.add(new Quote("My name can't be that tough to pronounce!", false, true, english, keanuReeves));
         quotes.add(new Quote("Energy can't be created or destroyed, and energy flows. It must be in a direction, with some kind of internal, emotive, spiritual direction. It must have some effect somewhere.", false, true, english, keanuReeves));
 
-        Author karlPilkington = getAuthor("Karl Pilkington");
+        Author karlPilkington = getAuthor(authors, "Karl Pilkington");
         quotes.add(new Quote("I'm not that lazy, but I don't need that much money. I lead a fairly simple life.", false, true, english, karlPilkington));
         quotes.add(new Quote("I'd rather live in a cave with a view of a palace than live in a palace with a view of a cave.", false, true, english, karlPilkington));
         quotes.add(new Quote("Being honest with you, it's not the 'great' wall of China. It's an all right wall. It's the 'All Right Wall of China.'", false, true, english, karlPilkington));
@@ -1741,7 +1762,7 @@ public class DataHandler {
         quotes.add(new Quote("A slug is always on its own. It's a lonely insect.", false, true, english, karlPilkington));
         quotes.add(new Quote("Everyone is living for everyone else now. They're doing stuff so they can tell other people about it. I don't get all that social media stuff, I've always got other things I want to do - odd jobs around the house. No one wants to hear about that.", false, true, english, karlPilkington));
 
-        Author laoTzu = getAuthor("Lao Tzu");
+        Author laoTzu = getAuthor(authors, "Lao Tzu");
         quotes.add(new Quote("Being deeply loved by someone gives you strength, while loving someone deeply gives you courage.", false, true, english, laoTzu));
         quotes.add(new Quote("Do the difficult things while they are easy and do the great things while they are small. A journey of a thousand miles must begin with a single step.", false, true, english, laoTzu));
         quotes.add(new Quote("The journey of a thousand miles begins with one step.", false, true, english, laoTzu));
@@ -1753,7 +1774,7 @@ public class DataHandler {
         quotes.add(new Quote("Nothing is softer or more flexible than water, yet nothing can resist it.", false, true, english, laoTzu));
         quotes.add(new Quote("Music in the soul can be heard by the universe.", false, true, english, laoTzu));
 
-        Author leBronJames = getAuthor("LeBron James");
+        Author leBronJames = getAuthor(authors, "LeBron James");
         quotes.add(new Quote("You can't be afraid to fail. It's the only way you succeed - you're not gonna succeed all the time, and I know that.", false, true, english, leBronJames));
         quotes.add(new Quote("My mom and I have always been there for each other. We had some tough times, but she was always there for me.", false, true, english, leBronJames));
         quotes.add(new Quote("I have short goals - to get better every day, to help my teammates every day - but my only ultimate goal is to win an NBA championship. It's all that matters. I dream about it. I dream about it all the time, how it would look, how it would feel. It would be so amazing.", false, true, english, leBronJames));
@@ -1764,7 +1785,7 @@ public class DataHandler {
         quotes.add(new Quote("You know, God gave me a gift to do other things besides play the game of basketball.", false, true, english, leBronJames));
         quotes.add(new Quote("I've always been an unselfish guy, and that's the only way I know how to play on the court and I try to play to the maximum of my ability - not only for myself but for my teammates.", false, true, english, leBronJames));
 
-        Author leoTolstoy = getAuthor("Leo Tolstoy");
+        Author leoTolstoy = getAuthor(authors, "Leo Tolstoy");
         quotes.add(new Quote("All, everything that I understand, I understand only because I love.", false, true, english, leoTolstoy));
         quotes.add(new Quote("Art is not a handicraft, it is the transmission of feeling the artist has experienced.", false, true, english, leoTolstoy));
         quotes.add(new Quote("One of the first conditions of happiness is that the link between Man and Nature shall not be broken.", false, true, english, leoTolstoy));
@@ -1776,7 +1797,7 @@ public class DataHandler {
         quotes.add(new Quote("Everyone thinks of changing the world, but no one thinks of changing himself.", false, true, english, leoTolstoy));
         quotes.add(new Quote("The two most powerful warriors are patience and time.", false, true, english, leoTolstoy));
 
-        Author leonardodaVinci = getAuthor("Leonardo da Vinci");
+        Author leonardodaVinci = getAuthor(authors, "Leonardo da Vinci");
         quotes.add(new Quote("It had long since come to my attention that people of accomplishment rarely sat back and let things happen to them. They went out and happened to things. Leonardo da Vinci", false, true, english, leonardodaVinci));
         quotes.add(new Quote("Nothing strengthens authority so much as silence.", false, true, english, leonardodaVinci));
         quotes.add(new Quote("As a well-spent day brings happy sleep, so a life well spent brings happy death.", false, true, english, leonardodaVinci));
@@ -1788,7 +1809,7 @@ public class DataHandler {
         quotes.add(new Quote("I love those who can smile in trouble, who can gather strength from distress, and grow brave by reflection. 'Tis the business of little minds to shrink, but they whose heart is firm, and whose conscience approves their conduct, will pursue their principles unto death.", false, true, english, leonardodaVinci));
         quotes.add(new Quote("Tears come from the heart and not from the brain.", false, true, english, leonardodaVinci));
 
-        Author lilUziVert = getAuthor("Lil Uzi Vert");
+        Author lilUziVert = getAuthor(authors, "Lil Uzi Vert");
         quotes.add(new Quote("If you're you, it doesn't matter if you're the most boring person in the world: someone will like you. You're not trying to be anyone else.", false, true, english, lilUziVert));
         quotes.add(new Quote("I'm just doing me, and to me, that's what got me this far.", false, true, english, lilUziVert));
         quotes.add(new Quote("There are always people who are into the old way of doing things. I don't think it's a bad thing necessarily, but things change - nothing stays the same. If you can stay true to yourself, you're always going to be legendary.", false, true, english, lilUziVert));
@@ -1800,7 +1821,7 @@ public class DataHandler {
         quotes.add(new Quote("Don't get me wrong: school is good and all, but school is way too slow for me. Like, super slow. So I didn't want to go. I wanted to learn on my own with real life experiences.", false, true, english, lilUziVert));
         quotes.add(new Quote("The type of music I make, it's not just straight-up rapping. There's emotion in it. That's why people feel each song differently. I get all my vibes from rock music, you know? All my melodies and all that.", false, true, english, lilUziVert));
 
-        Author malcolmX = getAuthor("Malcolm X");
+        Author malcolmX = getAuthor(authors, "Malcolm X");
         quotes.add(new Quote("Education is the passport to the future, for tomorrow belongs to those who prepare for it today.", false, true, english, malcolmX));
         quotes.add(new Quote("The media's the most powerful entity on earth. They have the power to make the innocent guilty and to make the guilty innocent, and that's power. Because they control the minds of the masses.", false, true, english, malcolmX));
         quotes.add(new Quote("There is no better than adversity. Every defeat, every heartbreak, every loss, contains its own seed, its own lesson on how to improve your performance the next time.", false, true, english, malcolmX));
@@ -1812,7 +1833,7 @@ public class DataHandler {
         quotes.add(new Quote("I don't even call it violence when it's in self defense; I call it intelligence.", false, true, english, malcolmX));
         quotes.add(new Quote("I have more respect for a man who lets me know where he stands, even if he's wrong, than the one who comes up like an angel and is nothing but a devil.", false, true, english, malcolmX));
 
-        Author motherTeresa = getAuthor("Mother Teresa");
+        Author motherTeresa = getAuthor(authors, "Mother Teresa");
         quotes.add(new Quote("Let us always meet each other with smile, for the smile is the beginning of love.", false, true, english, motherTeresa));
         quotes.add(new Quote("Peace begins with a smile.", false, true, english, motherTeresa));
         quotes.add(new Quote("We need to find God, and he cannot be found in noise and restlessness. God is the friend of silence. See how nature - trees, flowers, grass- grows in silence; see the stars, the moon and the sun, how they move in silence... We need silence to be able to touch souls.", false, true, english, motherTeresa));
@@ -1824,7 +1845,7 @@ public class DataHandler {
         quotes.add(new Quote("We think sometimes that poverty is only being hungry, naked and homeless. The poverty of being unwanted, unloved and uncared for is the greatest poverty. We must start in our own homes to remedy this kind of poverty.", false, true, english, motherTeresa));
         quotes.add(new Quote("Joy is prayer; joy is strength: joy is love; joy is a net of love by which you can catch souls.", false, true, english, motherTeresa));
 
-        Author mahatmaGandhi = getAuthor("Mahatma Gandhi");
+        Author mahatmaGandhi = getAuthor(authors, "Mahatma Gandhi");
         quotes.add(new Quote("A nation's culture resides in the hearts and in the soul of its people.", false, true, english, mahatmaGandhi));
         quotes.add(new Quote("An eye for an eye only ends up making the whole world blind.", false, true, english, mahatmaGandhi));
         quotes.add(new Quote("Happiness is when what you think, what you say, and what you do are in harmony.", false, true, english, mahatmaGandhi));
@@ -1836,7 +1857,7 @@ public class DataHandler {
         quotes.add(new Quote("The weak can never forgive. Forgiveness is the attribute of the strong.", false, true, english, mahatmaGandhi));
         quotes.add(new Quote("Where there is love there is life.", false, true, english, mahatmaGandhi));
 
-        Author marcusTulliusCicero = getAuthor("Marcus Tullius Cicero");
+        Author marcusTulliusCicero = getAuthor(authors, "Marcus Tullius Cicero");
         quotes.add(new Quote("It is not by muscle, speed, or physical dexterity that great things are achieved, but by reflection, force of character, and judgment.", false, true, english, marcusTulliusCicero));
         quotes.add(new Quote("What then is freedom? The power to live as one wishes.", false, true, english, marcusTulliusCicero));
         quotes.add(new Quote("The countenance is the portrait of the soul, and the eyes mark its intentions.", false, true, english, marcusTulliusCicero));
@@ -1848,7 +1869,7 @@ public class DataHandler {
         quotes.add(new Quote("Gratitude is not only the greatest of virtues, but the parent of all the others.", false, true, english, marcusTulliusCicero));
         quotes.add(new Quote("The life of the dead is placed in the memory of the living.", false, true, english, marcusTulliusCicero));
 
-        Author marilynMonroe = getAuthor("Marilyn Monroe");
+        Author marilynMonroe = getAuthor(authors, "Marilyn Monroe");
         quotes.add(new Quote("It's better to be unhappy alone than unhappy with someone - so far.", false, true, english, marilynMonroe));
         quotes.add(new Quote("Success makes so many people hate you. I wish it wasn't that way. It would be wonderful to enjoy success without seeing envy in the eyes of those around you.", false, true, english, marilynMonroe));
         quotes.add(new Quote("Experts on romance say for a happy marriage there has to be more than a passionate love. For a lasting union, they insist, there must be a genuine liking for each other. Which, in my book, is a good definition for friendship.", false, true, english, marilynMonroe));
@@ -1860,7 +1881,7 @@ public class DataHandler {
         quotes.add(new Quote("I've never dropped anyone I believed in.", false, true, english, marilynMonroe));
         quotes.add(new Quote("I'm selfish, impatient, and a little insecure. I make mistakes, I'm out of control, and at times hard to handle. But if you can't handle me at my worst, then you sure as hell don't deserve me at my best.", false, true, english, marilynMonroe));
 
-        Author napoleonBonaparte = getAuthor("Napoleon Bonaparte");
+        Author napoleonBonaparte = getAuthor(authors, "Napoleon Bonaparte");
         quotes.add(new Quote("You must not fight too often with one enemy, or you will teach him all your art of war.", false, true, english, napoleonBonaparte));
         quotes.add(new Quote("A leader is a dealer in hope.", false, true, english, napoleonBonaparte));
         quotes.add(new Quote("Death is nothing, but to live defeated and inglorious is to die daily.", false, true, english, napoleonBonaparte));
@@ -1872,7 +1893,7 @@ public class DataHandler {
         quotes.add(new Quote("If you want a thing done well, do it yourself.", false, true, english, napoleonBonaparte));
         quotes.add(new Quote("In politics stupidity is not a handicap.", false, true, english, napoleonBonaparte));
 
-        Author napoleonHill = getAuthor("Napoleon Hill");
+        Author napoleonHill = getAuthor(authors, "Napoleon Hill");
         quotes.add(new Quote("First comes thought; then organization of that thought, into ideas and plans; then transformation of those plans into reality. The beginning, as you will observe, is in your imagination.", false, true, english, napoleonHill));
         quotes.add(new Quote("If you cannot do great things, do small things in a great way.", false, true, english, napoleonHill));
         quotes.add(new Quote("Effort only fully releases its reward after a person refuses to quit.", false, true, english, napoleonHill));
@@ -1884,7 +1905,7 @@ public class DataHandler {
         quotes.add(new Quote("Patience, persistence and perspiration make an unbeatable combination for success.", false, true, english, napoleonHill));
         quotes.add(new Quote("Strength and growth come only through continuous effort and struggle.", false, true, english, napoleonHill));
 
-        Author nas = getAuthor("Nas");
+        Author nas = getAuthor(authors, "Nas");
         quotes.add(new Quote("I want to have fun. It's a beautiful life. You learn, you win, you lose, but you get up.", false, true, english, nas));
         quotes.add(new Quote("Once you make it to your point of making it, you'll appreciate the struggle.", false, true, english, nas));
         quotes.add(new Quote("I just enjoy life now. I just enjoy every morning I get to wake up.", false, true, english, nas));
@@ -1896,7 +1917,7 @@ public class DataHandler {
         quotes.add(new Quote("I don't want any title. I just say what I say, and hopefully somebody gets it, man. I'm not perfect, and I'm just here and trying to make a dollar, and being real at the same time, you know?", false, true, english, nas));
         quotes.add(new Quote("When you're a teenager, you want to meet a lot of girls - you want to get the most girls. You don't know anything about respect; you don't know anything about being faithful and loyal to your girlfriend.", false, true, english, nas));
 
-        Author neilArmstrong = getAuthor("Neil Armstrong");
+        Author neilArmstrong = getAuthor(authors, "Neil Armstrong");
         quotes.add(new Quote("Well, I think we tried very hard not to be overconfident, because when you get overconfident, that's when something snaps up and bites you.", false, true, english, neilArmstrong));
         quotes.add(new Quote("Houston, Tranquillity Base here. The Eagle has landed.", false, true, english, neilArmstrong));
         quotes.add(new Quote("It suddenly struck me that that tiny pea, pretty and blue, was the Earth. I put up my thumb and shut one eye, and my thumb blotted out the planet Earth. I didn't feel like a giant. I felt very, very small.", false, true, english, neilArmstrong));
@@ -1908,7 +1929,7 @@ public class DataHandler {
         quotes.add(new Quote("That's one small step for a man, one giant leap for mankind.", false, true, english, neilArmstrong));
         quotes.add(new Quote("Mystery creates wonder and wonder is the basis of man's desire to understand.", false, true, english, neilArmstrong));
 
-        Author neildeGrasseTyson = getAuthor("Neil deGrasse Tyson");
+        Author neildeGrasseTyson = getAuthor(authors, "Neil deGrasse Tyson");
         quotes.add(new Quote("We are part of this universe; we are in this universe, but perhaps more important than both of those facts, is that the universe is in us.", false, true, english, neildeGrasseTyson));
         quotes.add(new Quote("Ever since the Industrial Revolution, investments in science and technology have proved to be reliable engines of economic growth. If homegrown interest in those fields is not regenerated soon, the comfortable lifestyle to which Americans have become accustomed will draw to a rapid close.", false, true, english, neildeGrasseTyson));
         quotes.add(new Quote("Perhaps we've never been visited by aliens because they have looked upon Earth and decided there's no sign of intelligent life.", false, true, english, neildeGrasseTyson));
@@ -1920,7 +1941,7 @@ public class DataHandler {
         quotes.add(new Quote("The Universe is under no obligation to make sense to you.", false, true, english, neildeGrasseTyson));
         quotes.add(new Quote("Humans aren't as good as we should be in our capacity to empathize with feelings and thoughts of others, be they humans or other animals on Earth. So maybe part of our formal education should be training in empathy. Imagine how different the world would be if, in fact, that were 'reading, writing, arithmetic, empathy.'", false, true, english, neildeGrasseTyson));
 
-        Author oscarWilde = getAuthor("Oscar Wilde");
+        Author oscarWilde = getAuthor(authors, "Oscar Wilde");
         quotes.add(new Quote("Keep love in your heart. A life without it is like a sunless garden when the flowers are dead.", false, true, english, oscarWilde));
         quotes.add(new Quote("If you are not too long, I will wait here for you all my life.", false, true, english, oscarWilde));
         quotes.add(new Quote("Men always want to be a woman's first love - women like to be a man's last romance.", false, true, english, oscarWilde));
@@ -1932,7 +1953,7 @@ public class DataHandler {
         quotes.add(new Quote("Memory... is the diary that we all carry about with us.", false, true, english, oscarWilde));
         quotes.add(new Quote("A dreamer is one who can only find his way by moonlight, and his punishment is that he sees the dawn before the rest of the world.", false, true, english, oscarWilde));
 
-        Author OJSimpson = getAuthor("O. J. Simpson");
+        Author OJSimpson = getAuthor(authors, "O. J. Simpson");
         quotes.add(new Quote("The day you take complete responsibility for yourself, the day you stop making any excuses, that's the day you start to the top.", false, true, english, OJSimpson));
         quotes.add(new Quote("I didn't beat her. I just pushed her out of bed.", false, true, english, OJSimpson));
         quotes.add(new Quote("My NFL pension can barely pay my son's tuition. You know, it's very little money.", false, true, english, OJSimpson));
@@ -1944,7 +1965,7 @@ public class DataHandler {
         quotes.add(new Quote("I could not tell you the date of my mother's death. I could not tell you the date of my dad's death. These are not dates that I find significant.", false, true, english, OJSimpson));
         quotes.add(new Quote("I had some problems with fidelity in my life but pretty much got along with everybody.", false, true, english, OJSimpson));
 
-        Author OSheaJackson = getAuthor("O'Shea Jackson");
+        Author OSheaJackson = getAuthor(authors, "O'Shea Jackson");
         quotes.add(new Quote("Have confidence in everything. No matter what it is that you're doing, know that you can do it better than anyone.", false, true, english, OSheaJackson));
         quotes.add(new Quote("The stress and turmoil that my father had to go through at a young age to make sure that I didn't have the same trials and tribulations, I couldn't be more grateful.", false, true, english, OSheaJackson));
         quotes.add(new Quote("My parents wouldn't have sent me out into the world with wool over my eyes. You have to be aware, or you'll be swallowed.", false, true, english, OSheaJackson));
@@ -1956,13 +1977,13 @@ public class DataHandler {
         quotes.add(new Quote("When, you know, when you're playing basketball, you have to have confidence in your moves if they're gonna work.", false, true, english, OSheaJackson));
         quotes.add(new Quote("Music is always there, but if you're asking me my first love, it's film.", false, true, english, OSheaJackson));
 
-        Author OWinstonLink = getAuthor("O. Winston Link");
+        Author OWinstonLink = getAuthor(authors, "O. Winston Link");
         quotes.add(new Quote("I never expected that. I didn't aim for that. All I wanted was to get some nice pictures of trains at night.", false, true, english, OWinstonLink));
         quotes.add(new Quote("You can show me some stick ice cream and I can tell you if it's good or not just looking at it.", false, true, english, OWinstonLink));
         quotes.add(new Quote("I was strong and healthy and I was enjoying what I was doing.", false, true, english, OWinstonLink));
         quotes.add(new Quote("I was one man and I tackled a big railroad. I did the best I could.", false, true, english, OWinstonLink));
 
-        Author obiageliEzekwesili = getAuthor("Obiageli Ezekwesili");
+        Author obiageliEzekwesili = getAuthor(authors, "Obiageli Ezekwesili");
         quotes.add(new Quote("Social media is simply a tool that facilitates actions.", false, true, english, obiageliEzekwesili));
         quotes.add(new Quote("My mum was a quintessential businesswoman. She taught me problem-solving. She can solve any problem.", false, true, english, obiageliEzekwesili));
         quotes.add(new Quote("I would like to see a lot of people more involved in practical solutions to practical problems. Women have got to the point where we can turn the world upside down.", false, true, english, obiageliEzekwesili));
@@ -1974,7 +1995,7 @@ public class DataHandler {
         quotes.add(new Quote("Do our children now have to choose between getting an education and dying? Some of us cannot move on and accept that kind of society.", false, true, english, obiageliEzekwesili));
         quotes.add(new Quote("There's absolutely nothing that the God I believe in cannot do.", false, true, english, obiageliEzekwesili));
 
-        Author plato = getAuthor("Plato");
+        Author plato = getAuthor(authors, "Plato");
         quotes.add(new Quote("Wise men speak because they have something to say; Fools because they have to say something.", false, true, english, plato));
         quotes.add(new Quote("Music is a moral law. It gives soul to the universe, wings to the mind, flight to the imagination, and charm and gaiety to life and to everything.", false, true, english, plato));
         quotes.add(new Quote("Human behavior flows from three main sources: desire, emotion, and knowledge.", false, true, english, plato));
@@ -1986,7 +2007,7 @@ public class DataHandler {
         quotes.add(new Quote("Dictatorship naturally arises out of democracy, and the most aggravated form of tyranny and slavery out of the most extreme liberty.", false, true, english, plato));
         quotes.add(new Quote("Ignorance, the root and stem of all evil.", false, true, english, plato));
 
-        Author pabloPicasso = getAuthor("Pablo Picasso");
+        Author pabloPicasso = getAuthor(authors, "Pablo Picasso");
         quotes.add(new Quote("Our goals can only be reached through a vehicle of a plan, in which we must fervently believe, and upon which we must vigorously act. There is no other route to success.", false, true, english, pabloPicasso));
         quotes.add(new Quote("Action is the foundational key to all success.", false, true, english, pabloPicasso));
         quotes.add(new Quote("Youth has no age.", false, true, english, pabloPicasso));
@@ -1998,7 +2019,7 @@ public class DataHandler {
         quotes.add(new Quote("All children are artists. The problem is how to remain an artist once he grows up.", false, true, english, pabloPicasso));
         quotes.add(new Quote("The purpose of art is washing the dust of daily life off our souls.", false, true, english, pabloPicasso));
 
-        Author patrickHenry = getAuthor("Patrick Henry");
+        Author patrickHenry = getAuthor(authors, "Patrick Henry");
         quotes.add(new Quote("Is life so dear or peace so sweet as to be purchased at the price of chains and slavery? Forbid it, Almighty God! I know not what course others may take, but as for me, give me liberty, or give me death!", false, true, english, patrickHenry));
         quotes.add(new Quote("I have but one lamp by which my feet are guided, and that is the lamp of experience.", false, true, english, patrickHenry));
         quotes.add(new Quote("The liberties of a people never were, nor ever will be, secure, when the transactions of their rulers may be concealed from them.", false, true, english, patrickHenry));
@@ -2010,7 +2031,7 @@ public class DataHandler {
         quotes.add(new Quote("It is natural to indulge in the illusions of hope. We are apt to shut our eyes to that siren until she allures us to our death.", false, true, english, patrickHenry));
         quotes.add(new Quote("Shall we, who have laid the proud British lion at our feet, now be afraid of his whelps?", false, true, english, patrickHenry));
 
-        Author pauloCoelho = getAuthor("Paulo Coelho");
+        Author pauloCoelho = getAuthor(authors, "Paulo Coelho");
         quotes.add(new Quote("Waiting is painful. Forgetting is painful. But not knowing which to do is the worse kind of suffering.", false, true, english, pauloCoelho));
         quotes.add(new Quote("No one can lie, no one can hide anything, when he looks directly into someone's eyes.", false, true, english, pauloCoelho));
         quotes.add(new Quote("When you want something, all the universe conspires in helping you to achieve it.", false, true, english, pauloCoelho));
@@ -2022,7 +2043,7 @@ public class DataHandler {
         quotes.add(new Quote("Be brave. Take risks. Nothing can substitute experience.", false, true, english, pauloCoelho));
         quotes.add(new Quote("I have seen many storms in my life. Most storms have caught me by surprise, so I had to learn very quickly to look further and understand that I am not capable of controlling the weather, to exercise the art of patience and to respect the fury of nature.", false, true, english, pauloCoelho));
 
-        Author pele = getAuthor("Pele");
+        Author pele = getAuthor(authors, "Pele");
         quotes.add(new Quote("Success is no accident. It is hard work, perseverance, learning, studying, sacrifice and most of all, love of what you are doing or learning to do.", false, true, english, pele));
         quotes.add(new Quote("Enthusiasm is everything. It must be taut and vibrating like a guitar string.", false, true, english, pele));
         quotes.add(new Quote("I am constantly being asked about individuals. The only way to win is as a team. Football is not about one or two or three star players.", false, true, english, pele));
@@ -2034,7 +2055,7 @@ public class DataHandler {
         quotes.add(new Quote("Everything on earth is a game. A passing thing. We all end up dead. We all end up the same, don't we?", false, true, english, pele));
         quotes.add(new Quote("The World Cup is a very complicated tournament - six games, seven if you make it to the final - and maybe if you lose one game you're out, even if you're the best.", false, true, english, pele));
 
-        Author QoriankaKilcher = getAuthor("Q'orianka Kilcher");
+        Author QoriankaKilcher = getAuthor(authors, "Q'orianka Kilcher");
         quotes.add(new Quote("I love the power of celebrity because you can give voice to the voiceless.", false, true, english, QoriankaKilcher));
         quotes.add(new Quote("You need people around you that care about you and are thinking about you in your best interest. And keep your mind straight.", false, true, english, QoriankaKilcher));
         quotes.add(new Quote("I really identified with Pocahontas' struggles as a young woman trying to identify herself in a modern, changing world and trying to stay true to her culture and heritage.", false, true, english, QoriankaKilcher));
@@ -2046,7 +2067,7 @@ public class DataHandler {
         quotes.add(new Quote("My father's Peruvian! I actually have a lot of family in Cuzco. I'm also Swiss, Alaskan, French, Spanish and Italian.", false, true, english, QoriankaKilcher));
         quotes.add(new Quote("I feel like, as a celebrity, I have a responsibility to tell important stories.", false, true, english, QoriankaKilcher));
 
-        Author qTip = getAuthor("Q-Tip");
+        Author qTip = getAuthor(authors, "Q-Tip");
         quotes.add(new Quote("If there's a 'Cruel Summer' then there's got to be a 'Cruel Winter,' right? That's all I'm saying.", false, true, english, qTip));
         quotes.add(new Quote("I definitely move to the beat of my own drummer and man, he's not playing something anyone has heard before. It's pretty cool, though. Pretty cool.", false, true, english, qTip));
         quotes.add(new Quote("One thing the music industry has taught me is to manage my expectations. Q-Tip.", false, true, english, qTip));
@@ -2058,7 +2079,7 @@ public class DataHandler {
         quotes.add(new Quote("I feel like Obama in a way. His idea that hope means not shrinking from a fight; it's the courage to reach for something. My music is that. Those are principles I try to embody.", false, true, english, qTip));
         quotes.add(new Quote("In 1999, I just came out of putting out the song 'Vivrant Thing' and 'Breathe and Stop' off the 'Amplified' album. Clive Davis signed me to Arista.", false, true, english, qTip));
 
-        Author qandeelBaloch = getAuthor("Qandeel Baloch");
+        Author qandeelBaloch = getAuthor(authors, "Qandeel Baloch");
         quotes.add(new Quote("Love me or hate me, both are in my favour. If you love me, I will always be in your heart, and if you hate me, I will be in your mind.", false, true, english, qandeelBaloch));
         quotes.add(new Quote("I did a job. I completed my Matric and my Bachelors. I did a marketing job. I worked as a bus hostess. I did a lot of jobs; I struggled a lot. I got out from there. The first thing I did when I got out of Darul Aman was my Matric. Then I did my Bachelors privately; I kept doing it.", false, true, english, qandeelBaloch));
         quotes.add(new Quote("At least international media can see how I am trying to change the typical orthodox mindset of people who don't want to come out of their shells of false beliefs and old practices.", false, true, english, qandeelBaloch));
@@ -2070,7 +2091,7 @@ public class DataHandler {
         quotes.add(new Quote("It was my wish since I was a child to become something, to be able to stand on my own two feet, to do something for myself.", false, true, english, qandeelBaloch));
         quotes.add(new Quote("Pakistan is a free country, so according to me, in a free country, it's every right of the citizen to live the way they wish.", false, true, english, qandeelBaloch));
 
-        Author quavo = getAuthor("Quavo");
+        Author quavo = getAuthor(authors, "Quavo");
         quotes.add(new Quote("History repeats itself. So you might wanna pay attention.", false, true, english, quavo));
         quotes.add(new Quote("I'd open doors for anyone who opens doors for me.", false, true, english, quavo));
         quotes.add(new Quote("Wealth is just consistency... I don't want to be rich. I want to be wealthy.", false, true, english, quavo));
@@ -2082,11 +2103,11 @@ public class DataHandler {
         quotes.add(new Quote("We just feel like history repeats itself. You ain't never going to see nothing brand new; you're only going to see when records are broken. And we're here to just set records and set trends and follow the footsteps that have been shown to us.", false, true, english, quavo));
         quotes.add(new Quote("I'll tell ya, when you open up that can of dab, it's always fresh.", false, true, english, quavo));
 
-        Author queenChristina = getAuthor("Queen Christina");
+        Author queenChristina = getAuthor(authors, "Queen Christina");
         quotes.add(new Quote("It is necessary to try to pass one's self always; this occupation ought to last as long as life.", false, true, english, queenChristina));
         quotes.add(new Quote("Fools are more to be feared than the wicked.", false, true, english, queenChristina));
 
-        Author robinWilliams = getAuthor("Robin Williams");
+        Author robinWilliams = getAuthor(authors, "Robin Williams");
         quotes.add(new Quote("No matter what people tell you, words and ideas can change the world.", false, true, english, robinWilliams));
         quotes.add(new Quote("I'm sorry, if you were right, I'd agree with you.", false, true, english, robinWilliams));
         quotes.add(new Quote("If women ran the world we wouldn't have wars, just intense negotiations every 28 days.", false, true, english, robinWilliams));
@@ -2098,7 +2119,7 @@ public class DataHandler {
         quotes.add(new Quote("People say satire is dead. It's not dead; it's alive and living in the White House.", false, true, english, robinWilliams));
         quotes.add(new Quote("For me, comedy starts as a spew, a kind of explosion, and then you sculpt it from there, if at all. It comes out of a deeper, darker side. Maybe it comes from anger, because I'm outraged by cruel absurdities, the hypocrisy that exists everywhere, even within yourself, where it's hardest to see.", false, true, english, robinWilliams));
 
-        Author rumi = getAuthor("Rumi");
+        Author rumi = getAuthor(authors, "Rumi");
         quotes.add(new Quote("Let the beauty of what you love be what you do.", false, true, english, rumi));
         quotes.add(new Quote("Everything that is made beautiful and fair and lovely is made for the eye of one who sees.", false, true, english, rumi));
         quotes.add(new Quote("We are born of love; Love is our mother.", false, true, english, rumi));
@@ -2110,7 +2131,7 @@ public class DataHandler {
         quotes.add(new Quote("May this marriage be full of laughter, our every day in paradise.", false, true, english, rumi));
         quotes.add(new Quote("Listen! Clam up your mouth and be silent like an oyster shell, for that tongue of yours is the enemy of the soul, my friend. When the lips are silent, the heart has a hundred tongues.", false, true, english, rumi));
 
-        Author ralphWaldoEmerson = getAuthor("Ralph Waldo Emerson");
+        Author ralphWaldoEmerson = getAuthor(authors, "Ralph Waldo Emerson");
         quotes.add(new Quote("Adopt the pace of nature: her secret is patience.", false, true, english, ralphWaldoEmerson));
         quotes.add(new Quote("Never lose an opportunity of seeing anything beautiful, for beauty is God's handwriting.", false, true, english, ralphWaldoEmerson));
         quotes.add(new Quote("Love of beauty is taste. The creation of beauty is art.", false, true, english, ralphWaldoEmerson));
@@ -2122,7 +2143,7 @@ public class DataHandler {
         quotes.add(new Quote("The first wealth is health.", false, true, english, ralphWaldoEmerson));
         quotes.add(new Quote("It is one of the blessings of old friends that you can afford to be stupid with them.", false, true, english, ralphWaldoEmerson));
 
-        Author richardBranson = getAuthor("Richard Branson");
+        Author richardBranson = getAuthor(authors, "Richard Branson");
         quotes.add(new Quote("Business opportunities are like buses, there's always another one coming.", false, true, english, richardBranson));
         quotes.add(new Quote("By putting the employee first, the customer effectively comes first by default, and in the end, the shareholder comes first by default as well.", false, true, english, richardBranson));
         quotes.add(new Quote("Starting your own business isn't just a job - it's a way of life.", false, true, english, richardBranson));
@@ -2134,7 +2155,7 @@ public class DataHandler {
         quotes.add(new Quote("My attitude has always been, if you fall flat on your face, at least you're moving forward. All you have to do is get back up and try again.", false, true, english, richardBranson));
         quotes.add(new Quote("You don't learn to walk by following rules. You learn by doing, and by falling over.", false, true, english, richardBranson));
 
-        Author socrates = getAuthor("Socrates");
+        Author socrates = getAuthor(authors, "Socrates");
         quotes.add(new Quote("The only true wisdom is in knowing you know nothing.", false, true, english, socrates));
         quotes.add(new Quote("To know, is to know that you know nothing. That is the meaning of true knowledge.", false, true, english, socrates));
         quotes.add(new Quote("Our prayers should be for blessings in general, for God knows best what is good for us.", false, true, english, socrates));
@@ -2146,7 +2167,7 @@ public class DataHandler {
         quotes.add(new Quote("Death may be the greatest of all human blessings.", false, true, english, socrates));
         quotes.add(new Quote("Worthless people live only to eat and drink; people of worth eat and drink only to live.", false, true, english, socrates));
 
-        Author saintAugustine = getAuthor("Saint Augustine");
+        Author saintAugustine = getAuthor(authors, "Saint Augustine");
         quotes.add(new Quote("Do you wish to rise? Begin by descending. You plan a tower that will pierce the clouds? Lay first the foundation of humility.", false, true, english, saintAugustine));
         quotes.add(new Quote("In the absence of justice, what is sovereignty but organized robbery?", false, true, english, saintAugustine));
         quotes.add(new Quote("Men go abroad to wonder at the heights of mountains, at the huge waves of the sea, at the long courses of the rivers, at the vast compass of the ocean, at the circular motions of the stars, and they pass by themselves without wondering.", false, true, english, saintAugustine));
@@ -2158,7 +2179,7 @@ public class DataHandler {
         quotes.add(new Quote("It was pride that changed angels into devils; it is humility that makes men as angels.", false, true, english, saintAugustine));
         quotes.add(new Quote("The world is a book, and those who do not travel read only a page.", false, true, english, saintAugustine));
 
-        Author sigmundFreud = getAuthor("Sigmund Freud");
+        Author sigmundFreud = getAuthor(authors, "Sigmund Freud");
         quotes.add(new Quote("Dreams are often most profound when they seem the most crazy.", false, true, english, sigmundFreud));
         quotes.add(new Quote("We are never so defensless against suffering as when we love.", false, true, english, sigmundFreud));
         quotes.add(new Quote("Most people do not really want freedom, because freedom involves responsibility, and most people are frightened of responsibility.", false, true, english, sigmundFreud));
@@ -2170,7 +2191,7 @@ public class DataHandler {
         quotes.add(new Quote("Time spent with cats is never wasted.", false, true, english, sigmundFreud));
         quotes.add(new Quote("Civilization began the first time an angry person cast a word instead of a rock.", false, true, english, sigmundFreud));
 
-        Author simonSinek = getAuthor("Simon Sinek");
+        Author simonSinek = getAuthor(authors, "Simon Sinek");
         quotes.add(new Quote("There is a difference between listening and waiting for your turn to speak.", false, true, english, simonSinek));
         quotes.add(new Quote("Leadership is a way of thinking, a way of acting and, most importantly, a way of communicating.", false, true, english, simonSinek));
         quotes.add(new Quote("We can't all be good at everything. This is partly the logic behind having a team in the first place, so each role can be filled with the person best suited for that role and together, every job and every strength is covered.", false, true, english, simonSinek));
@@ -2182,7 +2203,7 @@ public class DataHandler {
         quotes.add(new Quote("Leadership is not about the next election, it's about the next generation.", false, true, english, simonSinek));
         quotes.add(new Quote("The strong bond of friendship is not always a balanced equation; friendship is not always about giving and taking in equal shares. Instead, friendship is grounded in a feeling that you know exactly who will be there for you when you need something, no matter what or when.", false, true, english, simonSinek));
 
-        Author sorenKierkegaard = getAuthor("Soren Kierkegaard");
+        Author sorenKierkegaard = getAuthor(authors, "Soren Kierkegaard");
         quotes.add(new Quote("The highest and most beautiful things in life are not to be heard about, nor read about, nor seen but, if one will, are to be lived.", false, true, english, sorenKierkegaard));
         quotes.add(new Quote("Our life always expresses the result of our dominant thoughts.", false, true, english, sorenKierkegaard));
         quotes.add(new Quote("What is a poet? An unhappy person who conceals profound anguish in his heart but whose lips are so formed that as sighs and cries pass over them they sound like beautiful music.", false, true, english, sorenKierkegaard));
@@ -2194,7 +2215,7 @@ public class DataHandler {
         quotes.add(new Quote("Life can only be understood backwards; but it must be lived forwards.", false, true, english, sorenKierkegaard));
         quotes.add(new Quote("Life is not a problem to be solved, but a reality to be experienced.", false, true, english, sorenKierkegaard));
 
-        Author theodoreRoosevelt = getAuthor("Theodore Roosevelt");
+        Author theodoreRoosevelt = getAuthor(authors, "Theodore Roosevelt");
         quotes.add(new Quote("Believe you can and you're halfway there.", false, true, english, theodoreRoosevelt));
         quotes.add(new Quote("Keep your eyes on the stars, and your feet on the ground.", false, true, english, theodoreRoosevelt));
         quotes.add(new Quote("People ask the difference between a leader and a boss. The leader leads, and the boss drives.", false, true, english, theodoreRoosevelt));
@@ -2206,7 +2227,7 @@ public class DataHandler {
         quotes.add(new Quote("Great thoughts speak only to the thoughtful mind, but great actions speak to all mankind.", false, true, english, theodoreRoosevelt));
         quotes.add(new Quote("With self-discipline most anything is possible.", false, true, english, theodoreRoosevelt));
 
-        Author TSEliot = getAuthor("T. S. Eliot");
+        Author TSEliot = getAuthor(authors, "T. S. Eliot");
         quotes.add(new Quote("If you aren't in over your head, how do you know how tall you are?", false, true, english, TSEliot));
         quotes.add(new Quote("Poetry is not a turning loose of emotion, but an escape from emotion; it is not the expression of personality, but an escape from personality. But, of course, only those who have personality and emotions know what it means to want to escape from these things.", false, true, english, TSEliot));
         quotes.add(new Quote("I said to my soul, be still, and wait without hope, For hope would be hope for the wrong thing.", false, true, english, TSEliot));
@@ -2218,7 +2239,7 @@ public class DataHandler {
         quotes.add(new Quote("We shall not cease from exploration, and the end of all our exploring will be to arrive where we started and know the place for the first time.", false, true, english, TSEliot));
         quotes.add(new Quote("Only those who will risk going too far can possibly find out how far one can go.", false, true, english, TSEliot));
 
-        Author taylorSwift = getAuthor("Taylor Swift");
+        Author taylorSwift = getAuthor(authors, "Taylor Swift");
         quotes.add(new Quote("I am alone a lot, which is good. I need that time to just be alone after a long day, just decompress. So, I go to either my house or the hotel, or my apartment, or whatever - wherever I am, I go home and I watch TV and I sit there, with my cat, and I just watch TV or go online, check my emails.", false, true, english, taylorSwift));
         quotes.add(new Quote("I think fearless is having fears but jumping anyway.", false, true, english, taylorSwift));
         quotes.add(new Quote("I love the scents of winter! For me, it's all about the feeling you get when you smell pumpkin spice, cinnamon, nutmeg, gingerbread and spruce.", false, true, english, taylorSwift));
@@ -2230,7 +2251,7 @@ public class DataHandler {
         quotes.add(new Quote("We don't need to share the same opinions as others, but we need to be respectful.", false, true, english, taylorSwift));
         quotes.add(new Quote("Red is such an interesting color to correlate with emotion, because it's on both ends of the spectrum. On one end you have happiness, falling in love, infatuation with someone, passion, all that. On the other end, you've got obsession, jealousy, danger, fear, anger and frustration.", false, true, english, taylorSwift));
 
-        Author thomasAquinas = getAuthor("Thomas Aquinas");
+        Author thomasAquinas = getAuthor(authors, "Thomas Aquinas");
         quotes.add(new Quote("To bear with patience wrongs done to oneself is a mark of perfection, but to bear with patience wrongs done to someone else is a mark of imperfection and even of actual sin.", false, true, english, thomasAquinas));
         quotes.add(new Quote("Law is nothing other than a certain ordinance of reason for the common good, promulgated by the person who has the care of the community.", false, true, english, thomasAquinas));
         quotes.add(new Quote("Good can exist without evil, whereas evil cannot exist without good.", false, true, english, thomasAquinas));
@@ -2242,7 +2263,7 @@ public class DataHandler {
         quotes.add(new Quote("The things that we love tell us what we are.", false, true, english, thomasAquinas));
         quotes.add(new Quote("There is nothing on this earth more to be prized than true friendship.", false, true, english, thomasAquinas));
 
-        Author thomasHobbes = getAuthor("Thomas Hobbes");
+        Author thomasHobbes = getAuthor(authors, "Thomas Hobbes");
         quotes.add(new Quote("A man's conscience and his judgment is the same thing; and as the judgment, so also the conscience, may be erroneous.", false, true, english, thomasHobbes));
         quotes.add(new Quote("There is no such thing as perpetual tranquillity of mind while we live here; because life itself is but motion, and can never be without desire, nor without fear, no more than without sense.", false, true, english, thomasHobbes));
         quotes.add(new Quote("Leisure is the Mother of Philosophy.", false, true, english, thomasHobbes));
@@ -2254,7 +2275,7 @@ public class DataHandler {
         quotes.add(new Quote("It is not wisdom but Authority that makes a law.", false, true, english, thomasHobbes));
         quotes.add(new Quote("The condition of man... is a condition of war of everyone against everyone.", false, true, english, thomasHobbes));
 
-        Author voltaire = getAuthor("Voltaire");
+        Author voltaire = getAuthor(authors, "Voltaire");
         quotes.add(new Quote("God gave us the gift of life; it is up to us to give ourselves the gift of living well.", false, true, english, voltaire));
         quotes.add(new Quote("Judge a man by his questions rather than his answers.", false, true, english, voltaire));
         quotes.add(new Quote("Appreciation is a wonderful thing: It makes what is excellent in others belong to us as well.", false, true, english, voltaire));
@@ -2266,7 +2287,7 @@ public class DataHandler {
         quotes.add(new Quote("Optimism is the madness of insisting that all is well when we are miserable.", false, true, english, voltaire));
         quotes.add(new Quote("It is better to risk saving a guilty man than to condemn an innocent one.", false, true, english, voltaire));
 
-        Author valentinoRossi = getAuthor("Valentino Rossi");
+        Author valentinoRossi = getAuthor(authors, "Valentino Rossi");
         quotes.add(new Quote("Riding a race bike is an art - a thing that you do because you feel something inside.", false, true, english, valentinoRossi));
         quotes.add(new Quote("The great fights with your strongest rivals are always the biggest motivation. When you win easily it's not the same taste.", false, true, english, valentinoRossi));
         quotes.add(new Quote("The work that we do during the winter is very important; we have a new bike and it's important to develop it during this time, and we start with this test.", false, true, english, valentinoRossi));
@@ -2278,7 +2299,7 @@ public class DataHandler {
         quotes.add(new Quote("Maybe the bike is more dangerous, but the passion for the car for me is second to the bike.", false, true, english, valentinoRossi));
         quotes.add(new Quote("To be a great motorbike racer, the most important thing is passion for the bike.", false, true, english, valentinoRossi));
 
-        Author victorHugo = getAuthor("Victor Hugo");
+        Author victorHugo = getAuthor(authors, "Victor Hugo");
         quotes.add(new Quote("How did it happen that their lips came together? How does it happen that birds sing, that snow melts, that the rose unfolds, that the dawn whitens behind the stark shapes of trees on the quivering summit of the hill? A kiss, and all was said.", false, true, english, victorHugo));
         quotes.add(new Quote("There is one spectacle grander than the sea, that is the sky; there is one spectacle grander than the sky, that is the interior of the soul.", false, true, english, victorHugo));
         quotes.add(new Quote("When dictatorship is a fact, revolution becomes a right.", false, true, english, victorHugo));
@@ -2290,7 +2311,7 @@ public class DataHandler {
         quotes.add(new Quote("Music expresses that which cannot be said and on which it is impossible to be silent.", false, true, english, victorHugo));
         quotes.add(new Quote("Laughter is the sun that drives winter from the human face.", false, true, english, victorHugo));
 
-        Author viktorEFrankl = getAuthor("Viktor E. Frankl");
+        Author viktorEFrankl = getAuthor(authors, "Viktor E. Frankl");
         quotes.add(new Quote("A man who becomes conscious of the responsibility he bears toward a human being who affectionately waits for him, or to an unfinished work, will never be able to throw away his life. He knows the 'why' for his existence, and will be able to bear almost any 'how.'", false, true, english, viktorEFrankl));
         quotes.add(new Quote("If there is a meaning in life at all, then there must be a meaning in suffering. Suffering is an ineradicable part of life, even as fate and death. Without suffering and death, human life cannot be complete.", false, true, english, viktorEFrankl));
         quotes.add(new Quote("The last of human freedoms - the ability to chose one's attitude in a given set of circumstances.", false, true, english, viktorEFrankl));
@@ -2302,7 +2323,7 @@ public class DataHandler {
         quotes.add(new Quote("When we are no longer able to change a situation - we are challenged to change ourselves.", false, true, english, viktorEFrankl));
         quotes.add(new Quote("Happiness must happen, and the same holds for success: you have to let it happen by not caring about it.", false, true, english, viktorEFrankl));
 
-        Author vinScully = getAuthor("Vin Scully");
+        Author vinScully = getAuthor(authors, "Vin Scully");
         quotes.add(new Quote("As long as you live keep smiling because it brightens everybody's day.", false, true, english, vinScully));
         quotes.add(new Quote("The roar of the crowd has always been the sweetest music. It's intoxicating.", false, true, english, vinScully));
         quotes.add(new Quote("It's a wonderful feeling being a bridge to the past and unite generations.", false, true, english, vinScully));
@@ -2314,7 +2335,7 @@ public class DataHandler {
         quotes.add(new Quote("I don't like to be alone, but I do cherish the moments that I'm alone with a good book.", false, true, english, vinScully));
         quotes.add(new Quote("Don't let the winds blow your dreams away... or steal your faith in God.", false, true, english, vinScully));
 
-        Author vinceLombardi = getAuthor("Vince Lombardi");
+        Author vinceLombardi = getAuthor(authors, "Vince Lombardi");
         quotes.add(new Quote("Football is like life - it requires perseverance, self-denial, hard work, sacrifice, dedication and respect for authority.", false, true, english, vinceLombardi));
         quotes.add(new Quote("Winning is habit. Unfortunately, so is losing.", false, true, english, vinceLombardi));
         quotes.add(new Quote("Practice does not make perfect. Only perfect practice makes perfect.", false, true, english, vinceLombardi));
@@ -2326,7 +2347,7 @@ public class DataHandler {
         quotes.add(new Quote("The price of success is hard work, dedication to the job at hand, and the determination that whether we win or lose, we have applied the best of ourselves to the task at hand.", false, true, english, vinceLombardi));
         quotes.add(new Quote("Perfection is not attainable, but if we chase perfection we can catch excellence.", false, true, english, vinceLombardi));
 
-        Author vincentVanGogh = getAuthor("Vincent Van Gogh");
+        Author vincentVanGogh = getAuthor(authors, "Vincent Van Gogh");
         quotes.add(new Quote("What would life be if we had no courage to attempt anything?", false, true, english, vincentVanGogh));
         quotes.add(new Quote("I feel that there is nothing more truly artistic than to love people.", false, true, english, vincentVanGogh));
         quotes.add(new Quote("If you hear a voice within you say 'you cannot paint,' then by all means paint, and that voice will be silenced.", false, true, english, vincentVanGogh));
@@ -2338,7 +2359,7 @@ public class DataHandler {
         quotes.add(new Quote("I often think that the night is more alive and more richly colored than the day.", false, true, english, vincentVanGogh));
         quotes.add(new Quote("Great things are done by a series of small things brought together.", false, true, english, vincentVanGogh));
 
-        Author waltDisney = getAuthor("Walt Disney");
+        Author waltDisney = getAuthor(authors, "Walt Disney");
         quotes.add(new Quote("If you can dream it, you can do it.", false, true, english, waltDisney));
         quotes.add(new Quote("We keep moving forward, opening new doors, and doing new things, because we're curious and curiosity keeps leading us down new paths.", false, true, english, waltDisney));
         quotes.add(new Quote("All our dreams can come true, if we have the courage to pursue them.", false, true, english, waltDisney));
@@ -2350,7 +2371,7 @@ public class DataHandler {
         quotes.add(new Quote("When you're curious, you find lots of interesting things to do.", false, true, english, waltDisney));
         quotes.add(new Quote("All the adversity I've had in my life, all my troubles and obstacles, have strengthened me... You may not realize it when it happens, but a kick in the teeth may be the best thing in the world for you.", false, true, english, waltDisney));
 
-        Author WCFields = getAuthor("W. C. Fields");
+        Author WCFields = getAuthor(authors, "W. C. Fields");
         quotes.add(new Quote("A woman drove me to drink and I didn't even have the decency to thank her.", false, true, english, WCFields));
         quotes.add(new Quote("It ain't what they call you, it's what you answer to.", false, true, english, WCFields));
         quotes.add(new Quote("Always carry a flagon of whiskey in case of snakebite and furthermore always carry a small snake.", false, true, english, WCFields));
@@ -2362,7 +2383,7 @@ public class DataHandler {
         quotes.add(new Quote("Start every day off with a smile and get it over with.", false, true, english, WCFields));
         quotes.add(new Quote("I cook with wine, sometimes I even add it to the food.", false, true, english, WCFields));
 
-        Author yaelNaim = getAuthor("Yael Naim");
+        Author yaelNaim = getAuthor(authors, "Yael Naim");
         quotes.add(new Quote("In France, I found there is a lot of attention to the little details and to the quality of life.", false, true, english, yaelNaim));
         quotes.add(new Quote("When I'd go to Israel, I felt like a tourist. My social and professional ties had started to dissolve, and it confused me. I didn't know whether I should stay here in Paris or go back to Israel, or even cut off all my ties with Israel so I could really plant roots here. Or maybe go somewhere else altogether.", false, true, english, yaelNaim));
         quotes.add(new Quote("When I write in Hebrew, I don't look for sophistication in music; it's just pure emotion that comes out.", false, true, english, yaelNaim));
@@ -2374,7 +2395,7 @@ public class DataHandler {
         quotes.add(new Quote("Songs are a way to express what I have felt. A way to understand what happened to me or to other people.", false, true, english, yaelNaim));
         quotes.add(new Quote("As always, I wrote songs. Some people cook or play sports. This is what I love to do. Sometimes I can't express myself that well in talk, so I write songs.", false, true, english, yaelNaim));
 
-        Author yaelStone = getAuthor("Yael Stone");
+        Author yaelStone = getAuthor(authors, "Yael Stone");
         quotes.add(new Quote("Family hang-outs can go very late into the night and involve lots of music.", false, true, english, yaelStone));
         quotes.add(new Quote("Prison makes an interesting context for so many different characters to come together. You get to see what lines get drawn between people.", false, true, english, yaelStone));
         quotes.add(new Quote("I've definitely had those moments when I think a relationship with somebody is one way, and then it just flips.", false, true, english, yaelStone));
@@ -2386,7 +2407,7 @@ public class DataHandler {
         quotes.add(new Quote("My working history as an actor is definitely in the theatre; it certainly was in Australia.", false, true, english, yaelStone));
         quotes.add(new Quote("", false, true, english, yaelStone));
 
-        Author yahooSerious = getAuthor("Yahoo Serious");
+        Author yahooSerious = getAuthor(authors, "Yahoo Serious");
         quotes.add(new Quote("In 1905 Albert discovered Relativity, in 1906 he invented Rock and Roll.", false, true, english, yahooSerious));
         quotes.add(new Quote("Find your own specific voice in filmmaking and go for it. Either people will get it or they won't and that's what it's all about.", false, true, english, yahooSerious));
         quotes.add(new Quote("The American formula things are out there but they don't have any stories to tell - we have all the stories to tell - but they're all formula.", false, true, english, yahooSerious));
@@ -2398,7 +2419,7 @@ public class DataHandler {
         quotes.add(new Quote("We live in a time where government is not a leadership thing, it's more a business that's out there and running riot, so I guess the people have to go out there and say stuff.", false, true, english, yahooSerious));
         quotes.add(new Quote("", false, true, english, yahooSerious));
 
-        Author yairLapid = getAuthor("Yair Lapid");
+        Author yairLapid = getAuthor(authors, "Yair Lapid");
         quotes.add(new Quote("One of the things that hold together a human society is the existence of basic politeness among its members.", false, true, english, yairLapid));
         quotes.add(new Quote("I want to live in a country that is not just a place but also an idea, and Jerusalem is the heart of the idea. There may be practical considerations, but a country cannot exist without an ethos, and Jerusalem is an ethos.", false, true, english, yairLapid));
         quotes.add(new Quote("I don't reject caution, but you also have to be careful about caution because there's a stage when it turns into paralysis.", false, true, english, yairLapid));
@@ -2410,7 +2431,7 @@ public class DataHandler {
         quotes.add(new Quote("Jerusalem will remain under Israeli sovereignty and will not be divided.", false, true, english, yairLapid));
         quotes.add(new Quote("At times, we need to stop and rethink everything. Our entire history is made up of people who were sure they knew the truth yet forgot that the truth has an annoying tendency to change on occasion without us noticing it.", false, true, english, yairLapid));
 
-        Author yotamOttolenghi = getAuthor("Yotam Ottolenghi");
+        Author yotamOttolenghi = getAuthor(authors, "Yotam Ottolenghi");
         quotes.add(new Quote("The combination of olive oil, garlic and lemon juice lifts the spirits in winter.", false, true, english, yotamOttolenghi));
         quotes.add(new Quote("The moment to tell my barber I was gay just never came up.", false, true, english, yotamOttolenghi));
         quotes.add(new Quote("A well-made salad must have a certain uniformity; it should make perfect sense for those ingredients to share a bowl.", false, true, english, yotamOttolenghi));
@@ -2421,7 +2442,7 @@ public class DataHandler {
         quotes.add(new Quote("The addition of vinaigrette to freshly roasted vegetables gives them a freshness and juiciness they don't normally have; the acidity brings out new shades of flavour, too.", false, true, english, yotamOttolenghi));
         quotes.add(new Quote("For me, the end of childhood came when the number of candles on my birthday cake no longer reflected my age, around 19 or 20. From then on, each candle came to represent an entire decade.", false, true, english, yotamOttolenghi));
 
-        Author zigZiglar = getAuthor("Zig Ziglar");
+        Author zigZiglar = getAuthor(authors, "Zig Ziglar");
         quotes.add(new Quote("What you get by achieving your goals is not as important as what you become by achieving your goals.", false, true, english, zigZiglar));
         quotes.add(new Quote("Positive thinking will let you do everything better than negative thinking will.", false, true, english, zigZiglar));
         quotes.add(new Quote("Your attitude, not your aptitude, will determine your altitude.", false, true, english, zigZiglar));
@@ -2433,7 +2454,7 @@ public class DataHandler {
         quotes.add(new Quote("You were designed for accomplishment, engineered for success, and endowed with the seeds of greatness.", false, true, english, zigZiglar));
         quotes.add(new Quote("People often say that motivation doesn't last. Well, neither does bathing - that's why we recommend it daily.", false, true, english, zigZiglar));
 
-        Author zacGoldsmith = getAuthor("Zac Goldsmith");
+        Author zacGoldsmith = getAuthor(authors, "Zac Goldsmith");
         quotes.add(new Quote("A pound invested in energy efficiency buys seven times more energy solution than a pound invested in nuclear power.", false, true, english, zacGoldsmith));
         quotes.add(new Quote("Yes, Heathrow is the U.K.'s busiest airport, but new runways or a new airport are not the answer. It is far better to focus on improving capacity.", false, true, english, zacGoldsmith));
         quotes.add(new Quote("Green policy is about triggering a shift to a cleaner way of doing things. To be effective, it needs to incentivise the right behaviour, for example through tax breaks, and that needs to be paid for by disincentives on polluting behaviour.", false, true, english, zacGoldsmith));
@@ -2445,14 +2466,14 @@ public class DataHandler {
         quotes.add(new Quote("More than half the world's largest 100 economies are corporations. They have no loyalties to place or citizens.", false, true, english, zacGoldsmith));
         quotes.add(new Quote("I think sometimes if you are too interested in day-to-day politics, you lose sight of the long term.", false, true, english, zacGoldsmith));
 
-        Author zacHanson = getAuthor("Zac Hanson");
+        Author zacHanson = getAuthor(authors, "Zac Hanson");
         quotes.add(new Quote("It's cool to have critical success because it's always nice for your peers to say, 'Good job.' But who cares about them?", false, true, english, zacHanson));
         quotes.add(new Quote("The real reason we ended up getting into that type of music was our dad worked for an oil company so we spent a year overseas when we were young kids. Because of that, it was all Spanish TV and radio so we ended up having these '50s and '60s tapes, tapes of that music.", false, true, english, zacHanson));
         quotes.add(new Quote("It's pretty much run by everybody. We're very involved in everything that goes on. We always have been.", false, true, english, zacHanson));
         quotes.add(new Quote("It would be nice to have radio support, not that we've ever had that much trouble with it.", false, true, english, zacHanson));
         quotes.add(new Quote("You may be pulling from different influences because of different things that are going on in your life, different people that are around you and more experiences to pull from.", false, true, english, zacHanson));
 
-        Author zhuZhu = getAuthor("Zhu Zhu");
+        Author zhuZhu = getAuthor(authors, "Zhu Zhu");
         quotes.add(new Quote("In China, we don't know about the swimming pool game, but we know about Marco Polo.", false, true, english, zhuZhu));
         quotes.add(new Quote("Sometimes I'll do a mask if I had a lot of makeup on that day or was out in the sun. I like a hydrogen mask. It's an easy one, and it's supposed to soothe and relax your skin.", false, true, english, zhuZhu));
         quotes.add(new Quote("English is not my first language.", false, true, english, zhuZhu));
@@ -2462,7 +2483,7 @@ public class DataHandler {
         quotes.add(new Quote("I love Jo Malone. I got the Orange Blossom scent as a gift many years ago, and I fell in love with it. It's very light, natural, sweet. It's there but not that obvious.", false, true, english, zhuZhu));
         quotes.add(new Quote("I like the MAC Face and Body foundation. Sometimes it can't cover all my flaws, but I like it because it looks really natural and it evens out my skin tone.", false, true, english, zhuZhu));
 
-        Author zoeKazan = getAuthor("Zoe Kazan");
+        Author zoeKazan = getAuthor(authors, "Zoe Kazan");
         quotes.add(new Quote("Nothing's going to come to you by sitting around and waiting for it.", false, true, english, zoeKazan));
         quotes.add(new Quote("Writing-wise, I like to have a lot of things on the burners at once, because when I hit a wall, I like to move on to the thing I haven't hit a wall on.", false, true, english, zoeKazan));
         quotes.add(new Quote("I really love people. I love to meet people. I'm curious about people.", false, true, english, zoeKazan));
@@ -2474,7 +2495,7 @@ public class DataHandler {
         quotes.add(new Quote("And when I get bored, it's like the worst parts of me come out. I really veer to self-destructive tendencies quickly.", false, true, english, zoeKazan));
         quotes.add(new Quote("Anytime that I've felt uninspired, I don't force myself to sit down and write. I only do it when I feel the impulse.", false, true, english, zoeKazan));
 
-        Author zooeyDeschanel = getAuthor("Zooey Deschanel");
+        Author zooeyDeschanel = getAuthor(authors, "Zooey Deschanel");
         quotes.add(new Quote("The Internet's like one big bathroom wall with a lot of people who anonymously can say really mean things. It's fine, I believe in freedom of speech and I think people should think what they want, but I don't care to hear it.", false, true, english, zooeyDeschanel));
         quotes.add(new Quote("True love that lasts forever... yes, I do believe in it. My parents have been married for 40 years and my grandparents were married for 70 years. I come from a long line of true loves.", false, true, english, zooeyDeschanel));
         quotes.add(new Quote("Summer has always been my favorite season. I feel happier.", false, true, english, zooeyDeschanel));
@@ -2486,7 +2507,7 @@ public class DataHandler {
         quotes.add(new Quote("One thing I love about Christmas music is that it has a tradition of warmth.", false, true, english, zooeyDeschanel));
         quotes.add(new Quote("Nothing's better than a picnic.", false, true, english, zooeyDeschanel));
 
-        Author zuleikhaRobinson = getAuthor("Zuleikha Robinson");
+        Author zuleikhaRobinson = getAuthor(authors, "Zuleikha Robinson");
         quotes.add(new Quote("The only time a friend has ever helped me in the industry was how I got my first job - that was through Mike Figgis.", false, true, english, zuleikhaRobinson));
         quotes.add(new Quote("It took a lot of time to find my stride, and it was really humbling.", false, true, english, zuleikhaRobinson));
         quotes.add(new Quote("I honestly never really watch the Emmys.", false, true, english, zuleikhaRobinson));
@@ -2498,7 +2519,7 @@ public class DataHandler {
         quotes.add(new Quote("Only twice have I really had a hard time leaving a character. The first was my character in 'Rome' and then in 'Homeland.'", false, true, english, zuleikhaRobinson));
         quotes.add(new Quote("I do like to play the darker characters; I don't really know why.", false, true, english, zuleikhaRobinson));
 
-        Author zygmuntBauman = getAuthor("Zygmunt Bauman");
+        Author zygmuntBauman = getAuthor(authors, "Zygmunt Bauman");
         quotes.add(new Quote("In a liquid modern life there are no permanent bonds, and any that we take up for a time must be tied loosely so that they can be untied again, as quickly and as effortlessly as possible, when circumstances change - as they surely will in our liquid modern society, over and over again.", false, true, english, zygmuntBauman));
         quotes.add(new Quote("We live in a globalising world. That means that all of us, consciously or not, depend on each other. Whatever we do or refrain from doing affects the lives of people who live in places we'll never visit.", false, true, english, zygmuntBauman));
         quotes.add(new Quote("This awful concept of underclass is really horrifying. You're not lower class, you are excluded - outside.", false, true, english, zygmuntBauman));
@@ -2615,7 +2636,8 @@ public class DataHandler {
 
         ArrayList<MappedQuote> mData = new ArrayList<MappedQuote>();
         ArrayList<Author> mAuthors = getAllAuthors();
-        Language language = getLanguage(SessionManager.getStringSetting(getGlobalContext(), SESSION_SELECTED_LANGUAGE));
+        List<Language> languages = getAllLanguages();
+        Language language = getLanguage(languages, SessionManager.getStringSetting(getGlobalContext(), SESSION_SELECTED_LANGUAGE));
 
         for (int i = 0; i < mAuthors.size(); i++) {
             Author author = mAuthors.get(i);
@@ -2630,12 +2652,13 @@ public class DataHandler {
     public static ArrayList<MappedQuote> getAllMappedQuotesWithAdvertise(ArrayList<MappedQuote> mappedQuoteArrayList) {
 
         ArrayList<MappedQuote> mData = new ArrayList<MappedQuote>();
+        List<Language> languages = getAllLanguages();
         ArrayList<MappedQuote> mTempData = mappedQuoteArrayList;
         if (mTempData.size() > 0) {
             if (SessionManager.getBooleanSetting(getGlobalContext(), SESSION_FREE_APP, false)) {
                 ArrayList<MappedQuote> arrAd = DataHandler.getAllMappedQuoteAdvertises();
                 int index = 0;
-                Language language = getLanguage(SessionManager.getStringSetting(getGlobalContext(), SESSION_SELECTED_LANGUAGE));
+                Language language = getLanguage(languages, SessionManager.getStringSetting(getGlobalContext(), SESSION_SELECTED_LANGUAGE));
                 for (MappedQuote author : mTempData) {
                     mData.add(author);
                     Double randomNumber = Math.random();
@@ -2657,8 +2680,9 @@ public class DataHandler {
 
     public static ArrayList<MappedQuote> getAllData() {
         ArrayList<MappedQuote> mappedQuotes = new ArrayList<MappedQuote>();
+        List<Language> languages = getAllLanguages();
         ArrayList<MappedQuote> tempMappedQuotes = DataHandler.getAllMappedQuotesWithAdvertise(DataHandler.getAllMappedQuotes());
-        Language language = getLanguage(SessionManager.getStringSetting(getGlobalContext(), SESSION_SELECTED_LANGUAGE));
+        Language language = getLanguage(languages, SessionManager.getStringSetting(getGlobalContext(), SESSION_SELECTED_LANGUAGE));
 
         for (int i = 0; i < tempMappedQuotes.size(); i++) {
             MappedQuote mappedQuote = tempMappedQuotes.get(i);
@@ -2735,9 +2759,10 @@ public class DataHandler {
 
     public static ArrayList<MappedQuote> getAllFavouriteData() {
         ArrayList<MappedQuote> mappedQuotes = new ArrayList<MappedQuote>();
+        List<Language> languages = getAllLanguages();
         ArrayList<MappedQuote> tempMappedQuotes = DataHandler.getAllMappedFavouriteQuotesWithAdvertise(DataHandler.getAllMappedFavouriteQuotes());
 
-        Language language = getLanguage(SessionManager.getStringSetting(getGlobalContext(), SESSION_SELECTED_LANGUAGE));
+        Language language = getLanguage(languages, SessionManager.getStringSetting(getGlobalContext(), SESSION_SELECTED_LANGUAGE));
         for (int i = 0; i < tempMappedQuotes.size(); i++) {
             MappedQuote mappedQuote = tempMappedQuotes.get(i);
             Author author = tempMappedQuotes.get(i).getAuthor();
@@ -2764,9 +2789,10 @@ public class DataHandler {
     public static ArrayList<MappedQuote> getAllMappedFavouriteQuotes() {
 
         ArrayList<MappedQuote> mData = new ArrayList<MappedQuote>();
+        List<Language> languages = getAllLanguages();
         ArrayList<Author> mAuthors = getAllAuthors();
 
-        Language language = getLanguage(SessionManager.getStringSetting(getGlobalContext(), SESSION_SELECTED_LANGUAGE));
+        Language language = getLanguage(languages, SessionManager.getStringSetting(getGlobalContext(), SESSION_SELECTED_LANGUAGE));
         for (int i = 0; i < mAuthors.size(); i++) {
             Author author = mAuthors.get(i);
             ArrayList<Quote> mQuotes = getAllFavouriteQuotes(author, language);
@@ -2782,12 +2808,13 @@ public class DataHandler {
     public static ArrayList<MappedQuote> getAllMappedFavouriteQuotesWithAdvertise(ArrayList<MappedQuote> mappedQuoteArrayList) {
 
         ArrayList<MappedQuote> mData = new ArrayList<MappedQuote>();
+        List<Language> languages = getAllLanguages();
         ArrayList<MappedQuote> mTempData = mappedQuoteArrayList;
         if (mTempData.size() > 0) {
             if (SessionManager.getBooleanSetting(getGlobalContext(), SESSION_FREE_APP, false)) {
                 ArrayList<MappedQuote> arrAd = DataHandler.getAllMappedQuoteAdvertises();
                 int index = 0;
-                Language language = getLanguage(SessionManager.getStringSetting(getGlobalContext(), SESSION_SELECTED_LANGUAGE));
+                Language language = getLanguage(languages, SessionManager.getStringSetting(getGlobalContext(), SESSION_SELECTED_LANGUAGE));
 
                 for (MappedQuote author : mTempData) {
                     mData.add(author);
