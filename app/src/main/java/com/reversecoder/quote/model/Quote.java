@@ -8,6 +8,8 @@ import com.orm.SugarRecord;
 import com.orm.annotation.Ignore;
 import com.orm.annotation.Unique;
 
+import java.util.ArrayList;
+
 public class Quote extends SugarRecord implements Parcelable {
 
     @Unique
@@ -16,6 +18,7 @@ public class Quote extends SugarRecord implements Parcelable {
     private boolean isQuote = false;
     private Language language;
     private Author author;
+    private ArrayList<Tag> tags = new ArrayList<>();
 
     public Quote() {
     }
@@ -26,6 +29,15 @@ public class Quote extends SugarRecord implements Parcelable {
         this.isQuote = isQuote;
         this.language = language;
         this.author = author;
+    }
+
+    public Quote(String quoteDescription, boolean isFavourite, boolean isQuote, Language language, Author author, ArrayList<Tag> tags) {
+        this.quoteDescription = quoteDescription;
+        this.isFavourite = isFavourite;
+        this.isQuote = isQuote;
+        this.language = language;
+        this.author = author;
+        this.tags = tags;
     }
 
     public String getQuoteDescription() {
@@ -68,6 +80,14 @@ public class Quote extends SugarRecord implements Parcelable {
         this.author = author;
     }
 
+    public ArrayList<Tag> getTags() {
+        return tags;
+    }
+
+    public void setTags(ArrayList<Tag> tags) {
+        this.tags = tags;
+    }
+
     @Override
     public String toString() {
         return "{" +
@@ -77,6 +97,7 @@ public class Quote extends SugarRecord implements Parcelable {
                 ", isQuote=" + isQuote +
                 ", language=" + language +
                 ", author=" + author +
+                ", tags=" + tags +
                 '}';
     }
 
