@@ -85,4 +85,5 @@ dependencies {
     compile project(":flipview")
     compile project(":gcm")
     compile project(":androidviewanimations")
+    compile project(":litepal")
 }

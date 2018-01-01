@@ -86,6 +86,7 @@ public class LicenseActivity extends AppCompatActivity {
         attributions.add(Library.UPDATE_CHECKER_KOBEUMUT.getAttribution());
         attributions.add(Library.VERTICAL_INTRO_ARMCHA.getAttribution());
         attributions.add(Library.WAVE_SIDEBAR_SOLARTISAN.getAttribution());
+        attributions.add(Library.LITEPAL_LITEPALFRAMEWORK.getAttribution());
 
         return attributions;
     }

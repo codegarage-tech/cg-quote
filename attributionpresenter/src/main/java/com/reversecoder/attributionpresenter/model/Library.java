@@ -55,6 +55,9 @@ public enum Library {
     SUGAR_CHENNAIONE(new Attribution.Builder("Sugar", "https://github.com/chennaione/sugar")
             .addLicenseInfo(new LicenseInfo("Copyright (C) 2012 by Satya Narayan", License.MIT))
             .build()),
+    LITEPAL_LITEPALFRAMEWORK(new Attribution.Builder("LitePal", "https://github.com/LitePalFramework/LitePal")
+            .addLicenseInfo(new LicenseInfo("Copyright (C)  Tony Green, LitePal Framework Open Source Project", License.APACHE))
+            .build()),
 
     // About page
     ANDROID_ABOUT_BOX_EGGHEADGAMES(new Attribution.Builder("Android About Box", "https://github.com/eggheadgames/android-about-box")
