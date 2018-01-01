@@ -4,11 +4,8 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.google.gson.Gson;
-import com.orm.SugarRecord;
-import com.orm.annotation.Unique;
 import com.reversecoder.quote.model.Author;
 import com.reversecoder.quote.model.Language;
-import com.reversecoder.quote.model.Tag;
 
 import org.litepal.annotation.Column;
 import org.litepal.crud.DataSupport;
@@ -25,15 +22,15 @@ public class LitePalQuote extends DataSupport implements Parcelable {
     private boolean isQuote = false;
     private LitePalLanguage language;
     private LitePalAuthor author;
-//    private ArrayList<LitePalTag> tags = new ArrayList<>();
+    private ArrayList<LitePalTag> tags = new ArrayList<>();
 
-    public LitePalQuote(String quoteDescription, boolean isFavourite, boolean isQuote, LitePalLanguage language, LitePalAuthor author) {
+    public LitePalQuote(String quoteDescription, boolean isFavourite, boolean isQuote, LitePalLanguage language, LitePalAuthor author, ArrayList<LitePalTag> tags) {
         this.quoteDescription = quoteDescription;
         this.isFavourite = isFavourite;
         this.isQuote = isQuote;
         this.language = language;
         this.author = author;
-//        this.tags = tags;
+        this.tags = tags;
     }
 
     public long getId() {
@@ -65,7 +62,12 @@ public class LitePalQuote extends DataSupport implements Parcelable {
     }
 
     public LitePalLanguage getLanguage() {
-        return language;
+        List<LitePalLanguage> litePalLanguages = DataSupport.where("litepalquote_id = ?", getId() + "").find(LitePalLanguage.class);
+        if (litePalLanguages != null && litePalLanguages.size() == 1) {
+            language = litePalLanguages.get(0);
+            return language;
+        }
+        return null;
     }
 
     public void setLanguage(LitePalLanguage language) {
@@ -73,22 +75,30 @@ public class LitePalQuote extends DataSupport implements Parcelable {
     }
 
     public LitePalAuthor getAuthor() {
-        return author;
+        List<LitePalAuthor> litePalAuthors = DataSupport.where("litepalquote_id = ?", getId() + "").find(LitePalAuthor.class);
+        if (litePalAuthors != null && litePalAuthors.size() == 1) {
+            author = litePalAuthors.get(0);
+            return author;
+        }
+        return null;
     }
 
     public void setAuthor(LitePalAuthor author) {
         this.author = author;
     }
 
-//    public List<LitePalTag> getTags() {
-////        List<LitePalTag> mTags = DataSupport.where("deletedFileInfo_id = ?", getId() + "").find(LitePalTag.class);
-////        tags = new ArrayList<LitePalTag>(mTags);
-//        return tags;
-//    }
-//
-//    public void setTags(ArrayList<LitePalTag> tags) {
-//        this.tags = tags;
-//    }
+    public ArrayList<LitePalTag> getTags() {
+        List<LitePalTag> mTags = DataSupport.where("litepalquote_id = ?", getId() + "").find(LitePalTag.class);
+        if (mTags != null && mTags.size() > 0) {
+            tags = new ArrayList<LitePalTag>(mTags);
+            return tags;
+        }
+        return new ArrayList<LitePalTag>();
+    }
+
+    public void setTags(ArrayList<LitePalTag> tags) {
+        this.tags = tags;
+    }
 
     @Override
     public String toString() {
@@ -97,9 +107,9 @@ public class LitePalQuote extends DataSupport implements Parcelable {
                 ", quoteDescription=" + quoteDescription +
                 ", isFavourite=" + isFavourite +
                 ", isQuote=" + isQuote +
-                ", language=" + language +
-                ", author=" + author +
-//                ", tags=" + tags +
+                ", language=" + getLanguage() +
+                ", author=" + getAuthor() +
+                ", tags=" + getTags() +
                 '}';
     }
 
