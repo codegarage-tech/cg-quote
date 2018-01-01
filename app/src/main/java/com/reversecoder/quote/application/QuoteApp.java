@@ -18,6 +18,8 @@ import com.singhajit.sherlock.core.investigation.AppInfo;
 import com.singhajit.sherlock.core.investigation.AppInfoProvider;
 import com.singhajit.sherlock.util.AppInfoUtil;
 
+import org.litepal.LitePal;
+
 import java.util.List;
 import java.util.Locale;
 
@@ -40,6 +42,9 @@ public class QuoteApp extends Application {
         super.onCreate();
 
         mContext = this;
+
+        //Initialize litepal database
+        LitePal.initialize(mContext);
 
         //initialize crash log handler
         Sherlock.init(this);

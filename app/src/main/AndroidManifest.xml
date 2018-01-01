@@ -12,7 +12,7 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name="com.reversecoder.quote.activity.SplashActivity"
+            android:name="com.reversecoder.quote.activity.LitePalTestActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
