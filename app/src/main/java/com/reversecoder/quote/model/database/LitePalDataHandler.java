@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LitePalDataHandler {
-    private static String TAG = LitePalDataHandler.class.getSimpleName();
+    private static String TAG = "LitePalTestRashed";
 
     /*******************
      * Methods for Tag *
@@ -16,30 +16,22 @@ public class LitePalDataHandler {
     public static ArrayList<LitePalTag> insetTags(ArrayList<LitePalTag> litePalTags) {
         ArrayList<LitePalTag> mLitePalTags = new ArrayList<>();
         for (int i = 0; i < litePalTags.size(); i++) {
-            LitePalTag savedTag = getTag(litePalTags.get(i).getTagName());
-            if (savedTag != null) {
-                mLitePalTags.add(savedTag);
-            } else {
-                LitePalTag mSavedTag = insetTag(litePalTags.get(i));
-                if (mSavedTag != null) {
-                    mLitePalTags.add(mSavedTag);
-                }
-            }
+            mLitePalTags.add(insetTag(litePalTags.get(i)));
         }
         return mLitePalTags;
     }
 
     public static LitePalTag insetTag(LitePalTag litePalTag) {
-        LitePalTag savedTag = getTag(litePalTag.getTagName());
-        if (savedTag != null) {
-            Log.d(TAG, "insetTag(existing): " + savedTag.toString());
-            return savedTag;
+        LitePalTag mSavedTag = getTag(litePalTag.getTagName());
+        if (mSavedTag != null) {
+            Log.d(TAG, "insetTag(existing): " + mSavedTag.toString());
+            return mSavedTag;
         } else {
             if (litePalTag.save()) {
-                LitePalTag mSavedTag = getTag(litePalTag.getTagName());
-                if (mSavedTag != null) {
-                    Log.d(TAG, "insetTag(new): " + mSavedTag.toString());
-                    return mSavedTag;
+                LitePalTag savedTag = getTag(litePalTag.getTagName());
+                if (savedTag != null) {
+                    Log.d(TAG, "insetTag(new): " + savedTag.toString());
+                    return savedTag;
                 }
             }
         }
@@ -117,27 +109,20 @@ public class LitePalDataHandler {
      * Methods for Quote *
      *********************/
     public static LitePalQuote insertQuote(LitePalQuote litePalQuote) {
-//        LitePalQuote savedQuote = getQuote(litePalQuote.getQuoteDescription());
-//        if (savedQuote != null) {
-//            Log.d(TAG, "insetQuote(existing): " + savedQuote.toString());
-//            return savedQuote;
-//        } else {
-        if (litePalQuote.save()) {
-//                LitePalQuote mSavedQuote = getQuote(litePalQuote.getQuoteDescription());
-//                if (mSavedQuote != null) {
-//                    Log.d(TAG, "insetQuote(new): " + mSavedQuote.toString());
-//                    return mSavedQuote;
-//                }
-            Log.d(TAG, "insetQuote(new): " + litePalQuote.toString());
-            return litePalQuote;
+        LitePalQuote savedQuote = getQuote(litePalQuote.getQuoteDescription());
+        if (savedQuote != null) {
+            Log.d(TAG, "insetQuote(existing): " + savedQuote.toString());
+            return savedQuote;
         } else {
-            LitePalQuote mSavedQuote = getQuote(litePalQuote.getQuoteDescription());
-            if (mSavedQuote != null) {
-                Log.d(TAG, "insetQuote(existing): " + mSavedQuote.toString());
-                return mSavedQuote;
+            if (litePalQuote.save()) {
+                LitePalQuote mSavedQuote = getQuote(litePalQuote.getQuoteDescription());
+                if (mSavedQuote != null) {
+                    Log.d(TAG, "insetQuote(new): " + mSavedQuote.toString());
+                    return mSavedQuote;
+                }
+                return litePalQuote;
             }
         }
-//        }
         return null;
     }
 
@@ -149,4 +134,23 @@ public class LitePalDataHandler {
         }
         return null;
     }
+
+    /********************************************
+     * Methods for Quote, Language, Author, Tag *
+     ********************************************/
+    public static void insertQuoteLanguageAuthorTag(LitePalQuoteBuilder litePalQuoteBuilder) {
+        for(int i=0;i<litePalQuoteBuilder.getLitePalTags().size();i++){
+            LitePalQuoteLanguageAuthorTag litePalQuoteLanguageAuthorTag = new LitePalQuoteLanguageAuthorTag(litePalQuoteBuilder.getLitePalQuote().getId(),litePalQuoteBuilder.getLitePalLanguage().getId(),litePalQuoteBuilder.getLitePalAuthor().getId(),litePalQuoteBuilder.getLitePalTags().get(i).getId());
+            litePalQuoteLanguageAuthorTag.save();
+        }
+    }
+
+//    public static LitePalQuoteLanguageAuthorTag getQuoteLanguageAuthorTag(LitePalQuote litePalQuote) {
+//        List<LitePalQuote> savedQuotes = DataSupport.where("quoteDescription = ?", ).find(LitePalQuote.class);
+//        if (savedQuotes != null && savedQuotes.size() == 1) {
+//            Log.d(TAG, "getQuote: " + savedQuotes.get(0).toString());
+//            return savedQuotes.get(0);
+//        }
+//        return null;
+//    }
 }

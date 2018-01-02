@@ -8,6 +8,7 @@ import android.view.View;
 import com.reversecoder.quote.R;
 import com.reversecoder.quote.model.Quote;
 
+import java.security.MessageDigest;
 import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -91,5 +92,31 @@ public class AppUtils {
         }
 
         return tempText;
+    }
+
+    /*******
+     * MD5 *
+     *******/
+    private static char[] Digit = {
+            '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'
+    };
+
+    public static String getMD5String(String src) {
+        try {
+            MessageDigest messageDigest = MessageDigest.getInstance("MD5");
+            messageDigest.update(src.getBytes());
+            return toHexString(messageDigest.digest());
+        } catch (Exception e) {
+        }
+        return null;
+    }
+
+    private static String toHexString(byte[] b) {
+        StringBuilder sb = new StringBuilder(b.length * 2);
+        for (int i = 0; i < b.length; i++) {
+            sb.append(Digit[(b[i] & 0xf0) >>> 4]);
+            sb.append(Digit[b[i] & 0x0f]);
+        }
+        return sb.toString();
     }
 }

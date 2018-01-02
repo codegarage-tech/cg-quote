@@ -36,6 +36,7 @@
         <mapping class="com.reversecoder.quote.model.database.LitePalAuthor" />
         <mapping class="com.reversecoder.quote.model.database.LitePalQuote" />
         <mapping class="com.reversecoder.quote.model.database.LitePalTag" />
+        <mapping class="com.reversecoder.quote.model.database.LitePalQuoteLanguageAuthorTag" />
     </list>
 
     <!--

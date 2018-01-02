@@ -11,7 +11,6 @@ import org.litepal.annotation.Column;
 import org.litepal.crud.DataSupport;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class LitePalQuote extends DataSupport implements Parcelable {
 
@@ -20,8 +19,11 @@ public class LitePalQuote extends DataSupport implements Parcelable {
     private String quoteDescription = "";
     private boolean isFavourite = false;
     private boolean isQuote = false;
+    @Column(ignore = true)
     private LitePalLanguage language;
+    @Column(ignore = true)
     private LitePalAuthor author;
+    @Column(ignore = true)
     private ArrayList<LitePalTag> tags = new ArrayList<>();
 
     public LitePalQuote(String quoteDescription, boolean isFavourite, boolean isQuote, LitePalLanguage language, LitePalAuthor author, ArrayList<LitePalTag> tags) {
@@ -31,6 +33,12 @@ public class LitePalQuote extends DataSupport implements Parcelable {
         this.language = language;
         this.author = author;
         this.tags = tags;
+    }
+
+    public LitePalQuote(String quoteDescription, boolean isFavourite, boolean isQuote) {
+        this.quoteDescription = quoteDescription;
+        this.isFavourite = isFavourite;
+        this.isQuote = isQuote;
     }
 
     public long getId() {
@@ -62,12 +70,13 @@ public class LitePalQuote extends DataSupport implements Parcelable {
     }
 
     public LitePalLanguage getLanguage() {
-        List<LitePalLanguage> litePalLanguages = DataSupport.where("litepalquote_id = ?", getId() + "").find(LitePalLanguage.class);
-        if (litePalLanguages != null && litePalLanguages.size() == 1) {
-            language = litePalLanguages.get(0);
-            return language;
-        }
-        return null;
+//        List<LitePalLanguage> litePalLanguages = DataSupport.where("litepalquote_id = ?", getId() + "").find(LitePalLanguage.class);
+//        if (litePalLanguages != null && litePalLanguages.size() == 1) {
+//            language = litePalLanguages.get(0);
+//            return language;
+//        }
+//        return null;
+        return language;
     }
 
     public void setLanguage(LitePalLanguage language) {
@@ -75,12 +84,13 @@ public class LitePalQuote extends DataSupport implements Parcelable {
     }
 
     public LitePalAuthor getAuthor() {
-        List<LitePalAuthor> litePalAuthors = DataSupport.where("litepalquote_id = ?", getId() + "").find(LitePalAuthor.class);
-        if (litePalAuthors != null && litePalAuthors.size() == 1) {
-            author = litePalAuthors.get(0);
-            return author;
-        }
-        return null;
+//        List<LitePalAuthor> litePalAuthors = DataSupport.where("litepalquote_id = ?", getId() + "").find(LitePalAuthor.class);
+//        if (litePalAuthors != null && litePalAuthors.size() == 1) {
+//            author = litePalAuthors.get(0);
+//            return author;
+//        }
+//        return null;
+        return author;
     }
 
     public void setAuthor(LitePalAuthor author) {
@@ -88,12 +98,13 @@ public class LitePalQuote extends DataSupport implements Parcelable {
     }
 
     public ArrayList<LitePalTag> getTags() {
-        List<LitePalTag> mTags = DataSupport.where("litepalquote_id = ?", getId() + "").find(LitePalTag.class);
-        if (mTags != null && mTags.size() > 0) {
-            tags = new ArrayList<LitePalTag>(mTags);
-            return tags;
-        }
-        return new ArrayList<LitePalTag>();
+//        List<LitePalTag> mTags = DataSupport.where("litepalquote_id = ?", getId() + "").find(LitePalTag.class);
+//        if (mTags != null && mTags.size() > 0) {
+//            tags = new ArrayList<LitePalTag>(mTags);
+//            return tags;
+//        }
+//        return new ArrayList<LitePalTag>();
+        return tags;
     }
 
     public void setTags(ArrayList<LitePalTag> tags) {
@@ -107,9 +118,9 @@ public class LitePalQuote extends DataSupport implements Parcelable {
                 ", quoteDescription=" + quoteDescription +
                 ", isFavourite=" + isFavourite +
                 ", isQuote=" + isQuote +
-                ", language=" + getLanguage() +
-                ", author=" + getAuthor() +
-                ", tags=" + getTags() +
+                ", language=" + language +
+                ", author=" + author +
+                ", tags=" + tags +
                 '}';
     }
 

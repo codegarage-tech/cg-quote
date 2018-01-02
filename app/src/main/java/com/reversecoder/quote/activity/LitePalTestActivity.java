@@ -6,14 +6,15 @@ import android.util.Log;
 
 import com.reversecoder.quote.model.database.EnumTag;
 import com.reversecoder.quote.model.database.LitePalAuthor;
-import com.reversecoder.quote.model.database.LitePalDataHandler;
 import com.reversecoder.quote.model.database.LitePalLanguage;
 import com.reversecoder.quote.model.database.LitePalQuote;
+import com.reversecoder.quote.model.database.LitePalQuoteBuilder;
 import com.reversecoder.quote.model.database.LitePalTag;
 
 import java.util.ArrayList;
 
 import static com.reversecoder.quote.model.database.LitePalDataHandler.insertQuote;
+import static com.reversecoder.quote.model.database.LitePalDataHandler.insertQuoteLanguageAuthorTag;
 import static com.reversecoder.quote.model.database.LitePalDataHandler.insetAuthor;
 import static com.reversecoder.quote.model.database.LitePalDataHandler.insetLanguage;
 
@@ -23,12 +24,13 @@ import static com.reversecoder.quote.model.database.LitePalDataHandler.insetLang
  */
 public class LitePalTestActivity extends AppCompatActivity {
 
-    private String TAG = LitePalTestActivity.class.getSimpleName();
+    private String TAG = "LitePalTestRashed";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        ArrayList<LitePalQuoteBuilder> litePalQuoteBuilders = new ArrayList<>();
         LitePalLanguage litePalLanguage = insetLanguage(new LitePalLanguage("English"));
         LitePalAuthor litePalAuthor = insetAuthor(new LitePalAuthor("Rashed", "20-12-87", "", "Software Engineer", "Bangladeshi", -1, true));
         LitePalAuthor litePalAuthor2 = insetAuthor(new LitePalAuthor("Mou", "20-12-87", "", "Software Engineer", "Bangladeshi", -1, true));
@@ -38,48 +40,42 @@ public class LitePalTestActivity extends AppCompatActivity {
         Log.d(TAG, "litePalLanguage: " + litePalLanguage.toString());
         Log.d(TAG, "litePalAuthor: " + litePalAuthor.toString());
 
-//        {{
-//            add(insetQuote(new LitePalQuote("Do what you want.", false, true,litePalLanguage , litePalAuthor, insetTags(new ArrayList<LitePalTag>() {{
-//                add(new LitePalTag("Inspirational"));
-//                add(new LitePalTag("Motivational"));
-//                add(new LitePalTag("Romantic"));
-//            }}))));
-//
-//            add(insetQuote(new LitePalQuote("You have to.", false, true, insetLanguage(new LitePalLanguage("English")), insetAuthor(new LitePalAuthor("Rashed", "20-12-87", "", "Software Engineer", "Bangladeshi", -1, true)), insetTags(new ArrayList<LitePalTag>() {{
-//                add(new LitePalTag("Motivational"));
-//            }}))));
-//
-//            add(insetQuote(new LitePalQuote("There is no rule in love and war.", false, true, insetLanguage(new LitePalLanguage("English")), insetAuthor(new LitePalAuthor("Rashed", "20-12-87", "", "Software Engineer", "Bangladeshi", -1, true)), insetTags(new ArrayList<LitePalTag>() {{
-//                add(new LitePalTag("Romantic"));
-//            }}))));
-//        }};
+        LitePalQuote litePalQuote = new LitePalQuote("Do what you want.", false, true);
+        litePalQuoteBuilders.add(new LitePalQuoteBuilder()
+                .setLitePalQuote(insertQuote(litePalQuote))
+                .setLitePalLanguage(litePalLanguage)
+                .setLitePalAuthor(litePalAuthor)
+                .setLitePalTags(new ArrayList<LitePalTag>() {{
+                    add(EnumTag.INSPIRATIONAL.getTag());
+                    add(EnumTag.MOTIVATIONAL.getTag());
+                    add(EnumTag.ROMANTIC.getTag());
+                }})
+                .build());
 
-//        ArrayList<LitePalTag> litePalTags = new ArrayList<>();
-//        litePalTags.add(EnumTag.INSPIRATIONAL.getTag());
-//        litePalTags.add(EnumTag.MOTIVATIONAL.getTag());
-//        litePalTags.add(EnumTag.ROMANTIC.getTag());
+        LitePalQuote litePalQuote2 = new LitePalQuote("yes.", false, true);
+        litePalQuoteBuilders.add(new LitePalQuoteBuilder()
+                .setLitePalQuote(insertQuote(litePalQuote2))
+                .setLitePalLanguage(litePalLanguage)
+                .setLitePalAuthor(litePalAuthor)
+                .setLitePalTags(new ArrayList<LitePalTag>() {{
+                    add(EnumTag.ROMANTIC.getTag());
+                }})
+                .build());
 
-        LitePalQuote litePalQuote = new LitePalQuote("Do what you want.", false, true, litePalLanguage, litePalAuthor,new ArrayList<LitePalTag>(){{
-            add(EnumTag.INSPIRATIONAL.getTag());
-            add(EnumTag.MOTIVATIONAL.getTag());
-            add(EnumTag.ROMANTIC.getTag());
-        }});
+        LitePalQuote litePalQuote3 = new LitePalQuote("no.", false, true);
+        litePalQuoteBuilders.add(new LitePalQuoteBuilder()
+                .setLitePalQuote(insertQuote(litePalQuote3))
+                .setLitePalLanguage(litePalLanguage)
+                .setLitePalAuthor(litePalAuthor2)
+                .setLitePalTags(new ArrayList<LitePalTag>() {{
+                    add(EnumTag.INSPIRATIONAL.getTag());
+                    add(EnumTag.MOTIVATIONAL.getTag());
+                }})
+                .build());
 
-        LitePalQuote litePalQuote2 = new LitePalQuote("yes.", false, true, litePalLanguage, litePalAuthor,new ArrayList<LitePalTag>(){{
-            add(EnumTag.INSPIRATIONAL.getTag());
-        }});
-
-        LitePalQuote litePalQuote3 = new LitePalQuote("no.", false, true, litePalLanguage, litePalAuthor2,new ArrayList<LitePalTag>(){{
-            add(EnumTag.INSPIRATIONAL.getTag());
-            add(EnumTag.MOTIVATIONAL.getTag());
-        }});
-
-
-        Log.d(TAG, "LitePalQuote " + " is: " + insertQuote(litePalQuote));
-        Log.d(TAG, "LitePalQuote " + " is: " + insertQuote(litePalQuote2));
-        Log.d(TAG, "LitePalQuote " + " is: " + insertQuote(litePalQuote3));
-//        for (int i = 0; i < litePalQuotes.size(); i++) {
-//            Log.d(TAG, "LitePalQuote " + i + " is: " + litePalQuotes.get(i).toString());
-//        }
+        for (int i = 0; i < litePalQuoteBuilders.size(); i++) {
+            Log.d(TAG, "LitePalQuote " + i + " is saving: " + litePalQuoteBuilders.get(i).getLitePalQuote().toString());
+            insertQuoteLanguageAuthorTag(litePalQuoteBuilders.get(i));
+        }
     }
 }
