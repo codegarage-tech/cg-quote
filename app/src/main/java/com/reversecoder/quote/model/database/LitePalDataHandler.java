@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LitePalDataHandler {
+
     private static String TAG = "LitePalTestRashed";
 
     /*******************
@@ -138,19 +139,27 @@ public class LitePalDataHandler {
     /********************************************
      * Methods for Quote, Language, Author, Tag *
      ********************************************/
-    public static void insertQuoteLanguageAuthorTag(LitePalQuoteBuilder litePalQuoteBuilder) {
-        for(int i=0;i<litePalQuoteBuilder.getLitePalTags().size();i++){
-            LitePalQuoteLanguageAuthorTag litePalQuoteLanguageAuthorTag = new LitePalQuoteLanguageAuthorTag(litePalQuoteBuilder.getLitePalQuote().getId(),litePalQuoteBuilder.getLitePalLanguage().getId(),litePalQuoteBuilder.getLitePalAuthor().getId(),litePalQuoteBuilder.getLitePalTags().get(i).getId());
-            litePalQuoteLanguageAuthorTag.save();
+    public static void insertQuoteLanguageAuthorTag(LitePalDataBuilder litePalDataBuilder) {
+        for (int i = 0; i < litePalDataBuilder.getLitePalQuoteBuilders().size(); i++) {
+            LitePalDataBuilder.LitePalQuoteBuilder litePalQuoteBuilder = litePalDataBuilder.getLitePalQuoteBuilders().get(i);
+            for (int j = 0; j < litePalQuoteBuilder.getLitePalTags().size(); j++) {
+                Log.d(TAG, "insertQuoteLanguageAuthorTag(new): " + litePalQuoteBuilder.getLitePalQuote().toString());
+                LitePalQuoteLanguageAuthorTag litePalQuoteLanguageAuthorTag = new LitePalQuoteLanguageAuthorTag(litePalQuoteBuilder.getLitePalQuote().getId(), litePalDataBuilder.getLitePalLanguage().getId(), litePalDataBuilder.getLitePalAuthor().getId(), litePalQuoteBuilder.getLitePalTags().get(j).getId());
+
+                LitePalQuoteLanguageAuthorTag mSavedData = getQuoteLanguageAuthorTag(litePalQuoteLanguageAuthorTag);
+                if (mSavedData == null) {
+                    litePalQuoteLanguageAuthorTag.save();
+                }
+            }
         }
     }
 
-//    public static LitePalQuoteLanguageAuthorTag getQuoteLanguageAuthorTag(LitePalQuote litePalQuote) {
-//        List<LitePalQuote> savedQuotes = DataSupport.where("quoteDescription = ?", ).find(LitePalQuote.class);
-//        if (savedQuotes != null && savedQuotes.size() == 1) {
-//            Log.d(TAG, "getQuote: " + savedQuotes.get(0).toString());
-//            return savedQuotes.get(0);
-//        }
-//        return null;
-//    }
+    public static LitePalQuoteLanguageAuthorTag getQuoteLanguageAuthorTag(LitePalQuoteLanguageAuthorTag litePalQuoteLanguageAuthorTag) {
+        List<LitePalQuoteLanguageAuthorTag> savedQuotes = DataSupport.where("md5 = ?", litePalQuoteLanguageAuthorTag.getMd5()).find(LitePalQuoteLanguageAuthorTag.class);
+        if (savedQuotes != null && savedQuotes.size() == 1) {
+            Log.d(TAG, "getQuoteLanguageAuthorTag(existing): " + savedQuotes.get(0).toString());
+            return savedQuotes.get(0);
+        }
+        return null;
+    }
 }
