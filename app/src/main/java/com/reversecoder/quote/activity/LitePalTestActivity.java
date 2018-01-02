@@ -1,5 +1,6 @@
 package com.reversecoder.quote.activity;
 
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -10,6 +11,9 @@ import com.reversecoder.quote.model.database.LitePalLanguage;
 import com.reversecoder.quote.model.database.LitePalQuote;
 import com.reversecoder.quote.model.database.LitePalQuoteBuilder;
 import com.reversecoder.quote.model.database.LitePalTag;
+
+import org.litepal.LitePal;
+import org.litepal.crud.DataSupport;
 
 import java.util.ArrayList;
 
@@ -76,6 +80,15 @@ public class LitePalTestActivity extends AppCompatActivity {
         for (int i = 0; i < litePalQuoteBuilders.size(); i++) {
             Log.d(TAG, "LitePalQuote " + i + " is saving: " + litePalQuoteBuilders.get(i).getLitePalQuote().toString());
             insertQuoteLanguageAuthorTag(litePalQuoteBuilders.get(i));
+        }
+
+        getAllData();
+    }
+
+    private void getAllData(){
+        Cursor cursor = DataSupport.findBySQL("select * from litepalquotelanguageauthortag where authorid = ?","2");
+        while(cursor.moveToNext()) {
+            Log.d(TAG, "CursorData: "+DataSupport.find(LitePalAuthor.class,cursor.getLong(cursor.getColumnIndex("authorid"))));
         }
     }
 }
