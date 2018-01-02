@@ -4,13 +4,9 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.google.gson.Gson;
-import com.reversecoder.quote.model.Author;
-import com.reversecoder.quote.model.Language;
 
 import org.litepal.annotation.Column;
 import org.litepal.crud.DataSupport;
-
-import java.util.ArrayList;
 
 public class LitePalQuote extends DataSupport implements Parcelable {
 
@@ -19,21 +15,6 @@ public class LitePalQuote extends DataSupport implements Parcelable {
     private String quoteDescription = "";
     private boolean isFavourite = false;
     private boolean isQuote = false;
-    @Column(ignore = true)
-    private LitePalLanguage language;
-    @Column(ignore = true)
-    private LitePalAuthor author;
-    @Column(ignore = true)
-    private ArrayList<LitePalTag> tags = new ArrayList<>();
-
-    public LitePalQuote(String quoteDescription, boolean isFavourite, boolean isQuote, LitePalLanguage language, LitePalAuthor author, ArrayList<LitePalTag> tags) {
-        this.quoteDescription = quoteDescription;
-        this.isFavourite = isFavourite;
-        this.isQuote = isQuote;
-        this.language = language;
-        this.author = author;
-        this.tags = tags;
-    }
 
     public LitePalQuote(String quoteDescription, boolean isFavourite, boolean isQuote) {
         this.quoteDescription = quoteDescription;
@@ -69,48 +50,6 @@ public class LitePalQuote extends DataSupport implements Parcelable {
         isQuote = quote;
     }
 
-    public LitePalLanguage getLanguage() {
-//        List<LitePalLanguage> litePalLanguages = DataSupport.where("litepalquote_id = ?", getId() + "").find(LitePalLanguage.class);
-//        if (litePalLanguages != null && litePalLanguages.size() == 1) {
-//            language = litePalLanguages.get(0);
-//            return language;
-//        }
-//        return null;
-        return language;
-    }
-
-    public void setLanguage(LitePalLanguage language) {
-        this.language = language;
-    }
-
-    public LitePalAuthor getAuthor() {
-//        List<LitePalAuthor> litePalAuthors = DataSupport.where("litepalquote_id = ?", getId() + "").find(LitePalAuthor.class);
-//        if (litePalAuthors != null && litePalAuthors.size() == 1) {
-//            author = litePalAuthors.get(0);
-//            return author;
-//        }
-//        return null;
-        return author;
-    }
-
-    public void setAuthor(LitePalAuthor author) {
-        this.author = author;
-    }
-
-    public ArrayList<LitePalTag> getTags() {
-//        List<LitePalTag> mTags = DataSupport.where("litepalquote_id = ?", getId() + "").find(LitePalTag.class);
-//        if (mTags != null && mTags.size() > 0) {
-//            tags = new ArrayList<LitePalTag>(mTags);
-//            return tags;
-//        }
-//        return new ArrayList<LitePalTag>();
-        return tags;
-    }
-
-    public void setTags(ArrayList<LitePalTag> tags) {
-        this.tags = tags;
-    }
-
     @Override
     public String toString() {
         return "{" +
@@ -118,9 +57,6 @@ public class LitePalQuote extends DataSupport implements Parcelable {
                 ", quoteDescription=" + quoteDescription +
                 ", isFavourite=" + isFavourite +
                 ", isQuote=" + isQuote +
-                ", language=" + language +
-                ", author=" + author +
-                ", tags=" + tags +
                 '}';
     }
 
@@ -138,8 +74,6 @@ public class LitePalQuote extends DataSupport implements Parcelable {
         dest.writeString(quoteDescription);
         dest.writeInt(isFavourite ? 1 : 0);
         dest.writeInt(isQuote ? 1 : 0);
-        dest.writeParcelable(language, flags);
-        dest.writeParcelable(author, flags);
     }
 
     // Creator
@@ -160,8 +94,6 @@ public class LitePalQuote extends DataSupport implements Parcelable {
         this.quoteDescription = in.readString();
         this.isFavourite = (in.readInt() == 0) ? false : true;
         this.isQuote = (in.readInt() == 0) ? false : true;
-        this.language = in.readParcelable(Language.class.getClassLoader());
-        this.author = in.readParcelable(Author.class.getClassLoader());
     }
 
     /**************************

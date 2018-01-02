@@ -6,13 +6,13 @@ public enum EnumTag {
     ROMANTIC("Romantic"),
     INSPIRATIONAL("Inspirational");
 
-    private String mTagName;
+    private LitePalTag litePalTag;
 
     EnumTag(String tagName) {
-        mTagName = tagName;
+        litePalTag = LitePalDataHandler.insetTag(new LitePalTag(tagName));
     }
 
-    public LitePalTag getTag() {
-        return LitePalDataHandler.insetTag(new LitePalTag(mTagName));
+    public LitePalTag getLitePalTag() {
+        return litePalTag;
     }
 }
