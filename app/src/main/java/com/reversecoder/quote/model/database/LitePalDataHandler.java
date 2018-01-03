@@ -130,7 +130,7 @@ public class LitePalDataHandler {
     public static LitePalQuote getQuote(String quoteDescription) {
         List<LitePalQuote> savedQuotes = DataSupport.where("quoteDescription = ?", quoteDescription).find(LitePalQuote.class);
         if (savedQuotes != null && savedQuotes.size() == 1) {
-            Log.d(TAG, "getQuote: " + savedQuotes.get(0).toString());
+            Log.d(TAG, "getQuote(existing): " + savedQuotes.get(0).toString());
             return savedQuotes.get(0);
         }
         return null;
@@ -143,19 +143,20 @@ public class LitePalDataHandler {
         for (int i = 0; i < litePalDataBuilder.getLitePalQuoteBuilders().size(); i++) {
             LitePalDataBuilder.LitePalQuoteBuilder litePalQuoteBuilder = litePalDataBuilder.getLitePalQuoteBuilders().get(i);
             for (int j = 0; j < litePalQuoteBuilder.getLitePalTags().size(); j++) {
-                Log.d(TAG, "insertQuoteLanguageAuthorTag(new): " + litePalQuoteBuilder.getLitePalQuote().toString());
+                Log.d(TAG, "insertQuoteLanguageAuthorTag(quote): " + litePalQuoteBuilder.getLitePalQuote().toString());
                 LitePalQuoteLanguageAuthorTag litePalQuoteLanguageAuthorTag = new LitePalQuoteLanguageAuthorTag(litePalQuoteBuilder.getLitePalQuote().getId(), litePalDataBuilder.getLitePalLanguage().getId(), litePalDataBuilder.getLitePalAuthor().getId(), litePalQuoteBuilder.getLitePalTags().get(j).getId());
 
-                LitePalQuoteLanguageAuthorTag mSavedData = getQuoteLanguageAuthorTag(litePalQuoteLanguageAuthorTag);
+                LitePalQuoteLanguageAuthorTag mSavedData = getQuoteLanguageAuthorTag(litePalQuoteLanguageAuthorTag.getMd5());
                 if (mSavedData == null) {
+                    Log.d(TAG, "insertQuoteLanguageAuthorTag(new): " + litePalQuoteLanguageAuthorTag.toString());
                     litePalQuoteLanguageAuthorTag.save();
                 }
             }
         }
     }
 
-    public static LitePalQuoteLanguageAuthorTag getQuoteLanguageAuthorTag(LitePalQuoteLanguageAuthorTag litePalQuoteLanguageAuthorTag) {
-        List<LitePalQuoteLanguageAuthorTag> savedQuotes = DataSupport.where("md5 = ?", litePalQuoteLanguageAuthorTag.getMd5()).find(LitePalQuoteLanguageAuthorTag.class);
+    public static LitePalQuoteLanguageAuthorTag getQuoteLanguageAuthorTag(String md5) {
+        List<LitePalQuoteLanguageAuthorTag> savedQuotes = DataSupport.where("md5 = ?", md5).find(LitePalQuoteLanguageAuthorTag.class);
         if (savedQuotes != null && savedQuotes.size() == 1) {
             Log.d(TAG, "getQuoteLanguageAuthorTag(existing): " + savedQuotes.get(0).toString());
             return savedQuotes.get(0);

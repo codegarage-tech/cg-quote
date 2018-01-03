@@ -1118,7 +1118,7 @@ public class DataHandler {
 //        Author drake = getAuthor(authors, "Drake");
 //        quotes.add(new Quote("Sometimes it's the journey that teaches you a lot about your destination.", false, true, english, drake));
 //        quotes.add(new Quote("Jealousy is just love and hate at the same time.", false, true, english, drake));
-//        quotes.add(new Quote("People like to build their own story about my life. I don't know if it makes them feel better, or if it makes it okay for them to not like me, but the last thing I grew up as was rich.", false, true, english, drake));
+//        quotes.add(new Quote("People like to buildQuotes their own story about my life. I don't know if it makes them feel better, or if it makes it okay for them to not like me, but the last thing I grew up as was rich.", false, true, english, drake));
 //        quotes.add(new Quote("I feel connected to my generation through the music, but I also fear for us. We're in a very self-destructive state where we're addicted to outside opinions and we all feel like we have fans.", false, true, english, drake));
 //        quotes.add(new Quote("Me and my dad are friends. We're cool. I'll never be disappointed again, because I don't expect anything anymore from him. I just let him exist, and that's how we get along.", false, true, english, drake));
 //        quotes.add(new Quote("Trying to meet new women, it's always a little more difficult as opposed to calling somebody I knew that's single and trying to rebuild that connection.", false, true, english, drake));
@@ -1317,7 +1317,7 @@ public class DataHandler {
 //        quotes.add(new Quote("It is not light that we need, but fire; it is not the gentle shower, but thunder. We need the storm, the whirlwind, and the earthquake.", false, true, english, frederickDouglass));
 //        quotes.add(new Quote("Without a struggle, there can be no progress.", false, true, english, frederickDouglass));
 //        quotes.add(new Quote("Where justice is denied, where poverty is enforced, where ignorance prevails, and where any one class is made to feel that society is an organized conspiracy to oppress, rob and degrade them, neither persons nor property will be safe.", false, true, english, frederickDouglass));
-//        quotes.add(new Quote("It is easier to build strong children than to repair broken men.", false, true, english, frederickDouglass));
+//        quotes.add(new Quote("It is easier to buildQuotes strong children than to repair broken men.", false, true, english, frederickDouglass));
 //        quotes.add(new Quote("If there is no struggle, there is no progress.", false, true, english, frederickDouglass));
 //
 //        Author fridaKahlo = getAuthor(authors, "Frida Kahlo");
@@ -1629,7 +1629,7 @@ public class DataHandler {
 //        quotes.add(new Quote("To every action there is always opposed an equal reaction.", false, true, english, isaacNewton));
 //        quotes.add(new Quote("I do not know what I may appear to the world, but to myself I seem to have been only like a boy playing on the seashore, and diverting myself in now and then finding a smoother pebble or a prettier shell than ordinary, whilst the great ocean of truth lay all undiscovered before me.", false, true, english, isaacNewton));
 //        quotes.add(new Quote("Truth is ever to be found in simplicity, and not in the multiplicity and confusion of things.", false, true, english, isaacNewton));
-//        quotes.add(new Quote("We build too many walls and not enough bridges.", false, true, english, isaacNewton));
+//        quotes.add(new Quote("We buildQuotes too many walls and not enough bridges.", false, true, english, isaacNewton));
 //        quotes.add(new Quote("If I have seen further than others, it is by standing upon the shoulders of giants.", false, true, english, isaacNewton));
 //
 //        Author isaacAsimov = getAuthor(authors, "Isaac Asimov");
@@ -2222,7 +2222,7 @@ public class DataHandler {
 //        quotes.add(new Quote("There is a difference between listening and waiting for your turn to speak.", false, true, english, simonSinek));
 //        quotes.add(new Quote("Leadership is a way of thinking, a way of acting and, most importantly, a way of communicating.", false, true, english, simonSinek));
 //        quotes.add(new Quote("We can't all be good at everything. This is partly the logic behind having a team in the first place, so each role can be filled with the person best suited for that role and together, every job and every strength is covered.", false, true, english, simonSinek));
-//        quotes.add(new Quote("Don't quit. Never give up trying to build the world you can see, even if others can't see it. Listen to your drum and your drum only. It's the one that makes the sweetest sound.", false, true, english, simonSinek));
+//        quotes.add(new Quote("Don't quit. Never give up trying to buildQuotes the world you can see, even if others can't see it. Listen to your drum and your drum only. It's the one that makes the sweetest sound.", false, true, english, simonSinek));
 //        quotes.add(new Quote("The challenge of the unknown future is so much more exciting than the stories of the accomplished past.", false, true, english, simonSinek));
 //        quotes.add(new Quote("Champions are not the ones who always win races - champions are the ones who get out there and try. And try harder the next time. And even harder the next time. 'Champion' is a state of mind. They are devoted. They compete to best themselves as much if not more than they compete to best others. Champions are not just athletes.", false, true, english, simonSinek));
 //        quotes.add(new Quote("There is no decision that we can make that doesn't come with some sort of balance or sacrifice.", false, true, english, simonSinek));
@@ -2391,7 +2391,7 @@ public class DataHandler {
 //        quotes.add(new Quote("We keep moving forward, opening new doors, and doing new things, because we're curious and curiosity keeps leading us down new paths.", false, true, english, waltDisney));
 //        quotes.add(new Quote("All our dreams can come true, if we have the courage to pursue them.", false, true, english, waltDisney));
 //        quotes.add(new Quote("The way to get started is to quit talking and begin doing.", false, true, english, waltDisney));
-//        quotes.add(new Quote("You can design and create, and build the most wonderful place in the world. But it takes people to make the dream a reality.", false, true, english, waltDisney));
+//        quotes.add(new Quote("You can design and create, and buildQuotes the most wonderful place in the world. But it takes people to make the dream a reality.", false, true, english, waltDisney));
 //        quotes.add(new Quote("Times and conditions change so rapidly that we must keep our aim constantly focused on the future.", false, true, english, waltDisney));
 //        quotes.add(new Quote("The way to get started is to quit talking and begin doing.", false, true, english, waltDisney));
 //        quotes.add(new Quote("It's kind of fun to do the impossible.", false, true, english, waltDisney));
@@ -2465,7 +2465,7 @@ public class DataHandler {
 //        quotes.add(new Quote("I keep returning to the combination of artichoke, broad beans and lemon. The freshness of young beans and the lemon juice 'lifts' the artichoke and balances its hearty nature.", false, true, english, yotamOttolenghi));
 //        quotes.add(new Quote("As is always the way with pancakes, the first hotcake to come out of the pan will probably be a bit misshapen. Just scoff it, and carry on with the rest.", false, true, english, yotamOttolenghi));
 //        quotes.add(new Quote("Pasta with melted cheese is the one thing I could eat over and over again.", false, true, english, yotamOttolenghi));
-//        quotes.add(new Quote("For those, like me, who can't rely on being given a home smoker this Christmas, you can build your own approximation with just a roll of tin foil and a big wok or pan for which you have a lid.", false, true, english, yotamOttolenghi));
+//        quotes.add(new Quote("For those, like me, who can't rely on being given a home smoker this Christmas, you can buildQuotes your own approximation with just a roll of tin foil and a big wok or pan for which you have a lid.", false, true, english, yotamOttolenghi));
 //        quotes.add(new Quote("The addition of vinaigrette to freshly roasted vegetables gives them a freshness and juiciness they don't normally have; the acidity brings out new shades of flavour, too.", false, true, english, yotamOttolenghi));
 //        quotes.add(new Quote("For me, the end of childhood came when the number of candles on my birthday cake no longer reflected my age, around 19 or 20. From then on, each candle came to represent an entire decade.", false, true, english, yotamOttolenghi));
 //

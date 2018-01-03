@@ -1,5 +1,7 @@
 package com.reversecoder.quote.model.database;
 
+import android.util.Log;
+
 import org.litepal.annotation.Column;
 import org.litepal.crud.DataSupport;
 
@@ -13,7 +15,7 @@ public class LitePalQuoteLanguageAuthorTag extends DataSupport {
     private long authorId;
     private long tagId;
     @Column(unique = true)
-    private String md5="";
+    private String md5 = "";
 
     public LitePalQuoteLanguageAuthorTag(long quoteId, long languageId, long authorId, long tagId) {
         this.quoteId = quoteId;
@@ -21,6 +23,8 @@ public class LitePalQuoteLanguageAuthorTag extends DataSupport {
         this.authorId = authorId;
         this.tagId = tagId;
         this.md5 = getMD5String(toString());
+        Log.d("MD5 for: ", toString());
+        Log.d("MD5: ", md5);
     }
 
     public long getQuoteId() {
@@ -71,7 +75,7 @@ public class LitePalQuoteLanguageAuthorTag extends DataSupport {
                 ", languageId=" + languageId +
                 ", authorId=" + authorId +
                 ", tagId=" + tagId +
-                ", md5=" + md5 +
+                ", md5='" + md5 + '\'' +
                 '}';
     }
 }

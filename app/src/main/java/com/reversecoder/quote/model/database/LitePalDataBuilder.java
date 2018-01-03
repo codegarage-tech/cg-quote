@@ -1,5 +1,7 @@
 package com.reversecoder.quote.model.database;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 
 public class LitePalDataBuilder {
@@ -40,6 +42,23 @@ public class LitePalDataBuilder {
         return this;
     }
 
+    public LitePalDataBuilder buildAuthor() {
+        if (litePalLanguage != null && litePalAuthor != null && getLitePalQuoteBuilders().size() > 0) {
+            LitePalDataHandler.insertQuoteLanguageAuthorTag(this);
+        }
+        Log.d(LitePalDataBuilder.class.getSimpleName(), toString());
+        return this;
+    }
+
+    @Override
+    public String toString() {
+        return "{" +
+                "litePalLanguage=" + litePalLanguage +
+                ", litePalAuthor=" + litePalAuthor +
+                ", litePalQuoteBuilders=" + litePalQuoteBuilders +
+                '}';
+    }
+
     public static class LitePalQuoteBuilder {
 
         private LitePalQuote litePalQuote;
@@ -68,11 +87,19 @@ public class LitePalDataBuilder {
             return litePalTags;
         }
 
-        public LitePalQuoteBuilder build() {
+        public LitePalQuoteBuilder buildQuotes() {
             if (litePalQuote != null) {
-                LitePalDataHandler.insertQuote(litePalQuote);
+                litePalQuote = LitePalDataHandler.insertQuote(litePalQuote);
             }
             return this;
+        }
+
+        @Override
+        public String toString() {
+            return "{" +
+                    "litePalQuote=" + litePalQuote +
+                    ", litePalTags=" + litePalTags +
+                    '}';
         }
     }
 }
