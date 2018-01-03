@@ -9,7 +9,7 @@ import java.util.List;
 
 public class LitePalDataHandler {
 
-    private static String TAG = "LitePalTestRashed";
+    private static String TAG = "LitePalDataHandler";
 
     /*******************
      * Methods for Tag *

@@ -159,7 +159,13 @@ public enum Library {
     // Sidebar Fast Scroll
     WAVE_SIDEBAR_SOLARTISAN(new Attribution.Builder("Wave SideBar", "https://github.com/Solartisan/WaveSideBar")
             .addLicenseInfo(new LicenseInfo("NA", License.NONE))
+            .build()),
+
+    // ProgressBar
+    MASK_PROGRESSVIEW_IAMMERT(new Attribution.Builder("Mask ProgressView", "https://github.com/iammert/MaskProgressView")
+            .addLicenseInfo(new LicenseInfo("Copyright 2015 Mert Şimşek.", License.APACHE))
             .build());
+
 
     private Attribution attribution;
 
