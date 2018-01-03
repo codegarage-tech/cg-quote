@@ -123,28 +123,28 @@ public class AppIntroActivity extends VerticalIntro {
         }
     }
 
-    /******************************
-     * Methods for database input *
-     ******************************/
-    public class InputData extends AsyncTask<String, String, ArrayList<MappedQuote>> {
-
-        @Override
-        protected void onPreExecute() {
-        }
-
-        @Override
-        protected ArrayList<MappedQuote> doInBackground(String... params) {
-            return DataHandler.initDataBase();
-        }
-
-        @Override
-        protected void onPostExecute(ArrayList<MappedQuote> result) {
-
-            if (result != null && result.size() > 0) {
-                navigateHomeActivity();
-            }
-        }
-    }
+//    /******************************
+//     * Methods for database input *
+//     ******************************/
+//    public class InputData extends AsyncTask<String, String, ArrayList<MappedQuote>> {
+//
+//        @Override
+//        protected void onPreExecute() {
+//        }
+//
+//        @Override
+//        protected ArrayList<MappedQuote> doInBackground(String... params) {
+//            return DataHandler.initDataBase();
+//        }
+//
+//        @Override
+//        protected void onPostExecute(ArrayList<MappedQuote> result) {
+//
+//            if (result != null && result.size() > 0) {
+//                navigateHomeActivity();
+//            }
+//        }
+//    }
 
     /*****************************
      * Methods for locale change *

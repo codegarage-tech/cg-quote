@@ -24,6 +24,7 @@ public class AllConstants {
     public static final String SESSION_DATA_AUTHORS = "SESSION_DATA_AUTHORS";
     public static final String SESSION_DATA_QUOTES = "SESSION_DATA_QUOTES";
     public static final String SESSION_DATA_MAPPED_QUOTES = "SESSION_DATA_MAPPED_QUOTES";
+    public static final String SESSION_DATA_DATA_BUILDER = "SESSION_DATA_DATA_BUILDER";
 
     //Request code
     public static final int REQUEST_CODE_FAVOURITE_FRAGMENT = 420;

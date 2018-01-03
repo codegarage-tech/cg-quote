@@ -2,14 +2,65 @@ package com.reversecoder.quote.model.database;
 
 import android.util.Log;
 
+import com.reversecoder.library.storage.SessionManager;
+import com.reversecoder.library.util.AllSettingsManager;
+
 import org.litepal.crud.DataSupport;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.reversecoder.quote.application.QuoteApp.getGlobalContext;
+import static com.reversecoder.quote.util.AllConstants.SESSION_DATA_DATA_BUILDER;
+
 public class LitePalDataHandler {
 
-    private static String TAG = "LitePalDataHandler";
+    private static String TAG = LitePalDataHandler.class.getSimpleName();
+
+    /**************
+     * Data input *
+     **************/
+    public static ArrayList<LitePalDataBuilder> initAllQuotes() {
+        ArrayList<LitePalDataBuilder> litePalDataBuilders = new ArrayList<>();
+
+        litePalDataBuilders.add(
+                new LitePalDataBuilder()
+                        .setLitePalLanguage(EnumLanguage.ENGLISH.getLitePalLanguage())
+                        .setLitePalAuthor(EnumAuthor.ARISTOTLE.getLitePalAuthor())
+                        .addLitePalQuotes(new LitePalDataBuilder.LitePalQuoteBuilder()
+                                .setLitePalQuote(new LitePalQuote("Do what you want.", false, true))
+                                .addLitePalTags(EnumTag.INSPIRATIONAL.getLitePalTag())
+                                .addLitePalTags(EnumTag.ROMANTIC.getLitePalTag())
+                                .buildQuotes()
+                        )
+                        .addLitePalQuotes(new LitePalDataBuilder.LitePalQuoteBuilder()
+                                .setLitePalQuote(new LitePalQuote("Yes", false, true))
+                                .addLitePalTags(EnumTag.ROMANTIC.getLitePalTag())
+                                .buildQuotes()
+                        )
+                        .addLitePalQuotes(new LitePalDataBuilder.LitePalQuoteBuilder()
+                                .setLitePalQuote(new LitePalQuote("No", false, true))
+                                .addLitePalTags(EnumTag.MOTIVATIONAL.getLitePalTag())
+                                .addLitePalTags(EnumTag.ROMANTIC.getLitePalTag())
+                                .buildQuotes()
+                        )
+                        .buildAuthor()
+        );
+
+        DataLitePalDataBuilder dataLitePalDataBuilder = new DataLitePalDataBuilder(litePalDataBuilders);
+        SessionManager.setStringSetting(getGlobalContext(), SESSION_DATA_DATA_BUILDER, DataLitePalDataBuilder.convertFromObjectToString(dataLitePalDataBuilder));
+
+        return litePalDataBuilders;
+    }
+
+    public static ArrayList<LitePalDataBuilder> getAllQuotes() {
+        ArrayList<LitePalDataBuilder> litePalDataBuilders = new ArrayList<>();
+        if (!AllSettingsManager.isNullOrEmpty(SessionManager.getStringSetting(getGlobalContext(), SESSION_DATA_DATA_BUILDER))) {
+            DataLitePalDataBuilder dataLitePalDataBuilder = DataLitePalDataBuilder.convertFromStringToObject(SessionManager.getStringSetting(getGlobalContext(), SESSION_DATA_DATA_BUILDER), DataLitePalDataBuilder.class);
+            litePalDataBuilders = dataLitePalDataBuilder.getLitePalDataBuilders();
+        }
+        return litePalDataBuilders;
+    }
 
     /*******************
      * Methods for Tag *

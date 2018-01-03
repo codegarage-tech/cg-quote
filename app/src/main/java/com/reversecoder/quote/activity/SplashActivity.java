@@ -12,19 +12,26 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
 import com.lombokcyberlab.android.multicolortextview.MultiColorTextView;
 import com.reversecoder.gcm.task.RegisterApp;
 import com.reversecoder.library.network.NetworkManager;
 import com.reversecoder.library.storage.SessionManager;
+import com.reversecoder.library.util.AllSettingsManager;
 import com.reversecoder.permission.activity.PermissionListActivity;
 import com.reversecoder.quote.R;
 import com.reversecoder.quote.model.MappedQuote;
+import com.reversecoder.quote.model.database.LitePalDataBuilder;
 import com.reversecoder.quote.util.DataHandler;
 import com.rodolfonavalon.shaperipplelibrary.ShapeRipple;
 import com.rodolfonavalon.shaperipplelibrary.model.Circle;
 
 import java.util.ArrayList;
 
+import static com.reversecoder.quote.application.QuoteApp.getGlobalContext;
+import static com.reversecoder.quote.model.database.LitePalDataHandler.initAllQuotes;
+import static com.reversecoder.quote.util.AllConstants.SESSION_DATA_DATA_BUILDER;
 import static com.reversecoder.quote.util.AllConstants.SESSION_IS_FIRST_TIME;
 import static com.reversecoder.quote.util.DataHandler.mAllMappedQuotes;
 
@@ -60,6 +67,10 @@ public class SplashActivity extends BaseActivity {
 
     private void initSplashUI() {
 
+        YoYo.with(Techniques.Shake)
+                .duration(1000)
+                .playOn(findViewById(R.id.tv_app_name));
+
         tvAppVersion = (TextView) findViewById(R.id.application_version);
         tvAppVersion.setText(getString(R.string.app_version_text) + " " + getString(R.string.app_version_name));
 
@@ -88,16 +99,24 @@ public class SplashActivity extends BaseActivity {
         ripple.setRippleCount(10);
         ripple.setRippleMaximumRadius(184);
 
-        if (mAllMappedQuotes.size() > 0) {
+//        if (mAllMappedQuotes.size() > 0) {
+//            splashCountDownTimer = new SplashCountDownTimer(splashTime, interval);
+//            splashCountDownTimer.start();
+//        } else {
+//            if (inputData == null) {
+//                inputData = new InputData();
+//            } else if (inputData.getStatus() == AsyncTask.Status.RUNNING) {
+//                inputData.cancel(true);
+//                mAllMappedQuotes.clear();
+//            }
+//            inputData.execute();
+//        }
+
+        if (!AllSettingsManager.isNullOrEmpty(SessionManager.getStringSetting(getGlobalContext(), SESSION_DATA_DATA_BUILDER))) {
             splashCountDownTimer = new SplashCountDownTimer(splashTime, interval);
             splashCountDownTimer.start();
-        } else {
-            if (inputData == null) {
-                inputData = new InputData();
-            } else if (inputData.getStatus() == AsyncTask.Status.RUNNING) {
-                inputData.cancel(true);
-                mAllMappedQuotes.clear();
-            }
+        }else{
+            inputData = new InputData();
             inputData.execute();
         }
     }
@@ -120,13 +139,14 @@ public class SplashActivity extends BaseActivity {
                     intent = new Intent(SplashActivity.this, PermissionListActivity.class);
                     startActivityForResult(intent, PermissionListActivity.REQUEST_CODE_PERMISSIONS);
                 } else {
-                    if (inputData == null) {
-                        inputData = new InputData();
-                    } else if (inputData.getStatus() == AsyncTask.Status.RUNNING) {
-                        inputData.cancel(true);
-                        mAllMappedQuotes.clear();
-                    }
-                    inputData.execute();
+//                    if (inputData == null) {
+//                        inputData = new InputData();
+//                    } else if (inputData.getStatus() == AsyncTask.Status.RUNNING) {
+//                        inputData.cancel(true);
+//                        mAllMappedQuotes.clear();
+//                    }
+//                    inputData.execute();
+                    navigateHomeActivity();
                 }
             }
         }
@@ -158,20 +178,19 @@ public class SplashActivity extends BaseActivity {
     /******************************
      * Methods for database input *
      ******************************/
-    public class InputData extends AsyncTask<String, String, ArrayList<MappedQuote>> {
+    public class InputData extends AsyncTask<String, String, ArrayList<LitePalDataBuilder>> {
 
         @Override
         protected void onPreExecute() {
         }
 
         @Override
-        protected ArrayList<MappedQuote> doInBackground(String... params) {
-            return DataHandler.initDataBase();
+        protected ArrayList<LitePalDataBuilder> doInBackground(String... params) {
+            return initAllQuotes();
         }
 
         @Override
-        protected void onPostExecute(ArrayList<MappedQuote> result) {
-
+        protected void onPostExecute(ArrayList<LitePalDataBuilder> result) {
             if (result != null && result.size() > 0) {
                 if (SessionManager.getBooleanSetting(SplashActivity.this, SESSION_IS_FIRST_TIME, true)) {
                     Intent intentAppIntro = new Intent(SplashActivity.this, AppIntroActivity.class);
@@ -194,8 +213,8 @@ public class SplashActivity extends BaseActivity {
         if (inputData != null && inputData.getStatus() == AsyncTask.Status.RUNNING) {
             Log.d(TAG, "Canceling splash");
             inputData.cancel(true);
-            mAllMappedQuotes.clear();
-            Log.d(TAG, "data size: " + mAllMappedQuotes.size());
+//            mAllMappedQuotes.clear();
+//            Log.d(TAG, "data size: " + mAllMappedQuotes.size());
         }
 
         super.onBackPressed();

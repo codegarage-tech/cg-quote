@@ -21,7 +21,7 @@
         android:layout_centerHorizontal="true"
         app:colors="@array/google2"
         app:text="@string/txt_loading_message"
-        app:textSize="30"
+        app:textSize="25"
         app:textStyle="bold" />
 
 </RelativeLayout>
