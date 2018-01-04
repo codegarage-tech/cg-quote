@@ -2,8 +2,11 @@ package com.reversecoder.quote.model.database;
 
 import android.util.Log;
 
+import com.kannan.glazy.GlazyCard;
+import com.kannan.glazy.views.GlazyImageView;
 import com.reversecoder.library.storage.SessionManager;
 import com.reversecoder.library.util.AllSettingsManager;
+import com.reversecoder.quote.R;
 
 import org.litepal.crud.DataSupport;
 
@@ -60,6 +63,40 @@ public class LitePalDataHandler {
             litePalDataBuilders = dataLitePalDataBuilder.getLitePalDataBuilders();
         }
         return litePalDataBuilders;
+    }
+
+    public static ArrayList<GlazyCard> getAllGlazyCards(ArrayList<LitePalDataBuilder> litePalDataBuilders) {
+
+        ArrayList<GlazyCard> glazyCards = new ArrayList<GlazyCard>();
+        GlazyCard glazyCard;
+        LitePalDataBuilder quote;
+        GlazyImageView.ImageCutType lastTransitionType = GlazyImageView.ImageCutType.LINE_POSITIVE;
+        for (int i = 0; i < litePalDataBuilders.size(); i++) {
+
+            quote = litePalDataBuilders.get(i);
+            glazyCard = new GlazyCard()
+                    .withTitle(quote.isLitePalData() ? quote.getLitePalAuthor().getAuthorName() : "Advertise")
+                    .withSubTitle(quote.isLitePalData() ? quote.getLitePalAuthor().getOccupation() : "")
+                    .withOccupation(quote.isLitePalData() ? quote.getLitePalAuthor().getOccupation() : "")
+                    .withNationality(quote.isLitePalData() ? quote.getLitePalAuthor().getNationality() : "")
+                    .withBirthDate(quote.isLitePalData() ? quote.getLitePalAuthor().getBirthDate() : "")
+                    .withDeathDate(quote.isLitePalData() ? quote.getLitePalAuthor().getDeathDate() : "")
+                    .withDescription(quote.isLitePalData() ? (quote.getLitePalQuoteBuilders().size() > 0 ? quote.getLitePalQuoteBuilders().get(0).getLitePalQuote().getQuoteDescription() : "") : "")
+                    .withImageRes((quote.getLitePalAuthor().getProfileImage() != -1) ? quote.getLitePalAuthor().getProfileImage() : R.drawable.avatar_male)
+                    .withImageCutType(lastTransitionType)
+                    .withImageCutHeightDP(50);
+            glazyCards.add(glazyCard);
+
+            if (lastTransitionType == GlazyImageView.ImageCutType.LINE_POSITIVE) {
+                lastTransitionType = GlazyImageView.ImageCutType.ARC;
+            } else if (lastTransitionType == GlazyImageView.ImageCutType.ARC) {
+                lastTransitionType = GlazyImageView.ImageCutType.WAVE;
+            } else if (lastTransitionType == GlazyImageView.ImageCutType.WAVE) {
+                lastTransitionType = GlazyImageView.ImageCutType.LINE_POSITIVE;
+            }
+        }
+
+        return glazyCards;
     }
 
     /*******************

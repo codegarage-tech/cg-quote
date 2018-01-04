@@ -9,6 +9,7 @@ public class LitePalDataBuilder {
     private LitePalLanguage litePalLanguage;
     private LitePalAuthor litePalAuthor;
     private ArrayList<LitePalQuoteBuilder> litePalQuoteBuilders = new ArrayList<>();
+    private boolean isLitePalData = true;
 
     public LitePalLanguage getLitePalLanguage() {
         return litePalLanguage;
@@ -39,6 +40,15 @@ public class LitePalDataBuilder {
 
     public LitePalDataBuilder addLitePalQuotes(LitePalQuoteBuilder litePalQuoteBuilder) {
         this.litePalQuoteBuilders.add(litePalQuoteBuilder);
+        return this;
+    }
+
+    public boolean isLitePalData() {
+        return isLitePalData;
+    }
+
+    public LitePalDataBuilder setLitePalData(boolean litePalData) {
+        isLitePalData = litePalData;
         return this;
     }
 

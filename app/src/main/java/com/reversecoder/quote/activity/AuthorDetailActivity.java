@@ -18,9 +18,10 @@ import com.kannan.glazy.transformers.GlazyPagerTransformer;
 import com.kannan.glazy.utils.Utils;
 import com.reversecoder.quote.R;
 import com.reversecoder.quote.factory.TextViewFactory;
-import com.reversecoder.quote.model.Author;
+import com.reversecoder.quote.model.database.LitePalAuthor;
+import com.reversecoder.quote.model.database.LitePalDataBuilder;
+import com.reversecoder.quote.model.database.LitePalDataHandler;
 import com.reversecoder.quote.util.AllConstants;
-import com.reversecoder.quote.util.DataHandler;
 
 import java.util.ArrayList;
 
@@ -28,13 +29,17 @@ import io.armcha.ribble.presentation.widget.AnimatedImageView;
 import io.armcha.ribble.presentation.widget.AnimatedTextView;
 import io.armcha.ribble.presentation.widget.ArcView;
 
-import static com.reversecoder.quote.util.DataHandler.mAllMappedQuotes;
+import static com.reversecoder.quote.model.database.LitePalDataHandler.getAllQuotes;
+
+//import static com.reversecoder.quote.util.DataHandler.mAllMappedQuotes;
 
 public class AuthorDetailActivity extends BaseActivity implements FragmentItemClickListener {
 
-    Author mAuthor;
+    LitePalAuthor mAuthor;
+    GetAuthorTask getAuthorTask;
     private static String TAG = AuthorDetailActivity.class.getSimpleName();
     int mSelectedPosition = -1;
+    private ArrayList<LitePalDataBuilder> litePalDataBuilders = new ArrayList<LitePalDataBuilder>();
 
     //Glazyviewpager
     private GlazyViewPager mPager;
@@ -68,7 +73,7 @@ public class AuthorDetailActivity extends BaseActivity implements FragmentItemCl
 
         //get quote list in background
         Intent intent = getIntent();
-        GetAuthorTask getAuthorTask = new GetAuthorTask(AuthorDetailActivity.this, intent);
+        getAuthorTask = new GetAuthorTask(AuthorDetailActivity.this, intent);
         getAuthorTask.execute();
     }
 
@@ -111,8 +116,8 @@ public class AuthorDetailActivity extends BaseActivity implements FragmentItemCl
         tsCounter.setOutAnimation(AuthorDetailActivity.this, animH[1]);
         tsCounter.setText((currentPosition + 1) + "/" + totalCount);
 
-        if (mAllMappedQuotes.size() >= currentPosition) {
-            toolbarTitle.setAnimatedText(mAllMappedQuotes.get(currentPosition).getAuthor().getAuthorName(), 0L);
+        if (litePalDataBuilders.size() >= currentPosition) {
+            toolbarTitle.setAnimatedText(litePalDataBuilders.get(currentPosition).getLitePalAuthor().getAuthorName(), 0L);
         }
 
         lastPagePosition = currentPosition;
@@ -161,10 +166,10 @@ public class AuthorDetailActivity extends BaseActivity implements FragmentItemCl
 
         @Override
         protected ArrayList<GlazyCard> doInBackground(String... params) {
-            if (mAllMappedQuotes != null && mAuthor != null) {
-                if (mAllMappedQuotes.size() > 0) {
-                    mAllGlazyCards = DataHandler.getAllGlazyCards(mAllMappedQuotes);
-                }
+            litePalDataBuilders = getAllQuotes();
+
+            if (litePalDataBuilders.size() > 0 && mAuthor != null) {
+                mAllGlazyCards = LitePalDataHandler.getAllGlazyCards(litePalDataBuilders);
             }
 
             return mAllGlazyCards;
@@ -189,7 +194,7 @@ public class AuthorDetailActivity extends BaseActivity implements FragmentItemCl
     public void onFragmentItemClick(View itemView) {
         Intent intentQuoteDetail = new Intent(AuthorDetailActivity.this, QuoteDetailActivity.class);
         intentQuoteDetail.putExtra(AllConstants.INTENT_KEY_AUTHOR_POSITION, mPager.getCurrentItem());
-        intentQuoteDetail.putExtra(AllConstants.INTENT_KEY_AUTHOR, mAllMappedQuotes.get(mPager.getCurrentItem()).getAuthor());
+        intentQuoteDetail.putExtra(AllConstants.INTENT_KEY_AUTHOR, litePalDataBuilders.get(mPager.getCurrentItem()).getLitePalAuthor());
         startActivity(intentQuoteDetail);
     }
 }

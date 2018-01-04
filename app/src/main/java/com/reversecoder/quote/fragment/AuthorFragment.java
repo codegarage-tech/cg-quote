@@ -36,7 +36,7 @@ import static com.reversecoder.quote.application.QuoteApp.getGlobalContext;
 import static com.reversecoder.quote.model.database.LitePalDataHandler.getAllQuotes;
 import static com.reversecoder.quote.model.database.LitePalDataHandler.initAllQuotes;
 import static com.reversecoder.quote.util.AllConstants.SESSION_DATA_DATA_BUILDER;
-import static com.reversecoder.quote.util.DataHandler.mAllMappedQuotes;
+//import static com.reversecoder.quote.util.DataHandler.mAllMappedQuotes;
 
 /**
  * @author Md. Rashadul Alam
@@ -222,8 +222,8 @@ public class AuthorFragment extends Fragment implements OnFragmentBackPressedLis
         if (inputData.getStatus() == AsyncTask.Status.RUNNING) {
             Log.d(TAG, "Destroying author fragment");
             inputData.cancel(true);
-            mAllMappedQuotes.clear();
-            Log.d(TAG, "data size: " + mAllMappedQuotes.size());
+//            mAllMappedQuotes.clear();
+//            Log.d(TAG, "data size: " + mAllMappedQuotes.size());
         }
 
         super.onDestroy();
