@@ -10,14 +10,14 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.jude.easyrecyclerview.adapter.BaseViewHolder;
 import com.reversecoder.quote.R;
-import com.reversecoder.quote.model.MappedQuote;
+import com.reversecoder.quote.model.database.LitePalDataBuilder;
 import com.reversecoder.quote.util.AppUtils;
 
 /**
  * @author Md. Rashadul Alam
  *         Email: rashed.droid@gmail.com
  */
-public class AuthorViewHolder extends BaseViewHolder<MappedQuote> {
+public class AuthorViewHolder extends BaseViewHolder<LitePalDataBuilder> {
 
     private TextView tvAuthorName;
     private TextView tvAuthorSubtitle;
@@ -34,14 +34,14 @@ public class AuthorViewHolder extends BaseViewHolder<MappedQuote> {
     }
 
     @Override
-    public void setData(final MappedQuote data) {
-        tvAuthorName.setText(data.getAuthor().getAuthorName());
-        tvAuthorSubtitle.setText(data.getAuthor().getOccupation());
+    public void setData(final LitePalDataBuilder data) {
+        tvAuthorName.setText(data.getLitePalAuthor().getAuthorName());
+        tvAuthorSubtitle.setText(data.getLitePalAuthor().getOccupation());
         viewColorBar.setBackgroundColor(AppUtils.getRandomPastelColor());
 
         Glide
                 .with(getContext())
-                .load((data.getAuthor().getProfileImage() != -1) ? data.getAuthor().getProfileImage() : R.drawable.avatar_male)
+                .load((data.getLitePalAuthor().getProfileImage() != -1) ? data.getLitePalAuthor().getProfileImage() : R.drawable.avatar_male)
                 .apply(new RequestOptions().diskCacheStrategy(DiskCacheStrategy.AUTOMATIC))
                 .apply(new RequestOptions().circleCropTransform())
                 .into(ivPersonThumbnail);

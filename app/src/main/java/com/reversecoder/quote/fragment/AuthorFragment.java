@@ -17,20 +17,25 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.lombokcyberlab.android.multicolortextview.MultiColorTextView;
+import com.reversecoder.library.storage.SessionManager;
+import com.reversecoder.library.util.AllSettingsManager;
 import com.reversecoder.quote.R;
 import com.reversecoder.quote.activity.AuthorDetailActivity;
 import com.reversecoder.quote.adapter.AuthorAdapter;
 import com.reversecoder.quote.interfaces.OnFragmentBackPressedListener;
 import com.reversecoder.quote.interfaces.RecyclerViewOnItemClickListener;
-import com.reversecoder.quote.model.MappedQuote;
+import com.reversecoder.quote.model.database.LitePalDataBuilder;
 import com.reversecoder.quote.util.AllConstants;
-import com.reversecoder.quote.util.DataHandler;
 
 import java.util.ArrayList;
 
 import br.com.stickyindex.StickyIndex;
 import cc.solart.wave.WaveSideBarView;
 
+import static com.reversecoder.quote.application.QuoteApp.getGlobalContext;
+import static com.reversecoder.quote.model.database.LitePalDataHandler.getAllQuotes;
+import static com.reversecoder.quote.model.database.LitePalDataHandler.initAllQuotes;
+import static com.reversecoder.quote.util.AllConstants.SESSION_DATA_DATA_BUILDER;
 import static com.reversecoder.quote.util.DataHandler.mAllMappedQuotes;
 
 /**
@@ -87,21 +92,21 @@ public class AuthorFragment extends Fragment implements OnFragmentBackPressedLis
         recyclerViewPersonInfo.setAdapter(personAdapter);
     }
 
-    private void initData(ArrayList<MappedQuote> mappedQuotes) {
+    private void initData(ArrayList<LitePalDataBuilder> litePalDataBuilders) {
         personAdapter.clear();
-        personAdapter.addAll(mappedQuotes);
+        personAdapter.addAll(litePalDataBuilders);
         personAdapter.notifyDataSetChanged();
 
         //sticky header
-        setStickyIndex(mappedQuotes);
+        setStickyIndex(litePalDataBuilders);
 
         //waveside bar
-        setWaveSideBar(mappedQuotes);
+        setWaveSideBar(litePalDataBuilders);
 
         initActions();
     }
 
-    private void setStickyIndex(ArrayList<MappedQuote> stickyIndexes) {
+    private void setStickyIndex(ArrayList<LitePalDataBuilder> stickyIndexes) {
         if (stickyIndexes.size() > 1) {
             indexContainer.setDataSet(getIndexList(stickyIndexes));
             indexContainer.setOnScrollListener(recyclerViewPersonInfo);
@@ -110,13 +115,13 @@ public class AuthorFragment extends Fragment implements OnFragmentBackPressedLis
         }
     }
 
-    private void setWaveSideBar(final ArrayList<MappedQuote> waveSideBar) {
+    private void setWaveSideBar(final ArrayList<LitePalDataBuilder> waveSideBar) {
         if (waveSideBar.size() > 0) {
             mSideBarView.setOnTouchLetterChangeListener(new WaveSideBarView.OnTouchLetterChangeListener() {
                 @Override
                 public void onLetterChange(String letter) {
                     for (int i = 0; i < waveSideBar.size(); i++) {
-                        if (String.valueOf(waveSideBar.get(i).getAuthor().getAuthorName().charAt(0)).equals(letter)) {
+                        if (String.valueOf(waveSideBar.get(i).getLitePalAuthor().getAuthorName().charAt(0)).equals(letter)) {
                             ((LinearLayoutManager) recyclerViewPersonInfo.getLayoutManager()).scrollToPositionWithOffset(i, 0);
                             return;
                         }
@@ -133,11 +138,11 @@ public class AuthorFragment extends Fragment implements OnFragmentBackPressedLis
     /*****************
      * Sticky header *
      *****************/
-    public static char[] getIndexList(ArrayList<MappedQuote> list) {
+    public static char[] getIndexList(ArrayList<LitePalDataBuilder> list) {
         char[] result = new char[list.size()];
         int i = 0;
-        for (MappedQuote c : list) {
-            result[i] = Character.toUpperCase(c.getAuthor().getAuthorName().charAt(0));
+        for (LitePalDataBuilder c : list) {
+            result[i] = Character.toUpperCase(c.getLitePalAuthor().getAuthorName().charAt(0));
             i++;
         }
         return result;
@@ -148,7 +153,7 @@ public class AuthorFragment extends Fragment implements OnFragmentBackPressedLis
             inputData = new InputData();
         } else if (inputData.getStatus() == AsyncTask.Status.RUNNING) {
             inputData.cancel(true);
-            mAllMappedQuotes.clear();
+//            mAllMappedQuotes.clear();
         }
         inputData.execute();
     }
@@ -161,10 +166,10 @@ public class AuthorFragment extends Fragment implements OnFragmentBackPressedLis
                 new RecyclerViewOnItemClickListener.OnItemClickListener() {
                     @Override
                     public void onItemClick(View view, int position) {
-                        MappedQuote mappedQuote = ((AuthorAdapter) recyclerViewPersonInfo.getAdapter()).getItem(position);
-                        if (mappedQuote.getAuthor().isAuthor()) {
+                        LitePalDataBuilder litePalDataBuilder = ((AuthorAdapter) recyclerViewPersonInfo.getAdapter()).getItem(position);
+                        if (litePalDataBuilder.getLitePalAuthor().isAuthor()) {
                             Intent intentQuoteList = new Intent(getActivity(), AuthorDetailActivity.class);
-                            intentQuoteList.putExtra(AllConstants.INTENT_KEY_AUTHOR, mappedQuote.getAuthor());
+                            intentQuoteList.putExtra(AllConstants.INTENT_KEY_AUTHOR, litePalDataBuilder.getLitePalAuthor());
                             intentQuoteList.putExtra(AllConstants.INTENT_KEY_AUTHOR_POSITION, position);
                             getActivity().startActivity(intentQuoteList);
                         }
@@ -175,7 +180,7 @@ public class AuthorFragment extends Fragment implements OnFragmentBackPressedLis
     /******************************
      * Methods for database input *
      ******************************/
-    public class InputData extends AsyncTask<String, String, ArrayList<MappedQuote>> {
+    public class InputData extends AsyncTask<String, String, ArrayList<LitePalDataBuilder>> {
 
         @Override
         protected void onPreExecute() {
@@ -185,12 +190,16 @@ public class AuthorFragment extends Fragment implements OnFragmentBackPressedLis
         }
 
         @Override
-        protected ArrayList<MappedQuote> doInBackground(String... params) {
-            return DataHandler.initDataBase();
+        protected ArrayList<LitePalDataBuilder> doInBackground(String... params) {
+            if (AllSettingsManager.isNullOrEmpty(SessionManager.getStringSetting(getGlobalContext(), SESSION_DATA_DATA_BUILDER))) {
+                return initAllQuotes();
+            } else {
+                return getAllQuotes();
+            }
         }
 
         @Override
-        protected void onPostExecute(ArrayList<MappedQuote> result) {
+        protected void onPostExecute(ArrayList<LitePalDataBuilder> result) {
 
             if (result != null && result.size() > 0) {
                 //This checking for avoiding "Fragment not attached to Activity when finish AsyncTask & Fragment"

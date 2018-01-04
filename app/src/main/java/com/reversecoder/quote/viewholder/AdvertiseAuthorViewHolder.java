@@ -5,13 +5,13 @@ import android.widget.TextView;
 
 import com.jude.easyrecyclerview.adapter.BaseViewHolder;
 import com.reversecoder.quote.R;
-import com.reversecoder.quote.model.MappedQuote;
+import com.reversecoder.quote.model.database.LitePalDataBuilder;
 
 /**
  * @author Md. Rashadul Alam
  *         Email: rashed.droid@gmail.com
  */
-public class AdvertiseAuthorViewHolder extends BaseViewHolder<MappedQuote> {
+public class AdvertiseAuthorViewHolder extends BaseViewHolder<LitePalDataBuilder> {
 
     public TextView txtAdvertiseName;
 
@@ -22,7 +22,7 @@ public class AdvertiseAuthorViewHolder extends BaseViewHolder<MappedQuote> {
     }
 
     @Override
-    public void setData(final MappedQuote data) {
+    public void setData(final LitePalDataBuilder data) {
 //        txtAdvertiseName.setText(data.getAuthorName());
     }
 }
