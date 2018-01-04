@@ -310,7 +310,7 @@ public class DataHandler {
         Author galileoGalilei = new Author("Galileo Galilei", "February 15, 1564", "January 8, 1642", "Scientist", "Italian", AppUtils.getDrawableResourceId(R.drawable.galileo_galilei), true);
         authors.add(galileoGalilei);
 
-        Author georgeCarlin = new Author("George Carlin", "May 12, 1937", "June 22, 2008", "Comedian", "American", AppUtils.getDrawableResourceId(R.drawable.goerge_carlin), true);
+        Author georgeCarlin = new Author("George Carlin", "May 12, 1937", "June 22, 2008", "Comedian", "American", AppUtils.getDrawableResourceId(R.drawable.george_carlin), true);
         authors.add(georgeCarlin);
 
         Author georgeOrwell = new Author("George Orwell", "June 25, 1903", "January 21, 1950", "Author", "British", AppUtils.getDrawableResourceId(R.drawable.george_orwell), true);
