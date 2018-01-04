@@ -24,7 +24,6 @@ import com.reversecoder.quote.model.database.LitePalTag;
 import com.reversecoder.quote.util.AllConstants;
 import com.reversecoder.quote.util.AppUtils;
 import com.reversecoder.quote.util.ClipboardHandler;
-import com.reversecoder.quote.util.DataHandler;
 import com.reversecoder.quote.util.IntentManager;
 import com.yalantis.contextmenu.lib.ContextMenuDialogFragment;
 import com.yalantis.contextmenu.lib.MenuObject;
@@ -365,9 +364,10 @@ public class QuoteDetailActivity extends BaseActivity {
 
         @Override
         protected LitePalQuoteBuilder doInBackground(String... params) {
-            Quote updatedDataIntoDatabase = DataHandler.setFavouriteForAuthorFragment(mQuote, mQuote.isFavourite());
-            Log.d(TAG, "updatedDataIntoDatabase" + updatedDataIntoDatabase.toString());
-            return updatedDataIntoDatabase;
+//            Quote updatedDataIntoDatabase = DataHandler.setFavouriteForAuthorFragment(mQuote, mQuote.isFavourite());
+//            Log.d(TAG, "updatedDataIntoDatabase" + updatedDataIntoDatabase.toString());
+//            return updatedDataIntoDatabase;
+            return (mQuote.getLitePalQuote().save()) ? mQuote : null;
         }
 
         @Override

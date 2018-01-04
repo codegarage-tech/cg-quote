@@ -89,30 +89,30 @@ public class LitePalDataHandler {
         return litePalDataBuilders;
     }
 
-    public static LitePalDataBuilder.LitePalQuoteBuilder setFavouriteForAuthorFragment(LitePalDataBuilder litePalDataBuilder,LitePalDataBuilder.LitePalQuoteBuilder quote, boolean isFavourite) {
-        ArrayList<LitePalDataBuilder> litePalDataBuilders = getAllQuotes();
-        for (LitePalDataBuilder mappedQuote : litePalDataBuilders) {
-//            mMappedQuote = mappedQuote;
-            if (mappedQuote.getLitePalAuthor().getAuthorName().equalsIgnoreCase(litePalDataBuilder.getLitePalAuthor().getAuthorName())) {
-                for (Quote mQuote : mappedQuote.getQuotes()) {
-                    if (mQuote.getQuoteDescription().equalsIgnoreCase(quote.getQuoteDescription())) {
-                        Quote updatedQuote = Quote.findById(Quote.class, mQuote.getId());
-                        if (updatedQuote.isFavourite() != isFavourite) {
-                            updatedQuote.setFavourite(isFavourite);
-                            updatedQuote.save();
-                            mQuote.setFavourite(isFavourite);
-                            quote.setFavourite(isFavourite);
-
-//                            Quote tagQuote = Quote.findById(Quote.class, updatedQuote.getId());
-//                            Log.d("setFavourite", "updatedQuote: " + tagQuote.toString());
-//                            Log.d("setFavourite", "foldableQuote: " + foldableQuote.toString());
-                        }
-                    }
-                }
-            }
-        }
-        return quote;
-    }
+//    public static LitePalDataBuilder.LitePalQuoteBuilder setFavouriteForAuthorFragment(LitePalDataBuilder litePalDataBuilder,LitePalDataBuilder.LitePalQuoteBuilder quote, boolean isFavourite) {
+//        ArrayList<LitePalDataBuilder> litePalDataBuilders = getAllQuotes();
+//        for (LitePalDataBuilder mappedQuote : litePalDataBuilders) {
+////            mMappedQuote = mappedQuote;
+//            if (mappedQuote.getLitePalAuthor().getAuthorName().equalsIgnoreCase(litePalDataBuilder.getLitePalAuthor().getAuthorName())) {
+//                for (Quote mQuote : mappedQuote.getQuotes()) {
+//                    if (mQuote.getQuoteDescription().equalsIgnoreCase(quote.getQuoteDescription())) {
+//                        Quote updatedQuote = Quote.findById(Quote.class, mQuote.getId());
+//                        if (updatedQuote.isFavourite() != isFavourite) {
+//                            updatedQuote.setFavourite(isFavourite);
+//                            updatedQuote.save();
+//                            mQuote.setFavourite(isFavourite);
+//                            quote.setFavourite(isFavourite);
+//
+////                            Quote tagQuote = Quote.findById(Quote.class, updatedQuote.getId());
+////                            Log.d("setFavourite", "updatedQuote: " + tagQuote.toString());
+////                            Log.d("setFavourite", "foldableQuote: " + foldableQuote.toString());
+//                        }
+//                    }
+//                }
+//            }
+//        }
+//        return quote;
+//    }
 
     public static ArrayList<GlazyCard> getAllGlazyCards(ArrayList<LitePalDataBuilder> litePalDataBuilders) {
 
