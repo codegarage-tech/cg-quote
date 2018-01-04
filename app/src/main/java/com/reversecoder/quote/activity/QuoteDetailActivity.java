@@ -13,21 +13,16 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextSwitcher;
 
-import com.reversecoder.library.event.OnSingleClickListener;
 import com.reversecoder.quote.R;
 import com.reversecoder.quote.adapter.QuoteFlipViewAdapter;
 import com.reversecoder.quote.factory.TextViewFactory;
-import com.reversecoder.quote.model.Author;
-import com.reversecoder.quote.model.Quote;
+import com.reversecoder.quote.model.database.LitePalDataBuilder;
+import com.reversecoder.quote.model.database.LitePalDataBuilder.LitePalQuoteBuilder;
+import com.reversecoder.quote.model.database.LitePalQuote;
+import com.reversecoder.quote.model.database.LitePalTag;
 import com.reversecoder.quote.util.AllConstants;
-import com.reversecoder.quote.util.AppUtils;
-import com.reversecoder.quote.util.ClipboardHandler;
-import com.reversecoder.quote.util.DataHandler;
-import com.reversecoder.quote.util.IntentManager;
 import com.yalantis.contextmenu.lib.ContextMenuDialogFragment;
 import com.yalantis.contextmenu.lib.MenuObject;
-import com.yalantis.contextmenu.lib.MenuParams;
-import com.yalantis.contextmenu.lib.interfaces.OnMenuItemClickListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,13 +34,15 @@ import se.emilsjolander.flipview.FlipView;
 import se.emilsjolander.flipview.OverFlipMode;
 
 import static com.reversecoder.quote.util.AppUtils.flashingView;
-import static com.reversecoder.quote.util.DataHandler.mAllMappedQuotes;
+
+//import static com.reversecoder.quote.util.DataHandler.mAllMappedQuotes;
 
 public class QuoteDetailActivity extends BaseActivity {
 
-    Author mAuthor;
+    LitePalDataBuilder mAuthor;
+    GetQuoteTask getQuoteTask;
     int mSelectedPosition = -1;
-    private ArrayList<Quote> mAllQuotes = new ArrayList<Quote>();
+    private ArrayList<LitePalQuoteBuilder> mAllQuotes = new ArrayList<LitePalQuoteBuilder>();
     private String TAG = QuoteDetailActivity.class.getSimpleName();
     TextSwitcher tsQuoteCounter;
 
@@ -83,7 +80,7 @@ public class QuoteDetailActivity extends BaseActivity {
 
         //get quote list in background
         Intent intent = getIntent();
-        GetQuoteTask getQuoteTask = new GetQuoteTask(QuoteDetailActivity.this, intent);
+        getQuoteTask = new GetQuoteTask(QuoteDetailActivity.this, intent);
         getQuoteTask.execute();
     }
 
@@ -110,16 +107,16 @@ public class QuoteDetailActivity extends BaseActivity {
     }
 
     private void initActions() {
-        btnContextMenu.setOnClickListener(new OnSingleClickListener() {
-            @Override
-            public void onSingleClick(View view) {
-                Quote quote = mQuoteAdapter.getItem(mQuoteFlipView.getCurrentPage());
-                if (quote.isQuote()) {
-                    initMenuFragment(quote.isFavourite());
-                    mMenuDialogFragment.show(fragmentManager, ContextMenuDialogFragment.TAG);
-                }
-            }
-        });
+//        btnContextMenu.setOnClickListener(new OnSingleClickListener() {
+//            @Override
+//            public void onSingleClick(View view) {
+//                Quote quote = mQuoteAdapter.getItem(mQuoteFlipView.getCurrentPage());
+//                if (quote.isQuote()) {
+//                    initMenuFragment(quote.isFavourite());
+//                    mMenuDialogFragment.show(fragmentManager, ContextMenuDialogFragment.TAG);
+//                }
+//            }
+//        });
     }
 
     private void initToolBar() {
@@ -146,7 +143,7 @@ public class QuoteDetailActivity extends BaseActivity {
         fragmentManager = getSupportFragmentManager();
     }
 
-    public class GetQuoteTask extends AsyncTask<String, String, ArrayList<Quote>> {
+    public class GetQuoteTask extends AsyncTask<String, String, ArrayList<LitePalQuoteBuilder>> {
 
         private Context mContext;
         private Intent mIntent;
@@ -162,15 +159,15 @@ public class QuoteDetailActivity extends BaseActivity {
             mAuthor = mIntent.getParcelableExtra(AllConstants.INTENT_KEY_AUTHOR);
 
             if (mAuthor != null) {
-                toolbarTitle.setAnimatedText(mAuthor.getAuthorName(), 0L);
+                toolbarTitle.setAnimatedText(mAuthor.getLitePalAuthor().getAuthorName(), 0L);
             }
         }
 
         @Override
-        protected ArrayList<Quote> doInBackground(String... params) {
-            if (mAllMappedQuotes != null && mAuthor != null) {
-                if (mAllMappedQuotes.size() > 0) {
-                    mAllQuotes = DataHandler.getAllQuotes(mAuthor, mAllMappedQuotes);
+        protected ArrayList<LitePalQuoteBuilder> doInBackground(String... params) {
+            if (mAuthor != null) {
+                if (mAuthor.getLitePalQuoteBuilders().size() > 0) {
+                    mAllQuotes = mAuthor.getLitePalQuoteBuilders();
                 }
             }
 
@@ -178,7 +175,7 @@ public class QuoteDetailActivity extends BaseActivity {
         }
 
         @Override
-        protected void onPostExecute(ArrayList<Quote> result) {
+        protected void onPostExecute(ArrayList<LitePalQuoteBuilder> result) {
             if (result != null && result.size() > 0) {
                 initQuoteDetailFlipView(result);
             }
@@ -189,47 +186,47 @@ public class QuoteDetailActivity extends BaseActivity {
      * Contextual Menu *
      *******************/
     private void initMenuFragment(boolean isFavourite) {
-        MenuParams menuParams = new MenuParams();
-        menuParams.setActionBarSize((int) getResources().getDimension(R.dimen.tool_bar_height));
-        menuParams.setMenuObjects(getMenuObjects(isFavourite));
-        menuParams.setClosableOutside(false);
-        mMenuDialogFragment = ContextMenuDialogFragment.newInstance(menuParams);
-        mMenuDialogFragment.setItemClickListener(new OnMenuItemClickListener() {
-            @Override
-            public void onMenuItemClick(View clickedView, int position) {
-
-                Quote quote = mQuoteAdapter.getItem(mQuoteFlipView.getCurrentPage());
-                Log.d(TAG, "FoldableItemPosition: " + mQuoteFlipView.getCurrentPage() + "");
-                Log.d(TAG, "FoldableItem: " + quote.toString());
-
-                switch (position) {
-
-                    case 0:
-                        break;
-
-                    case 1: {
-                        if (quote.isFavourite()) {
-                            quote.setFavourite(false);
-                        } else {
-                            quote.setFavourite(true);
-                        }
-                        new UpdateQuoteIntoDatabase(QuoteDetailActivity.this, quote).execute();
-                        break;
-                    }
-
-                    case 2:
-                        ClipboardHandler.copyToClipboard(QuoteDetailActivity.this, quote.getQuoteDescription());
-                        break;
-
-                    case 3:
-                        IntentManager.shareToAllAvailableApps(QuoteDetailActivity.this, "", AppUtils.getShareQuoted(QuoteDetailActivity.this, quote));
-                        break;
-
-                    default:
-                        break;
-                }
-            }
-        });
+//        MenuParams menuParams = new MenuParams();
+//        menuParams.setActionBarSize((int) getResources().getDimension(R.dimen.tool_bar_height));
+//        menuParams.setMenuObjects(getMenuObjects(isFavourite));
+//        menuParams.setClosableOutside(false);
+//        mMenuDialogFragment = ContextMenuDialogFragment.newInstance(menuParams);
+//        mMenuDialogFragment.setItemClickListener(new OnMenuItemClickListener() {
+//            @Override
+//            public void onMenuItemClick(View clickedView, int position) {
+//
+//                Quote quote = mQuoteAdapter.getItem(mQuoteFlipView.getCurrentPage());
+//                Log.d(TAG, "FoldableItemPosition: " + mQuoteFlipView.getCurrentPage() + "");
+//                Log.d(TAG, "FoldableItem: " + quote.toString());
+//
+//                switch (position) {
+//
+//                    case 0:
+//                        break;
+//
+//                    case 1: {
+//                        if (quote.isFavourite()) {
+//                            quote.setFavourite(false);
+//                        } else {
+//                            quote.setFavourite(true);
+//                        }
+//                        new UpdateQuoteIntoDatabase(QuoteDetailActivity.this, quote).execute();
+//                        break;
+//                    }
+//
+//                    case 2:
+//                        ClipboardHandler.copyToClipboard(QuoteDetailActivity.this, quote.getQuoteDescription());
+//                        break;
+//
+//                    case 3:
+//                        IntentManager.shareToAllAvailableApps(QuoteDetailActivity.this, "", AppUtils.getShareQuoted(QuoteDetailActivity.this, quote));
+//                        break;
+//
+//                    default:
+//                        break;
+//                }
+//            }
+//        });
     }
 
     private List<MenuObject> getMenuObjects(boolean isFavourite) {
@@ -284,7 +281,7 @@ public class QuoteDetailActivity extends BaseActivity {
     /****************************
      * FlipView methods *
      ****************************/
-    private void initQuoteDetailFlipView(ArrayList<Quote> data) {
+    private void initQuoteDetailFlipView(ArrayList<LitePalQuoteBuilder> data) {
 
         mQuoteFlipView = (FlipView) findViewById(R.id.flipview_quote_detail);
         mQuoteAdapter = new QuoteFlipViewAdapter(QuoteDetailActivity.this);
@@ -326,50 +323,51 @@ public class QuoteDetailActivity extends BaseActivity {
         switchCounter(mQuoteFlipView.getCurrentPage(), (mQuoteAdapter.getCount() - 1));
     }
 
-    private ArrayList<Quote> getModifiedQuotes(ArrayList<Quote> quotes) {
+    private ArrayList<LitePalQuoteBuilder> getModifiedQuotes(ArrayList<LitePalQuoteBuilder> quotes) {
         boolean isDummyDataFound = false;
-        for (Quote quote : quotes) {
-            if (quote.getQuoteDescription().equalsIgnoreCase(getString(R.string.txt_dummy_quote))) {
+        for (LitePalQuoteBuilder quote : quotes) {
+            if (quote.getLitePalQuote().getQuoteDescription().equalsIgnoreCase(getString(R.string.txt_dummy_quote))) {
                 isDummyDataFound = true;
                 break;
             }
         }
 
         if (!isDummyDataFound) {
-            Quote dummyQuote = new Quote(getString(R.string.txt_dummy_quote), false, false, null, null);
-            dummyQuote.setId(4200000L);
+            LitePalQuote litePalQuote = new LitePalQuote(getString(R.string.txt_dummy_quote), false, false);
+            litePalQuote.setId(4200000L);
+            LitePalQuoteBuilder dummyQuote = new LitePalQuoteBuilder(litePalQuote, new ArrayList<LitePalTag>());
             quotes.add(dummyQuote);
         }
 
         return quotes;
     }
 
-    class UpdateQuoteIntoDatabase extends AsyncTask<String, String, Quote> {
-
-        private Context mContext;
-        private Quote mQuote;
-
-        UpdateQuoteIntoDatabase(Context context, Quote updatedQuote) {
-            mContext = context;
-            mQuote = updatedQuote;
-        }
-
-        @Override
-        protected void onPreExecute() {
-        }
-
-        @Override
-        protected Quote doInBackground(String... params) {
-            Quote updatedDataIntoDatabase = DataHandler.setFavouriteForAuthorFragment(mQuote, mQuote.isFavourite());
-            Log.d(TAG, "updatedDataIntoDatabase" + updatedDataIntoDatabase.toString());
-            return updatedDataIntoDatabase;
-        }
-
-        @Override
-        protected void onPostExecute(Quote result) {
-            if (result != null) {
-                mQuoteAdapter.updateItem(mQuoteFlipView.getCurrentPage(), result);
-            }
-        }
-    }
+//    class UpdateQuoteIntoDatabase extends AsyncTask<String, String, Quote> {
+//
+//        private Context mContext;
+//        private Quote mQuote;
+//
+//        UpdateQuoteIntoDatabase(Context context, Quote updatedQuote) {
+//            mContext = context;
+//            mQuote = updatedQuote;
+//        }
+//
+//        @Override
+//        protected void onPreExecute() {
+//        }
+//
+//        @Override
+//        protected Quote doInBackground(String... params) {
+//            Quote updatedDataIntoDatabase = DataHandler.setFavouriteForAuthorFragment(mQuote, mQuote.isFavourite());
+//            Log.d(TAG, "updatedDataIntoDatabase" + updatedDataIntoDatabase.toString());
+//            return updatedDataIntoDatabase;
+//        }
+//
+//        @Override
+//        protected void onPostExecute(Quote result) {
+//            if (result != null) {
+//                mQuoteAdapter.updateItem(mQuoteFlipView.getCurrentPage(), result);
+//            }
+//        }
+//    }
 }

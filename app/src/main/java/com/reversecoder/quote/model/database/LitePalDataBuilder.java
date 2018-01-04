@@ -1,15 +1,20 @@
 package com.reversecoder.quote.model.database;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.Log;
 
 import java.util.ArrayList;
 
-public class LitePalDataBuilder {
+public class LitePalDataBuilder implements Parcelable {
 
     private LitePalLanguage litePalLanguage;
     private LitePalAuthor litePalAuthor;
     private ArrayList<LitePalQuoteBuilder> litePalQuoteBuilders = new ArrayList<>();
     private boolean isLitePalData = true;
+
+    public LitePalDataBuilder() {
+    }
 
     public LitePalLanguage getLitePalLanguage() {
         return litePalLanguage;
@@ -69,10 +74,54 @@ public class LitePalDataBuilder {
                 '}';
     }
 
-    public static class LitePalQuoteBuilder {
+    /**************************
+     * Methods for parcelable *
+     **************************/
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeParcelable(litePalLanguage, flags);
+        dest.writeParcelable(litePalAuthor, flags);
+        dest.writeList(litePalQuoteBuilders);
+        dest.writeInt(isLitePalData ? 1 : 0);
+    }
+
+    // Creator
+    public static final Creator CREATOR
+            = new Creator() {
+        public LitePalDataBuilder createFromParcel(Parcel in) {
+            return new LitePalDataBuilder(in);
+        }
+
+        public LitePalDataBuilder[] newArray(int size) {
+            return new LitePalDataBuilder[size];
+        }
+    };
+
+    // "De-parcel object
+    public LitePalDataBuilder(Parcel in) {
+        this.litePalLanguage = in.readParcelable(LitePalLanguage.class.getClassLoader());
+        this.litePalAuthor = in.readParcelable(LitePalAuthor.class.getClassLoader());
+        this.litePalQuoteBuilders = in.readArrayList(LitePalQuoteBuilder.class.getClassLoader());
+        this.isLitePalData = (in.readInt() == 0) ? false : true;
+    }
+
+    public static class LitePalQuoteBuilder implements Parcelable {
 
         private LitePalQuote litePalQuote;
         private ArrayList<LitePalTag> litePalTags = new ArrayList<>();
+
+        public LitePalQuoteBuilder() {
+        }
+
+        public LitePalQuoteBuilder(LitePalQuote litePalQuote, ArrayList<LitePalTag> litePalTags) {
+            this.litePalQuote = litePalQuote;
+            this.litePalTags = litePalTags;
+        }
 
         public LitePalQuoteBuilder setLitePalTags(ArrayList<LitePalTag> litePalTags) {
             this.litePalTags = litePalTags;
@@ -110,6 +159,38 @@ public class LitePalDataBuilder {
                     "litePalQuote=" + litePalQuote +
                     ", litePalTags=" + litePalTags +
                     '}';
+        }
+
+        /**************************
+         * Methods for parcelable *
+         **************************/
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
+            dest.writeParcelable(litePalQuote, flags);
+            dest.writeList(litePalTags);
+        }
+
+        // Creator
+        public static final Creator CREATOR
+                = new Creator() {
+            public LitePalQuoteBuilder createFromParcel(Parcel in) {
+                return new LitePalQuoteBuilder(in);
+            }
+
+            public LitePalQuoteBuilder[] newArray(int size) {
+                return new LitePalQuoteBuilder[size];
+            }
+        };
+
+        // "De-parcel object
+        public LitePalQuoteBuilder(Parcel in) {
+            this.litePalQuote = in.readParcelable(LitePalQuote.class.getClassLoader());
+            this.litePalTags = in.readArrayList(LitePalTag.class.getClassLoader());
         }
     }
 }

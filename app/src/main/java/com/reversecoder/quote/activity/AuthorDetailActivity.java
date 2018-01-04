@@ -18,7 +18,6 @@ import com.kannan.glazy.transformers.GlazyPagerTransformer;
 import com.kannan.glazy.utils.Utils;
 import com.reversecoder.quote.R;
 import com.reversecoder.quote.factory.TextViewFactory;
-import com.reversecoder.quote.model.database.LitePalAuthor;
 import com.reversecoder.quote.model.database.LitePalDataBuilder;
 import com.reversecoder.quote.model.database.LitePalDataHandler;
 import com.reversecoder.quote.util.AllConstants;
@@ -35,7 +34,7 @@ import static com.reversecoder.quote.model.database.LitePalDataHandler.getAllQuo
 
 public class AuthorDetailActivity extends BaseActivity implements FragmentItemClickListener {
 
-    LitePalAuthor mAuthor;
+    LitePalDataBuilder mAuthor;
     GetAuthorTask getAuthorTask;
     private static String TAG = AuthorDetailActivity.class.getSimpleName();
     int mSelectedPosition = -1;
@@ -168,7 +167,7 @@ public class AuthorDetailActivity extends BaseActivity implements FragmentItemCl
         protected ArrayList<GlazyCard> doInBackground(String... params) {
             litePalDataBuilders = getAllQuotes();
 
-            if (litePalDataBuilders.size() > 0 && mAuthor != null) {
+            if (litePalDataBuilders.size() > 0) {
                 mAllGlazyCards = LitePalDataHandler.getAllGlazyCards(litePalDataBuilders);
             }
 
@@ -194,7 +193,7 @@ public class AuthorDetailActivity extends BaseActivity implements FragmentItemCl
     public void onFragmentItemClick(View itemView) {
         Intent intentQuoteDetail = new Intent(AuthorDetailActivity.this, QuoteDetailActivity.class);
         intentQuoteDetail.putExtra(AllConstants.INTENT_KEY_AUTHOR_POSITION, mPager.getCurrentItem());
-        intentQuoteDetail.putExtra(AllConstants.INTENT_KEY_AUTHOR, litePalDataBuilders.get(mPager.getCurrentItem()).getLitePalAuthor());
+        intentQuoteDetail.putExtra(AllConstants.INTENT_KEY_AUTHOR, litePalDataBuilders.get(mPager.getCurrentItem()));
         startActivity(intentQuoteDetail);
     }
 }

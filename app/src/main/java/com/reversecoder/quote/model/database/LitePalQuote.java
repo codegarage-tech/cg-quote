@@ -26,6 +26,10 @@ public class LitePalQuote extends DataSupport implements Parcelable {
         return id;
     }
 
+    public void setId(long id) {
+        this.id = id;
+    }
+
     public String getQuoteDescription() {
         return quoteDescription;
     }

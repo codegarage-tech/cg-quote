@@ -169,7 +169,7 @@ public class AuthorFragment extends Fragment implements OnFragmentBackPressedLis
                         LitePalDataBuilder litePalDataBuilder = ((AuthorAdapter) recyclerViewPersonInfo.getAdapter()).getItem(position);
                         if (litePalDataBuilder.getLitePalAuthor().isAuthor()) {
                             Intent intentQuoteList = new Intent(getActivity(), AuthorDetailActivity.class);
-                            intentQuoteList.putExtra(AllConstants.INTENT_KEY_AUTHOR, litePalDataBuilder.getLitePalAuthor());
+                            intentQuoteList.putExtra(AllConstants.INTENT_KEY_AUTHOR, litePalDataBuilder);
                             intentQuoteList.putExtra(AllConstants.INTENT_KEY_AUTHOR_POSITION, position);
                             getActivity().startActivity(intentQuoteList);
                         }

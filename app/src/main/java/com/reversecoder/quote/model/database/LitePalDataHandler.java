@@ -50,6 +50,30 @@ public class LitePalDataHandler {
                         .buildAuthor()
         );
 
+        litePalDataBuilders.add(
+                new LitePalDataBuilder()
+                        .setLitePalLanguage(EnumLanguage.ENGLISH.getLitePalLanguage())
+                        .setLitePalAuthor(EnumAuthor.APJ_ABDUL_KALAM.getLitePalAuthor())
+                        .addLitePalQuotes(new LitePalDataBuilder.LitePalQuoteBuilder()
+                                .setLitePalQuote(new LitePalQuote("Burn like sun.", false, true))
+                                .addLitePalTags(EnumTag.INSPIRATIONAL.getLitePalTag())
+                                .buildQuotes()
+                        )
+                        .addLitePalQuotes(new LitePalDataBuilder.LitePalQuoteBuilder()
+                                .setLitePalQuote(new LitePalQuote("Burn", false, true))
+                                .addLitePalTags(EnumTag.MOTIVATIONAL.getLitePalTag())
+                                .buildQuotes()
+                        )
+                        .addLitePalQuotes(new LitePalDataBuilder.LitePalQuoteBuilder()
+                                .setLitePalQuote(new LitePalQuote("sun", false, true))
+                                .addLitePalTags(EnumTag.MOTIVATIONAL.getLitePalTag())
+                                .addLitePalTags(EnumTag.ROMANTIC.getLitePalTag())
+                                .addLitePalTags(EnumTag.INSPIRATIONAL.getLitePalTag())
+                                .buildQuotes()
+                        )
+                        .buildAuthor()
+        );
+
         DataLitePalDataBuilder dataLitePalDataBuilder = new DataLitePalDataBuilder(litePalDataBuilders);
         SessionManager.setStringSetting(getGlobalContext(), SESSION_DATA_DATA_BUILDER, DataLitePalDataBuilder.convertFromObjectToString(dataLitePalDataBuilder));
 
