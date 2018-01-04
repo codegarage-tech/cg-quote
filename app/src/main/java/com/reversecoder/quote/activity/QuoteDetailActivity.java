@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextSwitcher;
 
+import com.reversecoder.library.event.OnSingleClickListener;
 import com.reversecoder.quote.R;
 import com.reversecoder.quote.adapter.QuoteFlipViewAdapter;
 import com.reversecoder.quote.factory.TextViewFactory;
@@ -21,8 +22,14 @@ import com.reversecoder.quote.model.database.LitePalDataBuilder.LitePalQuoteBuil
 import com.reversecoder.quote.model.database.LitePalQuote;
 import com.reversecoder.quote.model.database.LitePalTag;
 import com.reversecoder.quote.util.AllConstants;
+import com.reversecoder.quote.util.AppUtils;
+import com.reversecoder.quote.util.ClipboardHandler;
+import com.reversecoder.quote.util.DataHandler;
+import com.reversecoder.quote.util.IntentManager;
 import com.yalantis.contextmenu.lib.ContextMenuDialogFragment;
 import com.yalantis.contextmenu.lib.MenuObject;
+import com.yalantis.contextmenu.lib.MenuParams;
+import com.yalantis.contextmenu.lib.interfaces.OnMenuItemClickListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +46,7 @@ import static com.reversecoder.quote.util.AppUtils.flashingView;
 
 public class QuoteDetailActivity extends BaseActivity {
 
-    LitePalDataBuilder mAuthor;
+    LitePalDataBuilder mLitePalDataBuilder;
     GetQuoteTask getQuoteTask;
     int mSelectedPosition = -1;
     private ArrayList<LitePalQuoteBuilder> mAllQuotes = new ArrayList<LitePalQuoteBuilder>();
@@ -107,16 +114,16 @@ public class QuoteDetailActivity extends BaseActivity {
     }
 
     private void initActions() {
-//        btnContextMenu.setOnClickListener(new OnSingleClickListener() {
-//            @Override
-//            public void onSingleClick(View view) {
-//                Quote quote = mQuoteAdapter.getItem(mQuoteFlipView.getCurrentPage());
-//                if (quote.isQuote()) {
-//                    initMenuFragment(quote.isFavourite());
-//                    mMenuDialogFragment.show(fragmentManager, ContextMenuDialogFragment.TAG);
-//                }
-//            }
-//        });
+        btnContextMenu.setOnClickListener(new OnSingleClickListener() {
+            @Override
+            public void onSingleClick(View view) {
+                LitePalQuoteBuilder quote = mQuoteAdapter.getItem(mQuoteFlipView.getCurrentPage());
+                if (quote.getLitePalQuote().isQuote()) {
+                    initMenuFragment(quote.getLitePalQuote().isFavourite());
+                    mMenuDialogFragment.show(fragmentManager, ContextMenuDialogFragment.TAG);
+                }
+            }
+        });
     }
 
     private void initToolBar() {
@@ -156,18 +163,18 @@ public class QuoteDetailActivity extends BaseActivity {
         @Override
         protected void onPreExecute() {
             mSelectedPosition = mIntent.getIntExtra(AllConstants.INTENT_KEY_AUTHOR_POSITION, -1);
-            mAuthor = mIntent.getParcelableExtra(AllConstants.INTENT_KEY_AUTHOR);
+            mLitePalDataBuilder = mIntent.getParcelableExtra(AllConstants.INTENT_KEY_AUTHOR);
 
-            if (mAuthor != null) {
-                toolbarTitle.setAnimatedText(mAuthor.getLitePalAuthor().getAuthorName(), 0L);
+            if (mLitePalDataBuilder != null) {
+                toolbarTitle.setAnimatedText(mLitePalDataBuilder.getLitePalAuthor().getAuthorName(), 0L);
             }
         }
 
         @Override
         protected ArrayList<LitePalQuoteBuilder> doInBackground(String... params) {
-            if (mAuthor != null) {
-                if (mAuthor.getLitePalQuoteBuilders().size() > 0) {
-                    mAllQuotes = mAuthor.getLitePalQuoteBuilders();
+            if (mLitePalDataBuilder != null) {
+                if (mLitePalDataBuilder.getLitePalQuoteBuilders().size() > 0) {
+                    mAllQuotes = mLitePalDataBuilder.getLitePalQuoteBuilders();
                 }
             }
 
@@ -186,47 +193,47 @@ public class QuoteDetailActivity extends BaseActivity {
      * Contextual Menu *
      *******************/
     private void initMenuFragment(boolean isFavourite) {
-//        MenuParams menuParams = new MenuParams();
-//        menuParams.setActionBarSize((int) getResources().getDimension(R.dimen.tool_bar_height));
-//        menuParams.setMenuObjects(getMenuObjects(isFavourite));
-//        menuParams.setClosableOutside(false);
-//        mMenuDialogFragment = ContextMenuDialogFragment.newInstance(menuParams);
-//        mMenuDialogFragment.setItemClickListener(new OnMenuItemClickListener() {
-//            @Override
-//            public void onMenuItemClick(View clickedView, int position) {
-//
-//                Quote quote = mQuoteAdapter.getItem(mQuoteFlipView.getCurrentPage());
-//                Log.d(TAG, "FoldableItemPosition: " + mQuoteFlipView.getCurrentPage() + "");
-//                Log.d(TAG, "FoldableItem: " + quote.toString());
-//
-//                switch (position) {
-//
-//                    case 0:
-//                        break;
-//
-//                    case 1: {
-//                        if (quote.isFavourite()) {
-//                            quote.setFavourite(false);
-//                        } else {
-//                            quote.setFavourite(true);
-//                        }
-//                        new UpdateQuoteIntoDatabase(QuoteDetailActivity.this, quote).execute();
-//                        break;
-//                    }
-//
-//                    case 2:
-//                        ClipboardHandler.copyToClipboard(QuoteDetailActivity.this, quote.getQuoteDescription());
-//                        break;
-//
-//                    case 3:
-//                        IntentManager.shareToAllAvailableApps(QuoteDetailActivity.this, "", AppUtils.getShareQuoted(QuoteDetailActivity.this, quote));
-//                        break;
-//
-//                    default:
-//                        break;
-//                }
-//            }
-//        });
+        MenuParams menuParams = new MenuParams();
+        menuParams.setActionBarSize((int) getResources().getDimension(R.dimen.tool_bar_height));
+        menuParams.setMenuObjects(getMenuObjects(isFavourite));
+        menuParams.setClosableOutside(false);
+        mMenuDialogFragment = ContextMenuDialogFragment.newInstance(menuParams);
+        mMenuDialogFragment.setItemClickListener(new OnMenuItemClickListener() {
+            @Override
+            public void onMenuItemClick(View clickedView, int position) {
+
+                LitePalQuoteBuilder quote = mQuoteAdapter.getItem(mQuoteFlipView.getCurrentPage());
+                Log.d(TAG, "FoldableItemPosition: " + mQuoteFlipView.getCurrentPage() + "");
+                Log.d(TAG, "FoldableItem: " + quote.toString());
+
+                switch (position) {
+
+                    case 0:
+                        break;
+
+                    case 1: {
+                        if (quote.getLitePalQuote().isFavourite()) {
+                            quote.getLitePalQuote().setFavourite(false);
+                        } else {
+                            quote.getLitePalQuote().setFavourite(true);
+                        }
+                        new UpdateQuoteIntoDatabase(QuoteDetailActivity.this, quote).execute();
+                        break;
+                    }
+
+                    case 2:
+                        ClipboardHandler.copyToClipboard(QuoteDetailActivity.this, quote.getLitePalQuote().getQuoteDescription());
+                        break;
+
+                    case 3:
+                        IntentManager.shareToAllAvailableApps(QuoteDetailActivity.this, "", AppUtils.getShareQuoted(QuoteDetailActivity.this, mLitePalDataBuilder, quote));
+                        break;
+
+                    default:
+                        break;
+                }
+            }
+        });
     }
 
     private List<MenuObject> getMenuObjects(boolean isFavourite) {
@@ -342,32 +349,32 @@ public class QuoteDetailActivity extends BaseActivity {
         return quotes;
     }
 
-//    class UpdateQuoteIntoDatabase extends AsyncTask<String, String, Quote> {
-//
-//        private Context mContext;
-//        private Quote mQuote;
-//
-//        UpdateQuoteIntoDatabase(Context context, Quote updatedQuote) {
-//            mContext = context;
-//            mQuote = updatedQuote;
-//        }
-//
-//        @Override
-//        protected void onPreExecute() {
-//        }
-//
-//        @Override
-//        protected Quote doInBackground(String... params) {
-//            Quote updatedDataIntoDatabase = DataHandler.setFavouriteForAuthorFragment(mQuote, mQuote.isFavourite());
-//            Log.d(TAG, "updatedDataIntoDatabase" + updatedDataIntoDatabase.toString());
-//            return updatedDataIntoDatabase;
-//        }
-//
-//        @Override
-//        protected void onPostExecute(Quote result) {
-//            if (result != null) {
-//                mQuoteAdapter.updateItem(mQuoteFlipView.getCurrentPage(), result);
-//            }
-//        }
-//    }
+    class UpdateQuoteIntoDatabase extends AsyncTask<String, String, LitePalQuoteBuilder> {
+
+        private Context mContext;
+        private LitePalQuoteBuilder mQuote;
+
+        UpdateQuoteIntoDatabase(Context context, LitePalQuoteBuilder updatedQuote) {
+            mContext = context;
+            mQuote = updatedQuote;
+        }
+
+        @Override
+        protected void onPreExecute() {
+        }
+
+        @Override
+        protected LitePalQuoteBuilder doInBackground(String... params) {
+            Quote updatedDataIntoDatabase = DataHandler.setFavouriteForAuthorFragment(mQuote, mQuote.isFavourite());
+            Log.d(TAG, "updatedDataIntoDatabase" + updatedDataIntoDatabase.toString());
+            return updatedDataIntoDatabase;
+        }
+
+        @Override
+        protected void onPostExecute(LitePalQuoteBuilder result) {
+            if (result != null) {
+                mQuoteAdapter.updateItem(mQuoteFlipView.getCurrentPage(), result);
+            }
+        }
+    }
 }

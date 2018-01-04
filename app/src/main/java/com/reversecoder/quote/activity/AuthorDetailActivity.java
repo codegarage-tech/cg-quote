@@ -34,7 +34,7 @@ import static com.reversecoder.quote.model.database.LitePalDataHandler.getAllQuo
 
 public class AuthorDetailActivity extends BaseActivity implements FragmentItemClickListener {
 
-    LitePalDataBuilder mAuthor;
+    LitePalDataBuilder mLitePalDataBuilder;
     GetAuthorTask getAuthorTask;
     private static String TAG = AuthorDetailActivity.class.getSimpleName();
     int mSelectedPosition = -1;
@@ -160,7 +160,7 @@ public class AuthorDetailActivity extends BaseActivity implements FragmentItemCl
         @Override
         protected void onPreExecute() {
             mSelectedPosition = mIntent.getIntExtra(AllConstants.INTENT_KEY_AUTHOR_POSITION, -1);
-            mAuthor = mIntent.getParcelableExtra(AllConstants.INTENT_KEY_AUTHOR);
+            mLitePalDataBuilder = mIntent.getParcelableExtra(AllConstants.INTENT_KEY_AUTHOR);
         }
 
         @Override

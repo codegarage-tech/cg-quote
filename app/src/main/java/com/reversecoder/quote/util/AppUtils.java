@@ -7,6 +7,7 @@ import android.view.View;
 
 import com.reversecoder.quote.R;
 import com.reversecoder.quote.model.Quote;
+import com.reversecoder.quote.model.database.LitePalDataBuilder;
 
 import java.security.MessageDigest;
 import java.util.Random;
@@ -68,6 +69,16 @@ public class AppUtils {
     public static String getShareQuoted(Context context, Quote quote) {
         String shareQuote = "\"" + quote.getQuoteDescription() +
                 "\"\n----- " + quote.getAuthor().getAuthorName() +
+                "\n\n     <<*=*=*=*=*>>     " +
+                "\n" + context.getString(R.string.txt_quote_is_shared_by_the_app) +
+                "\nhttps://play.google.com/store/apps/details?id=" + context.getApplicationContext().getPackageName() + "&hl=en";
+
+        return shareQuote;
+    }
+
+    public static String getShareQuoted(Context context, LitePalDataBuilder litePalDataBuilder, LitePalDataBuilder.LitePalQuoteBuilder quote) {
+        String shareQuote = "\"" + quote.getLitePalQuote().getQuoteDescription() +
+                "\"\n----- " + litePalDataBuilder.getLitePalAuthor().getAuthorName() +
                 "\n\n     <<*=*=*=*=*>>     " +
                 "\n" + context.getString(R.string.txt_quote_is_shared_by_the_app) +
                 "\nhttps://play.google.com/store/apps/details?id=" + context.getApplicationContext().getPackageName() + "&hl=en";
