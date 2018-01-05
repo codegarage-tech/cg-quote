@@ -19,9 +19,11 @@ import com.bumptech.glide.request.RequestOptions;
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
 import com.lombokcyberlab.android.multicolortextview.MultiColorTextView;
 import com.reversecoder.quote.R;
+import com.reversecoder.quote.activity.FavouriteQuoteDetailActivity;
 import com.reversecoder.quote.adapter.AuthorAdapter;
 import com.reversecoder.quote.interfaces.OnFragmentBackPressedListener;
 import com.reversecoder.quote.model.database.LitePalDataBuilder;
+import com.reversecoder.quote.util.AllConstants;
 
 import java.util.ArrayList;
 
@@ -167,13 +169,13 @@ public class FavouriteFragment extends Fragment implements OnFragmentBackPressed
             @Override
             public void onItemClick(View view, int position) {
                 //set selected items info globally
-//                mLastSelectedAuthor = position;
-//                LitePalDataBuilder litePalDataBuilder = favouriteAuthorAdapter.getItem(mLastSelectedAuthor);
-//
-//                Intent intentFavouriteQuoteDetail = new Intent(getActivity(), FavouriteQuoteDetailActivity.class);
-//                intentFavouriteQuoteDetail.putExtra(AllConstants.INTENT_KEY_FAVOURITE_AUTHOR_POSITION, mLastSelectedAuthor);
-//                intentFavouriteQuoteDetail.putExtra(AllConstants.INTENT_KEY_FAVOURITE_AUTHOR_MAPPED_QUOTE, litePalDataBuilder);
-//                startActivityForResult(intentFavouriteQuoteDetail, REQUEST_CODE_FAVOURITE_FRAGMENT);
+                mLastSelectedAuthor = position;
+                LitePalDataBuilder litePalDataBuilder = favouriteAuthorAdapter.getItem(mLastSelectedAuthor);
+
+                Intent intentFavouriteQuoteDetail = new Intent(getActivity(), FavouriteQuoteDetailActivity.class);
+                intentFavouriteQuoteDetail.putExtra(AllConstants.INTENT_KEY_FAVOURITE_AUTHOR_POSITION, mLastSelectedAuthor);
+                intentFavouriteQuoteDetail.putExtra(AllConstants.INTENT_KEY_FAVOURITE_AUTHOR, litePalDataBuilder);
+                startActivityForResult(intentFavouriteQuoteDetail, REQUEST_CODE_FAVOURITE_FRAGMENT);
             }
         });
     }
