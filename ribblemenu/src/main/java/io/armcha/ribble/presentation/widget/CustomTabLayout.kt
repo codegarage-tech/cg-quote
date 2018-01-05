@@ -550,7 +550,7 @@ class CustomTabLayout constructor(context: Context,
         if (mViewPager != null) {
             // If we've already been setup withLog a ViewPager, remove us from it
             if (mPageChangeListener != null) {
-                mViewPager!!.removeOnPageChangeListener(mPageChangeListener)
+                mViewPager!!.removeOnPageChangeListener(mPageChangeListener!!)
             }
             if (mAdapterChangeListener != null) {
                 mViewPager!!.removeOnAdapterChangeListener(mAdapterChangeListener!!)
@@ -571,7 +571,7 @@ class CustomTabLayout constructor(context: Context,
                 mPageChangeListener = CustomTabLayoutOnPageChangeListener(this)
             }
             mPageChangeListener!!.reset()
-            viewPager.addOnPageChangeListener(mPageChangeListener)
+            viewPager.addOnPageChangeListener(mPageChangeListener!!)
 
             // Now we'll add a tab selected listener to set ViewPager's current item
             mCurrentVpSelectedListener = ViewPagerOnTabSelectedListener(viewPager)
@@ -646,7 +646,7 @@ class CustomTabLayout constructor(context: Context,
     internal fun setPagerAdapter(adapter: PagerAdapter?, addObserver: Boolean) {
         if (mPagerAdapter != null && mPagerAdapterObserver != null) {
             // If we already have a PagerAdapter, unregister our observer
-            mPagerAdapter!!.unregisterDataSetObserver(mPagerAdapterObserver)
+            mPagerAdapter!!.unregisterDataSetObserver(mPagerAdapterObserver!!)
         }
 
         mPagerAdapter = adapter
@@ -656,7 +656,7 @@ class CustomTabLayout constructor(context: Context,
             if (mPagerAdapterObserver == null) {
                 mPagerAdapterObserver = PagerAdapterObserver()
             }
-            adapter.registerDataSetObserver(mPagerAdapterObserver)
+            adapter.registerDataSetObserver(mPagerAdapterObserver!!)
         }
 
         // Finally make sure we reflect the new adapter

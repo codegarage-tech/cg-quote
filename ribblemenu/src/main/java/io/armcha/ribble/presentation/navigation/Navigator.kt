@@ -75,9 +75,9 @@ class Navigator @Inject constructor(private val activity: AppCompatActivity,
 //            }
 //        }
         fragmentManager.fragments
-                .filter { it.tag.contains(activity.applicationContext.packageName) }
+                .filter { it.tag!!.contains(activity.applicationContext.packageName) }
                 .forEach {
-                    fragmentMap.put(it.tag, Screen(it, BackStrategy.KEEP)) //FIXME
+                    fragmentMap.put(it.tag!!, Screen(it, BackStrategy.KEEP)) //FIXME
                 }
 
         fragmentManager.inTransaction {
