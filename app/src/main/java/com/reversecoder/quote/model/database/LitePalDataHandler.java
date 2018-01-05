@@ -131,6 +131,14 @@ public class LitePalDataHandler {
         return -1;
     }
 
+    public static LitePalDataBuilder getAuthorData(int dataPosition) {
+        ArrayList<LitePalDataBuilder> litePalDataBuilders = getAllQuotes();
+        if (dataPosition < litePalDataBuilders.size()) {
+            return litePalDataBuilders.get(dataPosition);
+        }
+        return null;
+    }
+
     public static ArrayList<GlazyCard> getAllGlazyCards(ArrayList<LitePalDataBuilder> litePalDataBuilders) {
 
         ArrayList<GlazyCard> glazyCards = new ArrayList<GlazyCard>();

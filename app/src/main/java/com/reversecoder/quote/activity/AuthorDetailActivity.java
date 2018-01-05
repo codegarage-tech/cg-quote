@@ -29,6 +29,7 @@ import io.armcha.ribble.presentation.widget.AnimatedTextView;
 import io.armcha.ribble.presentation.widget.ArcView;
 
 import static com.reversecoder.quote.model.database.LitePalDataHandler.getAllQuotes;
+import static com.reversecoder.quote.model.database.LitePalDataHandler.getAuthorData;
 
 //import static com.reversecoder.quote.util.DataHandler.mAllMappedQuotes;
 
@@ -193,7 +194,8 @@ public class AuthorDetailActivity extends BaseActivity implements FragmentItemCl
     public void onFragmentItemClick(View itemView) {
         Intent intentQuoteDetail = new Intent(AuthorDetailActivity.this, QuoteDetailActivity.class);
         intentQuoteDetail.putExtra(AllConstants.INTENT_KEY_AUTHOR_POSITION, mPager.getCurrentItem());
-        intentQuoteDetail.putExtra(AllConstants.INTENT_KEY_AUTHOR, litePalDataBuilders.get(mPager.getCurrentItem()));
+//        intentQuoteDetail.putExtra(AllConstants.INTENT_KEY_AUTHOR, litePalDataBuilders.get(mPager.getCurrentItem()));
+        intentQuoteDetail.putExtra(AllConstants.INTENT_KEY_AUTHOR, getAuthorData(mPager.getCurrentItem()));
         startActivity(intentQuoteDetail);
     }
 }
