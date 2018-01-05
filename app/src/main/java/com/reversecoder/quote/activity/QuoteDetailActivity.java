@@ -39,6 +39,7 @@ import io.armcha.ribble.presentation.widget.ArcView;
 import se.emilsjolander.flipview.FlipView;
 import se.emilsjolander.flipview.OverFlipMode;
 
+import static com.reversecoder.quote.model.database.LitePalDataHandler.updateQuote;
 import static com.reversecoder.quote.util.AppUtils.flashingView;
 
 //import static com.reversecoder.quote.util.DataHandler.mAllMappedQuotes;
@@ -173,6 +174,7 @@ public class QuoteDetailActivity extends BaseActivity {
         protected ArrayList<LitePalQuoteBuilder> doInBackground(String... params) {
             if (mLitePalDataBuilder != null) {
                 if (mLitePalDataBuilder.getLitePalQuoteBuilders().size() > 0) {
+                    //Need to read from session due to getting previous update
                     mAllQuotes = mLitePalDataBuilder.getLitePalQuoteBuilders();
                 }
             }
@@ -364,10 +366,13 @@ public class QuoteDetailActivity extends BaseActivity {
 
         @Override
         protected LitePalQuoteBuilder doInBackground(String... params) {
-//            Quote updatedDataIntoDatabase = DataHandler.setFavouriteForAuthorFragment(mQuote, mQuote.isFavourite());
-//            Log.d(TAG, "updatedDataIntoDatabase" + updatedDataIntoDatabase.toString());
-//            return updatedDataIntoDatabase;
-            return (mQuote.getLitePalQuote().save()) ? mQuote : null;
+            //Update quote into database and session
+            LitePalQuoteBuilder updatedQuote = updateQuote(mLitePalDataBuilder, mQuote);
+            if (updatedQuote!= null) {
+                return updatedQuote;
+            }
+
+            return null;
         }
 
         @Override

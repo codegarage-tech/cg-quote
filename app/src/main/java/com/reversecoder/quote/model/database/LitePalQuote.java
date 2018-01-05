@@ -16,6 +16,9 @@ public class LitePalQuote extends DataSupport implements Parcelable {
     private boolean isFavourite = false;
     private boolean isQuote = false;
 
+    public LitePalQuote() {
+    }
+
     public LitePalQuote(String quoteDescription, boolean isFavourite, boolean isQuote) {
         this.quoteDescription = quoteDescription;
         this.isFavourite = isFavourite;

@@ -998,9 +998,9 @@ abstract class DataHandler extends LitePalBase {
 			ContentValues values) throws SecurityException, IllegalArgumentException,
 			NoSuchMethodException, IllegalAccessException, InvocationTargetException {
 		if (isUpdating()) {
-			if (!isFieldWithDefaultValue(baseObj, field)) {
+//			if (!isFieldWithDefaultValue(baseObj, field)) {
 				putContentValuesForUpdate(baseObj, field, values);
-			}
+//			}
 		} else if (isSaving()) {
             putContentValuesForSave(baseObj, field, values);
 		}

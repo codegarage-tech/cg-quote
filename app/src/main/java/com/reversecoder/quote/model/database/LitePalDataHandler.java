@@ -89,30 +89,47 @@ public class LitePalDataHandler {
         return litePalDataBuilders;
     }
 
-//    public static LitePalDataBuilder.LitePalQuoteBuilder setFavouriteForAuthorFragment(LitePalDataBuilder litePalDataBuilder,LitePalDataBuilder.LitePalQuoteBuilder quote, boolean isFavourite) {
-//        ArrayList<LitePalDataBuilder> litePalDataBuilders = getAllQuotes();
-//        for (LitePalDataBuilder mappedQuote : litePalDataBuilders) {
-////            mMappedQuote = mappedQuote;
-//            if (mappedQuote.getLitePalAuthor().getAuthorName().equalsIgnoreCase(litePalDataBuilder.getLitePalAuthor().getAuthorName())) {
-//                for (Quote mQuote : mappedQuote.getQuotes()) {
-//                    if (mQuote.getQuoteDescription().equalsIgnoreCase(quote.getQuoteDescription())) {
-//                        Quote updatedQuote = Quote.findById(Quote.class, mQuote.getId());
-//                        if (updatedQuote.isFavourite() != isFavourite) {
-//                            updatedQuote.setFavourite(isFavourite);
-//                            updatedQuote.save();
-//                            mQuote.setFavourite(isFavourite);
-//                            quote.setFavourite(isFavourite);
-//
-////                            Quote tagQuote = Quote.findById(Quote.class, updatedQuote.getId());
-////                            Log.d("setFavourite", "updatedQuote: " + tagQuote.toString());
-////                            Log.d("setFavourite", "foldableQuote: " + foldableQuote.toString());
-//                        }
-//                    }
-//                }
-//            }
-//        }
-//        return quote;
-//    }
+    public static LitePalDataBuilder.LitePalQuoteBuilder updateQuote(LitePalDataBuilder litePalDataBuilder, LitePalDataBuilder.LitePalQuoteBuilder litePalQuoteBuilder) {
+        //Update data into database
+        int id = litePalQuoteBuilder.getLitePalQuote().update(litePalQuoteBuilder.getLitePalQuote().getId());
+        //Search the updated data from database
+        LitePalQuote litePalQuoteUpdated = LitePalQuote.find(LitePalQuote.class, litePalQuoteBuilder.getLitePalQuote().getId());
+        //Update data into adapter view
+        if ((id == 1) && (litePalQuoteUpdated != null) && (litePalQuoteUpdated.isFavourite() == litePalQuoteBuilder.getLitePalQuote().isFavourite())) {
+            Log.d(TAG, "Updated quote(success response): " + litePalQuoteUpdated.toString());
+            ArrayList<LitePalDataBuilder> litePalDataBuilders = getAllQuotes();
+            for (LitePalDataBuilder dataBuilder : litePalDataBuilders) {
+                if (dataBuilder.getLitePalAuthor().getAuthorName().equalsIgnoreCase(litePalDataBuilder.getLitePalAuthor().getAuthorName())) {
+                    Log.d(TAG, "Updated quote: " + "found author");
+                    int quotePosition = getQuotePosition(dataBuilder.getLitePalQuoteBuilders(), litePalQuoteBuilder);
+                    Log.d(TAG, "Updated quote(id session): " + quotePosition);
+                    if (quotePosition != -1) {
+                        dataBuilder.getLitePalQuoteBuilders().remove(quotePosition);
+                        litePalQuoteBuilder.setLitePalQuote(litePalQuoteUpdated);
+                        dataBuilder.getLitePalQuoteBuilders().add(quotePosition, litePalQuoteBuilder);
+                        Log.d(TAG, "Updated quote: " + dataBuilder.getLitePalQuoteBuilders().get(quotePosition).toString());
+
+                        //Set updated value into session
+                        DataLitePalDataBuilder dataLitePalDataBuilder = new DataLitePalDataBuilder(litePalDataBuilders);
+                        SessionManager.setStringSetting(getGlobalContext(), SESSION_DATA_DATA_BUILDER, DataLitePalDataBuilder.convertFromObjectToString(dataLitePalDataBuilder));
+                        //Log.d(TAG, "Updated quote(All session): " + SessionManager.getStringSetting(getGlobalContext(), SESSION_DATA_DATA_BUILDER));
+
+                        return litePalQuoteBuilder;
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
+    public static int getQuotePosition(ArrayList<LitePalDataBuilder.LitePalQuoteBuilder> litePalQuoteBuilders, LitePalDataBuilder.LitePalQuoteBuilder litePalQuoteBuilder) {
+        for (int i = 0; i < litePalQuoteBuilders.size(); i++) {
+            if (litePalQuoteBuilders.get(i).getLitePalQuote().getQuoteDescription().equalsIgnoreCase(litePalQuoteBuilder.getLitePalQuote().getQuoteDescription())) {
+                return i;
+            }
+        }
+        return -1;
+    }
 
     public static ArrayList<GlazyCard> getAllGlazyCards(ArrayList<LitePalDataBuilder> litePalDataBuilders) {
 
