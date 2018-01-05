@@ -89,6 +89,9 @@ public class LitePalDataHandler {
         return litePalDataBuilders;
     }
 
+    /**********************
+     * Methods for Author *
+     **********************/
     public static LitePalDataBuilder.LitePalQuoteBuilder updateQuote(LitePalDataBuilder litePalDataBuilder, LitePalDataBuilder.LitePalQuoteBuilder litePalQuoteBuilder) {
         //Update data into database
         int id = litePalQuoteBuilder.getLitePalQuote().update(litePalQuoteBuilder.getLitePalQuote().getId());
@@ -171,6 +174,30 @@ public class LitePalDataHandler {
         }
 
         return glazyCards;
+    }
+
+    /*************************
+     * Methods for Favourite *
+     *************************/
+    public static ArrayList<LitePalDataBuilder> getAllFavouriteQuotes() {
+        ArrayList<LitePalDataBuilder> litePalDataBuilders = getAllQuotes();
+        ArrayList<LitePalDataBuilder> favouriteDataBuilders = new ArrayList<>();
+
+        for (LitePalDataBuilder litePalDataBuilder : litePalDataBuilders) {
+            LitePalDataBuilder tempLitePalDataBuilder = litePalDataBuilder;
+            ArrayList<LitePalDataBuilder.LitePalQuoteBuilder> tempLitePalQuoteBuilders = new ArrayList<>();
+            for (LitePalDataBuilder.LitePalQuoteBuilder litePalQuoteBuilder : litePalDataBuilder.getLitePalQuoteBuilders()) {
+                if (litePalQuoteBuilder.getLitePalQuote().isFavourite()) {
+                    tempLitePalQuoteBuilders.add(litePalQuoteBuilder);
+                }
+            }
+            if (tempLitePalQuoteBuilders.size() > 0) {
+                tempLitePalDataBuilder.setLitePalQuoteBuilders(tempLitePalQuoteBuilders);
+                favouriteDataBuilders.add(tempLitePalDataBuilder);
+            }
+        }
+
+        return favouriteDataBuilders;
     }
 
     /*******************
