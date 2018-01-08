@@ -18,7 +18,7 @@ android {
     buildToolsVersion appBuildToolsVersion
 
     defaultConfig {
-        applicationId "com.reversecoder.quote"
+        applicationId "tech.codegarage.quotes"
         minSdkVersion appMinSdkVersion
         targetSdkVersion appTargetSdkVersion
         versionCode appVersionCode

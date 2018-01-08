@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.reversecoder.quote.view.CanaroTextView
+    <tech.codegarage.quotes.view.CanaroTextView
         android:id="@+id/tv_quote"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

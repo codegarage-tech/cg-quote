@@ -52,7 +52,7 @@
             android:gravity="center"
             android:orientation="horizontal">
 
-            <com.reversecoder.quote.view.CanaroTextView
+            <tech.codegarage.quotes.view.CanaroTextView
                 android:id="@+id/tv_quote_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

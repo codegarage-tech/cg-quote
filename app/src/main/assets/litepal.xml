@@ -32,11 +32,11 @@
     	</list>
     -->
     <list>
-        <mapping class="com.reversecoder.quote.model.database.LitePalLanguage" />
-        <mapping class="com.reversecoder.quote.model.database.LitePalAuthor" />
-        <mapping class="com.reversecoder.quote.model.database.LitePalQuote" />
-        <mapping class="com.reversecoder.quote.model.database.LitePalTag" />
-        <mapping class="com.reversecoder.quote.model.database.LitePalQuoteLanguageAuthorTag" />
+        <mapping class="tech.codegarage.quotes.model.database.LitePalLanguage" />
+        <mapping class="tech.codegarage.quotes.model.database.LitePalAuthor" />
+        <mapping class="tech.codegarage.quotes.model.database.LitePalQuote" />
+        <mapping class="tech.codegarage.quotes.model.database.LitePalTag" />
+        <mapping class="tech.codegarage.quotes.model.database.LitePalQuoteLanguageAuthorTag" />
     </list>
 
     <!--

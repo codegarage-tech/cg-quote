@@ -12,7 +12,7 @@
         android:src="@drawable/ic_hamburger"
         android:visibility="gone" />
 
-    <com.reversecoder.quote.view.CanaroTextView
+    <tech.codegarage.quotes.view.CanaroTextView
         android:id="@+id/text_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

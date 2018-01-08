@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.reversecoder.quote">
+    package="tech.codegarage.quotes">
 
     <application
-        android:name=".application.QuoteApp"
+        android:name="tech.codegarage.quotes.application.QuoteApp"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -11,7 +11,7 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name="com.reversecoder.quote.activity.SplashActivity"
+            android:name="tech.codegarage.quotes.activity.SplashActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -20,7 +20,7 @@
         </activity>
 
         <activity
-            android:name="com.reversecoder.quote.activity.AppIntroActivity"
+            android:name="tech.codegarage.quotes.activity.AppIntroActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
 
@@ -31,22 +31,22 @@
             android:theme="@style/AppTheme" />
 
         <activity
-            android:name="com.reversecoder.quote.activity.HomeActivity"
+            android:name="tech.codegarage.quotes.activity.HomeActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
 
         <activity
-            android:name="com.reversecoder.quote.activity.AuthorDetailActivity"
+            android:name="tech.codegarage.quotes.activity.AuthorDetailActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
 
         <activity
-            android:name="com.reversecoder.quote.activity.QuoteDetailActivity"
+            android:name="tech.codegarage.quotes.activity.QuoteDetailActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
 
         <activity
-            android:name="com.reversecoder.quote.activity.FavouriteQuoteDetailActivity"
+            android:name="tech.codegarage.quotes.activity.FavouriteQuoteDetailActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
 
