@@ -25,10 +25,10 @@ class NavigationDrawerView : NavigationView, ItemClickListener {
                     itemIconColor = io.armcha.ribble.R.color.light_green),
             NavigationItem(NavigationId.FAVOURITE, io.armcha.ribble.R.drawable.ic_menu_favourite,
                     itemIconColor = io.armcha.ribble.R.color.colorAccent),
+            NavigationItem(NavigationId.AMAZING_TODAY, io.armcha.ribble.R.drawable.ic_menu_other_apps,
+                    itemIconColor = io.armcha.ribble.R.color.shot_color),
             NavigationItem(NavigationId.RATE_US, io.armcha.ribble.R.drawable.ic_menu_rate_us,
                     itemIconColor = io.armcha.ribble.R.color.green),
-            NavigationItem(NavigationId.OTHER_APPS, io.armcha.ribble.R.drawable.ic_menu_other_apps,
-                    itemIconColor = io.armcha.ribble.R.color.shot_color),
             NavigationItem(NavigationId.ABOUT, io.armcha.ribble.R.drawable.ic_menu_about,
                     itemIconColor = io.armcha.ribble.R.color.cyan))
 

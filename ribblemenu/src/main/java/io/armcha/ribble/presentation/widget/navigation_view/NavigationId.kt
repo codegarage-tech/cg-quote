@@ -10,14 +10,14 @@ sealed class NavigationId(val name: String = emptyString, val fullName: String =
     //For English
     object HOME : NavigationId("HOME")
     object FAVOURITE : NavigationId("FAVOURITE")
+    object AMAZING_TODAY : NavigationId("AMAZING TODAY")
     object RATE_US : NavigationId("RATE US")
-    object OTHER_APPS : NavigationId("OTHER APPS")
     object ABOUT : NavigationId("ABOUT")
 
     //For German
 //    object HOME : NavigationId("ZUHAUSE")
 //    object FAVOURITE : NavigationId("FAVORIT")
 //    object RATE_US : NavigationId("BEWERTEN SIE UNS")
-//    object OTHER_APPS : NavigationId("ANDERE APPS")
+//    object AMAZING_TODAY : NavigationId("ANDERE APPS")
 //    object ABOUT : NavigationId("ÜBER")
 }

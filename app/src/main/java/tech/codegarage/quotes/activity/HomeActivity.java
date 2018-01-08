@@ -122,10 +122,10 @@ public class HomeActivity extends BaseActivity {
                                 handleFragmentChanges(HomeActivity.this, getString(R.string.ribble_menu_item_home), new AuthorFragment());
                             } else if (item.getId().getName().equalsIgnoreCase(NavigationId.FAVOURITE.INSTANCE.getName())) {
                                 handleFragmentChanges(HomeActivity.this, getString(R.string.ribble_menu_item_favourite), new FavouriteFragment());
+                            } else if (item.getId().getName().equalsIgnoreCase(NavigationId.AMAZING_TODAY.INSTANCE.getName())) {
+//                                AboutBoxUtils.openPublisher(HomeActivity.this, AboutConfig.BuildType.GOOGLE, getString(R.string.txt_publisher), getApplicationContext().getPackageName());
                             } else if (item.getId().getName().equalsIgnoreCase(NavigationId.RATE_US.INSTANCE.getName())) {
                                 AboutBoxUtils.openApp(HomeActivity.this, AboutConfig.BuildType.GOOGLE, getApplicationContext().getPackageName());
-                            } else if (item.getId().getName().equalsIgnoreCase(NavigationId.OTHER_APPS.INSTANCE.getName())) {
-                                AboutBoxUtils.openPublisher(HomeActivity.this, AboutConfig.BuildType.GOOGLE, getString(R.string.txt_publisher), getApplicationContext().getPackageName());
                             } else if (item.getId().getName().equalsIgnoreCase(NavigationId.ABOUT.INSTANCE.getName())) {
                                 AboutActivity.launch(HomeActivity.this);
                                 AboutActivity.setLicenseListener(new LicenseClickListener() {
@@ -210,9 +210,9 @@ public class HomeActivity extends BaseActivity {
         } else if (currentTag.equalsIgnoreCase(NavigationId.FAVOURITE.INSTANCE.getName())) {
             checkPosition = 1;
             goScreen(checkPosition, currentTag, fragment);
-        } else if (currentTag.equalsIgnoreCase(NavigationId.RATE_US.INSTANCE.getName())) {
+        } else if (currentTag.equalsIgnoreCase(NavigationId.AMAZING_TODAY.INSTANCE.getName())) {
             checkPosition = 2;
-        } else if (currentTag.equalsIgnoreCase(NavigationId.OTHER_APPS.INSTANCE.getName())) {
+        } else if (currentTag.equalsIgnoreCase(NavigationId.RATE_US.INSTANCE.getName())) {
             checkPosition = 3;
         } else if (currentTag.equalsIgnoreCase(NavigationId.ABOUT.INSTANCE.getName())) {
             checkPosition = 4;
