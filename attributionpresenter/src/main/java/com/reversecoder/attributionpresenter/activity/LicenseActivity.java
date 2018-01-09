@@ -88,6 +88,8 @@ public class LicenseActivity extends AppCompatActivity {
         attributions.add(Library.WAVE_SIDEBAR_SOLARTISAN.getAttribution());
         attributions.add(Library.LITEPAL_LITEPALFRAMEWORK.getAttribution());
         attributions.add(Library.MASK_PROGRESSVIEW_IAMMERT.getAttribution());
+        attributions.add(Library.BUNGEE_BINARYFINERY.getAttribution());
+        attributions.add(Library.ANDROID_VIEW_ANIMATIONS_DAIMAJIA.getAttribution());
 
         return attributions;
     }

@@ -161,6 +161,14 @@ public enum Library {
             .addLicenseInfo(new LicenseInfo("NA", License.NONE))
             .build()),
 
+    //Animation
+    BUNGEE_BINARYFINERY(new Attribution.Builder("Bungee", "https://github.com/Binary-Finery/Bungee")
+            .addLicenseInfo(new LicenseInfo("NA", License.APACHE))
+            .build()),
+    ANDROID_VIEW_ANIMATIONS_DAIMAJIA(new Attribution.Builder("Android View Animations", "https://github.com/daimajia/AndroidViewAnimations")
+            .addLicenseInfo(new LicenseInfo("Copyright (c) 2014 daimajia", License.MIT))
+            .build()),
+
     // ProgressBar
     MASK_PROGRESSVIEW_IAMMERT(new Attribution.Builder("Mask ProgressView", "https://github.com/iammert/MaskProgressView")
             .addLicenseInfo(new LicenseInfo("Copyright 2015 Mert Şimşek.", License.APACHE))

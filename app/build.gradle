@@ -86,4 +86,5 @@ dependencies {
     compile project(":androidviewanimations")
     compile project(":litepal")
     compile project(":maskprogressview")
+    compile project(":bungee")
 }
