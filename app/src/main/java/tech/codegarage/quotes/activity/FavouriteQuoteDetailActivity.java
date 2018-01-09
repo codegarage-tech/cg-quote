@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextSwitcher;
 
+import spencerstudios.com.bungeelib.Bungee;
 import tech.codegarage.quotes.factory.TextViewFactory;
 import tech.codegarage.quotes.model.database.LitePalAuthor;
 import tech.codegarage.quotes.model.database.LitePalDataBuilder;
@@ -303,6 +304,7 @@ public class FavouriteQuoteDetailActivity extends BaseActivity {
                 data.putParcelableArrayListExtra(INTENT_KEY_FAVOURITE_UPDATED_QUOTES, getActualFavouriteQuotes(new ArrayList<LitePalDataBuilder.LitePalQuoteBuilder>(mQuoteAdapter.getData())));
                 setResult(RESULT_OK, data);
 
+                Bungee.slideDown(FavouriteQuoteDetailActivity.this);
                 finish();
             }
         } else {
@@ -314,6 +316,7 @@ public class FavouriteQuoteDetailActivity extends BaseActivity {
                 setResult(RESULT_OK, data);
             }
 
+            Bungee.slideDown(FavouriteQuoteDetailActivity.this);
             finish();
         }
     }

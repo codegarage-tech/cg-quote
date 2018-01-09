@@ -12,6 +12,8 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
+
+import spencerstudios.com.bungeelib.Bungee;
 import tech.codegarage.quotes.application.QuoteApp;
 import tech.codegarage.quotes.model.database.LitePalDataBuilder;
 import tech.codegarage.quotes.model.database.LitePalDataHandler;
@@ -130,11 +132,13 @@ public class SplashActivity extends BaseActivity {
             if (SessionManager.getBooleanSetting(SplashActivity.this, SESSION_IS_FIRST_TIME, true)) {
                 intent = new Intent(SplashActivity.this, AppIntroActivity.class);
                 startActivity(intent);
+                Bungee.slideUp(SplashActivity.this);
                 finish();
             } else {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     intent = new Intent(SplashActivity.this, PermissionListActivity.class);
                     startActivityForResult(intent, PermissionListActivity.REQUEST_CODE_PERMISSIONS);
+                    Bungee.slideUp(SplashActivity.this);
                 } else {
 //                    if (inputData == null) {
 //                        inputData = new InputData();
@@ -156,6 +160,7 @@ public class SplashActivity extends BaseActivity {
     private void navigateHomeActivity() {
         Intent intent = new Intent(SplashActivity.this, HomeActivity.class);
         startActivity(intent);
+        Bungee.slideUp(SplashActivity.this);
         finish();
     }
 
@@ -167,6 +172,7 @@ public class SplashActivity extends BaseActivity {
             if (resultCode == RESULT_OK) {
                 navigateHomeActivity();
             } else if (resultCode == RESULT_CANCELED) {
+                Bungee.slideDown(SplashActivity.this);
                 finish();
             }
         }
@@ -192,11 +198,13 @@ public class SplashActivity extends BaseActivity {
                 if (SessionManager.getBooleanSetting(SplashActivity.this, SESSION_IS_FIRST_TIME, true)) {
                     Intent intentAppIntro = new Intent(SplashActivity.this, AppIntroActivity.class);
                     startActivity(intentAppIntro);
+                    Bungee.slideUp(SplashActivity.this);
                     finish();
                 } else {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                         Intent intentPermission = new Intent(SplashActivity.this, PermissionListActivity.class);
                         startActivityForResult(intentPermission, PermissionListActivity.REQUEST_CODE_PERMISSIONS);
+                        Bungee.slideUp(SplashActivity.this);
                     } else {
                         navigateHomeActivity();
                     }
@@ -215,5 +223,6 @@ public class SplashActivity extends BaseActivity {
         }
 
         super.onBackPressed();
+        Bungee.slideDown(SplashActivity.this);
     }
 }

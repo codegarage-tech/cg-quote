@@ -14,6 +14,8 @@ import com.luseen.verticalintrolibrary.VerticalIntro;
 import com.luseen.verticalintrolibrary.VerticalIntroItem;
 import com.reversecoder.library.storage.SessionManager;
 import com.reversecoder.permission.activity.PermissionListActivity;
+
+import spencerstudios.com.bungeelib.Bungee;
 import tech.codegarage.quotes.R;
 
 import static tech.codegarage.quotes.util.AllConstants.SESSION_IS_FIRST_TIME;
@@ -94,6 +96,7 @@ public class AppIntroActivity extends VerticalIntro {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             Intent intent = new Intent(AppIntroActivity.this, PermissionListActivity.class);
             startActivityForResult(intent, PermissionListActivity.REQUEST_CODE_PERMISSIONS);
+            Bungee.slideUp(AppIntroActivity.this);
         } else {
             navigateHomeActivity();
         }
@@ -102,6 +105,7 @@ public class AppIntroActivity extends VerticalIntro {
     private void navigateHomeActivity() {
         Intent intent = new Intent(AppIntroActivity.this, HomeActivity.class);
         startActivity(intent);
+        Bungee.slideUp(AppIntroActivity.this);
         finish();
     }
 
@@ -113,6 +117,7 @@ public class AppIntroActivity extends VerticalIntro {
             if (resultCode == RESULT_OK) {
                 navigateHomeActivity();
             } else if (resultCode == RESULT_CANCELED) {
+                Bungee.slideDown(AppIntroActivity.this);
                 finish();
             }
         }

@@ -16,6 +16,8 @@ import android.widget.RelativeLayout;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
+
+import spencerstudios.com.bungeelib.Bungee;
 import tech.codegarage.quotes.adapter.AuthorAdapter;
 import com.lombokcyberlab.android.multicolortextview.MultiColorTextView;
 import com.reversecoder.library.storage.SessionManager;
@@ -172,6 +174,7 @@ public class AuthorFragment extends Fragment implements OnFragmentBackPressedLis
                             intentQuoteList.putExtra(AllConstants.INTENT_KEY_AUTHOR, litePalDataBuilder);
                             intentQuoteList.putExtra(AllConstants.INTENT_KEY_AUTHOR_POSITION, position);
                             getActivity().startActivity(intentQuoteList);
+                            Bungee.slideUp(getActivity());
                         }
                     }
                 }));
@@ -231,6 +234,7 @@ public class AuthorFragment extends Fragment implements OnFragmentBackPressedLis
 
     @Override
     public void onFragmentBackPressed() {
+        Bungee.slideDown(getActivity());
         getActivity().finish();
     }
 }

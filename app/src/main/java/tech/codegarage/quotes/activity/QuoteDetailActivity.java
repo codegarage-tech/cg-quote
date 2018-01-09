@@ -13,18 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextSwitcher;
 
-import tech.codegarage.quotes.adapter.QuoteFlipViewAdapter;
-import tech.codegarage.quotes.factory.TextViewFactory;
-import tech.codegarage.quotes.model.database.LitePalDataBuilder;
-import tech.codegarage.quotes.model.database.LitePalDataHandler;
-import tech.codegarage.quotes.model.database.LitePalQuote;
-import tech.codegarage.quotes.util.AllConstants;
-import tech.codegarage.quotes.util.AppUtils;
-import tech.codegarage.quotes.util.ClipboardHandler;
-import tech.codegarage.quotes.util.IntentManager;
 import com.reversecoder.library.event.OnSingleClickListener;
-import tech.codegarage.quotes.R;
-import tech.codegarage.quotes.model.database.LitePalTag;
 import com.yalantis.contextmenu.lib.ContextMenuDialogFragment;
 import com.yalantis.contextmenu.lib.MenuObject;
 import com.yalantis.contextmenu.lib.MenuParams;
@@ -38,6 +27,18 @@ import io.armcha.ribble.presentation.widget.AnimatedTextView;
 import io.armcha.ribble.presentation.widget.ArcView;
 import se.emilsjolander.flipview.FlipView;
 import se.emilsjolander.flipview.OverFlipMode;
+import spencerstudios.com.bungeelib.Bungee;
+import tech.codegarage.quotes.R;
+import tech.codegarage.quotes.adapter.QuoteFlipViewAdapter;
+import tech.codegarage.quotes.factory.TextViewFactory;
+import tech.codegarage.quotes.model.database.LitePalDataBuilder;
+import tech.codegarage.quotes.model.database.LitePalDataHandler;
+import tech.codegarage.quotes.model.database.LitePalQuote;
+import tech.codegarage.quotes.model.database.LitePalTag;
+import tech.codegarage.quotes.util.AllConstants;
+import tech.codegarage.quotes.util.AppUtils;
+import tech.codegarage.quotes.util.ClipboardHandler;
+import tech.codegarage.quotes.util.IntentManager;
 
 //import static DataHandler.mAllMappedQuotes;
 
@@ -279,6 +280,7 @@ public class QuoteDetailActivity extends BaseActivity {
         if (mMenuDialogFragment != null && mMenuDialogFragment.isAdded()) {
             mMenuDialogFragment.dismiss();
         } else {
+            Bungee.slideDown(QuoteDetailActivity.this);
             finish();
         }
     }
@@ -365,7 +367,7 @@ public class QuoteDetailActivity extends BaseActivity {
         protected LitePalDataBuilder.LitePalQuoteBuilder doInBackground(String... params) {
             //Update quote into database and session
             LitePalDataBuilder.LitePalQuoteBuilder updatedQuote = LitePalDataHandler.updateQuote(mLitePalDataBuilder, mQuote);
-            if (updatedQuote!= null) {
+            if (updatedQuote != null) {
                 return updatedQuote;
             }
 

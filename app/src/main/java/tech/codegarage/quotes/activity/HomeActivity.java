@@ -19,19 +19,12 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
-import tech.codegarage.quotes.fragment.AuthorFragment;
-import tech.codegarage.quotes.fragment.FavouriteFragment;
-import tech.codegarage.quotes.interfaces.OnFragmentBackPressedListener;
-import tech.codegarage.quotes.util.AllConstants;
-import tech.codegarage.quotes.util.AppUtils;
-import tech.codegarage.quotes.util.FragmentUtilsManager;
 import com.eggheadgames.aboutbox.AboutBoxUtils;
 import com.eggheadgames.aboutbox.AboutConfig;
 import com.eggheadgames.aboutbox.activity.AboutActivity;
 import com.eggheadgames.aboutbox.listener.LicenseClickListener;
 import com.reversecoder.attributionpresenter.activity.LicenseActivity;
 import com.reversecoder.library.storage.SessionManager;
-import tech.codegarage.quotes.R;
 
 import java.util.List;
 
@@ -44,6 +37,14 @@ import io.armcha.ribble.presentation.widget.navigation_view.NavigationDrawerView
 import io.armcha.ribble.presentation.widget.navigation_view.NavigationId;
 import io.armcha.ribble.presentation.widget.navigation_view.NavigationItem;
 import io.armcha.ribble.presentation.widget.navigation_view.NavigationItemSelectedListener;
+import spencerstudios.com.bungeelib.Bungee;
+import tech.codegarage.quotes.R;
+import tech.codegarage.quotes.fragment.AuthorFragment;
+import tech.codegarage.quotes.fragment.FavouriteFragment;
+import tech.codegarage.quotes.interfaces.OnFragmentBackPressedListener;
+import tech.codegarage.quotes.util.AllConstants;
+import tech.codegarage.quotes.util.AppUtils;
+import tech.codegarage.quotes.util.FragmentUtilsManager;
 
 public class HomeActivity extends BaseActivity {
 
@@ -133,6 +134,7 @@ public class HomeActivity extends BaseActivity {
                                     public void onLicenseClick() {
                                         Intent intentLicense = new Intent(HomeActivity.this, LicenseActivity.class);
                                         startActivity(intentLicense);
+                                        Bungee.slideUp(HomeActivity.this);
                                     }
                                 });
                             }
@@ -265,9 +267,9 @@ public class HomeActivity extends BaseActivity {
             //send backpress event to the fragment and finish activity from there
             List<Fragment> fragmentList = getSupportFragmentManager().getFragments();
             if (fragmentList != null) {
-                for(Fragment fragment : fragmentList){
-                    if(fragment instanceof OnFragmentBackPressedListener){
-                        ((OnFragmentBackPressedListener)fragment).onFragmentBackPressed();
+                for (Fragment fragment : fragmentList) {
+                    if (fragment instanceof OnFragmentBackPressedListener) {
+                        ((OnFragmentBackPressedListener) fragment).onFragmentBackPressed();
                     }
                 }
             }

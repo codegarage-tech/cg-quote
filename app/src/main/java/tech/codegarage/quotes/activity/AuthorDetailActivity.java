@@ -10,23 +10,24 @@ import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextSwitcher;
 
-import tech.codegarage.quotes.factory.TextViewFactory;
 import com.kannan.glazy.GlazyCard;
 import com.kannan.glazy.interfaces.FragmentItemClickListener;
 import com.kannan.glazy.pager.GlazyFragmentPagerAdapter;
 import com.kannan.glazy.pager.GlazyViewPager;
 import com.kannan.glazy.transformers.GlazyPagerTransformer;
 import com.kannan.glazy.utils.Utils;
-import tech.codegarage.quotes.R;
-import tech.codegarage.quotes.model.database.LitePalDataBuilder;
-import tech.codegarage.quotes.model.database.LitePalDataHandler;
-import tech.codegarage.quotes.util.AllConstants;
 
 import java.util.ArrayList;
 
 import io.armcha.ribble.presentation.widget.AnimatedImageView;
 import io.armcha.ribble.presentation.widget.AnimatedTextView;
 import io.armcha.ribble.presentation.widget.ArcView;
+import spencerstudios.com.bungeelib.Bungee;
+import tech.codegarage.quotes.R;
+import tech.codegarage.quotes.factory.TextViewFactory;
+import tech.codegarage.quotes.model.database.LitePalDataBuilder;
+import tech.codegarage.quotes.model.database.LitePalDataHandler;
+import tech.codegarage.quotes.util.AllConstants;
 
 import static tech.codegarage.quotes.model.database.LitePalDataHandler.getAllQuotes;
 import static tech.codegarage.quotes.model.database.LitePalDataHandler.getAuthorData;
@@ -197,5 +198,12 @@ public class AuthorDetailActivity extends BaseActivity implements FragmentItemCl
 //        intentQuoteDetail.putExtra(AllConstants.INTENT_KEY_AUTHOR, litePalDataBuilders.get(mPager.getCurrentItem()));
         intentQuoteDetail.putExtra(AllConstants.INTENT_KEY_AUTHOR, getAuthorData(mPager.getCurrentItem()));
         startActivity(intentQuoteDetail);
+        Bungee.slideUp(AuthorDetailActivity.this);
+    }
+
+    @Override
+    public void onBackPressed() {
+        Bungee.slideDown(AuthorDetailActivity.this);
+        finish();
     }
 }

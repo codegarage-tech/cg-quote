@@ -16,20 +16,21 @@ import android.widget.RelativeLayout;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
-import tech.codegarage.quotes.activity.FavouriteQuoteDetailActivity;
-import tech.codegarage.quotes.adapter.AuthorAdapter;
-import tech.codegarage.quotes.model.database.LitePalDataBuilder;
-import tech.codegarage.quotes.model.database.LitePalDataHandler;
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
 import com.lombokcyberlab.android.multicolortextview.MultiColorTextView;
-import tech.codegarage.quotes.R;
-import tech.codegarage.quotes.interfaces.OnFragmentBackPressedListener;
-import tech.codegarage.quotes.util.AllConstants;
 
 import java.util.ArrayList;
 
 import br.com.stickyindex.StickyIndex;
 import cc.solart.wave.WaveSideBarView;
+import spencerstudios.com.bungeelib.Bungee;
+import tech.codegarage.quotes.R;
+import tech.codegarage.quotes.activity.FavouriteQuoteDetailActivity;
+import tech.codegarage.quotes.adapter.AuthorAdapter;
+import tech.codegarage.quotes.interfaces.OnFragmentBackPressedListener;
+import tech.codegarage.quotes.model.database.LitePalDataBuilder;
+import tech.codegarage.quotes.model.database.LitePalDataHandler;
+import tech.codegarage.quotes.util.AllConstants;
 
 import static android.app.Activity.RESULT_OK;
 import static tech.codegarage.quotes.util.AllConstants.INTENT_KEY_FAVOURITE_UPDATED_QUOTES;
@@ -176,6 +177,8 @@ public class FavouriteFragment extends Fragment implements OnFragmentBackPressed
                 intentFavouriteQuoteDetail.putExtra(AllConstants.INTENT_KEY_FAVOURITE_AUTHOR_POSITION, mLastSelectedAuthor);
                 intentFavouriteQuoteDetail.putExtra(AllConstants.INTENT_KEY_FAVOURITE_AUTHOR, litePalDataBuilder);
                 startActivityForResult(intentFavouriteQuoteDetail, REQUEST_CODE_FAVOURITE_FRAGMENT);
+
+                Bungee.slideUp(getActivity());
             }
         });
     }
@@ -278,6 +281,7 @@ public class FavouriteFragment extends Fragment implements OnFragmentBackPressed
 
     @Override
     public void onFragmentBackPressed() {
+        Bungee.slideDown(getActivity());
         getActivity().finish();
     }
 }
