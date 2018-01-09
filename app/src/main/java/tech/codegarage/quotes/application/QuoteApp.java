@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.graphics.Typeface;
+import android.support.multidex.MultiDex;
 
 import com.orm.SugarContext;
 import com.reversecoder.library.storage.SessionManager;
@@ -41,6 +42,9 @@ public class QuoteApp extends Application {
         super.onCreate();
 
         mContext = this;
+
+        //Initialize multidex object
+        MultiDex.install(this);
 
         //Initialize litepal database
         LitePal.initialize(mContext);

@@ -23,6 +23,10 @@ android {
         targetSdkVersion appTargetSdkVersion
         versionCode appVersionCode
         versionName appVersionName
+
+        //For resolving multidex problem
+        multiDexEnabled  true
+
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 
@@ -54,6 +58,7 @@ dependencies {
     compile "com.android.support:appcompat-v7:$supportlibraryVersion"
     compile "com.android.support.constraint:constraint-layout:$constraintLayoutVersion"
     compile 'com.google.code.gson:gson:2.8.1'
+    compile "com.android.support:multidex:$multiDexVersion"
 
     compile 'com.reversecoder.permission:rc-permission:1.0.1-SNAPSHOT'
     compile 'com.reversecoder.library:rc-library:1.0.1-SNAPSHOT'
