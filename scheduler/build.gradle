@@ -1,0 +1,27 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion appCompileSdkVersion
+    buildToolsVersion appBuildToolsVersion
+
+    defaultConfig {
+        minSdkVersion appMinSdkVersion
+        targetSdkVersion appTargetSdkVersion
+        versionCode 100
+        versionName "1.0.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+        }
+    }
+    lintOptions {
+        abortOnError false
+    }
+}
+
+dependencies {
+    compile "com.android.support:appcompat-v7:$supportlibraryVersion"
+    compile "com.android.support:support-v4:$supportlibraryVersion"
+    compile "com.google.code.gson:gson:$gsonVersion"
+}

@@ -57,7 +57,7 @@ dependencies {
     //gradle libraries
     compile "com.android.support:appcompat-v7:$supportlibraryVersion"
     compile "com.android.support.constraint:constraint-layout:$constraintLayoutVersion"
-    compile 'com.google.code.gson:gson:2.8.1'
+    compile "com.google.code.gson:gson:$gsonVersion"
     compile "com.android.support:multidex:$multiDexVersion"
 
     compile 'com.reversecoder.permission:rc-permission:1.0.1-SNAPSHOT'
@@ -92,4 +92,5 @@ dependencies {
     compile project(":litepal")
     compile project(":maskprogressview")
     compile project(":bungee")
+    compile project(":scheduler")
 }
