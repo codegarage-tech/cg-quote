@@ -11,6 +11,7 @@ import android.support.v4.content.WakefulBroadcastReceiver;
 import java.util.Calendar;
 
 import tech.codegarage.scheduler.R;
+import tech.codegarage.scheduler.model.BaseParcelable;
 import tech.codegarage.scheduler.model.ScheduleItem;
 import tech.codegarage.scheduler.service.AlarmService;
 
@@ -25,12 +26,18 @@ public class AlarmReceiver extends WakefulBroadcastReceiver {
 
     private static final int HOURLY = 1, DAILY = 2, WEEKLY = 3, MONTHLY = 4, YEARLY = 5;
     private ScheduleItem scheduleItem;
+    private String TAG = AlarmReceiver.class.getSimpleName();
 
     @Override
     public void onReceive(Context context, Intent intent) {
 
-        scheduleItem = intent.getParcelableExtra(INTENT_KEY_SCHEDULE_DATA_ALARM_RECEIVER);
-        if (scheduleItem == null && context == null) {
+        scheduleItem = (ScheduleItem) BaseParcelable.toParcelable(intent.getByteArrayExtra(INTENT_KEY_SCHEDULE_DATA_ALARM_RECEIVER), ScheduleItem.CREATOR);
+
+        if (context == null) {
+            return;
+        }
+
+        if (scheduleItem == null) {
             return;
         }
 

@@ -16,11 +16,14 @@ public class ScheduleItem implements Parcelable {
     private int mId = -1;
     private String mTitle = "";
     private String mContent = "";
-    private long mTimeInMillis = -1;
+    private long mTimeInMillis = 0;
     private int mFrequency = -1;
 
     private static final SimpleDateFormat TIME_FORMAT =
             new SimpleDateFormat("HH:mm, MMM d ''yy", Locale.US);
+
+    public ScheduleItem() {
+    }
 
     public ScheduleItem(int mId, String mTitle, String mContent, long mTimeInMillis, int mFrequency) {
         this.mId = mId;
@@ -85,6 +88,9 @@ public class ScheduleItem implements Parcelable {
                 '}';
     }
 
+    /**************************
+     * Methods for parcelable *
+     **************************/
     @Override
     public int describeContents() {
         return 0;
@@ -99,25 +105,26 @@ public class ScheduleItem implements Parcelable {
         dest.writeInt(this.mFrequency);
     }
 
-    protected ScheduleItem(Parcel in) {
+    // Creator
+    public static final Creator CREATOR
+            = new Creator() {
+        public ScheduleItem createFromParcel(Parcel in) {
+            return new ScheduleItem(in);
+        }
+
+        public ScheduleItem[] newArray(int size) {
+            return new ScheduleItem[size];
+        }
+    };
+
+    // "De-parcel object
+    public ScheduleItem(Parcel in) {
         this.mId = in.readInt();
         this.mTitle = in.readString();
         this.mContent = in.readString();
         this.mTimeInMillis = in.readLong();
         this.mFrequency = in.readInt();
     }
-
-    public static final Creator<ScheduleItem> CREATOR = new Creator<ScheduleItem>() {
-        @Override
-        public ScheduleItem createFromParcel(Parcel source) {
-            return new ScheduleItem(source);
-        }
-
-        @Override
-        public ScheduleItem[] newArray(int size) {
-            return new ScheduleItem[size];
-        }
-    };
 
     /**************************
      * Methods for convertion *

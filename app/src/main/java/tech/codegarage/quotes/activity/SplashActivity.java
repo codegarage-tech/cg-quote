@@ -12,11 +12,6 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
-
-import spencerstudios.com.bungeelib.Bungee;
-import tech.codegarage.quotes.application.QuoteApp;
-import tech.codegarage.quotes.model.database.LitePalDataBuilder;
-import tech.codegarage.quotes.model.database.LitePalDataHandler;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.lombokcyberlab.android.multicolortextview.MultiColorTextView;
@@ -25,14 +20,25 @@ import com.reversecoder.library.network.NetworkManager;
 import com.reversecoder.library.storage.SessionManager;
 import com.reversecoder.library.util.AllSettingsManager;
 import com.reversecoder.permission.activity.PermissionListActivity;
-import tech.codegarage.quotes.R;
 import com.rodolfonavalon.shaperipplelibrary.ShapeRipple;
 import com.rodolfonavalon.shaperipplelibrary.model.Circle;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+
+import spencerstudios.com.bungeelib.Bungee;
+import tech.codegarage.quotes.R;
+import tech.codegarage.quotes.application.QuoteApp;
+import tech.codegarage.quotes.model.database.LitePalDataBuilder;
+import tech.codegarage.quotes.model.database.LitePalDataHandler;
+import tech.codegarage.scheduler.model.ScheduleItem;
+import tech.codegarage.scheduler.service.AlarmService;
 
 import static tech.codegarage.quotes.util.AllConstants.SESSION_DATA_DATA_BUILDER;
 import static tech.codegarage.quotes.util.AllConstants.SESSION_IS_FIRST_TIME;
+import static tech.codegarage.scheduler.util.AllConstants.INTENT_ACTION_CREATE;
+import static tech.codegarage.scheduler.util.AllConstants.INTENT_KEY_SCHEDULE_DATA_ALARM_SERVICE;
+import static tech.codegarage.scheduler.util.AllConstants.TIME_FORMAT;
 
 /**
  * @author Md. Rashadul Alam
@@ -62,6 +68,29 @@ public class SplashActivity extends BaseActivity {
         }
 
         initSplashUI();
+
+//        setQuoteOfTheDayAlarm();
+    }
+
+    private void setQuoteOfTheDayAlarm() {
+
+        String mTime = "";
+        Calendar currentTime = Calendar.getInstance();
+        currentTime.add(Calendar.MINUTE, 1);
+        Calendar mAlertTime = Calendar.getInstance();
+        mAlertTime.set(Calendar.HOUR_OF_DAY, currentTime.get(Calendar.HOUR_OF_DAY));
+        mAlertTime.set(Calendar.MINUTE, currentTime.get(Calendar.MINUTE));
+        mAlertTime.set(Calendar.SECOND, 0);
+        mTime = TIME_FORMAT.format(mAlertTime.getTime());
+
+//        if (AppUtils.isNullOrEmpty(AppUtils.getStringSetting(SplashActivity.this, SESSION_KEY_SCHEDULE_DATA, SESSION_DEFAULT_VALUE_STRING))) {
+        ScheduleItem scheduleItem = new ScheduleItem(1, "Rashed", "Need to meed", mAlertTime.getTimeInMillis(), 2);
+
+        Intent service = new Intent(SplashActivity.this, AlarmService.class);
+        service.putExtra(INTENT_KEY_SCHEDULE_DATA_ALARM_SERVICE, scheduleItem);
+        service.setAction(INTENT_ACTION_CREATE);
+        startService(service);
+//        }
     }
 
     private void initSplashUI() {
@@ -114,7 +143,7 @@ public class SplashActivity extends BaseActivity {
         if (!AllSettingsManager.isNullOrEmpty(SessionManager.getStringSetting(QuoteApp.getGlobalContext(), SESSION_DATA_DATA_BUILDER))) {
             splashCountDownTimer = new SplashCountDownTimer(splashTime, interval);
             splashCountDownTimer.start();
-        }else{
+        } else {
             inputData = new InputData();
             inputData.execute();
         }

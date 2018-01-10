@@ -1,5 +1,9 @@
 package tech.codegarage.scheduler.util;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Locale;
+
 /**
  * @author Md. Rashadul Alam
  */
@@ -17,4 +21,7 @@ public class AllConstants {
     //Intent key
     public static final String INTENT_KEY_SCHEDULE_DATA_ALARM_RECEIVER = "INTENT_KEY_SCHEDULE_DATA_ALARM_RECEIVER";
     public static final String INTENT_KEY_SCHEDULE_DATA_ALARM_SERVICE = "INTENT_KEY_SCHEDULE_DATA_ALARM_SERVICE";
+
+    public static final DateFormat TIME_FORMAT = new SimpleDateFormat("hh:mm aa", Locale.CANADA);
+    public static final DateFormat DATE_FORMAT = new SimpleDateFormat("dd/MM/yy", Locale.CANADA);
 }

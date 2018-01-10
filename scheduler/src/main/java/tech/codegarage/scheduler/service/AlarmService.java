@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Build;
 
+import tech.codegarage.scheduler.model.BaseParcelable;
 import tech.codegarage.scheduler.model.ScheduleItem;
 import tech.codegarage.scheduler.receiver.AlarmReceiver;
 import tech.codegarage.scheduler.util.AppUtils;
@@ -26,7 +27,8 @@ import static tech.codegarage.scheduler.util.AllConstants.SESSION_KEY_SCHEDULE_D
 public class AlarmService extends IntentService {
 
     private IntentFilter matcher;
-    private ScheduleItem scheduleItem;
+    private ScheduleItem mScheduleItem;
+    private String TAG = AlarmService.class.getSimpleName();
 
     public AlarmService() {
         super(AlarmService.class.getSimpleName());
@@ -39,9 +41,9 @@ public class AlarmService extends IntentService {
     @Override
     protected void onHandleIntent(Intent intent) {
         String action = intent.getAction();
-        scheduleItem = intent.getParcelableExtra(INTENT_KEY_SCHEDULE_DATA_ALARM_SERVICE);
-        if (scheduleItem != null && matcher.matchAction(action)) {
-            executeSchedule(action, scheduleItem);
+        mScheduleItem = intent.getParcelableExtra(INTENT_KEY_SCHEDULE_DATA_ALARM_SERVICE);
+        if (mScheduleItem != null && matcher.matchAction(action)) {
+            executeSchedule(action, mScheduleItem);
         }
     }
 
@@ -50,9 +52,8 @@ public class AlarmService extends IntentService {
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
 
         Intent intent = new Intent(this, AlarmReceiver.class);
-        intent.putExtra(INTENT_KEY_SCHEDULE_DATA_ALARM_RECEIVER, scheduleItem);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, scheduleItem.getId(), intent,
-                PendingIntent.FLAG_UPDATE_CURRENT);
+        intent.putExtra(INTENT_KEY_SCHEDULE_DATA_ALARM_RECEIVER, BaseParcelable.toByteArray(scheduleItem));
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, scheduleItem.getId(), intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         if (INTENT_ACTION_CREATE.equals(action)) {
 
