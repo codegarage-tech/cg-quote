@@ -31,6 +31,7 @@ import tech.codegarage.quotes.R;
 import tech.codegarage.quotes.application.QuoteApp;
 import tech.codegarage.quotes.model.database.LitePalDataBuilder;
 import tech.codegarage.quotes.model.database.LitePalDataHandler;
+import tech.codegarage.scheduler.enumeration.REPEAT_TYPE;
 import tech.codegarage.scheduler.model.ScheduleItem;
 import tech.codegarage.scheduler.service.AlarmService;
 
@@ -84,7 +85,7 @@ public class SplashActivity extends BaseActivity {
         mTime = TIME_FORMAT.format(mAlertTime.getTime());
 
 //        if (AppUtils.isNullOrEmpty(AppUtils.getStringSetting(SplashActivity.this, SESSION_KEY_SCHEDULE_DATA, SESSION_DEFAULT_VALUE_STRING))) {
-        ScheduleItem scheduleItem = new ScheduleItem(1, "Rashed", "Need to meed", mAlertTime.getTimeInMillis(), 2);
+        ScheduleItem scheduleItem = new ScheduleItem(1, "Rashed", mTime, mAlertTime.getTimeInMillis(), REPEAT_TYPE.DAILY);
 
         Intent service = new Intent(SplashActivity.this, AlarmService.class);
         service.putExtra(INTENT_KEY_SCHEDULE_DATA_ALARM_SERVICE, scheduleItem);

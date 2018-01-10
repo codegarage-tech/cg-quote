@@ -8,6 +8,8 @@ import com.google.gson.Gson;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 
+import tech.codegarage.scheduler.enumeration.REPEAT_TYPE;
+
 /**
  * @author Md. Rashadul Alam
  */
@@ -17,7 +19,7 @@ public class ScheduleItem implements Parcelable {
     private String mTitle = "";
     private String mContent = "";
     private long mTimeInMillis = 0;
-    private int mFrequency = -1;
+    private REPEAT_TYPE mFrequency = REPEAT_TYPE.NONE;
 
     private static final SimpleDateFormat TIME_FORMAT =
             new SimpleDateFormat("HH:mm, MMM d ''yy", Locale.US);
@@ -25,7 +27,7 @@ public class ScheduleItem implements Parcelable {
     public ScheduleItem() {
     }
 
-    public ScheduleItem(int mId, String mTitle, String mContent, long mTimeInMillis, int mFrequency) {
+    public ScheduleItem(int mId, String mTitle, String mContent, long mTimeInMillis, REPEAT_TYPE mFrequency) {
         this.mId = mId;
         this.mTitle = mTitle;
         this.mContent = mContent;
@@ -69,12 +71,12 @@ public class ScheduleItem implements Parcelable {
         return TIME_FORMAT.format(getTimeInMillis());
     }
 
-    public int getFrequency() {
+    public REPEAT_TYPE getFrequency() {
         return mFrequency;
     }
 
-    public void setFrequency(int frequency) {
-        mFrequency = frequency;
+    public void setFrequency(REPEAT_TYPE mFrequency) {
+        this.mFrequency = mFrequency;
     }
 
     @Override
@@ -84,7 +86,7 @@ public class ScheduleItem implements Parcelable {
                 ", mTitle='" + mTitle + '\'' +
                 ", mContent='" + mContent + '\'' +
                 ", mTimeInMillis=" + mTimeInMillis +
-                ", mFrequency=" + mFrequency +
+                ", mFrequency=" + mFrequency.name() +
                 '}';
     }
 
@@ -102,7 +104,7 @@ public class ScheduleItem implements Parcelable {
         dest.writeString(this.mTitle);
         dest.writeString(this.mContent);
         dest.writeLong(this.mTimeInMillis);
-        dest.writeInt(this.mFrequency);
+        dest.writeString((this.mFrequency == null) ? "" : this.mFrequency.name());
     }
 
     // Creator
@@ -123,7 +125,7 @@ public class ScheduleItem implements Parcelable {
         this.mTitle = in.readString();
         this.mContent = in.readString();
         this.mTimeInMillis = in.readLong();
-        this.mFrequency = in.readInt();
+        this.mFrequency = REPEAT_TYPE.valueOf(in.readString());
     }
 
     /**************************

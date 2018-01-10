@@ -11,6 +11,7 @@ import android.support.v4.content.WakefulBroadcastReceiver;
 import java.util.Calendar;
 
 import tech.codegarage.scheduler.R;
+import tech.codegarage.scheduler.enumeration.REPEAT_TYPE;
 import tech.codegarage.scheduler.model.BaseParcelable;
 import tech.codegarage.scheduler.model.ScheduleItem;
 import tech.codegarage.scheduler.service.AlarmService;
@@ -24,7 +25,6 @@ import static tech.codegarage.scheduler.util.AllConstants.INTENT_KEY_SCHEDULE_DA
  */
 public class AlarmReceiver extends WakefulBroadcastReceiver {
 
-    private static final int HOURLY = 1, DAILY = 2, WEEKLY = 3, MONTHLY = 4, YEARLY = 5;
     private ScheduleItem scheduleItem;
     private String TAG = AlarmReceiver.class.getSimpleName();
 
@@ -41,25 +41,27 @@ public class AlarmReceiver extends WakefulBroadcastReceiver {
             return;
         }
 
-        int frequency = scheduleItem.getFrequency();
+        REPEAT_TYPE frequency = scheduleItem.getFrequency();
         Calendar time = Calendar.getInstance();
         time.setTimeInMillis(scheduleItem.getTimeInMillis());
 
-        if (frequency > 0) {
-            if (frequency == HOURLY) {
-                time.add(Calendar.HOUR, 1);
-
-            } else if (frequency == DAILY) {
-                time.add(Calendar.DATE, 1);
-
-            } else if (frequency == WEEKLY) {
-                time.add(Calendar.DATE, 7);
-            } else if (frequency == MONTHLY) {
-                time.add(Calendar.MONTH, 1);
-
-            } else if (frequency == YEARLY) {
-                time.add(Calendar.YEAR, 1);
-
+        if (frequency != REPEAT_TYPE.NONE) {
+            switch (frequency) {
+                case HOURLY:
+                    time.add(Calendar.HOUR, 1);
+                    break;
+                case DAILY:
+                    time.add(Calendar.DATE, 1);
+                    break;
+                case WEEKLY:
+                    time.add(Calendar.DATE, 7);
+                    break;
+                case MONTHLY:
+                    time.add(Calendar.MONTH, 1);
+                    break;
+                case YEARLY:
+                    time.add(Calendar.YEAR, 1);
+                    break;
             }
 
             //Set alarm again for repeating
@@ -84,7 +86,7 @@ public class AlarmReceiver extends WakefulBroadcastReceiver {
         bigStyle.setBigContentTitle(scheduleItem.getTitle());
         bigStyle.bigText(scheduleItem.getContent());
         Notification n = new NotificationCompat.Builder(context)
-                .setSmallIcon(R.drawable.ic_schedule_48)
+                .setSmallIcon(R.drawable.ic_schedule_96)
                 .setContentTitle(scheduleItem.getTitle())
                 .setContentText(scheduleItem.getContent())
                 .setPriority(Notification.PRIORITY_MAX)
@@ -99,8 +101,7 @@ public class AlarmReceiver extends WakefulBroadcastReceiver {
         n.sound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         n.defaults |= Notification.DEFAULT_SOUND;
 
-        NotificationManager notificationManager = (NotificationManager)
-                context.getSystemService(Context.NOTIFICATION_SERVICE);
+        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(scheduleItem.getId(), n);
     }
 }
