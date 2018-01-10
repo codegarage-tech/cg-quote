@@ -86,7 +86,7 @@ public class AlarmReceiver extends WakefulBroadcastReceiver {
         bigStyle.setBigContentTitle(scheduleItem.getTitle());
         bigStyle.bigText(scheduleItem.getContent());
         Notification n = new NotificationCompat.Builder(context)
-                .setSmallIcon(R.drawable.ic_schedule_96)
+                .setSmallIcon(R.drawable.ic_notification_quote)
                 .setContentTitle(scheduleItem.getTitle())
                 .setContentText(scheduleItem.getContent())
                 .setPriority(Notification.PRIORITY_MAX)

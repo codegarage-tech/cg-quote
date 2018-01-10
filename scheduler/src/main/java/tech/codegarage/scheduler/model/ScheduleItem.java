@@ -21,8 +21,7 @@ public class ScheduleItem implements Parcelable {
     private long mTimeInMillis = 0;
     private REPEAT_TYPE mFrequency = REPEAT_TYPE.NONE;
 
-    private static final SimpleDateFormat TIME_FORMAT =
-            new SimpleDateFormat("HH:mm, MMM d ''yy", Locale.US);
+    private static final SimpleDateFormat TIME_FORMAT = new SimpleDateFormat("HH:mm, MMM d ''yy", Locale.US);
 
     public ScheduleItem() {
     }

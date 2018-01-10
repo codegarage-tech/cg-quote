@@ -40,6 +40,8 @@ import static tech.codegarage.quotes.util.AllConstants.SESSION_IS_FIRST_TIME;
 import static tech.codegarage.scheduler.util.AllConstants.INTENT_ACTION_CREATE;
 import static tech.codegarage.scheduler.util.AllConstants.INTENT_KEY_SCHEDULE_DATA_ALARM_SERVICE;
 import static tech.codegarage.scheduler.util.AllConstants.TIME_FORMAT;
+import static tech.codegarage.scheduler.util.AllConstants.DATE_FORMAT;
+import static tech.codegarage.scheduler.util.AllConstants.FORMATTED_TIME_DATE_FORMAT;
 
 /**
  * @author Md. Rashadul Alam
@@ -70,22 +72,23 @@ public class SplashActivity extends BaseActivity {
 
         initSplashUI();
 
-//        setQuoteOfTheDayAlarm();
+        setQuoteOfTheDayAlarm();
     }
 
     private void setQuoteOfTheDayAlarm() {
 
-        String mTime = "";
         Calendar currentTime = Calendar.getInstance();
         currentTime.add(Calendar.MINUTE, 1);
         Calendar mAlertTime = Calendar.getInstance();
         mAlertTime.set(Calendar.HOUR_OF_DAY, currentTime.get(Calendar.HOUR_OF_DAY));
         mAlertTime.set(Calendar.MINUTE, currentTime.get(Calendar.MINUTE));
         mAlertTime.set(Calendar.SECOND, 0);
-        mTime = TIME_FORMAT.format(mAlertTime.getTime());
+        String mTime = TIME_FORMAT.format(mAlertTime.getTime());
+        String mDate = DATE_FORMAT.format(mAlertTime.getTime());
+        String mFormattedDate = FORMATTED_TIME_DATE_FORMAT.format(mAlertTime.getTimeInMillis());
 
 //        if (AppUtils.isNullOrEmpty(AppUtils.getStringSetting(SplashActivity.this, SESSION_KEY_SCHEDULE_DATA, SESSION_DEFAULT_VALUE_STRING))) {
-        ScheduleItem scheduleItem = new ScheduleItem(1, "Rashed", mTime, mAlertTime.getTimeInMillis(), REPEAT_TYPE.DAILY);
+        ScheduleItem scheduleItem = new ScheduleItem(1, "Quote of the day"+"("+mDate+")", "Tap for more details." , mAlertTime.getTimeInMillis(), REPEAT_TYPE.NONE);
 
         Intent service = new Intent(SplashActivity.this, AlarmService.class);
         service.putExtra(INTENT_KEY_SCHEDULE_DATA_ALARM_SERVICE, scheduleItem);

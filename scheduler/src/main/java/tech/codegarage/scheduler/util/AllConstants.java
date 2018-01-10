@@ -22,6 +22,8 @@ public class AllConstants {
     public static final String INTENT_KEY_SCHEDULE_DATA_ALARM_RECEIVER = "INTENT_KEY_SCHEDULE_DATA_ALARM_RECEIVER";
     public static final String INTENT_KEY_SCHEDULE_DATA_ALARM_SERVICE = "INTENT_KEY_SCHEDULE_DATA_ALARM_SERVICE";
 
-    public static final DateFormat TIME_FORMAT = new SimpleDateFormat("hh:mm aa", Locale.CANADA);
-    public static final DateFormat DATE_FORMAT = new SimpleDateFormat("dd/MM/yy", Locale.CANADA);
+    public static final DateFormat TIME_FORMAT = new SimpleDateFormat("hh:mm aa", Locale.US);
+//    public static final DateFormat DATE_FORMAT = new SimpleDateFormat("dd/MM/yy", Locale.US);
+    public static final DateFormat DATE_FORMAT = new SimpleDateFormat("MMMM dd, yyyy", Locale.US);
+    public static final SimpleDateFormat FORMATTED_TIME_DATE_FORMAT = new SimpleDateFormat("HH:mm, MMM d ''yy", Locale.US);
 }
