@@ -34,6 +34,7 @@ import tech.codegarage.quotes.model.database.LitePalDataHandler;
 import tech.codegarage.scheduler.enumeration.REPEAT_TYPE;
 import tech.codegarage.scheduler.model.ScheduleItem;
 import tech.codegarage.scheduler.service.AlarmService;
+import tech.codegarage.scheduler.Scheduler;
 
 import static tech.codegarage.quotes.util.AllConstants.SESSION_DATA_DATA_BUILDER;
 import static tech.codegarage.quotes.util.AllConstants.SESSION_IS_FIRST_TIME;
@@ -76,6 +77,9 @@ public class SplashActivity extends BaseActivity {
     }
 
     private void setQuoteOfTheDayAlarm() {
+
+        //Initialize scheduler content class
+        new Scheduler.ScheduleBuilder().setContentClass(AmazingTodayActivity.class).buildSchedule();
 
         Calendar currentTime = Calendar.getInstance();
         currentTime.add(Calendar.MINUTE, 1);

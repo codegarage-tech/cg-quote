@@ -19,6 +19,7 @@
     <string name="title_activity_author">Home</string>
     <string name="title_activity_author_detail">Author</string>
     <string name="title_activity_quote_detail">Quote</string>
+    <string name="title_activity_amazing_today">Amazing Today</string>
 
     <!-- Context Menu -->
     <string name="context_menu">Context menu</string>

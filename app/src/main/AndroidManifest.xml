@@ -50,6 +50,11 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
 
+        <activity
+            android:name="tech.codegarage.quotes.activity.AmazingTodayActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+
         <!-- for database -->
         <meta-data
             android:name="DATABASE"

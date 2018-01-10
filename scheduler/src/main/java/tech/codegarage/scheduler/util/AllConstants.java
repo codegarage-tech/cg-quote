@@ -21,6 +21,7 @@ public class AllConstants {
     //Intent key
     public static final String INTENT_KEY_SCHEDULE_DATA_ALARM_RECEIVER = "INTENT_KEY_SCHEDULE_DATA_ALARM_RECEIVER";
     public static final String INTENT_KEY_SCHEDULE_DATA_ALARM_SERVICE = "INTENT_KEY_SCHEDULE_DATA_ALARM_SERVICE";
+    public static final String INTENT_KEY_SCHEDULE_DATA_CONTENT_INTENT = "INTENT_KEY_SCHEDULE_DATA_CONTENT_INTENT";
 
     public static final DateFormat TIME_FORMAT = new SimpleDateFormat("hh:mm aa", Locale.US);
 //    public static final DateFormat DATE_FORMAT = new SimpleDateFormat("dd/MM/yy", Locale.US);

@@ -2,10 +2,12 @@ package tech.codegarage.scheduler.receiver;
 
 import android.app.Notification;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.media.RingtoneManager;
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.TaskStackBuilder;
 import android.support.v4.content.WakefulBroadcastReceiver;
 
 import java.util.Calendar;
@@ -15,10 +17,12 @@ import tech.codegarage.scheduler.enumeration.REPEAT_TYPE;
 import tech.codegarage.scheduler.model.BaseParcelable;
 import tech.codegarage.scheduler.model.ScheduleItem;
 import tech.codegarage.scheduler.service.AlarmService;
+import tech.codegarage.scheduler.Scheduler;
 
 import static tech.codegarage.scheduler.util.AllConstants.INTENT_ACTION_CREATE;
 import static tech.codegarage.scheduler.util.AllConstants.INTENT_KEY_SCHEDULE_DATA_ALARM_RECEIVER;
 import static tech.codegarage.scheduler.util.AllConstants.INTENT_KEY_SCHEDULE_DATA_ALARM_SERVICE;
+import static tech.codegarage.scheduler.util.AllConstants.INTENT_KEY_SCHEDULE_DATA_CONTENT_INTENT;
 
 /**
  * @author Md. Rashadul Alam
@@ -75,12 +79,12 @@ public class AlarmReceiver extends WakefulBroadcastReceiver {
     }
 
     private void sendNotification(Context context, ScheduleItem scheduleItem) {
-//        Intent result = new Intent(context, CreateOrEditAlert.class);
-//        result.putExtra(ReminderParams.ID, id);
-//        TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
-//        stackBuilder.addParentStack(CreateOrEditAlert.class);
-//        stackBuilder.addNextIntent(result);
-//        PendingIntent clicked = stackBuilder.getPendingIntent(scheduleItem.getId(), PendingIntent.FLAG_UPDATE_CURRENT);
+        Intent result = new Intent(context, Scheduler.clazz);
+        result.putExtra(INTENT_KEY_SCHEDULE_DATA_CONTENT_INTENT, scheduleItem);
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
+        stackBuilder.addParentStack(Scheduler.clazz);
+        stackBuilder.addNextIntent(result);
+        PendingIntent clicked = stackBuilder.getPendingIntent(scheduleItem.getId(), PendingIntent.FLAG_UPDATE_CURRENT);
 
         NotificationCompat.BigTextStyle bigStyle = new NotificationCompat.BigTextStyle();
         bigStyle.setBigContentTitle(scheduleItem.getTitle());
@@ -92,10 +96,9 @@ public class AlarmReceiver extends WakefulBroadcastReceiver {
                 .setPriority(Notification.PRIORITY_MAX)
                 .setWhen(0)
                 .setStyle(bigStyle)
-//                .setContentIntent(clicked)
+                .setContentIntent(clicked)
                 .setAutoCancel(true)
                 .build();
-
 
         n.defaults |= Notification.DEFAULT_VIBRATE;
         n.sound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
