@@ -26,6 +26,7 @@ public class AllConstants {
     public static final DateFormat TIME_FORMAT = new SimpleDateFormat("hh:mm aa", Locale.US);
     //    public static final DateFormat DATE_FORMAT = new SimpleDateFormat("dd/MM/yy", Locale.US);
     public static final DateFormat DATE_FORMAT = new SimpleDateFormat("MMMM dd, yyyy", Locale.US);
-    public static final String DATE_FORMAT_STRING = "MMMM dd, yyyy";
+    public static final SimpleDateFormat DATE_FORMAT_DD_MM_YY = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+    public static final String DATE_FORMAT_STRING = "yyyy-MM-dd";
     public static final SimpleDateFormat FORMATTED_TIME_DATE_FORMAT = new SimpleDateFormat("HH:mm, MMM d ''yy", Locale.US);
 }

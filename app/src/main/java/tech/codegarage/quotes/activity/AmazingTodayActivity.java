@@ -24,7 +24,7 @@ import tech.codegarage.quotes.view.CanaroTextView;
 import static tech.codegarage.quotes.model.database.LitePalDataHandler.getAllQuotes;
 import static tech.codegarage.quotes.util.AllConstants.SESSION_QUOTE_OF_THE_DAY;
 import static tech.codegarage.quotes.util.AppUtils.isDateEqual;
-import static tech.codegarage.scheduler.util.AllConstants.DATE_FORMAT;
+import static tech.codegarage.scheduler.util.AllConstants.DATE_FORMAT_DD_MM_YY;
 import static tech.codegarage.scheduler.util.AllConstants.DATE_FORMAT_STRING;
 
 /**
@@ -98,7 +98,7 @@ public class AmazingTodayActivity extends BaseActivity {
         @Override
         protected void onPostExecute(LitePalDataBuilder result) {
             if (result != null) {
-                String today = DATE_FORMAT.format(new Date());
+                String today = DATE_FORMAT_DD_MM_YY.format(new Date());
                 QuoteOfTheDay quoteOfTheDay;
 
                 if (!AllSettingsManager.isNullOrEmpty(SessionManager.getStringSetting(AmazingTodayActivity.this, SESSION_QUOTE_OF_THE_DAY))) {
