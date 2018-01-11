@@ -15,8 +15,6 @@ import com.bumptech.glide.request.RequestOptions;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.lombokcyberlab.android.multicolortextview.MultiColorTextView;
-import com.reversecoder.gcm.task.RegisterApp;
-import com.reversecoder.library.network.NetworkManager;
 import com.reversecoder.library.storage.SessionManager;
 import com.reversecoder.library.util.AllSettingsManager;
 import com.reversecoder.permission.activity.PermissionListActivity;
@@ -24,25 +22,15 @@ import com.rodolfonavalon.shaperipplelibrary.ShapeRipple;
 import com.rodolfonavalon.shaperipplelibrary.model.Circle;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 
 import spencerstudios.com.bungeelib.Bungee;
 import tech.codegarage.quotes.R;
 import tech.codegarage.quotes.application.QuoteApp;
 import tech.codegarage.quotes.model.database.LitePalDataBuilder;
 import tech.codegarage.quotes.model.database.LitePalDataHandler;
-import tech.codegarage.scheduler.enumeration.REPEAT_TYPE;
-import tech.codegarage.scheduler.model.ScheduleItem;
-import tech.codegarage.scheduler.service.AlarmService;
-import tech.codegarage.scheduler.Scheduler;
 
 import static tech.codegarage.quotes.util.AllConstants.SESSION_DATA_DATA_BUILDER;
 import static tech.codegarage.quotes.util.AllConstants.SESSION_IS_FIRST_TIME;
-import static tech.codegarage.scheduler.util.AllConstants.INTENT_ACTION_CREATE;
-import static tech.codegarage.scheduler.util.AllConstants.INTENT_KEY_SCHEDULE_DATA_ALARM_SERVICE;
-import static tech.codegarage.scheduler.util.AllConstants.TIME_FORMAT;
-import static tech.codegarage.scheduler.util.AllConstants.DATE_FORMAT;
-import static tech.codegarage.scheduler.util.AllConstants.FORMATTED_TIME_DATE_FORMAT;
 
 /**
  * @author Md. Rashadul Alam
@@ -66,39 +54,7 @@ public class SplashActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-        //Register app for push notification
-        if (NetworkManager.isConnected(SplashActivity.this)) {
-            new RegisterApp(SplashActivity.this).execute();
-        }
-
         initSplashUI();
-
-        setQuoteOfTheDayAlarm();
-    }
-
-    private void setQuoteOfTheDayAlarm() {
-
-        //Initialize scheduler content class
-        new Scheduler.ScheduleBuilder().setContentClass(AmazingTodayActivity.class).buildSchedule();
-
-        Calendar currentTime = Calendar.getInstance();
-        currentTime.add(Calendar.MINUTE, 1);
-        Calendar mAlertTime = Calendar.getInstance();
-        mAlertTime.set(Calendar.HOUR_OF_DAY, currentTime.get(Calendar.HOUR_OF_DAY));
-        mAlertTime.set(Calendar.MINUTE, currentTime.get(Calendar.MINUTE));
-        mAlertTime.set(Calendar.SECOND, 0);
-        String mTime = TIME_FORMAT.format(mAlertTime.getTime());
-        String mDate = DATE_FORMAT.format(mAlertTime.getTime());
-        String mFormattedDate = FORMATTED_TIME_DATE_FORMAT.format(mAlertTime.getTimeInMillis());
-
-//        if (AppUtils.isNullOrEmpty(AppUtils.getStringSetting(SplashActivity.this, SESSION_KEY_SCHEDULE_DATA, SESSION_DEFAULT_VALUE_STRING))) {
-        ScheduleItem scheduleItem = new ScheduleItem(1, "Quote of the day"+"("+mDate+")", "Tap for more details." , mAlertTime.getTimeInMillis(), REPEAT_TYPE.NONE);
-
-        Intent service = new Intent(SplashActivity.this, AlarmService.class);
-        service.putExtra(INTENT_KEY_SCHEDULE_DATA_ALARM_SERVICE, scheduleItem);
-        service.setAction(INTENT_ACTION_CREATE);
-        startService(service);
-//        }
     }
 
     private void initSplashUI() {

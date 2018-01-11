@@ -52,4 +52,8 @@
     <!-- Share quote -->
     <string name="txt_quote_is_shared_by_the_app">The Quote is shared by the app-</string>
 
+    <!-- Notification -->
+    <string name="txt_quote_of_the_day_title">Quote of the day</string>
+    <string name="txt_quote_of_the_day_content">Tap for more details.</string>
+
 </resources>

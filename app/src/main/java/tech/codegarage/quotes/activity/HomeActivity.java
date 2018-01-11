@@ -21,11 +21,17 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.eggheadgames.aboutbox.AboutBoxUtils;
 import com.eggheadgames.aboutbox.AboutConfig;
+import com.eggheadgames.aboutbox.IAnalytic;
+import com.eggheadgames.aboutbox.IDialog;
 import com.eggheadgames.aboutbox.activity.AboutActivity;
 import com.eggheadgames.aboutbox.listener.LicenseClickListener;
 import com.reversecoder.attributionpresenter.activity.LicenseActivity;
+import com.reversecoder.gcm.task.RegisterApp;
+import com.reversecoder.library.network.NetworkManager;
 import com.reversecoder.library.storage.SessionManager;
+import com.reversecoder.library.util.AllSettingsManager;
 
+import java.util.Calendar;
 import java.util.List;
 
 import io.armcha.ribble.presentation.navigation.NavigationState;
@@ -45,6 +51,15 @@ import tech.codegarage.quotes.interfaces.OnFragmentBackPressedListener;
 import tech.codegarage.quotes.util.AllConstants;
 import tech.codegarage.quotes.util.AppUtils;
 import tech.codegarage.quotes.util.FragmentUtilsManager;
+import tech.codegarage.scheduler.enumeration.REPEAT_TYPE;
+import tech.codegarage.scheduler.model.ScheduleItem;
+import tech.codegarage.scheduler.service.AlarmService;
+
+import static tech.codegarage.scheduler.util.AllConstants.DATE_FORMAT;
+import static tech.codegarage.scheduler.util.AllConstants.INTENT_ACTION_CREATE;
+import static tech.codegarage.scheduler.util.AllConstants.INTENT_KEY_SCHEDULE_DATA_ALARM_SERVICE;
+import static tech.codegarage.scheduler.util.AllConstants.SESSION_DEFAULT_VALUE_STRING;
+import static tech.codegarage.scheduler.util.AllConstants.SESSION_KEY_SCHEDULE_DATA;
 
 public class HomeActivity extends BaseActivity {
 
@@ -77,21 +92,18 @@ public class HomeActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        initViews();
+        initQuoteOfTheDayAlarm();
 
-        if (isArcIcon || isDrawerOpened) {
-            setArcArrowState();
-        } else {
-            setArcHamburgerIconState();
-        }
-        setToolBarTitle(activeTitle);
-        updateUserInfo();
+        initAboutPage();
+
+        initViews();
 
         if (savedInstanceState == null) {
             SessionManager.setStringSetting(HomeActivity.this, AllConstants.SESSION_SELECTED_RIBBLE_MENU, getString(R.string.ribble_menu_item_home));
             handleFragmentChanges(HomeActivity.this, getString(R.string.ribble_menu_item_home), new AuthorFragment());
         }
 
+        initPushNotification();
     }
 
     private void initViews() {
@@ -176,6 +188,14 @@ public class HomeActivity extends BaseActivity {
         });
 
         drawerLayout.setScrimColor(Color.TRANSPARENT);
+
+        if (isArcIcon || isDrawerOpened) {
+            setArcArrowState();
+        } else {
+            setArcHamburgerIconState();
+        }
+
+        updateUserInfo();
     }
 
     private void initToolBar() {
@@ -356,6 +376,95 @@ public class HomeActivity extends BaseActivity {
             }
             default:
                 break;
+        }
+    }
+
+    /************************
+     * Methods for schedule *
+     ************************/
+    private void initQuoteOfTheDayAlarm() {
+
+        Calendar mAlertTime = Calendar.getInstance();
+//        Calendar currentTime = Calendar.getInstance();
+//        currentTime.add(Calendar.MINUTE, 2);
+//        mAlertTime.set(Calendar.HOUR_OF_DAY, currentTime.get(Calendar.HOUR_OF_DAY));
+//        mAlertTime.set(Calendar.MINUTE, currentTime.get(Calendar.MINUTE));
+//        String mTime = TIME_FORMAT.format(mAlertTime.getTime());
+//        String mFormattedDate = FORMATTED_TIME_DATE_FORMAT.format(mAlertTime.getTimeInMillis());
+
+        mAlertTime.set(Calendar.HOUR_OF_DAY, 8);
+        mAlertTime.set(Calendar.MINUTE, 0);
+        mAlertTime.set(Calendar.SECOND, 0);
+        String mDate = DATE_FORMAT.format(mAlertTime.getTime());
+
+        if (AllSettingsManager.isNullOrEmpty(SessionManager.getStringSetting(HomeActivity.this, SESSION_KEY_SCHEDULE_DATA, SESSION_DEFAULT_VALUE_STRING))) {
+            ScheduleItem scheduleItem = new ScheduleItem(1, getString(R.string.txt_quote_of_the_day_title), getString(R.string.txt_quote_of_the_day_content), mDate, mAlertTime.getTimeInMillis(), REPEAT_TYPE.DAILY);
+
+            Intent service = new Intent(HomeActivity.this, AlarmService.class);
+            service.putExtra(INTENT_KEY_SCHEDULE_DATA_ALARM_SERVICE, scheduleItem);
+            service.setAction(INTENT_ACTION_CREATE);
+            startService(service);
+        }
+    }
+
+    /**************************
+     * Methods for about page *
+     **************************/
+    private void initAboutPage() {
+        AboutConfig aboutConfig = AboutConfig.getInstance();
+        aboutConfig.appName = getString(R.string.app_name);
+        aboutConfig.appIcon = R.mipmap.ic_launcher;
+        aboutConfig.version = getString(R.string.app_version_name);
+        aboutConfig.author = getString(R.string.app_author);
+        aboutConfig.aboutLabelTitle = getString(R.string.mal_title_about);
+        aboutConfig.packageName = getApplicationContext().getPackageName();
+        aboutConfig.buildType = AboutConfig.BuildType.GOOGLE;
+
+        aboutConfig.facebookUserName = getString(R.string.app_publisher_facebook_id);
+        aboutConfig.twitterUserName = getString(R.string.app_publisher_twitter_id);
+        aboutConfig.webHomePage = getString(R.string.app_publisher_profile_website);
+
+        // app publisher for "Try Other Apps" item
+        aboutConfig.appPublisher = getString(R.string.app_publisher);
+
+        // if pages are stored locally, then you need to override aboutConfig.dialog to be able use custom WebView
+        aboutConfig.companyHtmlPath = getString(R.string.app_publisher_company_html_path);
+        aboutConfig.privacyHtmlPath = getString(R.string.app_publisher_privacy_html_path);
+        aboutConfig.acknowledgmentHtmlPath = getString(R.string.app_publisher_acknowledgment_html_path);
+
+        aboutConfig.dialog = new IDialog() {
+            @Override
+            public void open(AppCompatActivity appCompatActivity, String url, String tag) {
+                // handle custom implementations of WebView. It will be called when user click to web items. (Example: "Privacy", "Acknowledgments" and "About")
+            }
+        };
+
+        aboutConfig.analytics = new IAnalytic() {
+            @Override
+            public void logUiEvent(String s, String s1) {
+                // handle log events.
+            }
+
+            @Override
+            public void logException(Exception e, boolean b) {
+                // handle exception events.
+            }
+        };
+        // set it only if aboutConfig.analytics is defined.
+        aboutConfig.logUiEventName = "Log";
+
+        // Contact Support email details
+        aboutConfig.emailAddress = getString(R.string.app_author_email);
+        aboutConfig.emailSubject = "[" + getString(R.string.app_name) + "]" + "[" + getString(R.string.app_version_name) + "]" + " " + getString(R.string.app_contact_subject);
+        aboutConfig.emailBody = getString(R.string.app_contact_body);
+    }
+
+    /**************************************
+     * Register app for push notification *
+     **************************************/
+    private void initPushNotification() {
+        if (NetworkManager.isConnected(HomeActivity.this)) {
+            new RegisterApp(HomeActivity.this).execute();
         }
     }
 }

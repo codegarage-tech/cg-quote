@@ -11,8 +11,6 @@ import com.reversecoder.library.storage.SessionManager;
 import com.reversecoder.localechanger.LocaleChanger;
 import com.reversecoder.logger.LogType;
 import com.reversecoder.logger.Logger;
-import tech.codegarage.quotes.BuildConfig;
-import tech.codegarage.quotes.R;
 import com.singhajit.sherlock.core.Sherlock;
 import com.singhajit.sherlock.core.investigation.AppInfo;
 import com.singhajit.sherlock.core.investigation.AppInfoProvider;
@@ -22,6 +20,11 @@ import org.litepal.LitePal;
 
 import java.util.List;
 import java.util.Locale;
+
+import tech.codegarage.quotes.BuildConfig;
+import tech.codegarage.quotes.R;
+import tech.codegarage.quotes.activity.AmazingTodayActivity;
+import tech.codegarage.scheduler.Scheduler;
 
 import static com.reversecoder.localechanger.data.Locales.getAllLocales;
 import static tech.codegarage.quotes.util.AllConstants.SESSION_FREE_APP;
@@ -45,6 +48,9 @@ public class QuoteApp extends Application {
 
         //Initialize multidex object
         MultiDex.install(this);
+
+        //Initialize scheduler content class
+        Scheduler.initSchedule(mContext, new Scheduler.ScheduleBuilder().setContentClass(AmazingTodayActivity.class).buildSchedule());
 
         //Initialize litepal database
         LitePal.initialize(mContext);
@@ -76,13 +82,13 @@ public class QuoteApp extends Application {
 
         //Initialize Locale
 //        if (AllSettingsManager.isNullOrEmpty(SessionManager.getStringSetting(getGlobalContext(), SESSION_SELECTED_LANGUAGE))) {
-            List<Locale> locales = getAllLocales();
-            LocaleChanger.initialize(getApplicationContext(), locales);
-            Locale selectedLocale = locales.get(0);
-            LocaleChanger.setLocale(selectedLocale);
-            SessionManager.setStringSetting(getGlobalContext(), SESSION_SELECTED_LANGUAGE, selectedLocale.getLanguage());
-            //Initialize app type(Now the app is in paid mode for testing)
-            SessionManager.setBooleanSetting(getGlobalContext(), SESSION_FREE_APP, false);
+        List<Locale> locales = getAllLocales();
+        LocaleChanger.initialize(getApplicationContext(), locales);
+        Locale selectedLocale = locales.get(0);
+        LocaleChanger.setLocale(selectedLocale);
+        SessionManager.setStringSetting(getGlobalContext(), SESSION_SELECTED_LANGUAGE, selectedLocale.getLanguage());
+        //Initialize app type(Now the app is in paid mode for testing)
+        SessionManager.setBooleanSetting(getGlobalContext(), SESSION_FREE_APP, false);
 //        }
     }
 

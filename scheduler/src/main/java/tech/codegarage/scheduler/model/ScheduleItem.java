@@ -18,6 +18,7 @@ public class ScheduleItem implements Parcelable {
     private int mId = -1;
     private String mTitle = "";
     private String mContent = "";
+    private String mAlarmTime = "";
     private long mTimeInMillis = 0;
     private REPEAT_TYPE mFrequency = REPEAT_TYPE.NONE;
 
@@ -26,10 +27,11 @@ public class ScheduleItem implements Parcelable {
     public ScheduleItem() {
     }
 
-    public ScheduleItem(int mId, String mTitle, String mContent, long mTimeInMillis, REPEAT_TYPE mFrequency) {
+    public ScheduleItem(int mId, String mTitle, String mContent, String mAlarmTime, long mTimeInMillis, REPEAT_TYPE mFrequency) {
         this.mId = mId;
         this.mTitle = mTitle;
         this.mContent = mContent;
+        this.mAlarmTime = mAlarmTime;
         this.mTimeInMillis = mTimeInMillis;
         this.mFrequency = mFrequency;
     }
@@ -58,6 +60,14 @@ public class ScheduleItem implements Parcelable {
         mContent = content;
     }
 
+    public String getAlarmTime() {
+        return mAlarmTime;
+    }
+
+    public void setAlarmTime(String mAlarmTime) {
+        this.mAlarmTime = mAlarmTime;
+    }
+
     public long getTimeInMillis() {
         return mTimeInMillis;
     }
@@ -84,6 +94,7 @@ public class ScheduleItem implements Parcelable {
                 "mId=" + mId +
                 ", mTitle='" + mTitle + '\'' +
                 ", mContent='" + mContent + '\'' +
+                ", mAlarmTime='" + mAlarmTime + '\'' +
                 ", mTimeInMillis=" + mTimeInMillis +
                 ", mFrequency=" + mFrequency.name() +
                 '}';
@@ -102,6 +113,7 @@ public class ScheduleItem implements Parcelable {
         dest.writeInt(this.mId);
         dest.writeString(this.mTitle);
         dest.writeString(this.mContent);
+        dest.writeString(this.mAlarmTime);
         dest.writeLong(this.mTimeInMillis);
         dest.writeString((this.mFrequency == null) ? "" : this.mFrequency.name());
     }
@@ -123,6 +135,7 @@ public class ScheduleItem implements Parcelable {
         this.mId = in.readInt();
         this.mTitle = in.readString();
         this.mContent = in.readString();
+        this.mAlarmTime = in.readString();
         this.mTimeInMillis = in.readLong();
         this.mFrequency = REPEAT_TYPE.valueOf(in.readString());
     }

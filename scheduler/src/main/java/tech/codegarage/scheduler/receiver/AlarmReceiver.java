@@ -13,12 +13,13 @@ import android.support.v4.content.WakefulBroadcastReceiver;
 import java.util.Calendar;
 
 import tech.codegarage.scheduler.R;
+import tech.codegarage.scheduler.Scheduler;
 import tech.codegarage.scheduler.enumeration.REPEAT_TYPE;
 import tech.codegarage.scheduler.model.BaseParcelable;
 import tech.codegarage.scheduler.model.ScheduleItem;
 import tech.codegarage.scheduler.service.AlarmService;
-import tech.codegarage.scheduler.Scheduler;
 
+import static tech.codegarage.scheduler.util.AllConstants.DATE_FORMAT;
 import static tech.codegarage.scheduler.util.AllConstants.INTENT_ACTION_CREATE;
 import static tech.codegarage.scheduler.util.AllConstants.INTENT_KEY_SCHEDULE_DATA_ALARM_RECEIVER;
 import static tech.codegarage.scheduler.util.AllConstants.INTENT_KEY_SCHEDULE_DATA_ALARM_SERVICE;
@@ -46,31 +47,39 @@ public class AlarmReceiver extends WakefulBroadcastReceiver {
         }
 
         REPEAT_TYPE frequency = scheduleItem.getFrequency();
-        Calendar time = Calendar.getInstance();
-        time.setTimeInMillis(scheduleItem.getTimeInMillis());
-
         if (frequency != REPEAT_TYPE.NONE) {
+
+            Calendar repeatTime = Calendar.getInstance();
+            repeatTime.setTimeInMillis(scheduleItem.getTimeInMillis());
+
             switch (frequency) {
+                case MINUTELY:
+                    repeatTime.add(Calendar.MINUTE, 1);
+                    break;
                 case HOURLY:
-                    time.add(Calendar.HOUR, 1);
+                    repeatTime.add(Calendar.HOUR, 1);
                     break;
                 case DAILY:
-                    time.add(Calendar.DATE, 1);
+                    repeatTime.add(Calendar.DATE, 1);
                     break;
                 case WEEKLY:
-                    time.add(Calendar.DATE, 7);
+                    repeatTime.add(Calendar.DATE, 7);
                     break;
                 case MONTHLY:
-                    time.add(Calendar.MONTH, 1);
+                    repeatTime.add(Calendar.MONTH, 1);
                     break;
                 case YEARLY:
-                    time.add(Calendar.YEAR, 1);
+                    repeatTime.add(Calendar.YEAR, 1);
                     break;
             }
 
+            //Set updated schedule
+            String mDate = DATE_FORMAT.format(repeatTime.getTime());
+            ScheduleItem updatedSchedule = new ScheduleItem(scheduleItem.getId(), scheduleItem.getTitle(), scheduleItem.getContent(), mDate, repeatTime.getTimeInMillis(), scheduleItem.getFrequency());
+
             //Set alarm again for repeating
             Intent setAlarm = new Intent(context, AlarmService.class);
-            setAlarm.putExtra(INTENT_KEY_SCHEDULE_DATA_ALARM_SERVICE, scheduleItem);
+            setAlarm.putExtra(INTENT_KEY_SCHEDULE_DATA_ALARM_SERVICE, updatedSchedule);
             setAlarm.setAction(INTENT_ACTION_CREATE);
             context.startService(setAlarm);
         }
@@ -79,19 +88,19 @@ public class AlarmReceiver extends WakefulBroadcastReceiver {
     }
 
     private void sendNotification(Context context, ScheduleItem scheduleItem) {
-        Intent result = new Intent(context, Scheduler.clazz);
+        Intent result = new Intent(context, Scheduler.getContentClass());
         result.putExtra(INTENT_KEY_SCHEDULE_DATA_CONTENT_INTENT, scheduleItem);
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
-        stackBuilder.addParentStack(Scheduler.clazz);
+        stackBuilder.addParentStack(Scheduler.getContentClass());
         stackBuilder.addNextIntent(result);
         PendingIntent clicked = stackBuilder.getPendingIntent(scheduleItem.getId(), PendingIntent.FLAG_UPDATE_CURRENT);
 
         NotificationCompat.BigTextStyle bigStyle = new NotificationCompat.BigTextStyle();
-        bigStyle.setBigContentTitle(scheduleItem.getTitle());
+        bigStyle.setBigContentTitle(scheduleItem.getTitle() + "(" + scheduleItem.getAlarmTime() + ")");
         bigStyle.bigText(scheduleItem.getContent());
         Notification n = new NotificationCompat.Builder(context)
                 .setSmallIcon(R.drawable.ic_notification_quote)
-                .setContentTitle(scheduleItem.getTitle())
+                .setContentTitle(scheduleItem.getTitle() + "(" + scheduleItem.getAlarmTime() + ")")
                 .setContentText(scheduleItem.getContent())
                 .setPriority(Notification.PRIORITY_MAX)
                 .setWhen(0)
