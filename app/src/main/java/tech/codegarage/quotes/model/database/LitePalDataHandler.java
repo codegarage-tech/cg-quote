@@ -89,6 +89,16 @@ public class LitePalDataHandler {
         return litePalDataBuilders;
     }
 
+//    public static ArrayList<LitePalDataBuilder> getAllQuoteAdvertises() {
+//        ArrayList<LitePalDataBuilder> advertises = new ArrayList<LitePalDataBuilder>();
+//        advertises.add(new LitePalDataBuilder(new LitePalLanguage(), new LitePalAuthor(), new ArrayList<LitePalDataBuilder.LitePalQuoteBuilder>(),false));
+//        advertises.add(new LitePalDataBuilder("Add 2", false, false, null, null));
+//        advertises.add(new LitePalDataBuilder("Add 3", false, false, null, null));
+//        advertises.add(new LitePalDataBuilder("Add 4", false, false, null, null));
+//        advertises.add(new LitePalDataBuilder("Add 5", false, false, null, null));
+//        return advertises;
+//    }
+
     /**********************
      * Methods for Author *
      **********************/

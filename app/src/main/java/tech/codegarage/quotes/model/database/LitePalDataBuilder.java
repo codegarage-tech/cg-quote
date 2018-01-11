@@ -16,6 +16,13 @@ public class LitePalDataBuilder implements Parcelable {
     public LitePalDataBuilder() {
     }
 
+    public LitePalDataBuilder(LitePalLanguage litePalLanguage, LitePalAuthor litePalAuthor, ArrayList<LitePalQuoteBuilder> litePalQuoteBuilders, boolean isLitePalData) {
+        this.litePalLanguage = litePalLanguage;
+        this.litePalAuthor = litePalAuthor;
+        this.litePalQuoteBuilders = litePalQuoteBuilders;
+        this.isLitePalData = isLitePalData;
+    }
+
     public LitePalLanguage getLitePalLanguage() {
         return litePalLanguage;
     }

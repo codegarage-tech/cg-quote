@@ -136,7 +136,8 @@ public class HomeActivity extends BaseActivity {
                             } else if (item.getId().getName().equalsIgnoreCase(NavigationId.FAVOURITE.INSTANCE.getName())) {
                                 handleFragmentChanges(HomeActivity.this, getString(R.string.ribble_menu_item_favourite), new FavouriteFragment());
                             } else if (item.getId().getName().equalsIgnoreCase(NavigationId.AMAZING_TODAY.INSTANCE.getName())) {
-//                                AboutBoxUtils.openPublisher(HomeActivity.this, AboutConfig.BuildType.GOOGLE, getString(R.string.txt_publisher), getApplicationContext().getPackageName());
+                                Intent intentAmazingToday = new Intent(HomeActivity.this, AmazingTodayActivity.class);
+                                startActivity(intentAmazingToday);
                             } else if (item.getId().getName().equalsIgnoreCase(NavigationId.RATE_US.INSTANCE.getName())) {
                                 AboutBoxUtils.openApp(HomeActivity.this, AboutConfig.BuildType.GOOGLE, getApplicationContext().getPackageName());
                             } else if (item.getId().getName().equalsIgnoreCase(NavigationId.ABOUT.INSTANCE.getName())) {
@@ -146,7 +147,6 @@ public class HomeActivity extends BaseActivity {
                                     public void onLicenseClick() {
                                         Intent intentLicense = new Intent(HomeActivity.this, LicenseActivity.class);
                                         startActivity(intentLicense);
-                                        Bungee.slideUp(HomeActivity.this);
                                     }
                                 });
                             }
