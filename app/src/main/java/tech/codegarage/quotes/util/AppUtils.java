@@ -5,14 +5,19 @@ import android.content.Context;
 import android.graphics.Color;
 import android.view.View;
 
-import tech.codegarage.quotes.model.database.LitePalDataBuilder;
-import tech.codegarage.quotes.R;
-import tech.codegarage.quotes.model.Quote;
+import com.reversecoder.library.util.AllSettingsManager;
 
 import java.security.MessageDigest;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Locale;
 import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import tech.codegarage.quotes.R;
+import tech.codegarage.quotes.model.Quote;
+import tech.codegarage.quotes.model.database.LitePalDataBuilder;
 
 /**
  * Created by Rashed on 03-Oct-17.
@@ -129,5 +134,24 @@ public class AppUtils {
             sb.append(Digit[b[i] & 0x0f]);
         }
         return sb.toString();
+    }
+
+    public static boolean isDateEqual(String date1, String date2, String dateFormat) {
+        if (!AllSettingsManager.isNullOrEmpty(date1) && !AllSettingsManager.isNullOrEmpty(date2) && !AllSettingsManager.isNullOrEmpty(dateFormat)) {
+            SimpleDateFormat sdf = new SimpleDateFormat(dateFormat, Locale.US);
+            if ((date1.trim().length() != sdf.toPattern().length()) && (date2.trim().length() != sdf.toPattern().length())) {
+                return false;
+            }
+            sdf.setLenient(false);
+
+            try {
+                if (sdf.parse(date1.trim()).equals(sdf.parse(date2.trim()))) {
+                    return true;
+                }
+            } catch (ParseException pe) {
+                return false;
+            }
+        }
+        return false;
     }
 }

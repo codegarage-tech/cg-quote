@@ -386,11 +386,11 @@ public class HomeActivity extends BaseActivity {
 
         Calendar mAlertTime = Calendar.getInstance();
 //        Calendar currentTime = Calendar.getInstance();
-//        currentTime.add(Calendar.MINUTE, 2);
+//        currentTime.add(Calendar.MINUTE, 1);
 //        mAlertTime.set(Calendar.HOUR_OF_DAY, currentTime.get(Calendar.HOUR_OF_DAY));
 //        mAlertTime.set(Calendar.MINUTE, currentTime.get(Calendar.MINUTE));
-//        String mTime = TIME_FORMAT.format(mAlertTime.getTime());
-//        String mFormattedDate = FORMATTED_TIME_DATE_FORMAT.format(mAlertTime.getTimeInMillis());
+//        mAlertTime.set(Calendar.SECOND, 0);
+//        String mDate = DATE_FORMAT.format(mAlertTime.getTime());
 
         mAlertTime.set(Calendar.HOUR_OF_DAY, 8);
         mAlertTime.set(Calendar.MINUTE, 0);

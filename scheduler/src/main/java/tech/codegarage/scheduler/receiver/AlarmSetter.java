@@ -26,16 +26,12 @@ public class AlarmSetter extends BroadcastReceiver {
         if (!AppUtils.isNullOrEmpty(AppUtils.getStringSetting(context, SESSION_KEY_SCHEDULE_DATA, SESSION_DEFAULT_VALUE_STRING))) {
             ScheduleItem scheduleItem = ScheduleItem.convertFromStringToObject(AppUtils.getStringSetting(context, SESSION_KEY_SCHEDULE_DATA, SESSION_DEFAULT_VALUE_STRING), ScheduleItem.class);
 
-            if (scheduleItem != null) {
-
-                if (scheduleItem.getTimeInMillis() > Calendar.getInstance().getTimeInMillis()) {
-                    Intent service = new Intent(context, AlarmService.class);
-                    service.putExtra(INTENT_KEY_SCHEDULE_DATA_ALARM_SERVICE, scheduleItem);
-                    service.setAction(INTENT_ACTION_CREATE);
-                    context.startService(service);
-                }
+            if ((scheduleItem != null) && (scheduleItem.getTimeInMillis() > Calendar.getInstance().getTimeInMillis())) {
+                Intent service = new Intent(context, AlarmService.class);
+                service.putExtra(INTENT_KEY_SCHEDULE_DATA_ALARM_SERVICE, scheduleItem);
+                service.setAction(INTENT_ACTION_CREATE);
+                context.startService(service);
             }
         }
     }
 }
-
