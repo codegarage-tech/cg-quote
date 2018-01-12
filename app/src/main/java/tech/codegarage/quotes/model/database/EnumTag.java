@@ -2,9 +2,12 @@ package tech.codegarage.quotes.model.database;
 
 public enum EnumTag {
 
+    FUTURE("Future"),
+    TEACHER("Teacher"),
+    CHARACTER("Character"),
     MOTIVATIONAL("Motivational"),
-    ROMANTIC("Romantic"),
-    INSPIRATIONAL("Inspirational");
+    DEFEAT("Defeat"),
+    GIVE("Give");
 
     private LitePalTag litePalTag;
 

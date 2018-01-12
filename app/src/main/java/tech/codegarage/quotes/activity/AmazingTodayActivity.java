@@ -25,7 +25,7 @@ import static tech.codegarage.quotes.model.database.LitePalDataHandler.getAllQuo
 import static tech.codegarage.quotes.util.AllConstants.SESSION_QUOTE_OF_THE_DAY;
 import static tech.codegarage.quotes.util.AppUtils.isDateEqual;
 import static tech.codegarage.scheduler.util.AllConstants.DATE_FORMAT_DD_MM_YY;
-import static tech.codegarage.scheduler.util.AllConstants.DATE_FORMAT_DD_MM_YY_STRING;
+import static tech.codegarage.scheduler.util.AllConstants.DATE_FORMAT_YYYY_MM_DD_STRING;
 
 /**
  * @author Md. Rashadul Alam
@@ -107,7 +107,7 @@ public class AmazingTodayActivity extends BaseActivity {
                     quoteOfTheDay = QuoteOfTheDay.convertFromStringToObject(SessionManager.getStringSetting(AmazingTodayActivity.this, SESSION_QUOTE_OF_THE_DAY), QuoteOfTheDay.class);
                     Log.d(TAG, "Session data(today): " + today);
                     Log.d(TAG, "Session data(quoteOfTheDay.getToday()): " + quoteOfTheDay.getToday());
-                    if (!isDateEqual(today, quoteOfTheDay.getToday(), DATE_FORMAT_DD_MM_YY_STRING)) {
+                    if (!isDateEqual(today, quoteOfTheDay.getToday(), DATE_FORMAT_YYYY_MM_DD_STRING)) {
                         Log.d(TAG, "Session data didn't match");
                         LitePalDataBuilder.LitePalQuoteBuilder litePalQuoteBuilder = result.getLitePalQuoteBuilders().get(RandomManager.getRandom(result.getLitePalQuoteBuilders().size()));
                         quoteOfTheDay = new QuoteOfTheDay(result.getLitePalLanguage(), result.getLitePalAuthor(), litePalQuoteBuilder, today);

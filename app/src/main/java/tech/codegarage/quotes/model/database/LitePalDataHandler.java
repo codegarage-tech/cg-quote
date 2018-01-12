@@ -6,12 +6,13 @@ import com.kannan.glazy.GlazyCard;
 import com.kannan.glazy.views.GlazyImageView;
 import com.reversecoder.library.storage.SessionManager;
 import com.reversecoder.library.util.AllSettingsManager;
-import tech.codegarage.quotes.R;
 
 import org.litepal.crud.DataSupport;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import tech.codegarage.quotes.R;
 
 import static tech.codegarage.quotes.application.QuoteApp.getGlobalContext;
 import static tech.codegarage.quotes.util.AllConstants.SESSION_DATA_DATA_BUILDER;
@@ -29,50 +30,23 @@ public class LitePalDataHandler {
         litePalDataBuilders.add(
                 new LitePalDataBuilder()
                         .setLitePalLanguage(EnumLanguage.ENGLISH.getLitePalLanguage())
-                        .setLitePalAuthor(EnumAuthor.ARISTOTLE.getLitePalAuthor())
-                        .addLitePalQuotes(new LitePalDataBuilder.LitePalQuoteBuilder()
-                                .setLitePalQuote(new LitePalQuote("Do what you want.", false, true))
-                                .addLitePalTags(EnumTag.INSPIRATIONAL.getLitePalTag())
-                                .addLitePalTags(EnumTag.ROMANTIC.getLitePalTag())
-                                .buildQuotes()
-                        )
-                        .addLitePalQuotes(new LitePalDataBuilder.LitePalQuoteBuilder()
-                                .setLitePalQuote(new LitePalQuote("Yes", false, true))
-                                .addLitePalTags(EnumTag.ROMANTIC.getLitePalTag())
-                                .buildQuotes()
-                        )
-                        .addLitePalQuotes(new LitePalDataBuilder.LitePalQuoteBuilder()
-                                .setLitePalQuote(new LitePalQuote("No", false, true))
-                                .addLitePalTags(EnumTag.MOTIVATIONAL.getLitePalTag())
-                                .addLitePalTags(EnumTag.ROMANTIC.getLitePalTag())
-                                .buildQuotes()
-                        )
-                        .buildAuthor()
-        );
-
-        litePalDataBuilders.add(
-                new LitePalDataBuilder()
-                        .setLitePalLanguage(EnumLanguage.ENGLISH.getLitePalLanguage())
                         .setLitePalAuthor(EnumAuthor.APJ_ABDUL_KALAM.getLitePalAuthor())
                         .addLitePalQuotes(new LitePalDataBuilder.LitePalQuoteBuilder()
-                                .setLitePalQuote(new LitePalQuote("Burn like sun.", false, true))
-                                .addLitePalTags(EnumTag.INSPIRATIONAL.getLitePalTag())
+                                .setLitePalQuote(new LitePalQuote("Teaching is a very noble profession that shapes the character, caliber, and future of an individual. If the people remember me as a good teacher, that will be the biggest honour for me.", false, true))
+                                .addLitePalTags(EnumTag.FUTURE.getLitePalTag())
+                                .addLitePalTags(EnumTag.TEACHER.getLitePalTag())
+                                .addLitePalTags(EnumTag.CHARACTER.getLitePalTag())
                                 .buildQuotes()
                         )
                         .addLitePalQuotes(new LitePalDataBuilder.LitePalQuoteBuilder()
-                                .setLitePalQuote(new LitePalQuote("Burn", false, true))
+                                .setLitePalQuote(new LitePalQuote("We should not give up and we should not allow the problem to defeat us.", false, true))
                                 .addLitePalTags(EnumTag.MOTIVATIONAL.getLitePalTag())
+                                .addLitePalTags(EnumTag.DEFEAT.getLitePalTag())
+                                .addLitePalTags(EnumTag.GIVE.getLitePalTag())
                                 .buildQuotes()
                         )
-                        .addLitePalQuotes(new LitePalDataBuilder.LitePalQuoteBuilder()
-                                .setLitePalQuote(new LitePalQuote("sun", false, true))
-                                .addLitePalTags(EnumTag.MOTIVATIONAL.getLitePalTag())
-                                .addLitePalTags(EnumTag.ROMANTIC.getLitePalTag())
-                                .addLitePalTags(EnumTag.INSPIRATIONAL.getLitePalTag())
-                                .buildQuotes()
-                        )
-                        .buildAuthor()
         );
+
 
         DataLitePalDataBuilder dataLitePalDataBuilder = new DataLitePalDataBuilder(litePalDataBuilders);
         SessionManager.setStringSetting(getGlobalContext(), SESSION_DATA_DATA_BUILDER, DataLitePalDataBuilder.convertFromObjectToString(dataLitePalDataBuilder));
