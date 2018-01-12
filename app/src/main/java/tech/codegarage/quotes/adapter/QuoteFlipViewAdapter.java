@@ -7,15 +7,14 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import tech.codegarage.quotes.R;
-import tech.codegarage.quotes.activity.HomeActivity;
-import tech.codegarage.quotes.model.database.LitePalDataBuilder.LitePalQuoteBuilder;
-import tech.codegarage.quotes.util.AppUtils;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import se.emilsjolander.flipview.FlipView;
+import tech.codegarage.quotes.R;
+import tech.codegarage.quotes.activity.HomeActivity;
+import tech.codegarage.quotes.model.database.LitePalDataBuilder.LitePalQuoteBuilder;
+import tech.codegarage.quotes.util.AppUtils;
 
 public class QuoteFlipViewAdapter extends BaseAdapter {
 
@@ -146,7 +145,7 @@ public class QuoteFlipViewAdapter extends BaseAdapter {
         if (mItem.getLitePalQuote().getQuoteDescription().equalsIgnoreCase("420")) {
             text.setText("END");
         } else {
-            text.setText(mItem.getLitePalQuote().getQuoteDescription());
+            text.setText("\"" + mItem.getLitePalQuote().getQuoteDescription() + "\"");
         }
 
         vi.setBackgroundColor(AppUtils.getRandomPastelColor());

@@ -25,7 +25,7 @@ import static tech.codegarage.quotes.model.database.LitePalDataHandler.getAllQuo
 import static tech.codegarage.quotes.util.AllConstants.SESSION_QUOTE_OF_THE_DAY;
 import static tech.codegarage.quotes.util.AppUtils.isDateEqual;
 import static tech.codegarage.scheduler.util.AllConstants.DATE_FORMAT_DD_MM_YY;
-import static tech.codegarage.scheduler.util.AllConstants.DATE_FORMAT_STRING;
+import static tech.codegarage.scheduler.util.AllConstants.DATE_FORMAT_DD_MM_YY_STRING;
 
 /**
  * @author Md. Rashadul Alam
@@ -39,7 +39,7 @@ public class AmazingTodayActivity extends BaseActivity {
     AnimatedTextView toolbarTitle;
     Toolbar toolbar;
 
-    CanaroTextView tvQuote;
+    CanaroTextView tvQuote, tvAuthor;
     private String TAG = AmazingTodayActivity.class.getSimpleName();
 
     @Override
@@ -55,6 +55,7 @@ public class AmazingTodayActivity extends BaseActivity {
         initToolBar();
 
         tvQuote = (CanaroTextView) findViewById(R.id.tv_quote);
+        tvAuthor = (CanaroTextView) findViewById(R.id.tv_author);
 
         new GetTodayData().execute();
     }
@@ -106,15 +107,14 @@ public class AmazingTodayActivity extends BaseActivity {
                     quoteOfTheDay = QuoteOfTheDay.convertFromStringToObject(SessionManager.getStringSetting(AmazingTodayActivity.this, SESSION_QUOTE_OF_THE_DAY), QuoteOfTheDay.class);
                     Log.d(TAG, "Session data(today): " + today);
                     Log.d(TAG, "Session data(quoteOfTheDay.getToday()): " + quoteOfTheDay.getToday());
-
-                    if (!isDateEqual(today, quoteOfTheDay.getToday(), DATE_FORMAT_STRING)) {
+                    if (!isDateEqual(today, quoteOfTheDay.getToday(), DATE_FORMAT_DD_MM_YY_STRING)) {
                         Log.d(TAG, "Session data didn't match");
                         LitePalDataBuilder.LitePalQuoteBuilder litePalQuoteBuilder = result.getLitePalQuoteBuilders().get(RandomManager.getRandom(result.getLitePalQuoteBuilders().size()));
                         quoteOfTheDay = new QuoteOfTheDay(result.getLitePalLanguage(), result.getLitePalAuthor(), litePalQuoteBuilder, today);
                         SessionManager.setStringSetting(AmazingTodayActivity.this, SESSION_QUOTE_OF_THE_DAY, QuoteOfTheDay.convertFromObjectToString(quoteOfTheDay));
                         Log.d(TAG, "Session data: " + quoteOfTheDay.toString());
                     } else {
-                        Log.d(TAG, "Session data didn't match");
+                        Log.d(TAG, "Session data matched");
                         Log.d(TAG, "Session data: " + quoteOfTheDay.toString());
                     }
                 } else {
@@ -125,7 +125,8 @@ public class AmazingTodayActivity extends BaseActivity {
                     Log.d(TAG, "Session data: " + quoteOfTheDay.toString());
                 }
 
-                tvQuote.setText(quoteOfTheDay.getLitePalQuoteBuilder().getLitePalQuote().getQuoteDescription());
+                tvQuote.setText("\"" + quoteOfTheDay.getLitePalQuoteBuilder().getLitePalQuote().getQuoteDescription() + "\"");
+                tvAuthor.setText("--- " + quoteOfTheDay.getLitePalAuthor().getAuthorName());
             }
         }
     }

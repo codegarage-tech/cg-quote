@@ -7,30 +7,34 @@
 
     <include layout="@layout/toolbar_ribble" />
 
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical">
 
-        <LinearLayout
+        <tech.codegarage.quotes.view.CanaroTextView
+            android:id="@+id/tv_quote"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:orientation="vertical">
+            android:layout_margin="15dp"
+            android:gravity="center"
+            android:text=""
+            android:textColor="@color/textColorRosy"
+            android:textSize="@dimen/extra_large_font_size"
+            android:textStyle="bold" />
 
-            <tech.codegarage.quotes.view.CanaroTextView
-                android:id="@+id/tv_quote"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_margin="15dp"
-                android:gravity="center"
-                android:text=""
-                android:textColor="@color/textColorSecondary"
-                android:textSize="@dimen/extra_large_font_size"
-                android:textStyle="bold" />
+        <tech.codegarage.quotes.view.CanaroTextView
+            android:id="@+id/tv_author"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:gravity="right"
+            android:text=""
+            android:textColor="@color/textColorSecondary"
+            android:textSize="@dimen/large_font_size"
+            android:textStyle="italic" />
 
-        </LinearLayout>
-
-    </ScrollView>
+    </LinearLayout>
 
 </LinearLayout>
