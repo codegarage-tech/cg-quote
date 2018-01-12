@@ -7,7 +7,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.media.RingtoneManager;
 import android.support.v4.app.NotificationCompat;
-import android.support.v4.app.TaskStackBuilder;
 import android.support.v4.content.WakefulBroadcastReceiver;
 
 import java.util.Calendar;
@@ -88,12 +87,14 @@ public class AlarmReceiver extends WakefulBroadcastReceiver {
     }
 
     private void sendNotification(Context context, ScheduleItem scheduleItem) {
-        Intent result = new Intent(context, Scheduler.getContentClass());
-        result.putExtra(INTENT_KEY_SCHEDULE_DATA_CONTENT_INTENT, scheduleItem);
-        TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
-        stackBuilder.addParentStack(Scheduler.getContentClass());
-        stackBuilder.addNextIntent(result);
-        PendingIntent clicked = stackBuilder.getPendingIntent(scheduleItem.getId(), PendingIntent.FLAG_UPDATE_CURRENT);
+        Intent intentQuoteOfTheDay = new Intent(context, Scheduler.getContentClass());
+        intentQuoteOfTheDay.putExtra(INTENT_KEY_SCHEDULE_DATA_CONTENT_INTENT, scheduleItem);
+//        TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
+//        stackBuilder.addParentStack(Scheduler.getContentClass());
+//        stackBuilder.addNextIntent(result);
+//        PendingIntent clicked = stackBuilder.getPendingIntent(scheduleItem.getId(), PendingIntent.FLAG_UPDATE_CURRENT);
+        intentQuoteOfTheDay.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        PendingIntent pendingIntentQuoteOfTheDay = PendingIntent.getActivity(context, scheduleItem.getId(), intentQuoteOfTheDay, PendingIntent.FLAG_UPDATE_CURRENT);
 
         NotificationCompat.BigTextStyle bigStyle = new NotificationCompat.BigTextStyle();
         bigStyle.setBigContentTitle(scheduleItem.getTitle() + "(" + scheduleItem.getAlarmTime() + ")");
@@ -105,7 +106,7 @@ public class AlarmReceiver extends WakefulBroadcastReceiver {
                 .setPriority(Notification.PRIORITY_MAX)
                 .setWhen(0)
                 .setStyle(bigStyle)
-                .setContentIntent(clicked)
+                .setContentIntent(pendingIntentQuoteOfTheDay)
                 .setAutoCancel(true)
                 .build();
 
