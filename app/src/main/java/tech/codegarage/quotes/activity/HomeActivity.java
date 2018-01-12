@@ -347,7 +347,7 @@ public class HomeActivity extends BaseActivity {
     public void updateUserInfo() {
         Glide
                 .with(HomeActivity.this)
-                .load(R.mipmap.ic_launcher_round)
+                .load(R.mipmap.ic_launcher)
                 .apply(new RequestOptions().diskCacheStrategy(DiskCacheStrategy.AUTOMATIC))
                 .apply(new RequestOptions().circleCropTransform())
                 .into(userAvatar);
