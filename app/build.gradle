@@ -93,4 +93,5 @@ dependencies {
     compile project(":maskprogressview")
     compile project(":bungee")
     compile project(":scheduler")
+    compile project(":cyclemenu")
 }

@@ -89,6 +89,9 @@ public enum Library {
     RIBBLE_MENU_ARMCHA(new Attribution.Builder("Ribble Menu", "https://github.com/armcha/Ribble")
             .addLicenseInfo(new LicenseInfo("Copyright (c) 2017 Arman Chatikyan.", License.APACHE))
             .build()),
+    CYCLE_MENU_CLEVEROAD(new Attribution.Builder("Cycle Menu", "https://github.com/Cleveroad/CycleMenu")
+            .addLicenseInfo(new LicenseInfo("Copyright (c) 2016 Cleveroad Inc.", License.MIT))
+            .build()),
 
     // Notification
     COOKIEBAR2_AVIRANABADY(new Attribution.Builder("CookieBar2", "https://github.com/AviranAbady/CookieBar2")
