@@ -2,6 +2,8 @@ package tech.codegarage.quotes.activity;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
@@ -17,9 +19,9 @@ import io.armcha.ribble.presentation.widget.AnimatedImageView;
 import io.armcha.ribble.presentation.widget.AnimatedTextView;
 import io.armcha.ribble.presentation.widget.ArcView;
 import tech.codegarage.quotes.R;
+import tech.codegarage.quotes.adapter.CycleMenuAdapter;
 import tech.codegarage.quotes.model.database.LitePalDataBuilder;
 import tech.codegarage.quotes.model.database.QuoteOfTheDay;
-import tech.codegarage.quotes.view.CanaroTextView;
 
 import static tech.codegarage.quotes.model.database.LitePalDataHandler.getAllQuotes;
 import static tech.codegarage.quotes.util.AllConstants.SESSION_QUOTE_OF_THE_DAY;
@@ -39,7 +41,8 @@ public class AmazingTodayActivity extends BaseActivity {
     AnimatedTextView toolbarTitle;
     Toolbar toolbar;
 
-    CanaroTextView tvQuote, tvAuthor;
+    RecyclerView rvAmazingToday;
+    CycleMenuAdapter cycleMenuAdapter;
     private String TAG = AmazingTodayActivity.class.getSimpleName();
 
     @Override
@@ -54,14 +57,15 @@ public class AmazingTodayActivity extends BaseActivity {
     public void initView() {
         initToolBar();
 
-        tvQuote = (CanaroTextView) findViewById(R.id.tv_quote);
-        tvAuthor = (CanaroTextView) findViewById(R.id.tv_author);
+        rvAmazingToday = (RecyclerView) findViewById(R.id.rv_amazing_today);
+        rvAmazingToday.setLayoutManager(new LinearLayoutManager(this));
+        cycleMenuAdapter = new CycleMenuAdapter(AmazingTodayActivity.this);
+        rvAmazingToday.setAdapter(cycleMenuAdapter);
 
         new GetTodayData().execute();
     }
 
     private void initActions() {
-
     }
 
     private void initToolBar() {
@@ -125,8 +129,9 @@ public class AmazingTodayActivity extends BaseActivity {
                     Log.d(TAG, "Session data: " + quoteOfTheDay.toString());
                 }
 
-                tvQuote.setText("\"" + quoteOfTheDay.getLitePalQuoteBuilder().getLitePalQuote().getQuoteDescription() + "\"");
-                tvAuthor.setText("--- " + quoteOfTheDay.getLitePalAuthor().getAuthorName());
+                ArrayList<QuoteOfTheDay> data = new ArrayList<QuoteOfTheDay>();
+                data.add(quoteOfTheDay);
+                cycleMenuAdapter.addAll(data);
             }
         }
     }
