@@ -22,7 +22,8 @@ import java.lang.reflect.Field;
  * 在一些特殊情况下，只能在setData里设置监听。
  * @param <M>
  */
-abstract public class BaseViewHolder<M> extends RecyclerView.ViewHolder {
+public abstract class BaseViewHolder<M> extends RecyclerView.ViewHolder {
+
     public BaseViewHolder(View itemView) {
         super(itemView);
     }
@@ -34,15 +35,15 @@ abstract public class BaseViewHolder<M> extends RecyclerView.ViewHolder {
     public void setData(M data) {
     }
 
-    protected <T extends View> T $(@IdRes int id) {
+    public <T extends View> T $(@IdRes int id) {
         return (T) itemView.findViewById(id);
     }
 
-    protected Context getContext(){
+    public Context getContext(){
         return itemView.getContext();
     }
 
-    protected int getDataPosition(){
+    public int getDataPosition(){
         RecyclerView.Adapter adapter = getOwnerAdapter();
         if (adapter!=null && adapter instanceof RecyclerArrayAdapter){
             return getAdapterPosition() - ((RecyclerArrayAdapter) adapter).getHeaderCount();
@@ -52,13 +53,13 @@ abstract public class BaseViewHolder<M> extends RecyclerView.ViewHolder {
 
 
     @Nullable
-    protected <T extends RecyclerView.Adapter> T getOwnerAdapter(){
+    public <T extends RecyclerView.Adapter> T getOwnerAdapter(){
         RecyclerView recyclerView = getOwnerRecyclerView();
         return recyclerView == null?null: (T) recyclerView.getAdapter();
     }
 
     @Nullable
-    protected RecyclerView getOwnerRecyclerView(){
+    public RecyclerView getOwnerRecyclerView(){
         try {
             Field field = RecyclerView.ViewHolder.class.getDeclaredField("mOwnerRecyclerView");
             field.setAccessible(true);

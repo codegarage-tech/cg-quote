@@ -71,7 +71,7 @@ public class CycleMenuWidget extends ViewGroup {
         OPEN, CLOSED, IN_OPEN_PROCESS, IN_CLOSE_PROCESS
     }
 
-    private STATE mState = STATE.CLOSED;
+    public STATE mState = STATE.CLOSED;
 
     /**
      * Specifies corner which will be set to layout menu cycle
@@ -991,6 +991,20 @@ public class CycleMenuWidget extends ViewGroup {
             sendState();
             invalidate();
         }
+    }
+
+    public boolean isOpened() {
+        if (mState == STATE.OPEN) {
+            return true;
+        }
+        return false;
+    }
+
+    public boolean isClosed() {
+        if (mState == STATE.CLOSED) {
+            return true;
+        }
+        return false;
     }
 
     /**
