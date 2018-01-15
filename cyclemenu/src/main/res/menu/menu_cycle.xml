@@ -13,12 +13,4 @@
         android:id="@+id/cm_share"
         android:icon="@drawable/ic_filter_vintage_black_24dp"
         tools:ignore="MenuTitle"/>
-    <!--<item
-        android:id="@+id/test4"
-        android:icon="@drawable/ic_image_filter_drama_24dp"
-        tools:ignore="MenuTitle"/>
-    <item
-        android:id="@+id/test5"
-        android:icon="@drawable/ic_filter_vintage_black_24dp"
-        tools:ignore="MenuTitle"/>-->
 </menu>
