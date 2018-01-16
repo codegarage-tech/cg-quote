@@ -18,6 +18,7 @@ import java.util.regex.Pattern;
 import tech.codegarage.quotes.R;
 import tech.codegarage.quotes.model.Quote;
 import tech.codegarage.quotes.model.database.LitePalDataBuilder;
+import tech.codegarage.quotes.model.database.QuoteOfTheDay;
 
 /**
  * Created by Rashed on 03-Oct-17.
@@ -71,9 +72,9 @@ public class AppUtils {
         return resourceId;
     }
 
-    public static String getShareQuoted(Context context, Quote quote) {
+    public static String getSharedQuote(Context context, Quote quote) {
         String shareQuote = "\"" + quote.getQuoteDescription() +
-                "\"\n----- " + quote.getAuthor().getAuthorName() +
+                "\"\n--- " + quote.getAuthor().getAuthorName() +
                 "\n\n     <<*=*=*=*=*>>     " +
                 "\n" + context.getString(R.string.txt_quote_is_shared_by_the_app) +
                 "\nhttps://play.google.com/store/apps/details?id=" + context.getApplicationContext().getPackageName() + "&hl=en";
@@ -81,9 +82,19 @@ public class AppUtils {
         return shareQuote;
     }
 
-    public static String getShareQuoted(Context context, LitePalDataBuilder litePalDataBuilder, LitePalDataBuilder.LitePalQuoteBuilder quote) {
+    public static String getSharedQuote(Context context, LitePalDataBuilder litePalDataBuilder, LitePalDataBuilder.LitePalQuoteBuilder quote) {
         String shareQuote = "\"" + quote.getLitePalQuote().getQuoteDescription() +
-                "\"\n----- " + litePalDataBuilder.getLitePalAuthor().getAuthorName() +
+                "\"\n--- " + litePalDataBuilder.getLitePalAuthor().getAuthorName() +
+                "\n\n     <<*=*=*=*=*>>     " +
+                "\n" + context.getString(R.string.txt_quote_is_shared_by_the_app) +
+                "\nhttps://play.google.com/store/apps/details?id=" + context.getApplicationContext().getPackageName() + "&hl=en";
+
+        return shareQuote;
+    }
+
+    public static String getSharedQuote(Context context, QuoteOfTheDay quoteOfTheDay) {
+        String shareQuote = "\"" + quoteOfTheDay.getLitePalQuoteBuilder().getLitePalQuote().getQuoteDescription() +
+                "\"\n--- " + quoteOfTheDay.getLitePalAuthor().getAuthorName() +
                 "\n\n     <<*=*=*=*=*>>     " +
                 "\n" + context.getString(R.string.txt_quote_is_shared_by_the_app) +
                 "\nhttps://play.google.com/store/apps/details?id=" + context.getApplicationContext().getPackageName() + "&hl=en";

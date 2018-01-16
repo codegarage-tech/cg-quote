@@ -241,7 +241,7 @@ public class FavouriteQuoteDetailActivity extends BaseActivity {
                         break;
 
                     case 3:
-                        IntentManager.shareToAllAvailableApps(FavouriteQuoteDetailActivity.this, "", AppUtils.getShareQuoted(FavouriteQuoteDetailActivity.this, mLitePalDataBuilder, quote));
+                        IntentManager.shareToAllAvailableApps(FavouriteQuoteDetailActivity.this, "", AppUtils.getSharedQuote(FavouriteQuoteDetailActivity.this, mLitePalDataBuilder, quote));
                         break;
 
                     default:

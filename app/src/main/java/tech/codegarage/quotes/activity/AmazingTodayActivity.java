@@ -19,6 +19,7 @@ import java.util.Date;
 import io.armcha.ribble.presentation.widget.AnimatedImageView;
 import io.armcha.ribble.presentation.widget.AnimatedTextView;
 import io.armcha.ribble.presentation.widget.ArcView;
+import spencerstudios.com.bungeelib.Bungee;
 import tech.codegarage.quotes.R;
 import tech.codegarage.quotes.adapter.CycleMenuAdapter;
 import tech.codegarage.quotes.model.database.LitePalDataBuilder;
@@ -139,10 +140,16 @@ public class AmazingTodayActivity extends BaseActivity {
 
     @Override
     public void onBackPressed() {
-        if (((CycleMenuWidget) rvAmazingToday.findViewHolderForAdapterPosition(0).itemView.findViewById(R.id.itemCycleMenuWidget)).isOpened()) {
-            ((CycleMenuWidget) rvAmazingToday.findViewHolderForAdapterPosition(0).itemView.findViewById(R.id.itemCycleMenuWidget)).close(true);
+        if (cycleMenuAdapter != null && cycleMenuAdapter.getCount() > 0) {
+            if (((CycleMenuWidget) rvAmazingToday.findViewHolderForAdapterPosition(0).itemView.findViewById(R.id.itemCycleMenuWidget)).isOpened()) {
+                ((CycleMenuWidget) rvAmazingToday.findViewHolderForAdapterPosition(0).itemView.findViewById(R.id.itemCycleMenuWidget)).close(true);
+            } else {
+                super.onBackPressed();
+                Bungee.slideDown(AmazingTodayActivity.this);
+            }
         } else {
             super.onBackPressed();
+            Bungee.slideDown(AmazingTodayActivity.this);
         }
     }
 }

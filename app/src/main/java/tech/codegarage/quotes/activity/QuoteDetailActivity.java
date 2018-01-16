@@ -225,7 +225,7 @@ public class QuoteDetailActivity extends BaseActivity {
                         break;
 
                     case 3:
-                        IntentManager.shareToAllAvailableApps(QuoteDetailActivity.this, "", AppUtils.getShareQuoted(QuoteDetailActivity.this, mLitePalDataBuilder, quote));
+                        IntentManager.shareToAllAvailableApps(QuoteDetailActivity.this, "", AppUtils.getSharedQuote(QuoteDetailActivity.this, mLitePalDataBuilder, quote));
                         break;
 
                     default:
