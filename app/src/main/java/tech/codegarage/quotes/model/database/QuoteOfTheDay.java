@@ -7,33 +7,42 @@ import com.google.gson.Gson;
 
 public class QuoteOfTheDay implements Parcelable {
 
-    private LitePalLanguage litePalLanguage;
-    private LitePalAuthor litePalAuthor;
+    private LitePalDataBuilder litePalDataBuilder;
+//    private LitePalLanguage litePalLanguage;
+//    private LitePalAuthor litePalAuthor;
     private LitePalDataBuilder.LitePalQuoteBuilder litePalQuoteBuilder;
     private String today = "";
 
-    public QuoteOfTheDay(LitePalLanguage litePalLanguage, LitePalAuthor litePalAuthor, LitePalDataBuilder.LitePalQuoteBuilder litePalQuoteBuilder, String today) {
-        this.litePalLanguage = litePalLanguage;
-        this.litePalAuthor = litePalAuthor;
+    public QuoteOfTheDay(LitePalDataBuilder litePalDataBuilder, LitePalDataBuilder.LitePalQuoteBuilder litePalQuoteBuilder, String today) {
+//        this.litePalLanguage = litePalLanguage;
+//        this.litePalAuthor = litePalAuthor;
+        this.litePalDataBuilder = litePalDataBuilder;
         this.litePalQuoteBuilder = litePalQuoteBuilder;
         this.today = today;
     }
 
-    public LitePalLanguage getLitePalLanguage() {
-        return litePalLanguage;
+    public LitePalDataBuilder getLitePalDataBuilder() {
+        return litePalDataBuilder;
     }
 
-    public void setLitePalLanguage(LitePalLanguage litePalLanguage) {
-        this.litePalLanguage = litePalLanguage;
+    public void setLitePalDataBuilder(LitePalDataBuilder litePalDataBuilder) {
+        this.litePalDataBuilder = litePalDataBuilder;
     }
-
-    public LitePalAuthor getLitePalAuthor() {
-        return litePalAuthor;
-    }
-
-    public void setLitePalAuthor(LitePalAuthor litePalAuthor) {
-        this.litePalAuthor = litePalAuthor;
-    }
+    //    public LitePalLanguage getLitePalLanguage() {
+//        return litePalLanguage;
+//    }
+//
+//    public void setLitePalLanguage(LitePalLanguage litePalLanguage) {
+//        this.litePalLanguage = litePalLanguage;
+//    }
+//
+//    public LitePalAuthor getLitePalAuthor() {
+//        return litePalAuthor;
+//    }
+//
+//    public void setLitePalAuthor(LitePalAuthor litePalAuthor) {
+//        this.litePalAuthor = litePalAuthor;
+//    }
 
     public LitePalDataBuilder.LitePalQuoteBuilder getLitePalQuoteBuilder() {
         return litePalQuoteBuilder;
@@ -54,8 +63,9 @@ public class QuoteOfTheDay implements Parcelable {
     @Override
     public String toString() {
         return "{" +
-                "litePalLanguage=" + litePalLanguage +
-                ", litePalAuthor=" + litePalAuthor +
+                "litePalDataBuilder=" + litePalDataBuilder +
+//                "litePalLanguage=" + litePalLanguage +
+//                ", litePalAuthor=" + litePalAuthor +
                 ", litePalQuoteBuilder=" + litePalQuoteBuilder +
                 ", today=" + today +
                 '}';
@@ -71,8 +81,9 @@ public class QuoteOfTheDay implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeParcelable(litePalLanguage, flags);
-        dest.writeParcelable(litePalAuthor, flags);
+        dest.writeParcelable(litePalDataBuilder, flags);
+//        dest.writeParcelable(litePalLanguage, flags);
+//        dest.writeParcelable(litePalAuthor, flags);
         dest.writeParcelable(litePalQuoteBuilder, flags);
         dest.writeString(today);
     }
@@ -91,8 +102,9 @@ public class QuoteOfTheDay implements Parcelable {
 
     // "De-parcel object
     public QuoteOfTheDay(Parcel in) {
-        this.litePalLanguage = in.readParcelable(LitePalLanguage.class.getClassLoader());
-        this.litePalAuthor = in.readParcelable(LitePalAuthor.class.getClassLoader());
+        this.litePalDataBuilder = in.readParcelable(LitePalDataBuilder.class.getClassLoader());
+//        this.litePalLanguage = in.readParcelable(LitePalLanguage.class.getClassLoader());
+//        this.litePalAuthor = in.readParcelable(LitePalAuthor.class.getClassLoader());
         this.litePalQuoteBuilder = in.readParcelable(LitePalDataBuilder.LitePalQuoteBuilder.class.getClassLoader());
         this.today = in.readString();
     }

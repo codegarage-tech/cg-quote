@@ -94,7 +94,7 @@ public class AppUtils {
 
     public static String getSharedQuote(Context context, QuoteOfTheDay quoteOfTheDay) {
         String shareQuote = "\"" + quoteOfTheDay.getLitePalQuoteBuilder().getLitePalQuote().getQuoteDescription() +
-                "\"\n--- " + quoteOfTheDay.getLitePalAuthor().getAuthorName() +
+                "\"\n--- " + quoteOfTheDay.getLitePalDataBuilder().getLitePalAuthor().getAuthorName() +
                 "\n\n     <<*=*=*=*=*>>     " +
                 "\n" + context.getString(R.string.txt_quote_is_shared_by_the_app) +
                 "\nhttps://play.google.com/store/apps/details?id=" + context.getApplicationContext().getPackageName() + "&hl=en";

@@ -1,5 +1,7 @@
 package tech.codegarage.quotes.viewholder;
 
+import android.content.Context;
+import android.os.AsyncTask;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -9,6 +11,8 @@ import com.cleveroad.cyclemenuwidget.OnStateChangedListener;
 import com.jude.easyrecyclerview.adapter.BaseViewHolder;
 
 import tech.codegarage.quotes.R;
+import tech.codegarage.quotes.model.database.LitePalDataBuilder;
+import tech.codegarage.quotes.model.database.LitePalDataHandler;
 import tech.codegarage.quotes.model.database.QuoteOfTheDay;
 import tech.codegarage.quotes.util.AppUtils;
 import tech.codegarage.quotes.util.ClipboardHandler;
@@ -36,7 +40,7 @@ public class AmazingTodayViewHolder extends BaseViewHolder<QuoteOfTheDay> {
     public void setData(final QuoteOfTheDay data) {
 
         tvQuote.setText("\"" + data.getLitePalQuoteBuilder().getLitePalQuote().getQuoteDescription() + "\"");
-        tvAuthor.setText("--- " + data.getLitePalAuthor().getAuthorName());
+        tvAuthor.setText("--- " + data.getLitePalDataBuilder().getLitePalAuthor().getAuthorName());
 
         cycleMenuWidget.setMenuRes(R.menu.menu_cycle);
         cycleMenuWidget.setCurrentPosition(-1);
@@ -53,6 +57,13 @@ public class AmazingTodayViewHolder extends BaseViewHolder<QuoteOfTheDay> {
                         ClipboardHandler.copyToClipboard(getContext(), data.getLitePalQuoteBuilder().getLitePalQuote().getQuoteDescription());
                         break;
                     case 2:
+                        if (data.getLitePalQuoteBuilder().getLitePalQuote().isFavourite()) {
+                            data.getLitePalQuoteBuilder().getLitePalQuote().setFavourite(false);
+                        } else {
+                            data.getLitePalQuoteBuilder().getLitePalQuote().setFavourite(true);
+                        }
+                        new UpdateQuoteIntoDatabase(getContext(), data.getLitePalDataBuilder(), data.getLitePalQuoteBuilder()).execute();
+
                         break;
                 }
             }
@@ -74,5 +85,40 @@ public class AmazingTodayViewHolder extends BaseViewHolder<QuoteOfTheDay> {
             public void onCloseComplete() {
             }
         });
+    }
+
+    private class UpdateQuoteIntoDatabase extends AsyncTask<String, String, LitePalDataBuilder.LitePalQuoteBuilder> {
+
+        private Context mContext;
+        private LitePalDataBuilder.LitePalQuoteBuilder mQuote;
+        private LitePalDataBuilder mLitePalDataBuilder;
+
+        UpdateQuoteIntoDatabase(Context context, LitePalDataBuilder litePalDataBuilder, LitePalDataBuilder.LitePalQuoteBuilder updatedQuote) {
+            mContext = context;
+            mLitePalDataBuilder = litePalDataBuilder;
+            mQuote = updatedQuote;
+        }
+
+        @Override
+        protected void onPreExecute() {
+        }
+
+        @Override
+        protected LitePalDataBuilder.LitePalQuoteBuilder doInBackground(String... params) {
+            //Update quote into database and session
+            LitePalDataBuilder.LitePalQuoteBuilder updatedQuote = LitePalDataHandler.updateQuote(mLitePalDataBuilder, mQuote);
+            if (updatedQuote != null) {
+                return updatedQuote;
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(LitePalDataBuilder.LitePalQuoteBuilder result) {
+            if (result != null) {
+//                Toast.makeText(getContext(), Toast.)
+            }
+        }
     }
 }

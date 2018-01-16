@@ -116,7 +116,7 @@ public class AmazingTodayActivity extends BaseActivity {
                     if (!isDateEqual(today, quoteOfTheDay.getToday(), DATE_FORMAT_YYYY_MM_DD_STRING)) {
                         Log.d(TAG, "Session data didn't match");
                         LitePalDataBuilder.LitePalQuoteBuilder litePalQuoteBuilder = result.getLitePalQuoteBuilders().get(RandomManager.getRandom(result.getLitePalQuoteBuilders().size()));
-                        quoteOfTheDay = new QuoteOfTheDay(result.getLitePalLanguage(), result.getLitePalAuthor(), litePalQuoteBuilder, today);
+                        quoteOfTheDay = new QuoteOfTheDay(result, litePalQuoteBuilder, today);
                         SessionManager.setStringSetting(AmazingTodayActivity.this, SESSION_QUOTE_OF_THE_DAY, QuoteOfTheDay.convertFromObjectToString(quoteOfTheDay));
                         Log.d(TAG, "Session data: " + quoteOfTheDay.toString());
                     } else {
@@ -126,7 +126,7 @@ public class AmazingTodayActivity extends BaseActivity {
                 } else {
                     Log.d(TAG, "Session data is not found");
                     LitePalDataBuilder.LitePalQuoteBuilder litePalQuoteBuilder = result.getLitePalQuoteBuilders().get(RandomManager.getRandom(result.getLitePalQuoteBuilders().size()));
-                    quoteOfTheDay = new QuoteOfTheDay(result.getLitePalLanguage(), result.getLitePalAuthor(), litePalQuoteBuilder, today);
+                    quoteOfTheDay = new QuoteOfTheDay(result, litePalQuoteBuilder, today);
                     SessionManager.setStringSetting(AmazingTodayActivity.this, SESSION_QUOTE_OF_THE_DAY, QuoteOfTheDay.convertFromObjectToString(quoteOfTheDay));
                     Log.d(TAG, "Session data: " + quoteOfTheDay.toString());
                 }
