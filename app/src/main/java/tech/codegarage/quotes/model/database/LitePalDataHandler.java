@@ -13,9 +13,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import tech.codegarage.quotes.R;
+import tech.codegarage.quotes.activity.AmazingTodayActivity;
 
 import static tech.codegarage.quotes.application.QuoteApp.getGlobalContext;
 import static tech.codegarage.quotes.util.AllConstants.SESSION_DATA_DATA_BUILDER;
+import static tech.codegarage.quotes.util.AllConstants.SESSION_QUOTE_OF_THE_DAY;
 
 public class LitePalDataHandler {
 
@@ -535,6 +537,13 @@ public class LitePalDataHandler {
                         DataLitePalDataBuilder dataLitePalDataBuilder = new DataLitePalDataBuilder(litePalDataBuilders);
                         SessionManager.setStringSetting(getGlobalContext(), SESSION_DATA_DATA_BUILDER, DataLitePalDataBuilder.convertFromObjectToString(dataLitePalDataBuilder));
                         //Log.d(TAG, "Updated quote(All session): " + SessionManager.getStringSetting(getGlobalContext(), SESSION_DATA_DATA_BUILDER));
+                        //Set update to the quote of the day item
+                        QuoteOfTheDay quoteOfTheDay = QuoteOfTheDay.convertFromStringToObject(SessionManager.getStringSetting(getGlobalContext(), SESSION_QUOTE_OF_THE_DAY), QuoteOfTheDay.class);
+                        if(quoteOfTheDay!=null && quoteOfTheDay.getLitePalQuoteBuilder().getLitePalQuote().getQuoteDescription().equalsIgnoreCase(litePalQuoteUpdated.getQuoteDescription())){
+                            quoteOfTheDay.setLitePalDataBuilder(dataBuilder);
+                            quoteOfTheDay.setLitePalQuoteBuilder(litePalQuoteBuilder);
+                            SessionManager.setStringSetting(getGlobalContext(), SESSION_QUOTE_OF_THE_DAY, QuoteOfTheDay.convertFromObjectToString(quoteOfTheDay));
+                        }
 
                         return litePalQuoteBuilder;
                     }

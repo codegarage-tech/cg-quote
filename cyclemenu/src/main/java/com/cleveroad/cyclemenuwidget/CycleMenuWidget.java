@@ -429,6 +429,18 @@ public class CycleMenuWidget extends ViewGroup {
     }
 
     /**
+     * Update the menu item.
+     *
+     * @param item menu item to add
+     */
+    public void updateMenuItem(int position, @NonNull CycleMenuItem item) {
+//        checkNonNullParams(item, FIELD_NAME_FOR_EXCEPTION_ITEM);
+//        mInitialized = false;
+//        mAdapter.addItem(item);
+//        mAdapter.notifyDataSetChanged();
+    }
+
+    /**
      * Set the menu items from the menu res.
      *
      * @param menuResId menu resource from which need to get menuItems and add to the cycleMenu
