@@ -13,6 +13,7 @@ public class AllConstants {
     public static final String INTENT_KEY_FAVOURITE_AUTHOR = "INTENT_KEY_FAVOURITE_AUTHOR";
     public static final String INTENT_KEY_FAVOURITE_UPDATED_QUOTES = "INTENT_KEY_FAVOURITE_UPDATED_QUOTES";
 
+    public static final int FLASHING_DEFAULT_DELAY = 1500;
     public static final int NAVIGATION_DRAWER_CLOSE_DELAY = 200;
 
     //Session key

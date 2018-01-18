@@ -41,8 +41,9 @@ import io.armcha.ribble.presentation.widget.ArcView;
 import se.emilsjolander.flipview.FlipView;
 import se.emilsjolander.flipview.OverFlipMode;
 
+import static tech.codegarage.quotes.util.AllConstants.FLASHING_DEFAULT_DELAY;
 import static tech.codegarage.quotes.util.AllConstants.INTENT_KEY_FAVOURITE_UPDATED_QUOTES;
-import static tech.codegarage.quotes.util.AppUtils.flashingView;
+import static tech.codegarage.quotes.util.AppUtils.flashView;
 
 public class FavouriteQuoteDetailActivity extends BaseActivity {
 
@@ -147,7 +148,7 @@ public class FavouriteQuoteDetailActivity extends BaseActivity {
         btnContextMenu = (Button) findViewById(R.id.btn_context_menu);
         btnContextMenu.setVisibility(View.VISIBLE);
         //Animate context menu
-        flashingView(btnContextMenu, 2000);
+        flashView(btnContextMenu, FLASHING_DEFAULT_DELAY);
         fragmentManager = getSupportFragmentManager();
     }
 

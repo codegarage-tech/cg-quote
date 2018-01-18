@@ -40,6 +40,8 @@ import tech.codegarage.quotes.util.AppUtils;
 import tech.codegarage.quotes.util.ClipboardHandler;
 import tech.codegarage.quotes.util.IntentManager;
 
+import static tech.codegarage.quotes.util.AllConstants.FLASHING_DEFAULT_DELAY;
+
 //import static DataHandler.mAllMappedQuotes;
 
 public class QuoteDetailActivity extends BaseActivity {
@@ -144,7 +146,7 @@ public class QuoteDetailActivity extends BaseActivity {
         btnContextMenu = (Button) findViewById(R.id.btn_context_menu);
         btnContextMenu.setVisibility(View.VISIBLE);
         //Animate context menu
-        AppUtils.flashingView(btnContextMenu, 2000);
+        AppUtils.flashView(btnContextMenu, FLASHING_DEFAULT_DELAY);
         fragmentManager = getSupportFragmentManager();
     }
 

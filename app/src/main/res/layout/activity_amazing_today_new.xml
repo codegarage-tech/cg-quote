@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <include layout="@layout/toolbar_ribble" />
+
+    <LinearLayout
+        android:layout_below="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <tech.codegarage.quotes.view.CanaroTextView
+            android:id="@+id/tv_quote"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:gravity="center"
+            android:text=""
+            android:textColor="@color/textColorRosy"
+            android:textSize="@dimen/extra_large_font_size"
+            android:textStyle="bold" />
+
+        <tech.codegarage.quotes.view.CanaroTextView
+            android:id="@+id/tv_author"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:gravity="right"
+            android:text=""
+            android:textColor="@color/textColorSecondary"
+            android:textSize="@dimen/large_font_size"
+            android:textStyle="italic" />
+
+    </LinearLayout>
+
+    <com.cleveroad.cyclemenuwidget.CycleMenuWidget
+        android:id="@+id/itemCycleMenuWidget"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        app:cm_autoMaxRadius="150dp"
+        app:cm_autoMinRadius="10dp"
+        app:cm_corner="right_bottom"
+        app:cm_item_background_tint="@color/colorRose"
+        app:cm_ripple_color="@color/colorRose"
+        app:cm_scroll_type="endless" />
+
+</RelativeLayout>

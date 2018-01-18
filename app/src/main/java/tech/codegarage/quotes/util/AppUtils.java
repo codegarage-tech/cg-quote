@@ -31,7 +31,7 @@ public class AppUtils {
         return (int) (value * density);
     }
 
-    public static void flashingView(final View viewGroup, long time) {
+    public static ValueAnimator flashView(final View viewGroup, long time) {
         ValueAnimator animator = ValueAnimator.ofFloat(0f, 1f);
         animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
@@ -43,7 +43,13 @@ public class AppUtils {
         animator.setRepeatMode(ValueAnimator.REVERSE);
         animator.setRepeatCount(-1);
         animator.start();
+        return animator;
     }
+
+//    public static void stopFlashView(View viewGroup) {
+//        viewGroup.getAnimation().cancel();
+//        viewGroup.clearAnimation();
+//    }
 
     public static int getRandomColor() {
         Random rnd = new Random();
