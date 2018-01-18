@@ -8,14 +8,10 @@ import com.google.gson.Gson;
 public class QuoteOfTheDay implements Parcelable {
 
     private LitePalDataBuilder litePalDataBuilder;
-//    private LitePalLanguage litePalLanguage;
-//    private LitePalAuthor litePalAuthor;
     private LitePalDataBuilder.LitePalQuoteBuilder litePalQuoteBuilder;
     private String today = "";
 
     public QuoteOfTheDay(LitePalDataBuilder litePalDataBuilder, LitePalDataBuilder.LitePalQuoteBuilder litePalQuoteBuilder, String today) {
-//        this.litePalLanguage = litePalLanguage;
-//        this.litePalAuthor = litePalAuthor;
         this.litePalDataBuilder = litePalDataBuilder;
         this.litePalQuoteBuilder = litePalQuoteBuilder;
         this.today = today;
@@ -28,21 +24,6 @@ public class QuoteOfTheDay implements Parcelable {
     public void setLitePalDataBuilder(LitePalDataBuilder litePalDataBuilder) {
         this.litePalDataBuilder = litePalDataBuilder;
     }
-    //    public LitePalLanguage getLitePalLanguage() {
-//        return litePalLanguage;
-//    }
-//
-//    public void setLitePalLanguage(LitePalLanguage litePalLanguage) {
-//        this.litePalLanguage = litePalLanguage;
-//    }
-//
-//    public LitePalAuthor getLitePalAuthor() {
-//        return litePalAuthor;
-//    }
-//
-//    public void setLitePalAuthor(LitePalAuthor litePalAuthor) {
-//        this.litePalAuthor = litePalAuthor;
-//    }
 
     public LitePalDataBuilder.LitePalQuoteBuilder getLitePalQuoteBuilder() {
         return litePalQuoteBuilder;
@@ -64,8 +45,6 @@ public class QuoteOfTheDay implements Parcelable {
     public String toString() {
         return "{" +
                 "litePalDataBuilder=" + litePalDataBuilder +
-//                "litePalLanguage=" + litePalLanguage +
-//                ", litePalAuthor=" + litePalAuthor +
                 ", litePalQuoteBuilder=" + litePalQuoteBuilder +
                 ", today=" + today +
                 '}';

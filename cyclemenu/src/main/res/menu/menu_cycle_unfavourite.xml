@@ -2,15 +2,15 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
     <item
-        android:id="@+id/cm_share"
+        android:id="@id/cm_share"
         android:icon="@drawable/cm_ic_share"
         tools:ignore="MenuTitle" />
     <item
-        android:id="@+id/cm_copy"
+        android:id="@id/cm_copy"
         android:icon="@drawable/cm_ic_copy"
         tools:ignore="MenuTitle" />
     <item
-        android:id="@+id/cm_favourite"
+        android:id="@id/cm_favourite"
         android:icon="@drawable/cm_ic_unfavourite"
         tools:ignore="MenuTitle" />
 </menu>

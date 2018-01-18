@@ -431,13 +431,15 @@ public class CycleMenuWidget extends ViewGroup {
     /**
      * Update the menu item.
      *
-     * @param item menu item to add
+     * @param position menu item position
+     * @param updatedItem menu item to update
      */
-    public void updateMenuItem(int position, @NonNull CycleMenuItem item) {
-//        checkNonNullParams(item, FIELD_NAME_FOR_EXCEPTION_ITEM);
+    public void updateMenuItem(int position, @NonNull CycleMenuItem updatedItem) {
+        checkNonNullParams(updatedItem, FIELD_NAME_FOR_EXCEPTION_ITEM);
 //        mInitialized = false;
-//        mAdapter.addItem(item);
-//        mAdapter.notifyDataSetChanged();
+        mAdapter.removeItem(position);
+        mAdapter.addItem(updatedItem);
+        mAdapter.notifyDataSetChanged();
     }
 
     /**

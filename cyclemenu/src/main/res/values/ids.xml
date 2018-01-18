@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="cm_share" type="id" />
+    <item name="cm_copy" type="id" />
+    <item name="cm_favourite" type="id" />
+</resources>

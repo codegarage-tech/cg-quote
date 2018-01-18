@@ -85,6 +85,15 @@ class RecyclerMenuAdapter extends RecyclerView.Adapter<RecyclerMenuAdapter.ItemH
         mItems.add(item);
     }
 
+    /**
+     * Remove item from adapter
+     *
+     * @param position position of any item into adapter
+     */
+    void removeItem(int position) {
+        mItems.remove(position);
+    }
+
     @Override
     public ItemHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.cm_item_fab, parent, false);

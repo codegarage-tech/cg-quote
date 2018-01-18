@@ -2,17 +2,18 @@ package tech.codegarage.quotes.viewholder;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.cleveroad.cyclemenuwidget.CycleMenuItem;
 import com.cleveroad.cyclemenuwidget.CycleMenuWidget;
 import com.cleveroad.cyclemenuwidget.OnMenuItemClickListener;
 import com.cleveroad.cyclemenuwidget.OnStateChangedListener;
 import com.jude.easyrecyclerview.adapter.BaseViewHolder;
 
 import tech.codegarage.quotes.R;
-import tech.codegarage.quotes.adapter.CycleMenuAdapter;
 import tech.codegarage.quotes.model.database.LitePalDataBuilder;
 import tech.codegarage.quotes.model.database.LitePalDataHandler;
 import tech.codegarage.quotes.model.database.QuoteOfTheDay;
@@ -20,6 +21,8 @@ import tech.codegarage.quotes.util.AppUtils;
 import tech.codegarage.quotes.util.ClipboardHandler;
 import tech.codegarage.quotes.util.IntentManager;
 import tech.codegarage.quotes.view.CanaroTextView;
+
+import static tech.codegarage.quotes.model.database.LitePalDataHandler.getQuotePosition;
 
 /**
  * @author Md. Rashadul Alam
@@ -63,13 +66,13 @@ public class AmazingTodayViewHolder extends BaseViewHolder<QuoteOfTheDay> {
                         ClipboardHandler.copyToClipboard(getContext(), data.getLitePalQuoteBuilder().getLitePalQuote().getQuoteDescription());
                         break;
                     case 2:
-//                        QuoteOfTheDay quoteOfTheDay = new QuoteOfTheDay(data.getLitePalDataBuilder(), data.getLitePalQuoteBuilder(), data.getToday());
-                        if (data.getLitePalQuoteBuilder().getLitePalQuote().isFavourite()) {
-                            data.getLitePalQuoteBuilder().getLitePalQuote().setFavourite(false);
+                        QuoteOfTheDay quoteOfTheDay = new QuoteOfTheDay(data.getLitePalDataBuilder(), data.getLitePalQuoteBuilder(), data.getToday());
+                        if (quoteOfTheDay.getLitePalQuoteBuilder().getLitePalQuote().isFavourite()) {
+                            quoteOfTheDay.getLitePalQuoteBuilder().getLitePalQuote().setFavourite(false);
                         } else {
-                            data.getLitePalQuoteBuilder().getLitePalQuote().setFavourite(true);
+                            quoteOfTheDay.getLitePalQuoteBuilder().getLitePalQuote().setFavourite(true);
                         }
-                        new UpdateQuoteIntoDatabase(getContext(), data).execute();
+                        new UpdateQuoteIntoDatabase(getContext(), quoteOfTheDay).execute();
 
                         break;
                 }
@@ -122,15 +125,24 @@ public class AmazingTodayViewHolder extends BaseViewHolder<QuoteOfTheDay> {
         @Override
         protected void onPostExecute(LitePalDataBuilder.LitePalQuoteBuilder result) {
             if (result != null) {
+                //Update cycle menu
                 if (result.getLitePalQuote().isFavourite()) {
                     Toast.makeText(getContext(), getContext().getString(R.string.txt_noted_as_favourite), Toast.LENGTH_SHORT).show();
+                    cycleMenuWidget.updateMenuItem(2, new CycleMenuItem(R.id.cm_favourite, ContextCompat.getDrawable(getContext(), R.drawable.cm_ic_favourite)));
                 } else {
                     Toast.makeText(getContext(), getContext().getString(R.string.txt_noted_as_unfavourite), Toast.LENGTH_SHORT).show();
+                    cycleMenuWidget.updateMenuItem(2, new CycleMenuItem(R.id.cm_favourite, ContextCompat.getDrawable(getContext(), R.drawable.cm_ic_unfavourite)));
                 }
 
-//                cycleMenuWidget.close(true);
-                //Update icon for favourite changes
-//                ((CycleMenuAdapter)getOwnerAdapter()).notifyDataSetChanged();
+                //Update recycler view
+                int quotePosition = getQuotePosition(quoteOfTheDay.getLitePalDataBuilder().getLitePalQuoteBuilders(), result);
+                quoteOfTheDay.getLitePalDataBuilder().getLitePalQuoteBuilders().remove(quotePosition);
+                quoteOfTheDay.getLitePalDataBuilder().getLitePalQuoteBuilders().add(quotePosition, result);
+                quoteOfTheDay.setLitePalQuoteBuilder(result);
+
+//                if (((CycleMenuAdapter) getOwnerAdapter()) != null && (((CycleMenuAdapter) getOwnerAdapter()).getCount() > 0)) {
+//                    ((CycleMenuAdapter) getOwnerAdapter()).update(quoteOfTheDay, 0);
+//                }
             }
         }
     }
