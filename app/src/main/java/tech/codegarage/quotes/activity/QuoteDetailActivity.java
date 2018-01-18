@@ -257,18 +257,19 @@ public class QuoteDetailActivity extends BaseActivity {
         List<MenuObject> menuObjects = new ArrayList<>();
 
         MenuObject close = new MenuObject();
-        close.setResource(R.drawable.icn_close);
+        close.setResource(R.drawable.ic_vector_cancel_empty_rose);
 
         MenuObject addToFavourite = new MenuObject(getString(R.string.context_menu_add_to_favourite));
-        addToFavourite.setResource(isFavourite ? R.drawable.icn_6 : R.drawable.icn_4);
+        addToFavourite.setResource(isFavourite ? R.drawable.ic_vector_favourite_fill_rose : R.drawable.ic_vector_favourite_empty_rose);
 
         MenuObject copyToClipboard = new MenuObject(getString(R.string.context_menu_copy_to_clipboard));
-        copyToClipboard.setResource(R.drawable.icn_1);
+        copyToClipboard.setResource(R.drawable.ic_vector_copy_empty_rose);
 
         MenuObject shareToFriend = new MenuObject(getString(R.string.share_to_friends));
-        BitmapDrawable bd = new BitmapDrawable(getResources(),
-                BitmapFactory.decodeResource(getResources(), R.drawable.icn_3));
-        shareToFriend.setDrawable(bd);
+        shareToFriend.setResource(R.drawable.ic_vector_share_empty_rose);
+//        BitmapDrawable bd = new BitmapDrawable(getResources(),
+//                BitmapFactory.decodeResource(getResources(), R.drawable.ic_vector_share_empty_rose));
+//        shareToFriend.setDrawable(bd);
 
         menuObjects.add(close);
         menuObjects.add(addToFavourite);

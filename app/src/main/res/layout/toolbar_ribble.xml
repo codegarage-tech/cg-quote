@@ -62,7 +62,7 @@
             android:layout_width="35dp"
             android:layout_height="35dp"
             android:layout_margin="8dp"
-            android:background="@drawable/btn_add"
+            android:background="@drawable/ic_vector_add_empty_white"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

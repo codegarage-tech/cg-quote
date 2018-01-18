@@ -3,14 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools">
     <item
         android:id="@id/cm_share"
-        android:icon="@drawable/cm_ic_share"
+        android:icon="@drawable/ic_vector_share_empty_white"
         tools:ignore="MenuTitle" />
     <item
         android:id="@id/cm_copy"
-        android:icon="@drawable/cm_ic_copy"
+        android:icon="@drawable/ic_vector_copy_empty_white"
         tools:ignore="MenuTitle" />
     <item
         android:id="@id/cm_favourite"
-        android:icon="@drawable/cm_ic_unfavourite"
+        android:icon="@drawable/ic_vector_favourite_empty_white"
         tools:ignore="MenuTitle" />
 </menu>
