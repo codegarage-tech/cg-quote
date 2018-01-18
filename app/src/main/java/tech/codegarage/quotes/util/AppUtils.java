@@ -46,11 +46,6 @@ public class AppUtils {
         return animator;
     }
 
-//    public static void stopFlashView(View viewGroup) {
-//        viewGroup.getAnimation().cancel();
-//        viewGroup.clearAnimation();
-//    }
-
     public static int getRandomColor() {
         Random rnd = new Random();
         return Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));

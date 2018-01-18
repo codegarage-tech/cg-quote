@@ -52,8 +52,6 @@ public class AmazingTodayActivity extends BaseActivity {
     AnimatedTextView toolbarTitle;
     Toolbar toolbar;
 
-    //    RecyclerView rvAmazingToday;
-//    CycleMenuAdapter cycleMenuAdapter;
     CycleMenuWidget cycleMenuWidget;
     CanaroTextView tvQuote, tvAuthor;
     QuoteOfTheDay mQuoteOfTheDay;
@@ -63,7 +61,7 @@ public class AmazingTodayActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_amazing_today_new);
+        setContentView(R.layout.activity_amazing_today);
 
         initView();
         initActions();
@@ -71,11 +69,6 @@ public class AmazingTodayActivity extends BaseActivity {
 
     public void initView() {
         initToolBar();
-
-//        rvAmazingToday = (RecyclerView) findViewById(R.id.rv_amazing_today);
-//        rvAmazingToday.setLayoutManager(new LinearLayoutManager(this));
-//        cycleMenuAdapter = new CycleMenuAdapter(AmazingTodayActivity.this);
-//        rvAmazingToday.setAdapter(cycleMenuAdapter);
 
         tvQuote = (CanaroTextView) findViewById(R.id.tv_quote);
         tvAuthor = (CanaroTextView) findViewById(R.id.tv_author);
@@ -205,10 +198,6 @@ public class AmazingTodayActivity extends BaseActivity {
                     Log.d(TAG, "Session data: " + quoteOfTheDay.toString());
                 }
 
-//                ArrayList<QuoteOfTheDay> data = new ArrayList<QuoteOfTheDay>();
-//                data.add(quoteOfTheDay);
-//                cycleMenuAdapter.addAll(data);
-
                 setViewData(quoteOfTheDay);
             }
         }
@@ -256,10 +245,6 @@ public class AmazingTodayActivity extends BaseActivity {
                 quoteOfTheDay.getLitePalDataBuilder().getLitePalQuoteBuilders().remove(quotePosition);
                 quoteOfTheDay.getLitePalDataBuilder().getLitePalQuoteBuilders().add(quotePosition, result);
                 quoteOfTheDay.setLitePalQuoteBuilder(result);
-
-//                if (((CycleMenuAdapter) getOwnerAdapter()) != null && (((CycleMenuAdapter) getOwnerAdapter()).getCount() > 0)) {
-//                    ((CycleMenuAdapter) getOwnerAdapter()).update(quoteOfTheDay, 0);
-//                }
             }
         }
     }
