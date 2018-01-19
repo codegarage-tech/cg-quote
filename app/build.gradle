@@ -27,6 +27,8 @@ android {
         //For resolving multidex problem
         multiDexEnabled  true
 
+        vectorDrawables.useSupportLibrary = true
+
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 

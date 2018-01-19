@@ -233,10 +233,10 @@ public class AmazingTodayActivity extends BaseActivity {
             if (result != null) {
                 //Update cycle menu
                 if (result.getLitePalQuote().isFavourite()) {
-                    Toast.makeText(AmazingTodayActivity.this, getString(R.string.txt_noted_as_favourite), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AmazingTodayActivity.this, getString(R.string.txt_marked_as_favourite), Toast.LENGTH_SHORT).show();
                     cycleMenuWidget.updateMenuItem(2, new CycleMenuItem(R.id.cm_favourite, ContextCompat.getDrawable(AmazingTodayActivity.this, R.drawable.ic_vector_favourite_fill_white)));
                 } else {
-                    Toast.makeText(AmazingTodayActivity.this, getString(R.string.txt_noted_as_unfavourite), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AmazingTodayActivity.this, getString(R.string.txt_marked_as_unfavourite), Toast.LENGTH_SHORT).show();
                     cycleMenuWidget.updateMenuItem(2, new CycleMenuItem(R.id.cm_favourite, ContextCompat.getDrawable(AmazingTodayActivity.this, R.drawable.ic_vector_favourite_empty_white)));
                 }
 

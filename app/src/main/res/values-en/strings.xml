@@ -55,7 +55,7 @@
     <!-- Notification -->
     <string name="txt_quote_of_the_day_title">Quote of the day</string>
     <string name="txt_quote_of_the_day_content">Tap for more details.</string>
-    <string name="txt_noted_as_favourite">Noted as favourite</string>
-    <string name="txt_noted_as_unfavourite">Noted as unfavourite</string>
+    <string name="txt_marked_as_favourite">Marked as favourite</string>
+    <string name="txt_marked_as_unfavourite">Marked as unfavourite</string>
 
 </resources>
