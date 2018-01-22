@@ -57,13 +57,13 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <Button
-            android:id="@+id/btn_context_menu"
+        <ImageView
+            android:id="@+id/iv_context_menu"
             android:layout_width="35dp"
             android:layout_height="35dp"
             android:layout_margin="8dp"
-            android:background="@drawable/ic_vector_add_empty_white"
             android:visibility="gone"
+            app:srcCompat="@drawable/ic_vector_add_empty_white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

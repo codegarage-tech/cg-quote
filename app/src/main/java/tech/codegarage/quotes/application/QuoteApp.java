@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.res.Configuration;
 import android.graphics.Typeface;
 import android.support.multidex.MultiDex;
+import android.support.v7.app.AppCompatDelegate;
 
 import com.orm.SugarContext;
 import com.reversecoder.library.storage.SessionManager;
@@ -45,6 +46,9 @@ public class QuoteApp extends Application {
         super.onCreate();
 
         mContext = this;
+
+        //For using vector drawable
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
 
         //Initialize multidex object
         MultiDex.install(this);

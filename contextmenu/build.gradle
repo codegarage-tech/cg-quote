@@ -9,6 +9,8 @@ android {
         targetSdkVersion appTargetSdkVersion
         versionCode 8
         versionName "1.0.7"
+
+        vectorDrawables.useSupportLibrary = true
     }
 
     compileOptions {

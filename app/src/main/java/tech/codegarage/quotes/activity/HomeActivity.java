@@ -43,7 +43,6 @@ import io.armcha.ribble.presentation.widget.navigation_view.NavigationDrawerView
 import io.armcha.ribble.presentation.widget.navigation_view.NavigationId;
 import io.armcha.ribble.presentation.widget.navigation_view.NavigationItem;
 import io.armcha.ribble.presentation.widget.navigation_view.NavigationItemSelectedListener;
-import spencerstudios.com.bungeelib.Bungee;
 import tech.codegarage.quotes.R;
 import tech.codegarage.quotes.fragment.AuthorFragment;
 import tech.codegarage.quotes.fragment.FavouriteFragment;
@@ -74,7 +73,7 @@ public class HomeActivity extends BaseActivity {
     public ArcView arcMenuView;
     public AnimatedImageView arcMenuImage;
     AnimatedTextView toolbarTitle;
-    public Button btnContextMenu;
+    public ImageView imagViewContextMenu;
     ImageView userAvatar;
     TextView userName;
     TextView userInfo;
@@ -203,7 +202,7 @@ public class HomeActivity extends BaseActivity {
         arcMenuImage = (AnimatedImageView) findViewById(R.id.arcImage);
         arcMenuView = (ArcView) findViewById(R.id.arcView);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-        btnContextMenu = (Button) findViewById(R.id.btn_context_menu);
+        imagViewContextMenu = (ImageView) findViewById(R.id.iv_context_menu);
 
         toolbarTitle.setAnimatedText(getString(R.string.title_activity_author), 0L);
         arcMenuImage.setAnimatedImage(R.drawable.arrow_left, 0L);

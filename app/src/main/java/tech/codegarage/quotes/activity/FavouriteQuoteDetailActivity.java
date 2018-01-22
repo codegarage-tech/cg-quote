@@ -2,15 +2,14 @@ package tech.codegarage.quotes.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.graphics.drawable.VectorDrawableCompat;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextSwitcher;
 
 import spencerstudios.com.bungeelib.Bungee;
@@ -65,7 +64,7 @@ public class FavouriteQuoteDetailActivity extends BaseActivity {
     AnimatedImageView arcMenuImage;
     AnimatedTextView toolbarTitle;
     Toolbar toolbar;
-    public Button btnContextMenu;
+    ImageView ivContextMenu;
 
     //Contextual Menu
     private FragmentManager fragmentManager;
@@ -116,7 +115,7 @@ public class FavouriteQuoteDetailActivity extends BaseActivity {
     }
 
     private void initActions() {
-        btnContextMenu.setOnClickListener(new OnSingleClickListener() {
+        ivContextMenu.setOnClickListener(new OnSingleClickListener() {
             @Override
             public void onSingleClick(View view) {
                 LitePalDataBuilder.LitePalQuoteBuilder quote = mQuoteAdapter.getItem(mQuoteFlipView.getCurrentPage());
@@ -145,10 +144,10 @@ public class FavouriteQuoteDetailActivity extends BaseActivity {
         });
 
         //context menu
-        btnContextMenu = (Button) findViewById(R.id.btn_context_menu);
-        btnContextMenu.setVisibility(View.VISIBLE);
+        ivContextMenu = (ImageView) findViewById(R.id.iv_context_menu);
+        ivContextMenu.setVisibility(View.VISIBLE);
         //Animate context menu
-        flashView(btnContextMenu, FLASHING_DEFAULT_DELAY);
+        flashView(ivContextMenu, FLASHING_DEFAULT_DELAY);
         fragmentManager = getSupportFragmentManager();
     }
 
@@ -272,24 +271,26 @@ public class FavouriteQuoteDetailActivity extends BaseActivity {
         List<MenuObject> menuObjects = new ArrayList<>();
 
         MenuObject close = new MenuObject();
-        close.setResource(R.drawable.ic_vector_cancel_empty_rose);
+        close.setDrawable(VectorDrawableCompat.create(getResources(), R.drawable.ic_vector_cancel_empty_rose, getTheme()));
+        close.setDividerColor(R.color.colorPrimary);
 
         MenuObject addToFavourite = new MenuObject(getString(R.string.context_menu_add_to_favourite));
-        addToFavourite.setResource(isFavourite ? R.drawable.ic_vector_favourite_fill_rose : R.drawable.ic_vector_favourite_empty_rose);
+        addToFavourite.setDrawable(VectorDrawableCompat.create(getResources(), (isFavourite ? R.drawable.ic_vector_favourite_fill_rose : R.drawable.ic_vector_favourite_empty_rose), getTheme()));
+        addToFavourite.setDividerColor(R.color.colorPrimary);
 
         MenuObject copyToClipboard = new MenuObject(getString(R.string.context_menu_copy_to_clipboard));
-        copyToClipboard.setResource(R.drawable.ic_vector_copy_empty_rose);
+        copyToClipboard.setDrawable(VectorDrawableCompat.create(getResources(), R.drawable.ic_vector_copy_empty_rose, getTheme()));
+        copyToClipboard.setDividerColor(R.color.colorPrimary);
 
         MenuObject shareToFriend = new MenuObject(getString(R.string.share_to_friends));
-        shareToFriend.setResource(R.drawable.ic_vector_share_empty_rose);
-//        BitmapDrawable bd = new BitmapDrawable(getResources(),
-//                BitmapFactory.decodeResource(getResources(), R.drawable.ic_vector_share_empty_rose));
-//        shareToFriend.setDrawable(bd);
+        shareToFriend.setDrawable(VectorDrawableCompat.create(getResources(), R.drawable.ic_vector_share_empty_rose, getTheme()));
+        shareToFriend.setDividerColor(R.color.colorPrimary);
 
         menuObjects.add(close);
         menuObjects.add(addToFavourite);
         menuObjects.add(copyToClipboard);
         menuObjects.add(shareToFriend);
+
         return menuObjects;
     }
 
@@ -342,10 +343,10 @@ public class FavouriteQuoteDetailActivity extends BaseActivity {
             public void onFlippedToPage(FlipView v, int position, long id) {
                 //invisible context menu for last item, as it is the end.
                 if (position == mQuoteAdapter.getCount() - 1) {
-                    btnContextMenu.setVisibility(View.GONE);
+                    ivContextMenu.setVisibility(View.GONE);
                     tsQuoteCounter.setVisibility(View.GONE);
                 } else {
-                    btnContextMenu.setVisibility(View.VISIBLE);
+                    ivContextMenu.setVisibility(View.VISIBLE);
                     tsQuoteCounter.setVisibility(View.VISIBLE);
 
                     //switch counter of the flipview

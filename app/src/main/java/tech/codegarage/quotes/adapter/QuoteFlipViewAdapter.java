@@ -93,7 +93,7 @@ public class QuoteFlipViewAdapter extends BaseAdapter {
                     mFlipView.setAdapter(null);
                     mData.clear();
                     //invisible context menu for no item, as it is empty.
-                    ((HomeActivity) mContext).btnContextMenu.setVisibility(View.GONE);
+                    ((HomeActivity) mContext).imagViewContextMenu.setVisibility(View.GONE);
                     notifyDataSetChanged();
                 }
             }
@@ -114,7 +114,7 @@ public class QuoteFlipViewAdapter extends BaseAdapter {
                     mFlipView.setAdapter(null);
                     mData.clear();
                     //invisible context menu for no item, as it is empty.
-                    ((HomeActivity) mContext).btnContextMenu.setVisibility(View.GONE);
+                    ((HomeActivity) mContext).imagViewContextMenu.setVisibility(View.GONE);
                     notifyDataSetChanged();
                 }
             }
