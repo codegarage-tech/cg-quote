@@ -175,6 +175,9 @@ public enum Library {
     // ProgressBar
     MASK_PROGRESSVIEW_IAMMERT(new Attribution.Builder("Mask ProgressView", "https://github.com/iammert/MaskProgressView")
             .addLicenseInfo(new LicenseInfo("Copyright 2015 Mert Şimşek.", License.APACHE))
+            .build()),
+    FILL_ME_PATRYK1007(new Attribution.Builder("Fill Me", "https://github.com/patryk1007/Fillme")
+            .addLicenseInfo(new LicenseInfo("Copyright (C) 2018 patryk1007", License.APACHE))
             .build());
 
 

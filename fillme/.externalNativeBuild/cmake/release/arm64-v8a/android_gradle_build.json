@@ -1,0 +1,41 @@
+
+{
+	"buildFiles" : 
+	[
+		"/home/rashed/BattleField/Weapon/development/GithubProjects/Workspace/Quote/cg-quote/fillme/src/CMakeLists.txt"
+	],
+	"cleanCommands" : 
+	[
+		"/home/rashed/BattleField/Weapon/development_environment/sdk/cmake/3.6.4111459/bin/cmake --build /home/rashed/BattleField/Weapon/development/GithubProjects/Workspace/Quote/cg-quote/fillme/.externalNativeBuild/cmake/release/arm64-v8a --target clean"
+	],
+	"cppFileExtensions" : [ "cpp" ],
+	"libraries" : 
+	{
+		"native-lib-Release-arm64-v8a" : 
+		{
+			"abi" : "arm64-v8a",
+			"artifactName" : "native-lib",
+			"buildCommand" : "/home/rashed/BattleField/Weapon/development_environment/sdk/cmake/3.6.4111459/bin/cmake --build /home/rashed/BattleField/Weapon/development/GithubProjects/Workspace/Quote/cg-quote/fillme/.externalNativeBuild/cmake/release/arm64-v8a --target native-lib",
+			"buildType" : "release",
+			"files" : 
+			[
+				
+				{
+					"flags" : "  --target=aarch64-none-linux-android --gcc-toolchain=/home/rashed/BattleField/Weapon/development_environment/sdk/ndk-bundle/toolchains/aarch64-linux-android-4.9/prebuilt/linux-x86_64 --sysroot=/home/rashed/BattleField/Weapon/development_environment/sdk/ndk-bundle/sysroot  -Dnative_lib_EXPORTS -isystem /home/rashed/BattleField/Weapon/development_environment/sdk/ndk-bundle/sources/cxx-stl/gnu-libstdc++/4.9/include -isystem /home/rashed/BattleField/Weapon/development_environment/sdk/ndk-bundle/sources/cxx-stl/gnu-libstdc++/4.9/libs/arm64-v8a/include -isystem /home/rashed/BattleField/Weapon/development_environment/sdk/ndk-bundle/sources/cxx-stl/gnu-libstdc++/4.9/include/backward  -isystem /home/rashed/BattleField/Weapon/development_environment/sdk/ndk-bundle/sysroot/usr/include/aarch64-linux-android -D__ANDROID_API__=21 -g -DANDROID -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -Wa,--noexecstack -Wformat -Werror=format-security   -O2 -DNDEBUG  -fPIC    -c ",
+					"src" : "/home/rashed/BattleField/Weapon/development/GithubProjects/Workspace/Quote/cg-quote/fillme/src/main/cpp/native-lib.cpp",
+					"workingDirectory" : "/home/rashed/BattleField/Weapon/development/GithubProjects/Workspace/Quote/cg-quote/fillme/.externalNativeBuild/cmake/release/arm64-v8a"
+				}
+			],
+			"output" : "/home/rashed/BattleField/Weapon/development/GithubProjects/Workspace/Quote/cg-quote/fillme/build/intermediates/cmake/release/obj/arm64-v8a/libnative-lib.so",
+			"toolchain" : "16464289841343948537"
+		}
+	},
+	"toolchains" : 
+	{
+		"16464289841343948537" : 
+		{
+			"cCompilerExecutable" : "/home/rashed/BattleField/Weapon/development_environment/sdk/ndk-bundle/toolchains/llvm/prebuilt/linux-x86_64/bin/clang",
+			"cppCompilerExecutable" : "/home/rashed/BattleField/Weapon/development_environment/sdk/ndk-bundle/toolchains/llvm/prebuilt/linux-x86_64/bin/clang++"
+		}
+	}
+}
