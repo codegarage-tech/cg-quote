@@ -963,7 +963,7 @@ public class DataHandler {
         quotes.add(new Quote("Everybody I know who is funny, it's in them. You can teach timing, or some people are able to tell a joke, though I don't like to tell jokes. But I think you have to be born with a sense of humor and a sense of timing.", false, true, english, carlBurnett));
         quotes.add(new Quote("My grandmother and I would go see movies, and we'd come back to the apartment - we had a one-room apartment in Hollywood - and I would kind of lock myself in this little dressing room area with a cracked mirror on the door and act out what I had just seen.", false, true, english, carlBurnett));
         quotes.add(new Quote("It costs a lot to sue a magazine, and it's too bad that we don't have a system where the losing team has to pay the winning team's lawyers.", false, true, english, carlBurnett));
-        quotes.add(new Quote("'m not always optimistic. You wouldn't have all cylinders cooking if you were always like Mary Poppins.", false, true, english, carlBurnett));
+        quotes.add(new Quote("I'm not always optimistic. You wouldn't have all cylinders cooking if you were always like Mary Poppins.", false, true, english, carlBurnett));
         quotes.add(new Quote("I love to write. I have always loved writing. That was my first love.", false, true, english, carlBurnett));
 
         Author charlesDickens = getAuthor(authors, "Charles Dickens");
