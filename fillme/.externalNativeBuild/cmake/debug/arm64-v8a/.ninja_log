@@ -1,3 +1,7 @@
 # ninja log v5
 96	5924	0	CMakeFiles/native-lib.dir/main/cpp/native-lib.cpp.o	b96c4c492bc22e9b
 5924	6322	0	/home/rashed/BattleField/Weapon/development/GithubProjects/Workspace/Quote/cg-quote/fillme/build/intermediates/cmake/debug/obj/arm64-v8a/libnative-lib.so	8011cd3bcfb13519
+2096	30855	0	CMakeFiles/native-lib.dir/main/cpp/native-lib.cpp.o	b96c4c492bc22e9b
+30855	36133	0	/home/rashed/BattleField/Weapon/development/GithubProjects/Workspace/Quote/cg-quote/fillme/build/intermediates/cmake/debug/obj/arm64-v8a/libnative-lib.so	8011cd3bcfb13519
+1698	17875	0	CMakeFiles/native-lib.dir/main/cpp/native-lib.cpp.o	b96c4c492bc22e9b
+17875	21601	0	/home/rashed/BattleField/Weapon/development/GithubProjects/Workspace/Quote/cg-quote/fillme/build/intermediates/cmake/debug/obj/arm64-v8a/libnative-lib.so	8011cd3bcfb13519

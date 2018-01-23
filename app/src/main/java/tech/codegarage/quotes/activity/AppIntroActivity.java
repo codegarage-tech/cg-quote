@@ -8,11 +8,11 @@ import android.os.Build;
 import android.util.Log;
 import android.view.View;
 
-import com.reversecoder.localechanger.LocaleChanger;
-import com.reversecoder.localechanger.utils.ActivityRecreationHelper;
 import com.luseen.verticalintrolibrary.VerticalIntro;
 import com.luseen.verticalintrolibrary.VerticalIntroItem;
 import com.reversecoder.library.storage.SessionManager;
+import com.reversecoder.localechanger.LocaleChanger;
+import com.reversecoder.localechanger.utils.ActivityRecreationHelper;
 import com.reversecoder.permission.activity.PermissionListActivity;
 
 import spencerstudios.com.bungeelib.Bungee;
@@ -30,7 +30,7 @@ public class AppIntroActivity extends VerticalIntro {
     @Override
     protected void init() {
         addIntroItem(new VerticalIntroItem.Builder()
-                .backgroundColor(R.color.colorPrimaryDark)
+                .backgroundColor(R.color.colorPink)
                 .image(R.drawable.intro_author)
                 .title(getString(R.string.txt_author_detail_title))
                 .text(getString(R.string.txt_author_detail_description))

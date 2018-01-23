@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <color name="colorPrimary">#f2bccf</color>
+    <color name="colorPrimaryDark">#ef3979</color>
+    <color name="colorAccent">#FF4081</color>
+
     <color name="white">#ffffff</color>
     <color name="black">#000</color>
     <color name="white_v19">#64ffffff</color>
@@ -8,8 +13,9 @@
     <color name="color2">#02A8F4</color>
     <color name="color3">#6739B7</color>
 
-    <color name="colorPink">#f2bccf</color>
-    <color name="colorRose">#ed1862</color>
+    <color name="colorPink">#ef3979</color>
+    <color name="colorYellow">#eae476</color>
+    <color name="colorRose">#e30677</color>
     <color name="colorPurple">#e218ed</color>
-    <color name="colorBlue">#18ede6</color>
+    <color name="colorBlue">#44c3b7</color>
 </resources>
