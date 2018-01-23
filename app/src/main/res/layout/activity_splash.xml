@@ -44,4 +44,15 @@
         android:text="@string/app_version_name"
         android:textColor="@color/white"
         android:textSize="@dimen/medium_font_size" />
+
+    <com.patryk1007.fillme.FillMe
+        android:id="@+id/fill_me_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        app:fmFillByTouch="none"
+        app:fmConvexFigure="true"
+        app:fmFillColour="@color/colorFillMeDark"
+        app:fmImage="@drawable/ic_transparent_border_bg" />
+
 </RelativeLayout>
