@@ -84,7 +84,7 @@ public class ContextMenuDialogFragment extends DialogFragment implements OnItemC
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setStyle(STYLE_NO_FRAME, R.style.MenuFragmentStyle);
+        setStyle(STYLE_NO_FRAME, R.style.AppTheme_ContextMenu_Transparent);
         if (getArguments() != null) {
             mMenuParams = getArguments().getParcelable(BUNDLE_MENU_PARAMS);
         }
