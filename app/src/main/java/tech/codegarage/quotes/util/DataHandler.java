@@ -1129,7 +1129,7 @@ public class DataHandler {
         quotes.add(new Quote("Here in America we are descended in blood and in spirit from revolutionists and rebels - men and women who dare to dissent from accepted doctrine. As their heirs, may we never confuse honest dissent with disloyal subversion.", false, true, english, dwightDEisenhower));
         quotes.add(new Quote("Plans are nothing; planning is everything.", false, true, english, dwightDEisenhower));
         quotes.add(new Quote("In preparing for battle I have always found that plans are useless, but planning is indispensable.", false, true, english, dwightDEisenhower));
-        quotes.add(new Quote("You don't lead by hitting people over the head - that's assault, not leadership. Dwight D. Eisenhower", false, true, english, dwightDEisenhower));
+        quotes.add(new Quote("You don't lead by hitting people over the head - that's assault, not leadership.", false, true, english, dwightDEisenhower));
         quotes.add(new Quote("Motivation is the art of getting people to do what you want them to do because they want to do it.", false, true, english, dwightDEisenhower));
         quotes.add(new Quote("How far you can go without destroying from within what you are trying to defend from without?", false, true, english, dwightDEisenhower));
         quotes.add(new Quote("The supreme quality for leadership is unquestionably integrity. Without it, no real success is possible, no matter whether it is on a section gang, a football field, in an army, or in an office.", false, true, english, dwightDEisenhower));
