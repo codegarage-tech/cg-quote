@@ -37,17 +37,17 @@
         <activity
             android:name="tech.codegarage.quotes.activity.AuthorDetailActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.Transparent" />
 
         <activity
             android:name="tech.codegarage.quotes.activity.QuoteDetailActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.Transparent" />
 
         <activity
             android:name="tech.codegarage.quotes.activity.FavouriteQuoteDetailActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.Transparent" />
 
         <activity
             android:name="tech.codegarage.quotes.activity.AmazingTodayActivity"

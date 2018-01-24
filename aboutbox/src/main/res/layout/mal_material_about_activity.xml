@@ -3,17 +3,27 @@
     android:id="@+id/mal_material_about_activity_coordinator_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark"
+    android:fitsSystemWindows="true"
     android:orientation="vertical">
 
-    <include
-        android:id="@+id/title_bar"
-        layout="@layout/toolbar_about" />
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/mal_recyclerview"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:clipToPadding="false"
-        android:paddingBottom="@dimen/mal_baseline_half" />
+        android:background="@android:color/white"
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/title_bar"
+            layout="@layout/toolbar_about" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/mal_recyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:paddingBottom="@dimen/mal_baseline_half" />
+
+    </LinearLayout>
 
 </LinearLayout>

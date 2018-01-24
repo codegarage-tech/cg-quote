@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="AppTheme.MaterialAboutActivity" parent="Theme.Mal.Light.DarkActionBar" >
+    <style name="AppTheme.AboutBox.Transparent" parent="Theme.Mal.Light.DarkActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowTranslucentNavigation">true</item>
     </style>
 
     <!-- Danielstone -->
@@ -33,5 +36,6 @@
     </style>
 
     <style name="Theme.Mal.Toolbar.Light" parent="ThemeOverlay.AppCompat.Light" />
+
     <style name="Theme.Mal.Toolbar.Dark" parent="ThemeOverlay.AppCompat.Dark" />
 </resources>

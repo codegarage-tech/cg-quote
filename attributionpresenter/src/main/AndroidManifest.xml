@@ -7,12 +7,12 @@
         <activity
             android:name=".activity.LicenseActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.AttributePresenter.Transparent" />
 
         <activity
             android:name=".activity.LicenseDetailActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.AttributePresenter.Transparent" />
 
     </application>
 
