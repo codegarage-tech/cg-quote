@@ -31,7 +31,7 @@ public class AppIntroActivity extends VerticalIntro {
     protected void init() {
         addIntroItem(new VerticalIntroItem.Builder()
                 .backgroundColor(R.color.colorPink)
-                .image(R.drawable.intro_author)
+                .image(R.drawable.ic_vector_intro_author_empty_rose)
                 .title(getString(R.string.txt_author_detail_title))
                 .text(getString(R.string.txt_author_detail_description))
                 .textSize(18)
@@ -40,7 +40,7 @@ public class AppIntroActivity extends VerticalIntro {
 
         addIntroItem(new VerticalIntroItem.Builder()
                 .backgroundColor(R.color.colorPurple)
-                .image(R.drawable.intro_quote)
+                .image(R.drawable.ic_vector_intro_quote_empty_blue)
                 .title(getString(R.string.txt_quote_detail_title))
                 .text(getString(R.string.txt_quote_detail_description))
                 .textSize(18)
@@ -49,7 +49,7 @@ public class AppIntroActivity extends VerticalIntro {
 
         addIntroItem(new VerticalIntroItem.Builder()
                 .backgroundColor(R.color.colorBlue)
-                .image(R.drawable.intro_favourite)
+                .image(R.drawable.ic_vector_intro_favourite_quote_empty_rose)
                 .title(getString(R.string.txt_favourite_quote_title))
                 .text(getString(R.string.txt_favourite_quote_description))
                 .textColor(R.color.white)
