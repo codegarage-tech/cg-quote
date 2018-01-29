@@ -3,4 +3,4 @@ include ':app', ':ribblemenu', ':easyrecyclerview', ':wavesidebar', ':sugar' , '
         ':sherlock', ':verticalappintro', ':tutors', ':shaperipple', ':cookiebar2', ':localechanger',
         ':updatechecker', ':kenburnsview', ':arclayout', ':cardslider', ':multicolortextview',
         ':flipview', ':gcm', ':androidviewanimations', ':litepal', ':maskprogressview', ':bungee',
-        ':scheduler', ':cyclemenu', ':fillme'
+        ':scheduler', ':cyclemenu', ':fillme', ':fabulousfilter'

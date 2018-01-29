@@ -92,6 +92,7 @@ public class LicenseActivity extends AppCompatActivity {
         attributions.add(Library.ANDROID_VIEW_ANIMATIONS_DAIMAJIA.getAttribution());
         attributions.add(Library.CYCLE_MENU_CLEVEROAD.getAttribution());
         attributions.add(Library.FILL_ME_PATRYK1007.getAttribution());
+        attributions.add(Library.FABULOUS_FILTER_KRUPEN.getAttribution());
 
         return attributions;
     }

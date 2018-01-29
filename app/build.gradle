@@ -97,4 +97,5 @@ dependencies {
     compile project(":scheduler")
     compile project(":cyclemenu")
     compile project(":fillme")
+    compile project(":fabulousfilter")
 }

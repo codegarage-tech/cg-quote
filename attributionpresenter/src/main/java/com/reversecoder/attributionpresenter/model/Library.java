@@ -178,6 +178,11 @@ public enum Library {
             .build()),
     FILL_ME_PATRYK1007(new Attribution.Builder("Fill Me", "https://github.com/patryk1007/Fillme")
             .addLicenseInfo(new LicenseInfo("Copyright (C) 2018 patryk1007", License.APACHE))
+            .build()),
+
+    //Search or filter
+    FABULOUS_FILTER_KRUPEN(new Attribution.Builder("Fabulous Filter", "https://github.com/Krupen/FabulousFilter")
+            .addLicenseInfo(new LicenseInfo("Copyright 2017 Krupen Ghetiya", License.APACHE))
             .build());
 
 
