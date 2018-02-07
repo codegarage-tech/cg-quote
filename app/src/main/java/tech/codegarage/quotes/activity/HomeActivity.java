@@ -12,7 +12,6 @@ import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -26,7 +25,9 @@ import com.eggheadgames.aboutbox.IDialog;
 import com.eggheadgames.aboutbox.activity.AboutActivity;
 import com.eggheadgames.aboutbox.listener.LicenseClickListener;
 import com.reversecoder.attributionpresenter.activity.LicenseActivity;
+import com.reversecoder.gcm.listener.RegisterAppListener;
 import com.reversecoder.gcm.task.RegisterApp;
+import com.reversecoder.gcm.util.HttpRequestManager;
 import com.reversecoder.library.network.NetworkManager;
 import com.reversecoder.library.storage.SessionManager;
 import com.reversecoder.library.util.AllSettingsManager;
@@ -54,6 +55,7 @@ import tech.codegarage.scheduler.enumeration.REPEAT_TYPE;
 import tech.codegarage.scheduler.model.ScheduleItem;
 import tech.codegarage.scheduler.service.AlarmService;
 
+import static com.reversecoder.gcm.util.GcmConfig.isNullOrEmpty;
 import static tech.codegarage.scheduler.util.AllConstants.DATE_FORMAT;
 import static tech.codegarage.scheduler.util.AllConstants.INTENT_ACTION_CREATE;
 import static tech.codegarage.scheduler.util.AllConstants.INTENT_KEY_SCHEDULE_DATA_ALARM_SERVICE;
@@ -463,7 +465,14 @@ public class HomeActivity extends BaseActivity {
      **************************************/
     private void initPushNotification() {
         if (NetworkManager.isConnected(HomeActivity.this)) {
-            new RegisterApp(HomeActivity.this).execute();
+            new RegisterApp(HomeActivity.this, new RegisterAppListener() {
+                @Override
+                public void registerApp(HttpRequestManager.HttpResponse result) {
+                    if (result.isSuccess() && !isNullOrEmpty(result.getResult().toString())) {
+                        //Do whatever you want with the response
+                    }
+                }
+            }).execute();
         }
     }
 }
