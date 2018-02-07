@@ -64,7 +64,7 @@ public enum EnumTag {
     DAY("Day"),
 
     HAIR("Hair"),
-    WOMAN ("Woman"),
+    WOMAN("Woman"),
     TOMORROW("Tomorrow"),
     CAKE("Cake"),
     COFFEE("Coffee"),
@@ -241,7 +241,7 @@ public enum EnumTag {
     private LitePalTag litePalTag;
 
     EnumTag(String tagName) {
-        litePalTag = LitePalDataHandler.insetTag(new LitePalTag(tagName));
+        litePalTag = LitePalDataHandler.insetTag(new LitePalTag(tagName), null);
     }
 
     public LitePalTag getLitePalTag() {

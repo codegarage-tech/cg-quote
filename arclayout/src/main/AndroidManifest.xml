@@ -1,1 +1,5 @@
-<manifest package="com.github.florent37.arclayout"/>
+<manifest package="com.github.florent37.arclayout">
+
+    <application />
+
+</manifest>

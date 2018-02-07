@@ -332,7 +332,7 @@ public enum EnumAuthor {
     private LitePalAuthor litePalAuthor;
 
     EnumAuthor(String authorName, String birthDate, String deathDate, String occupation, String nationality, int profileImage, boolean isAuthor) {
-        this.litePalAuthor = LitePalDataHandler.insetAuthor(new LitePalAuthor(authorName, birthDate, deathDate, occupation, nationality, profileImage, isAuthor));
+        this.litePalAuthor = LitePalDataHandler.insetAuthor(new LitePalAuthor(authorName, birthDate, deathDate, occupation, nationality, profileImage, isAuthor), null);
     }
 
     public LitePalAuthor getLitePalAuthor() {

@@ -1242,14 +1242,14 @@ public class DataHandler {
         quotes.add(new Quote("Once upon a midnight dreary, while I pondered weak and weary.", false, true, english, edgarAllanPoe));
         quotes.add(new Quote("Science has not yet taught us if madness is or is not the sublimity of the intelligence.", false, true, english, edgarAllanPoe));
 
-        Author francisofAssisi = getAuthor(authors, "Francis of Assisi");
+        Author francisofAssisi = getAuthor(authors,"Francis of Assisi");
         quotes.add(new Quote("Start by doing what's necessary; then do what's possible; and suddenly you are doing the impossible.", false, true, english, francisofAssisi));
         quotes.add(new Quote("Lord, make me an instrument of thy peace. Where there is hatred, let me sow love.", false, true, english, francisofAssisi));
         quotes.add(new Quote("A single sunbeam is enough to drive away many shadows.", false, true, english, francisofAssisi));
         quotes.add(new Quote("Where there is charity and wisdom, there is neither fear nor ignorance.", false, true, english, francisofAssisi));
         quotes.add(new Quote("It is no use walking anywhere to preach unless our walking is our preaching.", false, true, english, francisofAssisi));
         quotes.add(new Quote("While you are proclaiming peace with your lips, be careful to have it even more fully in your heart.", false, true, english, francisofAssisi));
-        quotes.add(new Quote("If God can work through me, he can work through anyone. Francis of Assisi", false, true, english, francisofAssisi));
+        quotes.add(new Quote("If God can work through me, he can work through anyone.", false, true, english, francisofAssisi));
         quotes.add(new Quote("Men lose all the material things they leave behind them in this world, but they carry with them the reward of their charity and the alms they give. For these, they will receive from the Lord the reward and recompense they deserve.", false, true, english, francisofAssisi));
         quotes.add(new Quote("For it is in giving that we receive.", false, true, english, francisofAssisi));
         quotes.add(new Quote("Lord, grant that I might not so much seek to be loved as to love.", false, true, english, francisofAssisi));
@@ -1492,7 +1492,6 @@ public class DataHandler {
         quotes.add(new Quote("I had reasoned this out in my mind, there was one of two things I had a right to, liberty or death; if I could not have one, I would have the other.", false, true, english, harrietTubman));
         quotes.add(new Quote("I was the conductor of the Underground Railroad for eight years, and I can say what most conductors can't say; I never ran my train off the track and I never lost a passenger.", false, true, english, harrietTubman));
         quotes.add(new Quote("I think slavery is the next thing to hell. If a person would send another into bondage, he would, it appears to me, be bad enough to send him into hell if he could.", false, true, english, harrietTubman));
-        quotes.add(new Quote("Now I've been free, I know what a dreadful condition slavery is. I have seen hundreds of escaped slaves, but I never saw one who was willing to go back and be a slave.", false, true, english, harrietTubman));
         quotes.add(new Quote("Now I've been free, I know what a dreadful condition slavery is. I have seen hundreds of escaped slaves, but I never saw one who was willing to go back and be a slave.", false, true, english, harrietTubman));
 
         Author harrySTruman = getAuthor(authors, "Harry S Truman");

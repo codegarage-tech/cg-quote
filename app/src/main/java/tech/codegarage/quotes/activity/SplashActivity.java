@@ -26,8 +26,11 @@ import java.util.ArrayList;
 import spencerstudios.com.bungeelib.Bungee;
 import tech.codegarage.quotes.R;
 import tech.codegarage.quotes.application.QuoteApp;
+import tech.codegarage.quotes.model.database.DataInputListener;
 import tech.codegarage.quotes.model.database.LitePalDataBuilder;
 import tech.codegarage.quotes.model.database.LitePalDataHandler;
+import tech.codegarage.quotes.model.database.LitePalQuote;
+import tech.codegarage.quotes.model.database.LitePalQuoteLanguageAuthorTag;
 
 import static tech.codegarage.quotes.util.AllConstants.SESSION_DATA_DATA_BUILDER;
 import static tech.codegarage.quotes.util.AllConstants.SESSION_IS_FIRST_TIME;
@@ -174,7 +177,7 @@ public class SplashActivity extends BaseActivity {
     /******************************
      * Methods for database input *
      ******************************/
-    public class InputData extends AsyncTask<String, String, ArrayList<LitePalDataBuilder>> {
+    public class InputData extends AsyncTask<String, Object, ArrayList<LitePalDataBuilder>> {
 
         @Override
         protected void onPreExecute() {
@@ -182,7 +185,20 @@ public class SplashActivity extends BaseActivity {
 
         @Override
         protected ArrayList<LitePalDataBuilder> doInBackground(String... params) {
-            return LitePalDataHandler.initAllQuotes();
+            return LitePalDataHandler.initAllQuotes(new DataInputListener<Object>() {
+                @Override
+                public void InputListener(Object insertedData) {
+                    publishProgress(insertedData);
+                }
+            });
+        }
+
+        protected void onProgressUpdate(Object... progress) {
+            if (progress[0] instanceof LitePalQuote) {
+                Log.d(TAG, "onProgressUpdate(LitePalQuote): "+((LitePalQuote)progress[0]).toString());
+            } else if (progress[0] instanceof LitePalQuoteLanguageAuthorTag) {
+                Log.d(TAG, "onProgressUpdate(LitePalQuoteLanguageAuthorTag): "+((LitePalQuoteLanguageAuthorTag)progress[0]).toString());
+            }
         }
 
         @Override

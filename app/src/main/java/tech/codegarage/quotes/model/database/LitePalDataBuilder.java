@@ -12,6 +12,7 @@ public class LitePalDataBuilder implements Parcelable {
     private LitePalAuthor litePalAuthor;
     private ArrayList<LitePalQuoteBuilder> litePalQuoteBuilders = new ArrayList<>();
     private boolean isLitePalData = true;
+    private transient DataInputListener dataInputListener;
 
     public LitePalDataBuilder() {
     }
@@ -64,9 +65,14 @@ public class LitePalDataBuilder implements Parcelable {
         return this;
     }
 
+    public LitePalDataBuilder setDataInputListener(DataInputListener dataInputListener) {
+        this.dataInputListener = dataInputListener;
+        return this;
+    }
+
     public LitePalDataBuilder buildAuthor() {
         if (litePalLanguage != null && litePalAuthor != null && getLitePalQuoteBuilders().size() > 0) {
-            LitePalDataHandler.insertQuoteLanguageAuthorTag(this);
+            LitePalDataHandler.insertQuoteLanguageAuthorTag(this, ((dataInputListener != null) ? dataInputListener : null));
         }
         Log.d(LitePalDataBuilder.class.getSimpleName(), toString());
         return this;
@@ -121,6 +127,7 @@ public class LitePalDataBuilder implements Parcelable {
 
         private LitePalQuote litePalQuote;
         private ArrayList<LitePalTag> litePalTags = new ArrayList<>();
+        private transient DataInputListener dataInputListener;
 
         public LitePalQuoteBuilder() {
         }
@@ -153,9 +160,14 @@ public class LitePalDataBuilder implements Parcelable {
             return litePalTags;
         }
 
+        public LitePalQuoteBuilder setDataInputListener(DataInputListener dataInputListener) {
+            this.dataInputListener = dataInputListener;
+            return this;
+        }
+
         public LitePalQuoteBuilder buildQuotes() {
             if (litePalQuote != null) {
-                litePalQuote = LitePalDataHandler.insertQuote(litePalQuote);
+                litePalQuote = LitePalDataHandler.insertQuote(litePalQuote, ((dataInputListener != null) ? dataInputListener : null));
             }
             return this;
         }

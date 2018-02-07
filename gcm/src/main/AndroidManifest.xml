@@ -22,11 +22,7 @@
         android:name="${applicationId}.permission.C2D_MESSAGE"
         android:protectionLevel="signature" />
 
-    <application
-        android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
-        android:supportsRtl="true">
+    <application>
 
         <!-- GCM -->
         <meta-data
@@ -43,9 +39,10 @@
             </intent-filter>
         </receiver>
 
-        <service android:name="com.reversecoder.gcm.service.GcmIntentService"
+        <service
+            android:name="com.reversecoder.gcm.service.GcmIntentService"
             android:enabled="true"
-            android:exported="true"/>
+            android:exported="true" />
 
     </application>
 </manifest>

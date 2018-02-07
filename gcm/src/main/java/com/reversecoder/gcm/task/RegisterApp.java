@@ -23,6 +23,7 @@ public class RegisterApp extends AsyncTask<String, String, HttpRequestManager.Ht
     private RegisterAppListener mRegisterAppListener;
 
     public RegisterApp(Context context, RegisterAppListener registerAppListener) {
+        this.mContext = context;
         this.mRegisterAppListener = registerAppListener;
     }
 

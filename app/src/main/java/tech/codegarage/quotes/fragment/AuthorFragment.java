@@ -16,23 +16,22 @@ import android.widget.RelativeLayout;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
-
-import spencerstudios.com.bungeelib.Bungee;
-import tech.codegarage.quotes.adapter.AuthorAdapter;
 import com.lombokcyberlab.android.multicolortextview.MultiColorTextView;
 import com.reversecoder.library.storage.SessionManager;
 import com.reversecoder.library.util.AllSettingsManager;
-import tech.codegarage.quotes.R;
-import tech.codegarage.quotes.activity.AuthorDetailActivity;
-import tech.codegarage.quotes.interfaces.OnFragmentBackPressedListener;
-import tech.codegarage.quotes.interfaces.RecyclerViewOnItemClickListener;
-import tech.codegarage.quotes.model.database.LitePalDataBuilder;
-import tech.codegarage.quotes.util.AllConstants;
 
 import java.util.ArrayList;
 
 import br.com.stickyindex.StickyIndex;
 import cc.solart.wave.WaveSideBarView;
+import spencerstudios.com.bungeelib.Bungee;
+import tech.codegarage.quotes.R;
+import tech.codegarage.quotes.activity.AuthorDetailActivity;
+import tech.codegarage.quotes.adapter.AuthorAdapter;
+import tech.codegarage.quotes.interfaces.OnFragmentBackPressedListener;
+import tech.codegarage.quotes.interfaces.RecyclerViewOnItemClickListener;
+import tech.codegarage.quotes.model.database.LitePalDataBuilder;
+import tech.codegarage.quotes.util.AllConstants;
 
 import static tech.codegarage.quotes.application.QuoteApp.getGlobalContext;
 import static tech.codegarage.quotes.model.database.LitePalDataHandler.getAllQuotes;
@@ -195,7 +194,7 @@ public class AuthorFragment extends Fragment implements OnFragmentBackPressedLis
         @Override
         protected ArrayList<LitePalDataBuilder> doInBackground(String... params) {
             if (AllSettingsManager.isNullOrEmpty(SessionManager.getStringSetting(getGlobalContext(), SESSION_DATA_DATA_BUILDER))) {
-                return initAllQuotes();
+                return initAllQuotes(null);
             } else {
                 return getAllQuotes();
             }
