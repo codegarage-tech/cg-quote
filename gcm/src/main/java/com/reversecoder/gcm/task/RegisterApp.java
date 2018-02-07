@@ -11,7 +11,6 @@ import com.reversecoder.gcm.util.HttpRequestManager;
 import com.reversecoder.gcm.util.UniqueIdManager;
 
 import static com.reversecoder.gcm.util.GcmConfig.GCM_SENDER_ID;
-import static com.reversecoder.gcm.util.GcmConfig.isNullOrEmpty;
 
 /**
  * @author Md. Rashadul Alam
@@ -59,13 +58,15 @@ public class RegisterApp extends AsyncTask<String, String, HttpRequestManager.Ht
 
     @Override
     protected void onPostExecute(HttpRequestManager.HttpResponse result) {
-
-        //Send response to the parent activity
-        mRegisterAppListener.registerApp(result);
-
-        if (result.isSuccess() && !isNullOrEmpty(result.getResult().toString())) {
-            Log.d(TAG, "success response: " + result.getResult().toString());
+        if (result != null) {
+            if (result.isSuccess()) {
+                //Send response to the parent activity
+                mRegisterAppListener.registerApp(result);
+                Log.d(TAG, "success response: " + result.getResult().toString());
 //            GcmConfig.setStringSetting(mContext, GcmConfig.SESSION_GCM_PUSH_ID, mPushId);
+            }
+        } else {
+            Log.d(TAG, "success response: " + "No response found");
         }
     }
 }

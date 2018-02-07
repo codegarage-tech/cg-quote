@@ -468,9 +468,7 @@ public class HomeActivity extends BaseActivity {
             new RegisterApp(HomeActivity.this, new RegisterAppListener() {
                 @Override
                 public void registerApp(HttpRequestManager.HttpResponse result) {
-                    if (result.isSuccess() && !isNullOrEmpty(result.getResult().toString())) {
-                        //Do whatever you want with the response
-                    }
+                    //Do whatever you want with the response
                 }
             }).execute();
         }
