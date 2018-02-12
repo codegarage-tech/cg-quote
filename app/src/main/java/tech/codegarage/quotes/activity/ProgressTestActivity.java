@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 
 import com.patryk1007.fillme.FillMe;
 
@@ -27,6 +28,7 @@ public class ProgressTestActivity extends BaseActivity {
     Toolbar toolbar;
 
     FillMe fillMeView;
+    TextView tvProgress;
     int counter = 0;
 
     private String TAG = ProgressTestActivity.class.getSimpleName();
@@ -47,12 +49,12 @@ public class ProgressTestActivity extends BaseActivity {
     }
 
     private void initFillMeView() {
-
+        tvProgress = (TextView) findViewById(R.id.tv_progress);
         fillMeView = (FillMe) findViewById(R.id.fill_me_view);
         fillMeView.setImageDrawableId(R.drawable.ic_transparent_border_bg);
         fillMeView.setFillColour(getResources().getColor(R.color.colorFillMeDark));
 //        fillMeView.setFillPercentHorizontalAndVertical(0, 0);
-//        fillMeView.setFillPercentVertical(1.0f);
+        fillMeView.setFillPercentVertical(1.0f);
 
         new LongOperation().execute();
     }
@@ -89,11 +91,11 @@ public class ProgressTestActivity extends BaseActivity {
         protected String doInBackground(String... params) {
             for (counter = 0; counter <= 100; counter++) {
                 try {
-                    Thread.sleep(1000);
                     float progress = ((float) counter / (float) 100);
                     Log.d(TAG, "Progress:(i) = " + counter);
                     Log.d(TAG, "Progress:(i) = " + progress);
                     publishProgress(progress);
+                    Thread.sleep(10);
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
@@ -108,6 +110,8 @@ public class ProgressTestActivity extends BaseActivity {
 
         @Override
         protected void onProgressUpdate(Float... progress) {
+            Log.d(TAG, "Progress:(i) found =  " + progress[0]);
+            tvProgress.setText(progress[0] + "%");
             fillMeView.setFillPercentHorizontal(progress[0]);
         }
     }
