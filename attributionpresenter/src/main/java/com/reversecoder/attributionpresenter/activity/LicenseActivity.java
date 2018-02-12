@@ -65,34 +65,35 @@ public class LicenseActivity extends AppCompatActivity {
         ArrayList<Attribution> attributions = new ArrayList<>();
         attributions.add(Library.ANDROID_ABOUT_BOX_EGGHEADGAMES.getAttribution());
         attributions.add(Library.MATERIAL_ABOUT_LIBRARY_DANIELSTONEUK.getAttribution());
-        attributions.add(Library.ARC_LAYOUT_FLORENT37.getAttribution());
         attributions.add(Library.ATTRIBUTE_PRESENTER_FRANMONTIEL.getAttribution());
-        attributions.add(Library.CARD_SLIDER_ANDROID_RAMOTION.getAttribution());
         attributions.add(Library.CONTEXT_MENU_ANDROID_YALANTIS.getAttribution());
         attributions.add(Library.COOKIEBAR2_AVIRANABADY.getAttribution());
         attributions.add(Library.EASY_RECYCLERVIEW_JUDE95.getAttribution());
         attributions.add(Library.ANDROID_FLIPVIEW_EMILSJOLANDER.getAttribution());
-        attributions.add(Library.FOLDABLE_LAYOUT_ALEXVASILKOV.getAttribution());
         attributions.add(Library.GLAZY_VIEWPAGER_KANNANANBU.getAttribution());
-        attributions.add(Library.KENBURNSVIEW_FLAVIOARFARIA.getAttribution());
         attributions.add(Library.LOCALE_CHANGER_FRANMONTIEL.getAttribution());
         attributions.add(Library.MULTI_COLOR_TEXTVIEW_HAYI.getAttribution());
         attributions.add(Library.RIBBLE_MENU_ARMCHA.getAttribution());
         attributions.add(Library.SHAPE_RIPPLE_POLDZ123.getAttribution());
         attributions.add(Library.SHERLOCK_AJITSING.getAttribution());
         attributions.add(Library.STICKY_INDEX_EDSILFER.getAttribution());
-        attributions.add(Library.SUGAR_CHENNAIONE.getAttribution());
-        attributions.add(Library.TUTORS_POPALAY.getAttribution());
         attributions.add(Library.UPDATE_CHECKER_KOBEUMUT.getAttribution());
         attributions.add(Library.VERTICAL_INTRO_ARMCHA.getAttribution());
         attributions.add(Library.WAVE_SIDEBAR_SOLARTISAN.getAttribution());
         attributions.add(Library.LITEPAL_LITEPALFRAMEWORK.getAttribution());
-        attributions.add(Library.MASK_PROGRESSVIEW_IAMMERT.getAttribution());
         attributions.add(Library.BUNGEE_BINARYFINERY.getAttribution());
         attributions.add(Library.ANDROID_VIEW_ANIMATIONS_DAIMAJIA.getAttribution());
         attributions.add(Library.CYCLE_MENU_CLEVEROAD.getAttribution());
         attributions.add(Library.FILL_ME_PATRYK1007.getAttribution());
-        attributions.add(Library.FABULOUS_FILTER_KRUPEN.getAttribution());
+
+//        attributions.add(Library.SUGAR_CHENNAIONE.getAttribution());
+//        attributions.add(Library.FOLDABLE_LAYOUT_ALEXVASILKOV.getAttribution());
+//        attributions.add(Library.TUTORS_POPALAY.getAttribution());
+//        attributions.add(Library.KENBURNSVIEW_FLAVIOARFARIA.getAttribution());
+//        attributions.add(Library.ARC_LAYOUT_FLORENT37.getAttribution());
+//        attributions.add(Library.CARD_SLIDER_ANDROID_RAMOTION.getAttribution());
+//        attributions.add(Library.MASK_PROGRESSVIEW_IAMMERT.getAttribution());
+//        attributions.add(Library.FABULOUS_FILTER_KRUPEN.getAttribution());
 
         return attributions;
     }

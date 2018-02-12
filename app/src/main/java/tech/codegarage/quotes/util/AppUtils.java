@@ -16,7 +16,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import tech.codegarage.quotes.R;
-import tech.codegarage.quotes.model.Quote;
 import tech.codegarage.quotes.model.database.LitePalDataBuilder;
 import tech.codegarage.quotes.model.database.QuoteOfTheDay;
 
@@ -73,15 +72,15 @@ public class AppUtils {
         return resourceId;
     }
 
-    public static String getSharedQuote(Context context, Quote quote) {
-        String shareQuote = "\"" + quote.getQuoteDescription() +
-                "\"\n--- " + quote.getAuthor().getAuthorName() +
-                "\n\n     <<*=*=*=*=*>>     " +
-                "\n" + context.getString(R.string.txt_quote_is_shared_by_the_app) +
-                "\nhttps://play.google.com/store/apps/details?id=" + context.getApplicationContext().getPackageName() + "&hl=en";
-
-        return shareQuote;
-    }
+//    public static String getSharedQuote(Context context, Quote quote) {
+//        String shareQuote = "\"" + quote.getQuoteDescription() +
+//                "\"\n--- " + quote.getAuthor().getAuthorName() +
+//                "\n\n     <<*=*=*=*=*>>     " +
+//                "\n" + context.getString(R.string.txt_quote_is_shared_by_the_app) +
+//                "\nhttps://play.google.com/store/apps/details?id=" + context.getApplicationContext().getPackageName() + "&hl=en";
+//
+//        return shareQuote;
+//    }
 
     public static String getSharedQuote(Context context, LitePalDataBuilder litePalDataBuilder, LitePalDataBuilder.LitePalQuoteBuilder quote) {
         String shareQuote = "\"" + quote.getLitePalQuote().getQuoteDescription() +

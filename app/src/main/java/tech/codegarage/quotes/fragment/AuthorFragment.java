@@ -193,11 +193,12 @@ public class AuthorFragment extends Fragment implements OnFragmentBackPressedLis
 
         @Override
         protected ArrayList<LitePalDataBuilder> doInBackground(String... params) {
-            if (AllSettingsManager.isNullOrEmpty(SessionManager.getStringSetting(getGlobalContext(), SESSION_DATA_DATA_BUILDER))) {
-                return initAllQuotes(null);
-            } else {
-                return getAllQuotes();
-            }
+//            if (AllSettingsManager.isNullOrEmpty(SessionManager.getStringSetting(getGlobalContext(), SESSION_DATA_DATA_BUILDER))) {
+//                return initAllQuotes(null);
+//            } else {
+//                return getAllQuotes();
+//            }
+            return getAllQuotes();
         }
 
         @Override

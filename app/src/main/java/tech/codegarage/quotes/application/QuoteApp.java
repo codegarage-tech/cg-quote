@@ -7,7 +7,6 @@ import android.graphics.Typeface;
 import android.support.multidex.MultiDex;
 import android.support.v7.app.AppCompatDelegate;
 
-import com.orm.SugarContext;
 import com.reversecoder.library.storage.SessionManager;
 import com.reversecoder.localechanger.LocaleChanger;
 import com.reversecoder.logger.LogType;
@@ -71,8 +70,8 @@ public class QuoteApp extends Application {
             }
         });
 
-        //initialize database
-        SugarContext.init(this);
+//        //initialize database
+//        SugarContext.init(this);
 
         //initialize font
         initTypeface();
@@ -96,11 +95,11 @@ public class QuoteApp extends Application {
 //        }
     }
 
-    @Override
-    public void onTerminate() {
-        super.onTerminate();
-        SugarContext.terminate();
-    }
+//    @Override
+//    public void onTerminate() {
+//        super.onTerminate();
+//        SugarContext.terminate();
+//    }
 
     private void initTypeface() {
         canaroExtraBold = Typeface.createFromAsset(getAssets(), CANARO_EXTRA_BOLD_PATH);
