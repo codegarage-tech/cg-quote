@@ -5,15 +5,14 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.support.annotation.Nullable;
 import android.util.Log;
-import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.request.RequestOptions;
-import com.daimajia.androidanimations.library.Techniques;
-import com.daimajia.androidanimations.library.YoYo;
+import com.airbnb.lottie.LottieAnimationView;
+import com.airbnb.lottie.LottieComposition;
+import com.airbnb.lottie.OnCompositionLoadedListener;
 import com.patryk1007.fillme.FillMe;
 import com.reversecoder.library.storage.SessionManager;
 import com.reversecoder.library.util.AllSettingsManager;
@@ -46,7 +45,8 @@ public class SplashActivity extends BaseActivity {
     private final long interval = 1 * 1000;
     ShapeRipple ripple;
     TextView tvAppVersion;
-//    ImageView ivLoading;
+    LinearLayout llTitleAnimationView;
+    //    ImageView ivLoading;
 //    MultiColorTextView tvLoadingMessage;
     FillMe fillMeView;
 
@@ -60,14 +60,16 @@ public class SplashActivity extends BaseActivity {
 
         initSplashUI();
 
-        new LongOperation().execute();
+        new PerformLottieTitle().execute(getString(R.string.app_name_capital));
+
+        new PerformFillMeLoading().execute();
     }
 
     private void initSplashUI() {
 
-        YoYo.with(Techniques.Shake)
-                .duration(1000)
-                .playOn(findViewById(R.id.tv_app_name));
+//        YoYo.with(Techniques.Shake)
+//                .duration(1000)
+//                .playOn(findViewById(R.id.tv_app_name));
 
         tvAppVersion = (TextView) findViewById(R.id.application_version);
         tvAppVersion.setText(getString(R.string.app_version_text) + " " + getString(R.string.app_version_name));
@@ -214,7 +216,54 @@ public class SplashActivity extends BaseActivity {
         }
     }
 
-    private class LongOperation extends AsyncTask<String, Float, String> {
+    private class PerformLottieTitle extends AsyncTask<String, LottieComposition, String> {
+
+        @Override
+        protected String doInBackground(String... params) {
+
+            if (!AllSettingsManager.isNullOrEmpty(params[0])) {
+
+                llTitleAnimationView = (LinearLayout) findViewById(R.id.ll_title_animation_view);
+                llTitleAnimationView.removeAllViews();
+
+                String name = params[0];
+
+                for (int i = 0; i < name.length(); i++) {
+                    String fileName = "mobilo/" + name.charAt(i) + ".json";
+                    LottieComposition.Factory.fromAssetFileName(SplashActivity.this, fileName, new OnCompositionLoadedListener() {
+                        @Override
+                        public void onCompositionLoaded(@Nullable LottieComposition composition) {
+                            if (composition != null) {
+                                publishProgress(composition);
+                            }
+                        }
+                    });
+
+                    try {
+                        Thread.sleep(500);
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
+                }
+            }
+            return "Executed";
+        }
+
+        @Override
+        protected void onProgressUpdate(LottieComposition... progress) {
+            if (progress[0] != null) {
+                LottieComposition lottieComposition = progress[0];
+                LottieAnimationView lottieAnimationView = new LottieAnimationView(SplashActivity.this);
+                LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, 1f);
+                lottieAnimationView.setLayoutParams(layoutParams);
+                lottieAnimationView.setComposition(lottieComposition);
+                lottieAnimationView.playAnimation();
+                llTitleAnimationView.addView(lottieAnimationView);
+            }
+        }
+    }
+
+    private class PerformFillMeLoading extends AsyncTask<String, Float, String> {
 
         @Override
         protected String doInBackground(String... params) {
@@ -231,10 +280,6 @@ public class SplashActivity extends BaseActivity {
 
             }
             return "Executed";
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
         }
 
         @Override
