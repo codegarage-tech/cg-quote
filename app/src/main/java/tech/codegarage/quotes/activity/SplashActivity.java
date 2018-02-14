@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.airbnb.lottie.LottieAnimationView;
 import com.airbnb.lottie.LottieComposition;
 import com.airbnb.lottie.OnCompositionLoadedListener;
+import com.lombokcyberlab.android.multicolortextview.MultiColorTextView;
 import com.patryk1007.fillme.FillMe;
 import com.reversecoder.library.storage.SessionManager;
 import com.reversecoder.library.util.AllSettingsManager;
@@ -44,8 +45,9 @@ public class SplashActivity extends BaseActivity {
     private final long splashTime = 4 * 1000;
     private final long interval = 1 * 1000;
     ShapeRipple ripple;
-    TextView tvAppVersion;
+    TextView tvAppVersion,tvMessage;
     LinearLayout llTitleAnimationView;
+    MultiColorTextView tvStatus;
     //    ImageView ivLoading;
 //    MultiColorTextView tvLoadingMessage;
     FillMe fillMeView;
@@ -59,10 +61,6 @@ public class SplashActivity extends BaseActivity {
         setContentView(R.layout.activity_splash);
 
         initSplashUI();
-
-        new PerformLottieTitle().execute(getString(R.string.app_name_capital));
-
-        new PerformFillMeLoading().execute();
     }
 
     private void initSplashUI() {
@@ -71,6 +69,10 @@ public class SplashActivity extends BaseActivity {
 //                .duration(1000)
 //                .playOn(findViewById(R.id.tv_app_name));
 
+        tvStatus = (MultiColorTextView) findViewById(R.id.tv_status);
+        tvMessage = (TextView) findViewById(R.id.tv_message);
+        llTitleAnimationView = (LinearLayout) findViewById(R.id.ll_title_animation_view);
+        llTitleAnimationView.removeAllViews();
         tvAppVersion = (TextView) findViewById(R.id.application_version);
         tvAppVersion.setText(getString(R.string.app_version_text) + " " + getString(R.string.app_version_name));
 
@@ -100,6 +102,9 @@ public class SplashActivity extends BaseActivity {
 
         //Fill me view
         fillMeView = (FillMe) findViewById(R.id.fill_me_view);
+
+        //Call fill me view
+        new PerformLottieTitle().execute(getString(R.string.app_name_capital));
 
         if (!AllSettingsManager.isNullOrEmpty(SessionManager.getStringSetting(QuoteApp.getGlobalContext(), SESSION_DATA_DATA_BUILDER))) {
             splashCountDownTimer = new SplashCountDownTimer(splashTime, interval);
@@ -173,6 +178,12 @@ public class SplashActivity extends BaseActivity {
      ******************************/
     public class InputData extends AsyncTask<String, Object, ArrayList<LitePalDataBuilder>> {
 
+        int counter;
+
+        public InputData() {
+            counter = 0;
+        }
+
         @Override
         protected void onPreExecute() {
         }
@@ -188,11 +199,19 @@ public class SplashActivity extends BaseActivity {
         }
 
         protected void onProgressUpdate(Object... progress) {
+            String progressMessage="";
             if (progress[0] instanceof LitePalQuote) {
                 Log.d(TAG, "onProgressUpdate(LitePalQuote): " + ((LitePalQuote) progress[0]).toString());
+                progressMessage = ((LitePalQuote) progress[0]).getQuoteDescription();
             } else if (progress[0] instanceof LitePalQuoteLanguageAuthorTag) {
                 Log.d(TAG, "onProgressUpdate(LitePalQuoteLanguageAuthorTag): " + ((LitePalQuoteLanguageAuthorTag) progress[0]).toString());
             }
+
+            float progressPercentage = ((float) counter / (float) 100);
+            fillMeView.setFillPercentHorizontal(progressPercentage);
+//            tvMessage.setText(progressMessage);
+
+            counter++;
         }
 
         @Override
@@ -222,8 +241,6 @@ public class SplashActivity extends BaseActivity {
         protected String doInBackground(String... params) {
 
             if (!AllSettingsManager.isNullOrEmpty(params[0])) {
-
-                llTitleAnimationView = (LinearLayout) findViewById(R.id.ll_title_animation_view);
                 llTitleAnimationView.removeAllViews();
 
                 String name = params[0];
@@ -240,7 +257,7 @@ public class SplashActivity extends BaseActivity {
                     });
 
                     try {
-                        Thread.sleep(500);
+                        Thread.sleep(700);
                     } catch (Exception ex) {
                         ex.printStackTrace();
                     }
@@ -263,32 +280,32 @@ public class SplashActivity extends BaseActivity {
         }
     }
 
-    private class PerformFillMeLoading extends AsyncTask<String, Float, String> {
-
-        @Override
-        protected String doInBackground(String... params) {
-            for (int counter = 0; counter <= 100; counter++) {
-                try {
-                    float progress = ((float) counter / (float) 100);
-                    Log.d(TAG, "Progress:(i) = " + counter);
-                    Log.d(TAG, "Progress:(i) = " + progress);
-                    publishProgress(progress);
-                    Thread.sleep(30);
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                }
-
-            }
-            return "Executed";
-        }
-
-        @Override
-        protected void onProgressUpdate(Float... progress) {
-            Log.d(TAG, "Progress:(i) found =  " + progress[0]);
-//            tvProgress.setText(progress[0] + "%");
-            fillMeView.setFillPercentHorizontal(progress[0]);
-        }
-    }
+//    private class PerformFillMeLoading extends AsyncTask<String, Float, String> {
+//
+//        @Override
+//        protected String doInBackground(String... params) {
+//            for (int counter = 0; counter <= 100; counter++) {
+//                try {
+//                    float progress = ((float) counter / (float) 100);
+//                    Log.d(TAG, "Progress:(i) = " + counter);
+//                    Log.d(TAG, "Progress:(i) = " + progress);
+//                    publishProgress(progress);
+//                    Thread.sleep(30);
+//                } catch (Exception ex) {
+//                    ex.printStackTrace();
+//                }
+//
+//            }
+//            return "Executed";
+//        }
+//
+//        @Override
+//        protected void onProgressUpdate(Float... progress) {
+//            Log.d(TAG, "Progress:(i) found =  " + progress[0]);
+////            tvProgress.setText(progress[0] + "%");
+//            fillMeView.setFillPercentHorizontal(progress[0]);
+//        }
+//    }
 
     @Override
     public void onBackPressed() {
