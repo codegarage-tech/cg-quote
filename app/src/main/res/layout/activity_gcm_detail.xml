@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <include layout="@layout/toolbar_ribble" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar"
+        android:background="@color/bg_color"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <tech.codegarage.quotes.view.CanaroTextView
+            android:id="@+id/tv_quote"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:gravity="center"
+            android:text="GCM Test"
+            android:textColor="@color/textColorRosy"
+            android:textSize="@dimen/extra_large_font_size"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+</RelativeLayout>

@@ -49,6 +49,9 @@ public class UniqueIdManager {
         return androidId;
     }
 
+    /***********************************
+    *Need to fix for above marshmallow *
+    ************************************/
     public static String getWlanMacAddress(Context context) {
         // Auto granted permission
         // need permission: <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
@@ -57,6 +60,10 @@ public class UniqueIdManager {
         return wlanMacAddress;
     }
 
+
+    /***********************************
+     *Need to fix for above marshmallow *
+     ************************************/
     public static String getBluetoothAddress(Context context) {
         // Auto granted permission
         // need permission: <uses-permission android:name="android.permission.BLUETOOTH" />

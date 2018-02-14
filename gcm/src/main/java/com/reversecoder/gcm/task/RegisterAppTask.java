@@ -6,6 +6,8 @@ import android.util.Log;
 
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.reversecoder.gcm.listener.RegisterAppListener;
+import com.reversecoder.gcm.model.RegisterApp;
+import com.reversecoder.gcm.model.ResponseRegisterApp;
 import com.reversecoder.gcm.util.GcmConfig;
 import com.reversecoder.gcm.util.HttpRequestManager;
 import com.reversecoder.gcm.util.UniqueIdManager;
@@ -16,13 +18,13 @@ import static com.reversecoder.gcm.util.GcmConfig.GCM_SENDER_ID;
  * @author Md. Rashadul Alam
  *         Email: rashed.droid@gmail.com
  */
-public class RegisterApp extends AsyncTask<String, String, HttpRequestManager.HttpResponse> {
+public class RegisterAppTask extends AsyncTask<String, String, HttpRequestManager.HttpResponse> {
 
-    private static final String TAG = RegisterApp.class.getSimpleName();
+    private static final String TAG = RegisterAppTask.class.getSimpleName();
     private Context mContext;
     private RegisterAppListener mRegisterAppListener;
 
-    public RegisterApp(Context context, RegisterAppListener registerAppListener) {
+    public RegisterAppTask(Context context, RegisterAppListener registerAppListener) {
         this.mContext = context;
         this.mRegisterAppListener = registerAppListener;
     }
@@ -44,7 +46,7 @@ public class RegisterApp extends AsyncTask<String, String, HttpRequestManager.Ht
             Log.d(TAG, "mPushId: " + mPushId);
 
             //Get GCM unique id for each device
-            String mUniqueId = UniqueIdManager.getWlanMacAddress(mContext);
+            String mUniqueId = UniqueIdManager.getAndroidId(mContext);
             Log.d(TAG, "mUniqueId: " + mUniqueId);
 
             //Send response to the server
@@ -60,14 +62,21 @@ public class RegisterApp extends AsyncTask<String, String, HttpRequestManager.Ht
     @Override
     protected void onPostExecute(HttpRequestManager.HttpResponse result) {
         if (result != null) {
-            if (result.isSuccess()) {
-                //Send response to the parent activity
-                mRegisterAppListener.registerApp(result);
-                Log.d(TAG, "success response: " + result.getResult().toString());
-//            GcmConfig.setStringSetting(mContext, GcmConfig.SESSION_GCM_PUSH_ID, mPushId);
+
+            if (result.isSuccess() && !GcmConfig.isNullOrEmpty(result.getResult().toString())) {
+
+                ResponseRegisterApp responseRegisterApp = ResponseRegisterApp.convertFromStringToObject(result.getResult().toString(), ResponseRegisterApp.class);
+
+                if (responseRegisterApp.getStatus().equalsIgnoreCase("1") && responseRegisterApp.getData() != null) {
+
+                    Log.d(TAG, "success response: " + responseRegisterApp.toString());
+                    GcmConfig.setStringSetting(mContext, GcmConfig.SESSION_GCM_REGISTER_DATA, RegisterApp.convertFromObjectToString(responseRegisterApp.getData()));
+                    //Send response to the parent activity
+                    mRegisterAppListener.registerApp(result);
+                }
             }
         } else {
-            Log.d(TAG, "success response: " + "No response found");
+            Log.d(TAG, "success response: " + "No response found for gcm");
         }
     }
 }

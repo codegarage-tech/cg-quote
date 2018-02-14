@@ -7,6 +7,7 @@ import android.graphics.Typeface;
 import android.support.multidex.MultiDex;
 import android.support.v7.app.AppCompatDelegate;
 
+import com.reversecoder.gcm.GcmManager;
 import com.reversecoder.library.storage.SessionManager;
 import com.reversecoder.localechanger.LocaleChanger;
 import com.reversecoder.logger.LogType;
@@ -24,6 +25,7 @@ import java.util.Locale;
 import tech.codegarage.quotes.BuildConfig;
 import tech.codegarage.quotes.R;
 import tech.codegarage.quotes.activity.AmazingTodayActivity;
+import tech.codegarage.quotes.activity.GcmDetailActivity;
 import tech.codegarage.scheduler.Scheduler;
 
 import static com.reversecoder.localechanger.data.Locales.getAllLocales;
@@ -51,6 +53,9 @@ public class QuoteApp extends Application {
 
         //Initialize multidex object
         MultiDex.install(this);
+
+        //Initialize GCM content class
+        GcmManager.initGcmManager(mContext, new GcmManager.GcmBuilder().setContentClass(GcmDetailActivity.class).buildGcmManager());
 
         //Initialize scheduler content class
         Scheduler.initSchedule(mContext, new Scheduler.ScheduleBuilder().setContentClass(AmazingTodayActivity.class).buildSchedule());

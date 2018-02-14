@@ -26,7 +26,7 @@ import com.eggheadgames.aboutbox.activity.AboutActivity;
 import com.eggheadgames.aboutbox.listener.LicenseClickListener;
 import com.reversecoder.attributionpresenter.activity.LicenseActivity;
 import com.reversecoder.gcm.listener.RegisterAppListener;
-import com.reversecoder.gcm.task.RegisterApp;
+import com.reversecoder.gcm.task.RegisterAppTask;
 import com.reversecoder.gcm.util.HttpRequestManager;
 import com.reversecoder.library.network.NetworkManager;
 import com.reversecoder.library.storage.SessionManager;
@@ -55,7 +55,6 @@ import tech.codegarage.scheduler.enumeration.REPEAT_TYPE;
 import tech.codegarage.scheduler.model.ScheduleItem;
 import tech.codegarage.scheduler.service.AlarmService;
 
-import static com.reversecoder.gcm.util.GcmConfig.isNullOrEmpty;
 import static tech.codegarage.scheduler.util.AllConstants.DATE_FORMAT;
 import static tech.codegarage.scheduler.util.AllConstants.INTENT_ACTION_CREATE;
 import static tech.codegarage.scheduler.util.AllConstants.INTENT_KEY_SCHEDULE_DATA_ALARM_SERVICE;
@@ -465,7 +464,7 @@ public class HomeActivity extends BaseActivity {
      **************************************/
     private void initPushNotification() {
         if (NetworkManager.isConnected(HomeActivity.this)) {
-            new RegisterApp(HomeActivity.this, new RegisterAppListener() {
+            new RegisterAppTask(HomeActivity.this, new RegisterAppListener() {
                 @Override
                 public void registerApp(HttpRequestManager.HttpResponse result) {
                     //Do whatever you want with the response

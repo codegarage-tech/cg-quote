@@ -20,6 +20,7 @@
     <string name="title_activity_author_detail">Autor</string>
     <string name="title_activity_quote_detail">Zitat</string>
     <string name="title_activity_amazing_today">Amazing Today</string>
+    <string name="title_activity_gcm_detail">GCM Detail</string>
 
     <!-- Context Menu -->
     <string name="context_menu">Context menu</string>
