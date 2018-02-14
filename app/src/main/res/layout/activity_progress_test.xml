@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/colorPrimaryDark"
     android:fitsSystemWindows="true">
 
@@ -20,11 +20,11 @@
 
     <com.patryk1007.fillme.FillMe
         android:id="@+id/fill_me_view"
-        app:fmImage="@drawable/ic_transparent_border_bg"
         android:layout_width="match_parent"
-        app:fmFillColour="@color/colorFillMeDark"
-        app:fmFillVerticalPercent = "1"
         android:layout_height="match_parent"
-        android:layout_marginTop="60dp" />
+        android:layout_marginTop="60dp"
+        app:fmFillColour="@color/colorFillMeDark"
+        app:fmFillVerticalPercent="1"
+        app:fmImage="@drawable/ic_transparent_border_bg" />
 
 </FrameLayout>

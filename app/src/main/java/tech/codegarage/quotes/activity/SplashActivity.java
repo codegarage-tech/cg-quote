@@ -14,7 +14,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
-import com.lombokcyberlab.android.multicolortextview.MultiColorTextView;
+import com.patryk1007.fillme.FillMe;
 import com.reversecoder.library.storage.SessionManager;
 import com.reversecoder.library.util.AllSettingsManager;
 import com.reversecoder.permission.activity.PermissionListActivity;
@@ -46,8 +46,9 @@ public class SplashActivity extends BaseActivity {
     private final long interval = 1 * 1000;
     ShapeRipple ripple;
     TextView tvAppVersion;
-    ImageView ivLoading;
-    MultiColorTextView tvLoadingMessage;
+//    ImageView ivLoading;
+//    MultiColorTextView tvLoadingMessage;
+    FillMe fillMeView;
 
     InputData inputData;
     private String TAG = SplashActivity.class.getSimpleName();
@@ -58,6 +59,8 @@ public class SplashActivity extends BaseActivity {
         setContentView(R.layout.activity_splash);
 
         initSplashUI();
+
+        new LongOperation().execute();
     }
 
     private void initSplashUI() {
@@ -69,17 +72,16 @@ public class SplashActivity extends BaseActivity {
         tvAppVersion = (TextView) findViewById(R.id.application_version);
         tvAppVersion.setText(getString(R.string.app_version_text) + " " + getString(R.string.app_version_name));
 
-        tvLoadingMessage = (MultiColorTextView) findViewById(R.id.tv_loading_message);
-        tvLoadingMessage.setText(getString(R.string.txt_loading_message));
-//        tvLoadingMessage.setTextColor(getResources().getColor(R.color.white));
+//        tvLoadingMessage = (MultiColorTextView) findViewById(R.id.tv_loading_message);
+//        tvLoadingMessage.setText(getString(R.string.txt_loading_message));
 
         //loading gif
-        ivLoading = (ImageView) findViewById(R.id.iv_loading);
-        Glide
-                .with(SplashActivity.this)
-                .load(R.drawable.gif_loading)
-                .apply(new RequestOptions().diskCacheStrategy(DiskCacheStrategy.AUTOMATIC))
-                .into(ivLoading);
+//        ivLoading = (ImageView) findViewById(R.id.iv_loading);
+//        Glide
+//                .with(SplashActivity.this)
+//                .load(R.drawable.gif_loading)
+//                .apply(new RequestOptions().diskCacheStrategy(DiskCacheStrategy.AUTOMATIC))
+//                .into(ivLoading);
 
         //shape ripple
         ripple = (ShapeRipple) findViewById(R.id.background_ripple);
@@ -94,18 +96,8 @@ public class SplashActivity extends BaseActivity {
         ripple.setRippleCount(10);
         ripple.setRippleMaximumRadius(184);
 
-//        if (mAllMappedQuotes.size() > 0) {
-//            splashCountDownTimer = new SplashCountDownTimer(splashTime, interval);
-//            splashCountDownTimer.start();
-//        } else {
-//            if (inputData == null) {
-//                inputData = new InputData();
-//            } else if (inputData.getStatus() == AsyncTask.Status.RUNNING) {
-//                inputData.cancel(true);
-//                mAllMappedQuotes.clear();
-//            }
-//            inputData.execute();
-//        }
+        //Fill me view
+        fillMeView = (FillMe) findViewById(R.id.fill_me_view);
 
         if (!AllSettingsManager.isNullOrEmpty(SessionManager.getStringSetting(QuoteApp.getGlobalContext(), SESSION_DATA_DATA_BUILDER))) {
             splashCountDownTimer = new SplashCountDownTimer(splashTime, interval);
@@ -195,9 +187,9 @@ public class SplashActivity extends BaseActivity {
 
         protected void onProgressUpdate(Object... progress) {
             if (progress[0] instanceof LitePalQuote) {
-                Log.d(TAG, "onProgressUpdate(LitePalQuote): "+((LitePalQuote)progress[0]).toString());
+                Log.d(TAG, "onProgressUpdate(LitePalQuote): " + ((LitePalQuote) progress[0]).toString());
             } else if (progress[0] instanceof LitePalQuoteLanguageAuthorTag) {
-                Log.d(TAG, "onProgressUpdate(LitePalQuoteLanguageAuthorTag): "+((LitePalQuoteLanguageAuthorTag)progress[0]).toString());
+                Log.d(TAG, "onProgressUpdate(LitePalQuoteLanguageAuthorTag): " + ((LitePalQuoteLanguageAuthorTag) progress[0]).toString());
             }
         }
 
@@ -219,6 +211,37 @@ public class SplashActivity extends BaseActivity {
                     }
                 }
             }
+        }
+    }
+
+    private class LongOperation extends AsyncTask<String, Float, String> {
+
+        @Override
+        protected String doInBackground(String... params) {
+            for (int counter = 0; counter <= 100; counter++) {
+                try {
+                    float progress = ((float) counter / (float) 100);
+                    Log.d(TAG, "Progress:(i) = " + counter);
+                    Log.d(TAG, "Progress:(i) = " + progress);
+                    publishProgress(progress);
+                    Thread.sleep(30);
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+
+            }
+            return "Executed";
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+        }
+
+        @Override
+        protected void onProgressUpdate(Float... progress) {
+            Log.d(TAG, "Progress:(i) found =  " + progress[0]);
+//            tvProgress.setText(progress[0] + "%");
+            fillMeView.setFillPercentHorizontal(progress[0]);
         }
     }
 

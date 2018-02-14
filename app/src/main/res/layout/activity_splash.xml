@@ -27,11 +27,11 @@
         app:textSize="45"
         app:textStyle="bold" />
 
-    <include
+    <!--<include
         layout="@layout/layout_loading"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true" />
+        android:layout_centerInParent="true" />-->
 
     <TextView
         android:id="@+id/application_version"
@@ -49,10 +49,8 @@
         android:id="@+id/fill_me_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="center"
-        app:fmFillByTouch="none"
-        app:fmConvexFigure="true"
         app:fmFillColour="@color/colorFillMeDark"
+        app:fmFillVerticalPercent="1"
         app:fmImage="@drawable/ic_transparent_border_bg" />
 
 </RelativeLayout>
