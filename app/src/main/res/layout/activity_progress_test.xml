@@ -2,6 +2,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/colorPrimaryDark"
     android:fitsSystemWindows="true">
 
@@ -11,7 +12,7 @@
         android:id="@+id/tv_progress"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
+        android:layout_gravity="center"
         android:layout_margin="10dp"
         android:gravity="center"
         android:text=""
@@ -19,7 +20,10 @@
 
     <com.patryk1007.fillme.FillMe
         android:id="@+id/fill_me_view"
+        app:fmImage="@drawable/ic_transparent_border_bg"
         android:layout_width="match_parent"
+        app:fmFillColour="@color/colorFillMeDark"
+        app:fmFillVerticalPercent = "1"
         android:layout_height="match_parent"
         android:layout_marginTop="60dp" />
 

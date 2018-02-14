@@ -51,10 +51,10 @@ public class ProgressTestActivity extends BaseActivity {
     private void initFillMeView() {
         tvProgress = (TextView) findViewById(R.id.tv_progress);
         fillMeView = (FillMe) findViewById(R.id.fill_me_view);
-        fillMeView.setImageDrawableId(R.drawable.ic_transparent_border_bg);
-        fillMeView.setFillColour(getResources().getColor(R.color.colorFillMeDark));
+//        fillMeView.setImageDrawableId(R.drawable.ic_transparent_border_bg);
+//        fillMeView.setFillColour(getResources().getColor(R.color.colorFillMeDark));
 //        fillMeView.setFillPercentHorizontalAndVertical(0, 0);
-        fillMeView.setFillPercentVertical(1.0f);
+//        fillMeView.setFillPercentVertical(1.0f);
 
         new LongOperation().execute();
     }
@@ -95,7 +95,7 @@ public class ProgressTestActivity extends BaseActivity {
                     Log.d(TAG, "Progress:(i) = " + counter);
                     Log.d(TAG, "Progress:(i) = " + progress);
                     publishProgress(progress);
-                    Thread.sleep(10);
+                    Thread.sleep(100);
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
