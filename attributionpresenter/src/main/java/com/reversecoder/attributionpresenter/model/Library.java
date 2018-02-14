@@ -171,6 +171,9 @@ public enum Library {
     ANDROID_VIEW_ANIMATIONS_DAIMAJIA(new Attribution.Builder("Android View Animations", "https://github.com/daimajia/AndroidViewAnimations")
             .addLicenseInfo(new LicenseInfo("Copyright (c) 2014 daimajia", License.MIT))
             .build()),
+    LOTTIE_ANDROID_AIRBNB(new Attribution.Builder("Lottie Android", "https://github.com/airbnb/lottie-android")
+            .addLicenseInfo(new LicenseInfo("Copyright 2018 Airbnb, Inc.", License.APACHE))
+            .build()),
 
     // ProgressBar
     MASK_PROGRESSVIEW_IAMMERT(new Attribution.Builder("Mask ProgressView", "https://github.com/iammert/MaskProgressView")
