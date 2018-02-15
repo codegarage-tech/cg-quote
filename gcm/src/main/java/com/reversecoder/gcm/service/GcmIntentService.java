@@ -90,11 +90,11 @@ public class GcmIntentService extends IntentService {
 
         NotificationCompat.BigTextStyle bigStyle = new NotificationCompat.BigTextStyle();
         bigStyle.setBigContentTitle(gcmData.getTitle());
-        bigStyle.bigText(gcmData.getSubtitle());
+        bigStyle.bigText(getString(R.string.txt_tap_for_more_details));
         Notification n = new NotificationCompat.Builder(context)
                 .setSmallIcon(R.drawable.ic_notification_gcm)
                 .setContentTitle(gcmData.getTitle())
-                .setContentText(gcmData.getSubtitle())
+                .setContentText(getString(R.string.txt_tap_for_more_details))
                 .setPriority(Notification.PRIORITY_MAX)
                 .setWhen(0)
                 .setStyle(bigStyle)
