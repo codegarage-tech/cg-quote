@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.widget.LinearLayout;
@@ -27,10 +26,13 @@ import spencerstudios.com.bungeelib.Bungee;
 import tech.codegarage.quotes.R;
 import tech.codegarage.quotes.application.QuoteApp;
 import tech.codegarage.quotes.model.database.DataInputListener;
+import tech.codegarage.quotes.model.database.LitePalAuthor;
 import tech.codegarage.quotes.model.database.LitePalDataBuilder;
 import tech.codegarage.quotes.model.database.LitePalDataHandler;
+import tech.codegarage.quotes.model.database.LitePalLanguage;
 import tech.codegarage.quotes.model.database.LitePalQuote;
 import tech.codegarage.quotes.model.database.LitePalQuoteLanguageAuthorTag;
+import tech.codegarage.quotes.model.database.LitePalTag;
 
 import static tech.codegarage.quotes.util.AllConstants.SESSION_DATA_DATA_BUILDER;
 import static tech.codegarage.quotes.util.AllConstants.SESSION_IS_FIRST_TIME;
@@ -41,18 +43,17 @@ import static tech.codegarage.quotes.util.AllConstants.SESSION_IS_FIRST_TIME;
  */
 public class SplashActivity extends BaseActivity {
 
-    SplashCountDownTimer splashCountDownTimer;
+    //    SplashCountDownTimer splashCountDownTimer;
     private final long splashTime = 4 * 1000;
     private final long interval = 1 * 1000;
     ShapeRipple ripple;
-    TextView tvAppVersion,tvMessage;
+    TextView tvAppVersion, tvMessage, tvProgressStatus, tvLeftFirstBrace, tvProgressMessage, tvRightFirstBrace;
     LinearLayout llTitleAnimationView;
     MultiColorTextView tvStatus;
-    //    ImageView ivLoading;
-//    MultiColorTextView tvLoadingMessage;
     FillMe fillMeView;
 
     InputData inputData;
+    PerformLottieTitle performLottieTitle;
     private String TAG = SplashActivity.class.getSimpleName();
 
     @Override
@@ -64,28 +65,16 @@ public class SplashActivity extends BaseActivity {
     }
 
     private void initSplashUI() {
-
-//        YoYo.with(Techniques.Shake)
-//                .duration(1000)
-//                .playOn(findViewById(R.id.tv_app_name));
-
         tvStatus = (MultiColorTextView) findViewById(R.id.tv_status);
         tvMessage = (TextView) findViewById(R.id.tv_message);
+        tvProgressStatus = (TextView) findViewById(R.id.tv_progress_status);
+        tvLeftFirstBrace = (TextView) findViewById(R.id.tv_left_first_brace);
+        tvProgressMessage = (TextView) findViewById(R.id.tv_progress_message);
+        tvRightFirstBrace = (TextView) findViewById(R.id.tv_right_first_brace);
         llTitleAnimationView = (LinearLayout) findViewById(R.id.ll_title_animation_view);
         llTitleAnimationView.removeAllViews();
         tvAppVersion = (TextView) findViewById(R.id.application_version);
         tvAppVersion.setText(getString(R.string.app_version_text) + " " + getString(R.string.app_version_name));
-
-//        tvLoadingMessage = (MultiColorTextView) findViewById(R.id.tv_loading_message);
-//        tvLoadingMessage.setText(getString(R.string.txt_loading_message));
-
-        //loading gif
-//        ivLoading = (ImageView) findViewById(R.id.iv_loading);
-//        Glide
-//                .with(SplashActivity.this)
-//                .load(R.drawable.gif_loading)
-//                .apply(new RequestOptions().diskCacheStrategy(DiskCacheStrategy.AUTOMATIC))
-//                .into(ivLoading);
 
         //shape ripple
         ripple = (ShapeRipple) findViewById(R.id.background_ripple);
@@ -95,7 +84,6 @@ public class SplashActivity extends BaseActivity {
         ripple.setEnableRandomPosition(true);
         ripple.setEnableRandomColor(true);
         ripple.setEnableStrokeStyle(false);
-
         ripple.setRippleDuration(2500);
         ripple.setRippleCount(10);
         ripple.setRippleMaximumRadius(184);
@@ -104,52 +92,8 @@ public class SplashActivity extends BaseActivity {
         fillMeView = (FillMe) findViewById(R.id.fill_me_view);
 
         //Call fill me view
-        new PerformLottieTitle().execute(getString(R.string.app_name_capital));
-
-        if (!AllSettingsManager.isNullOrEmpty(SessionManager.getStringSetting(QuoteApp.getGlobalContext(), SESSION_DATA_DATA_BUILDER))) {
-            splashCountDownTimer = new SplashCountDownTimer(splashTime, interval);
-            splashCountDownTimer.start();
-        } else {
-            inputData = new InputData();
-            inputData.execute();
-        }
-    }
-
-    public class SplashCountDownTimer extends CountDownTimer {
-        public SplashCountDownTimer(long startTime, long interval) {
-            super(startTime, interval);
-        }
-
-        @Override
-        public void onFinish() {
-
-            Intent intent;
-            if (SessionManager.getBooleanSetting(SplashActivity.this, SESSION_IS_FIRST_TIME, true)) {
-                intent = new Intent(SplashActivity.this, AppIntroActivity.class);
-                startActivity(intent);
-                Bungee.slideUp(SplashActivity.this);
-                finish();
-            } else {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    intent = new Intent(SplashActivity.this, PermissionListActivity.class);
-                    startActivityForResult(intent, PermissionListActivity.REQUEST_CODE_PERMISSIONS);
-                    Bungee.slideUp(SplashActivity.this);
-                } else {
-//                    if (inputData == null) {
-//                        inputData = new InputData();
-//                    } else if (inputData.getStatus() == AsyncTask.Status.RUNNING) {
-//                        inputData.cancel(true);
-//                        mAllMappedQuotes.clear();
-//                    }
-//                    inputData.execute();
-                    navigateHomeActivity();
-                }
-            }
-        }
-
-        @Override
-        public void onTick(long millisUntilFinished) {
-        }
+        performLottieTitle = new PerformLottieTitle();
+        performLottieTitle.execute(getString(R.string.app_name_capital));
     }
 
     private void navigateHomeActivity() {
@@ -178,10 +122,11 @@ public class SplashActivity extends BaseActivity {
      ******************************/
     public class InputData extends AsyncTask<String, Object, ArrayList<LitePalDataBuilder>> {
 
-        int counter;
+        int mCounter, mProgress;
 
         public InputData() {
-            counter = 0;
+            mCounter = 0;
+            mProgress = 0;
         }
 
         @Override
@@ -190,28 +135,103 @@ public class SplashActivity extends BaseActivity {
 
         @Override
         protected ArrayList<LitePalDataBuilder> doInBackground(String... params) {
-            return LitePalDataHandler.initAllQuotes(new DataInputListener<Object>() {
-                @Override
-                public void InputListener(Object insertedData) {
-                    publishProgress(insertedData);
+
+            if (!AllSettingsManager.isNullOrEmpty(SessionManager.getStringSetting(QuoteApp.getGlobalContext(), SESSION_DATA_DATA_BUILDER))) {
+
+                try {
+                    Thread.sleep(2 * interval);
+                } catch (Exception ex) {
+                    ex.printStackTrace();
                 }
-            });
+
+                Intent intent;
+                if (SessionManager.getBooleanSetting(SplashActivity.this, SESSION_IS_FIRST_TIME, true)) {
+                    intent = new Intent(SplashActivity.this, AppIntroActivity.class);
+                    startActivity(intent);
+                    Bungee.slideUp(SplashActivity.this);
+                    finish();
+                } else {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        intent = new Intent(SplashActivity.this, PermissionListActivity.class);
+                        startActivityForResult(intent, PermissionListActivity.REQUEST_CODE_PERMISSIONS);
+                        Bungee.slideUp(SplashActivity.this);
+                    } else {
+                        navigateHomeActivity();
+                    }
+                }
+            } else {
+
+//                for (int mCounter = 0; mCounter <= 100; mCounter++) {
+//                    try {
+//                        float progress = ((float) mCounter / (float) 100);
+//                        Log.d(TAG, "Progress:(i) = " + mCounter);
+//                        Log.d(TAG, "Progress:(i) = " + progress);
+//                        publishProgress(progress);
+//                        Thread.sleep(30);
+//                    } catch (Exception ex) {
+//                        ex.printStackTrace();
+//                    }
+//                }
+
+                publishProgress(mCounter);
+                ArrayList<LitePalDataBuilder> litePalDataBuilders = LitePalDataHandler.initAllQuotes(new DataInputListener<Object>() {
+                    @Override
+                    public void InputListener(Object insertedData) {
+                        publishProgress(insertedData);
+                    }
+                });
+
+                return litePalDataBuilders;
+            }
+
+            return null;
         }
 
         protected void onProgressUpdate(Object... progress) {
-            String progressMessage="";
-            if (progress[0] instanceof LitePalQuote) {
-                Log.d(TAG, "onProgressUpdate(LitePalQuote): " + ((LitePalQuote) progress[0]).toString());
-                progressMessage = ((LitePalQuote) progress[0]).getQuoteDescription();
-            } else if (progress[0] instanceof LitePalQuoteLanguageAuthorTag) {
-                Log.d(TAG, "onProgressUpdate(LitePalQuoteLanguageAuthorTag): " + ((LitePalQuoteLanguageAuthorTag) progress[0]).toString());
+            //Used this logic as a temporary basis,
+            //after getting all input count can be decide the final logic
+            if (progress[0] != null) {
+
+                //assigning message
+                String progressMessage = "", progressStatus = "";
+                if (progress[0] instanceof LitePalQuote) {
+                    Log.d(TAG, "input(LitePalQuote): " + ((LitePalQuote) progress[0]).toString());
+                    progressStatus = getString(R.string.txt_setting_quote);
+                    progressMessage = ((LitePalQuote) progress[0]).getQuoteDescription();
+                } else if (progress[0] instanceof LitePalQuoteLanguageAuthorTag) {
+                    Log.d(TAG, "input(LitePalQuoteLanguageAuthorTag): " + ((LitePalQuoteLanguageAuthorTag) progress[0]).toString());
+                    progressStatus = getString(R.string.txt_setting_tag);
+                    progressMessage = getString(R.string.txt_linking_quote_with_tag);
+                } else if (progress[0] instanceof LitePalAuthor) {
+                    Log.d(TAG, "input(LitePalAuthor): " + ((LitePalAuthor) progress[0]).toString());
+                    progressStatus = getString(R.string.txt_setting_author);
+                    progressMessage = ((LitePalAuthor) progress[0]).getAuthorName();
+                } else if (progress[0] instanceof LitePalTag) {
+                    Log.d(TAG, "input(LitePalTag): " + ((LitePalTag) progress[0]).toString());
+                    progressStatus = getString(R.string.txt_setting_tag);
+                    progressMessage = ((LitePalTag) progress[0]).getTagName();
+                } else if (progress[0] instanceof LitePalLanguage) {
+                    Log.d(TAG, "input(LitePalLanguage): " + ((LitePalLanguage) progress[0]).toString());
+                    progressStatus = getString(R.string.txt_setting_language);
+                    progressMessage = ((LitePalLanguage) progress[0]).getLanguageName();
+                }
+
+                //setting message
+                tvProgressStatus.setText(progressStatus + ",");
+                tvLeftFirstBrace.setText("(");
+                tvProgressMessage.setText(progressMessage);
+                tvRightFirstBrace.setText(")");
+
+                //set progress
+                if (mCounter == 10) {
+                    mProgress++;
+                    float finalProgress = ((float) mProgress / (float) 100);
+                    fillMeView.setFillPercentHorizontal(finalProgress);
+                    tvMessage.setText(getString(R.string.txt_loading_for_the_first_time) + ",\n" + (int) (finalProgress * 100) + "%");
+                    mCounter = 0;
+                }
+                mCounter++;
             }
-
-            float progressPercentage = ((float) counter / (float) 100);
-            fillMeView.setFillPercentHorizontal(progressPercentage);
-//            tvMessage.setText(progressMessage);
-
-            counter++;
         }
 
         @Override
@@ -257,7 +277,7 @@ public class SplashActivity extends BaseActivity {
                     });
 
                     try {
-                        Thread.sleep(700);
+                        Thread.sleep(interval);
                     } catch (Exception ex) {
                         ex.printStackTrace();
                     }
@@ -271,49 +291,29 @@ public class SplashActivity extends BaseActivity {
             if (progress[0] != null) {
                 LottieComposition lottieComposition = progress[0];
                 LottieAnimationView lottieAnimationView = new LottieAnimationView(SplashActivity.this);
-                LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, 1f);
+                LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, 1f);
                 lottieAnimationView.setLayoutParams(layoutParams);
                 lottieAnimationView.setComposition(lottieComposition);
                 lottieAnimationView.playAnimation();
                 llTitleAnimationView.addView(lottieAnimationView);
             }
         }
-    }
 
-//    private class PerformFillMeLoading extends AsyncTask<String, Float, String> {
-//
-//        @Override
-//        protected String doInBackground(String... params) {
-//            for (int counter = 0; counter <= 100; counter++) {
-//                try {
-//                    float progress = ((float) counter / (float) 100);
-//                    Log.d(TAG, "Progress:(i) = " + counter);
-//                    Log.d(TAG, "Progress:(i) = " + progress);
-//                    publishProgress(progress);
-//                    Thread.sleep(30);
-//                } catch (Exception ex) {
-//                    ex.printStackTrace();
-//                }
-//
-//            }
-//            return "Executed";
-//        }
-//
-//        @Override
-//        protected void onProgressUpdate(Float... progress) {
-//            Log.d(TAG, "Progress:(i) found =  " + progress[0]);
-////            tvProgress.setText(progress[0] + "%");
-//            fillMeView.setFillPercentHorizontal(progress[0]);
-//        }
-//    }
+        @Override
+        protected void onPostExecute(String result) {
+            inputData = new InputData();
+            inputData.execute();
+        }
+    }
 
     @Override
     public void onBackPressed() {
         if (inputData != null && inputData.getStatus() == AsyncTask.Status.RUNNING) {
-            Log.d(TAG, "Canceling splash");
             inputData.cancel(true);
-//            mAllMappedQuotes.clear();
-//            Log.d(TAG, "data size: " + mAllMappedQuotes.size());
+        }
+
+        if (performLottieTitle != null && performLottieTitle.getStatus() == AsyncTask.Status.RUNNING) {
+            performLottieTitle.cancel(true);
         }
 
         super.onBackPressed();

@@ -42,6 +42,12 @@
     <!-- Message -->
     <string name="txt_loading_message">Loading, please wait.</string>
     <string name="txt_no_data_found">No data found.</string>
+    <string name="txt_loading_for_the_first_time">Loading for the first time</string>
+    <string name="txt_setting_language">Setting language</string>
+    <string name="txt_setting_author">Setting author</string>
+    <string name="txt_setting_quote">Setting quote</string>
+    <string name="txt_setting_tag">Setting tag</string>
+    <string name="txt_linking_quote_with_tag">Linking quote with tag</string>
 
     <!-- Favourite quote -->
     <string name="txt_dummy_quote">420</string>

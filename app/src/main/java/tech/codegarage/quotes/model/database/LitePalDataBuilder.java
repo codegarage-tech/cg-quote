@@ -127,7 +127,7 @@ public class LitePalDataBuilder implements Parcelable {
 
         private LitePalQuote litePalQuote;
         private ArrayList<LitePalTag> litePalTags = new ArrayList<>();
-        private transient DataInputListener dataInputListener;
+//        private transient DataInputListener dataInputListener;
 
         public LitePalQuoteBuilder() {
         }
@@ -160,14 +160,14 @@ public class LitePalDataBuilder implements Parcelable {
             return litePalTags;
         }
 
-        public LitePalQuoteBuilder setDataInputListener(DataInputListener dataInputListener) {
-            this.dataInputListener = dataInputListener;
-            return this;
-        }
+//        public LitePalQuoteBuilder setDataInputListener(DataInputListener dataInputListener) {
+//            this.dataInputListener = dataInputListener;
+//            return this;
+//        }
 
         public LitePalQuoteBuilder buildQuotes() {
             if (litePalQuote != null) {
-                litePalQuote = LitePalDataHandler.insertQuote(litePalQuote, ((dataInputListener != null) ? dataInputListener : null));
+                litePalQuote = LitePalDataHandler.insertQuote(litePalQuote, ((LitePalDataHandler.dataInputListener != null) ? LitePalDataHandler.dataInputListener : null));
             }
             return this;
         }

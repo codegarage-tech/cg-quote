@@ -8,7 +8,7 @@ public enum EnumLanguage {
     private LitePalLanguage litePalLanguage;
 
     EnumLanguage(String languageName) {
-        litePalLanguage = LitePalDataHandler.insetLanguage(new LitePalLanguage(languageName), null);
+        litePalLanguage = LitePalDataHandler.insetLanguage(new LitePalLanguage(languageName), LitePalDataHandler.dataInputListener);
     }
 
     public LitePalLanguage getLitePalLanguage() {

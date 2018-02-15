@@ -283,7 +283,7 @@ public enum EnumTag {
     private LitePalTag litePalTag;
 
     EnumTag(String tagName) {
-        litePalTag = LitePalDataHandler.insetTag(new LitePalTag(tagName), null);
+        litePalTag = LitePalDataHandler.insetTag(new LitePalTag(tagName), LitePalDataHandler.dataInputListener);
     }
 
     public LitePalTag getLitePalTag() {

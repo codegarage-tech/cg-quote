@@ -3,5 +3,6 @@
 
     <color name="colorFillMe">#22000000</color>
     <color name="colorFillMeDark">#55000000</color>
+    <color name="colorFillMeTransparent">#00000000</color>
 
 </resources>

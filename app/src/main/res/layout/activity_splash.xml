@@ -15,81 +15,142 @@
         android:layout_height="match_parent"
         custom:ripple_stroke_width="15dp" />
 
-    <!--    <com.lombokcyberlab.android.multicolortextview.MultiColorTextView
-            android:id="@+id/tv_app_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="50dp"
-            app:colors="@array/google2"
-            app:text="@string/app_name_capital"
-            app:textSize="45"
-            app:textStyle="bold" />-->
-
-    <LinearLayout
-        android:id="@+id/ll_title_animation_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="50dp"
-        android:gravity="center"
-        android:orientation="horizontal" />
-
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
+        android:layout_height="match_parent"
         android:layout_margin="10dp"
-        android:gravity="center"
         android:orientation="vertical">
 
-        <!--        <TextView
-                    android:id="@+id/tv_status"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
-                    android:text="@string/txt_loading_message"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/medium_font_size" />-->
-        <com.lombokcyberlab.android.multicolortextview.MultiColorTextView
-            android:id="@+id/tv_status"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            app:colors="@array/google2"
-            app:text="@string/txt_loading_message"
-            app:textSize="20"
-            app:textStyle="bold" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight=".40"
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/tv_message"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/white"
-            android:textSize="@dimen/medium_font_size" />
+            <LinearLayout
+                android:id="@+id/ll_title_animation_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="30dp"
+                android:gravity="center"
+                android:orientation="horizontal" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight=".40"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <com.lombokcyberlab.android.multicolortextview.MultiColorTextView
+                android:id="@+id/tv_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                app:colors="@array/google2"
+                app:text="@string/txt_loading_message"
+                app:textSize="30"
+                app:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_message"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="30dp"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textSize="@dimen/large_font_size" />
+
+            <TextView
+                android:id="@+id/tv_progress_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textSize="@dimen/large_font_size" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".10"
+                    android:gravity="center"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:id="@+id/tv_left_first_brace"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/medium_font_size" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".80"
+                    android:gravity="center">
+
+                    <TextView
+                        android:id="@+id/tv_progress_message"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:gravity="center"
+                        android:maxLines="1"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/medium_font_size" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".10"
+                    android:gravity="center"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:id="@+id/tv_right_first_brace"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/medium_font_size" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight=".20"
+            android:gravity="bottom|right"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/application_version"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/app_version_name"
+                android:textColor="@color/white"
+                android:textSize="@dimen/medium_font_size" />
+
+        </LinearLayout>
 
     </LinearLayout>
-
-    <!--<include
-        layout="@layout/layout_loading"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true" />-->
-
-
-    <TextView
-        android:id="@+id/application_version"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginBottom="10dp"
-        android:layout_marginRight="10dp"
-        android:text="@string/app_version_name"
-        android:textColor="@color/white"
-        android:textSize="@dimen/medium_font_size" />
 
     <com.patryk1007.fillme.FillMe
         android:id="@+id/fill_me_view"
