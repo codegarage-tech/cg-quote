@@ -115,7 +115,7 @@ public class FavouriteQuoteFlipViewAdapter extends BaseAdapter {
                     mFlipView.setAdapter(null);
                     mData.clear();
                     //invisible context menu for no item, as it is empty.
-                    ((HomeActivity) mContext).imagViewContextMenu.setVisibility(View.GONE);
+                    ((FavouriteQuoteDetailActivity) mContext).ivContextMenu.setVisibility(View.GONE);
                     notifyDataSetChanged();
                 }
             }

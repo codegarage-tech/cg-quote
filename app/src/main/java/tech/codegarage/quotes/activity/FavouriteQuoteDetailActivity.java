@@ -64,7 +64,7 @@ public class FavouriteQuoteDetailActivity extends BaseActivity {
     AnimatedImageView arcMenuImage;
     AnimatedTextView toolbarTitle;
     Toolbar toolbar;
-    ImageView ivContextMenu;
+    public ImageView ivContextMenu;
 
     //Contextual Menu
     private FragmentManager fragmentManager;
