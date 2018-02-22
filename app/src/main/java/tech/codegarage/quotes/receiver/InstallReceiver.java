@@ -20,9 +20,10 @@ public class InstallReceiver extends BroadcastReceiver {
             String action = intent.getAction();
             if (action != null) {
                 if (intent.getAction().equalsIgnoreCase(Intent.ACTION_PACKAGE_REMOVED)) {
-                    Log.d(TAG, "PACKAGE_REMOVED ");
-                } else if (intent.getAction().equalsIgnoreCase(Intent.ACTION_PACKAGE_ADDED)) {
-                    Log.d(TAG, "PACKAGE_ADDED ");
+                    Log.d(TAG, "PACKAGE_REMOVED");
+                }
+                if (intent.getAction().equalsIgnoreCase(Intent.ACTION_PACKAGE_ADDED)) {
+                    Log.d(TAG, "PACKAGE_ADDED");
                 }
 
                 Uri data = intent.getData();

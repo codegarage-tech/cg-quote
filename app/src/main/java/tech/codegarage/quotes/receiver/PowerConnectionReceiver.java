@@ -21,7 +21,8 @@ public class PowerConnectionReceiver extends BroadcastReceiver {
             if (action != null) {
                 if (action.equalsIgnoreCase(Intent.ACTION_POWER_CONNECTED)) {
                     Log.d(TAG, "Power Connected");
-                } else if (action.equalsIgnoreCase(Intent.ACTION_POWER_DISCONNECTED)) {
+                }
+                if (action.equalsIgnoreCase(Intent.ACTION_POWER_DISCONNECTED)) {
                     Log.d(TAG, "Power Disconnected");
                 }
             }
