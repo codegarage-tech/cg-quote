@@ -11,8 +11,12 @@
             android:name="tech.codegarage.scheduler.service.AlarmService"
             android:enabled="true" />
 
-        <receiver android:name="tech.codegarage.scheduler.receiver.AlarmSetter">
+        <receiver android:name="tech.codegarage.scheduler.receiver.AlarmSetter"
+            android:directBootAware="true"
+            android:exported="false">
             <intent-filter>
+                <action android:name="android.intent.action.LOCKED_BOOT_COMPLETED" />
+                <!-- For pre-N devices -->
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
