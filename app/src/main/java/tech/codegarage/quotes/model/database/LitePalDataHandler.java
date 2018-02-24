@@ -10646,13 +10646,6 @@ public class LitePalDataHandler {
                                 .buildQuotes()
                         )
                         .addLitePalQuotes(new LitePalDataBuilder.LitePalQuoteBuilder()
-                                .setLitePalQuote(new LitePalQuote("The way to get started is to quit talking and begin doing.", false, true))
-                                .addLitePalTags(EnumTag.MOTIVATIONAL.getLitePalTag())
-                                .addLitePalTags(EnumTag.DOING.getLitePalTag())
-                                .addLitePalTags(EnumTag.GET.getLitePalTag())
-                                .buildQuotes()
-                        )
-                        .addLitePalQuotes(new LitePalDataBuilder.LitePalQuoteBuilder()
                                 .setLitePalQuote(new LitePalQuote("You can design and create, and build the most wonderful place in the world. But it takes people to make the dream a reality.", false, true))
                                 .addLitePalTags(EnumTag.DESIGN.getLitePalTag())
                                 .addLitePalTags(EnumTag.PEOPLE.getLitePalTag())
@@ -12001,8 +11994,9 @@ public class LitePalDataHandler {
     public static void insertQuoteLanguageAuthorTag(LitePalDataBuilder litePalDataBuilder, DataInputListener dataInputListener) {
         for (int i = 0; i < litePalDataBuilder.getLitePalQuoteBuilders().size(); i++) {
             LitePalDataBuilder.LitePalQuoteBuilder litePalQuoteBuilder = litePalDataBuilder.getLitePalQuoteBuilders().get(i);
+
+            Log.d(TAG, "insertQuoteLanguageAuthorTag(quote)(inserting): " + litePalQuoteBuilder.getLitePalQuote().toString());
             for (int j = 0; j < litePalQuoteBuilder.getLitePalTags().size(); j++) {
-//                Log.d(TAG, "insertQuoteLanguageAuthorTag(quote): " + litePalQuoteBuilder.getLitePalQuote().toString());
                 LitePalQuoteLanguageAuthorTag litePalQuoteLanguageAuthorTag = new LitePalQuoteLanguageAuthorTag(litePalQuoteBuilder.getLitePalQuote().getId(), litePalDataBuilder.getLitePalLanguage().getId(), litePalDataBuilder.getLitePalAuthor().getId(), litePalQuoteBuilder.getLitePalTags().get(j).getId());
 
 //                LitePalQuoteLanguageAuthorTag mSavedData = getQuoteLanguageAuthorTag(litePalQuoteLanguageAuthorTag.getMd5());

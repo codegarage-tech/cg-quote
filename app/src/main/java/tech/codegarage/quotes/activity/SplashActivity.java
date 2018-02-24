@@ -223,7 +223,7 @@ public class SplashActivity extends BaseActivity {
                 tvRightFirstBrace.setText(")");
 
                 //set progress
-                if (mCounter == 10) {
+                if (mCounter == 20) {
                     mProgress++;
                     float finalProgress = ((float) mProgress / (float) 100);
                     fillMeView.setFillPercentHorizontal(finalProgress);
