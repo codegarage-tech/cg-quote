@@ -190,7 +190,6 @@ public enum EnumTag {
     WOMEN("Women"),
     WORK("Work"),
     WRONG("Wrong"),
-
     EYES("Eyes"),
     LOOK("Look"),
     OWN("OWN"),
@@ -261,7 +260,6 @@ public enum EnumTag {
     HISTORIC("Historic"),
     WALKING("Walking"),
     THEM("Them"),
-
     ALLIGATOR("Alligator"),
     HAPPY("Happy"),
     INCOME("Income"),
@@ -411,7 +409,7 @@ public enum EnumTag {
     WORDS("Words"),
     RACIAL("Racial"),
     BELIEFS("Beliefs"),
-    EVERY_DAY(" Every Day"),
+    EVERY_DAY("Every Day"),
     SWAYED("Swayed"),
     CHRIST("Christ"),
     BIBLE("Bible"),
@@ -457,7 +455,36 @@ public enum EnumTag {
     GOES("Goes"),
 
 
-
+    FUN("Fun"),
+    AIM("Aim"),
+    TIMES("Times"),
+    PEOPLE("People"),
+    WONDERFUL("Wonderful"),
+    TRUE("True"),
+    PURSUE("Pursue"),
+    DREAM("Dream"),
+    ADD("Add"),
+    POOR("Poor"),
+    BULL("Bull"),
+    BRILLIANCE("Brilliance"),
+    QUESTION("Question"),
+    DEGREE("Degree"),
+    SLEEP("Sleep"),
+    WORRY("Worry"),
+    FURTHERMORE("Furthermore"),
+    CALL("Call"),
+    HER("Her"),
+    JAZZ("Jazz"),
+    ALBUM("Album"),
+    POETIC("Poetic"),
+    ENDS("Ends"),
+    SONGS("Songs"),
+    SOPHISTICATION("Sophistication"),
+    I_WRITE("I Write"),
+    MAYBE("Maybe"),
+    HERE("Here"),
+    FRANCE("France"),
+    FOUND("Found"),
     THEATRE("Theatre"),
     ACTOR("Actor"),
     CERTAINLY("Certainly"),
@@ -632,9 +659,7 @@ public enum EnumTag {
     HELP("Help"),
     TASK("Task"),
     INDIVIDUAL("Individual"),
-    AVERAGE("Average"),
-    MSDSDSSDSADSDSADSDSZDSZDSZDSDXFCDSFCFDDSZDE("Medfdfdxfdfdxfvdsfvdfdsfdxfdxfdxfvdxfvdxfdxf");
-
+    AVERAGE("Average");
 
     private LitePalTag litePalTag;
 

@@ -295,9 +295,9 @@ public enum EnumAuthor {
 
     WALT_DISNEY("Walt Disney", "December 5, 1901", "December 15, 1966", "Cartoonist", "American", AppUtils.getDrawableResourceId(R.drawable.walt_disney), true),
 
-    WC_FIELDS("W. C. Fields", "January 29, 1880", "December 25, 1946", "Comedian", "American", AppUtils.getDrawableResourceId(R.drawable.w_c_fields), true),
+    W_C_FIELDS("W. C. Fields", "January 29, 1880", "December 25, 1946", "Comedian", "American", AppUtils.getDrawableResourceId(R.drawable.w_c_fields), true),
 
-    WEB_DU_BOIS("W. E. B. Du Bois", "February 23, 1868", "August 27, 1963", "Writer", "American", AppUtils.getDrawableResourceId(R.drawable.w_e_b_du_bois), true),
+    W_E_B_DU_BOIS("W. E. B. Du Bois", "February 23, 1868", "August 27, 1963", "Writer", "American", AppUtils.getDrawableResourceId(R.drawable.w_e_b_du_bois), true),
 
     WALT_WHITMAN("Walt Whitman", "May 31, 1819", "March 26, 1892", "Poet", "American", AppUtils.getDrawableResourceId(R.drawable.walt_whitman), true),
 
