@@ -9,6 +9,14 @@
     android:focusable="true"
     android:focusableInTouchMode="true">
 
+    <co.mobiwise.library.ProgressLayout
+        android:id="@+id/progress_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:autoProgress="false"
+        app:emptyColor="@color/colorPrimaryDark"
+        app:maxProgress="100" />
+
     <com.rodolfonavalon.shaperipplelibrary.ShapeRipple
         android:id="@+id/background_ripple"
         android:layout_width="match_parent"
@@ -151,13 +159,5 @@
         </LinearLayout>
 
     </LinearLayout>
-
-    <com.patryk1007.fillme.FillMe
-        android:id="@+id/fill_me_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:fmFillColour="@color/colorFillMeDark"
-        app:fmFillVerticalPercent="1"
-        app:fmImage="@drawable/ic_transparent_border_bg" />
 
 </RelativeLayout>

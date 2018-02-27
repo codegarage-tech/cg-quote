@@ -29,7 +29,7 @@ import android.view.View;
 public class ProgressLayout extends View implements Animatable {
 
   private static final int COLOR_EMPTY_DEFAULT = 0x00000000;
-  private static final int COLOR_LOADED_DEFAULT = 0x11FFFFFF;
+  private static final int COLOR_LOADED_DEFAULT = 0x55000000;
   private static final int PROGRESS_SECOND_MS = 1000;
 
   private static Paint paintProgressLoaded;

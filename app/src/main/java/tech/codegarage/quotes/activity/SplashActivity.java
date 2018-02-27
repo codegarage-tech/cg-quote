@@ -13,7 +13,6 @@ import com.airbnb.lottie.LottieAnimationView;
 import com.airbnb.lottie.LottieComposition;
 import com.airbnb.lottie.OnCompositionLoadedListener;
 import com.lombokcyberlab.android.multicolortextview.MultiColorTextView;
-import com.patryk1007.fillme.FillMe;
 import com.reversecoder.library.storage.SessionManager;
 import com.reversecoder.library.util.AllSettingsManager;
 import com.reversecoder.permission.activity.PermissionListActivity;
@@ -22,6 +21,7 @@ import com.rodolfonavalon.shaperipplelibrary.model.Circle;
 
 import java.util.ArrayList;
 
+import co.mobiwise.library.ProgressLayout;
 import spencerstudios.com.bungeelib.Bungee;
 import tech.codegarage.quotes.R;
 import tech.codegarage.quotes.application.QuoteApp;
@@ -50,7 +50,7 @@ public class SplashActivity extends BaseActivity {
     TextView tvAppVersion, tvMessage, tvProgressStatus, tvLeftFirstBrace, tvProgressMessage, tvRightFirstBrace;
     LinearLayout llTitleAnimationView;
     MultiColorTextView tvStatus;
-    FillMe fillMeView;
+    ProgressLayout progressLayout;
 
     InputData inputData;
     PerformLottieTitle performLottieTitle;
@@ -88,10 +88,10 @@ public class SplashActivity extends BaseActivity {
         ripple.setRippleCount(10);
         ripple.setRippleMaximumRadius(184);
 
-        //Fill me view
-        fillMeView = (FillMe) findViewById(R.id.fill_me_view);
+        //Progress layout view
+        progressLayout = (ProgressLayout) findViewById(R.id.progress_layout);
 
-        //Call fill me view
+        //Call Lottie view
         performLottieTitle = new PerformLottieTitle();
         performLottieTitle.execute(getString(R.string.app_name_capital));
     }
@@ -226,7 +226,11 @@ public class SplashActivity extends BaseActivity {
                 if (mCounter == 20) {
                     mProgress++;
                     float finalProgress = ((float) mProgress / (float) 100);
-                    fillMeView.setFillPercentHorizontal(finalProgress);
+                    if (!progressLayout.isPlaying()) {
+                        progressLayout.start();
+                    }
+
+                    progressLayout.setCurrentProgress((int) (finalProgress * 100));
                     tvMessage.setText(getString(R.string.txt_loading_for_the_first_time) + ",\n" + (int) (finalProgress * 100) + "%");
                     mCounter = 0;
                 }

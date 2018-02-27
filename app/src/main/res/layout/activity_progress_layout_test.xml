@@ -8,6 +8,14 @@
 
     <!--<include layout="@layout/toolbar_ribble" />
 
+    <co.mobiwise.library.ProgressLayout
+        android:id="@+id/progressLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:maxProgress="100"
+        app:autoProgress="true"
+        app:emptyColor="@color/colorPrimaryDark"/>
+
     <TextView
         android:id="@+id/tv_progress"
         android:layout_width="match_parent"
@@ -15,16 +23,7 @@
         android:layout_gravity="center"
         android:layout_margin="10dp"
         android:gravity="center"
-        android:text=""
-        android:textColor="@color/white" />
-
-    <com.patryk1007.fillme.FillMe
-        android:id="@+id/fill_me_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="60dp"
-        app:fmFillColour="@color/colorFillMeDark"
-        app:fmFillVerticalPercent="1"
-        app:fmImage="@drawable/ic_transparent_border_bg" />-->
+        android:text="This is progress layout."
+        android:textColor="@color/white" />-->
 
 </FrameLayout>
