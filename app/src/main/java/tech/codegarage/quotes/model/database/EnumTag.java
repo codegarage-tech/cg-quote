@@ -158,7 +158,6 @@ public enum EnumTag {
     SAD("Sad"),
     SAME("Same"),
     SAINT_PATRICKS_DAY("Saint Patrick's Day"),
-
     SMILE("Smile"),
     SOCIETY("Society"),
     SPACE("Space"),
@@ -546,6 +545,16 @@ public enum EnumTag {
     TRIED("Tried"),
 
 
+    CONDITION("Condition"),
+    AUTHORITY("Authority"),
+    USE("Use"),
+    SUBJECTS("Subjects"),
+    EVERY_MAN("Every Man"),
+    CURIOSITY("Curiosity"),
+    LUST("Lust"),
+    FOOLS("Fools"),
+    LEISURE("Leisure"),
+    JUDGMENT("Judgment"),
     SAVING("Saving"),
     OPTIMISM("Optimism"),
     MADNESS("Madness"),
