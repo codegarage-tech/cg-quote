@@ -307,6 +307,10 @@ public class SplashActivity extends BaseActivity {
         protected void onPostExecute(String result) {
             inputData = new InputData();
             inputData.execute();
+
+            if (progressLayout.isPlaying()) {
+                progressLayout.stop();
+            }
         }
     }
 
@@ -318,6 +322,10 @@ public class SplashActivity extends BaseActivity {
 
         if (performLottieTitle != null && performLottieTitle.getStatus() == AsyncTask.Status.RUNNING) {
             performLottieTitle.cancel(true);
+        }
+
+        if (progressLayout.isPlaying()) {
+            progressLayout.stop();
         }
 
         super.onBackPressed();
