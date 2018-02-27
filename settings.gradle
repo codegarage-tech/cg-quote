@@ -22,7 +22,8 @@ include ':app',
         ':scheduler',
         ':cyclemenu',
         ':fillme',
-        ':lottie'
+        ':lottie',
+        ':progresslayout'
 //':sugar',
 //':foldablelayout',
 //':tutors',

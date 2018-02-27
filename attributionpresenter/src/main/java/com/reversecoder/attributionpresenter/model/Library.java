@@ -182,6 +182,9 @@ public enum Library {
     FILL_ME_PATRYK1007(new Attribution.Builder("Fill Me", "https://github.com/patryk1007/Fillme")
             .addLicenseInfo(new LicenseInfo("Copyright (C) 2018 patryk1007", License.APACHE))
             .build()),
+    PROGRESS_LAYOUT_IAMMERT(new Attribution.Builder("Progress Layout", "https://github.com/iammert/ProgressLayout")
+            .addLicenseInfo(new LicenseInfo("Copyright 2015 Mert Şimşek.", License.APACHE))
+            .build()),
 
     //Search or filter
     FABULOUS_FILTER_KRUPEN(new Attribution.Builder("Fabulous Filter", "https://github.com/Krupen/FabulousFilter")
