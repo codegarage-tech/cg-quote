@@ -49,9 +49,9 @@ public enum EnumAuthor {
 
     CARL_SAGAN("Carl Sagan", "November 9, 1934", "December 20, 1996", "Scientist", "American", AppUtils.getDrawableResourceId(R.drawable.carl_sagan), true),
 
-    CAROL_BURNETT("Carol Burnett", "April 26, 1933", "", "Actress", "American", AppUtils.getDrawableResourceId(R.drawable.carl_burnett), true),
+    CAROL_BURNETT("Carol Burnett", "April 26, 1933", "", "Actress", "American", AppUtils.getDrawableResourceId(R.drawable.carol_burnett), true),
 
-    CHARLES_DARWIN("Charles Darwin", "February 12, 1809", "April 19, 1882", "Scientist", "English", AppUtils.getDrawableResourceId(R.drawable.charles_dickens), true),
+    CHARLES_DARWIN("Charles Darwin", "February 12, 1809", "April 19, 1882", "Scientist", "English", AppUtils.getDrawableResourceId(R.drawable.charles_darwin), true),
 
     CHARLES_R_SWINDOLL("Charles R. Swindoll", "October 18, 1934", "", "Clergyman", "American", AppUtils.getDrawableResourceId(R.drawable.charles_r_swindoll), true),
 
