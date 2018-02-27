@@ -1802,7 +1802,7 @@ public class LitePalDataHandler {
                 new LitePalDataBuilder()
                         .setDataInputListener(dataInputListener)
                         .setLitePalLanguage(EnumLanguage.ENGLISH.getLitePalLanguage())
-                        .setLitePalAuthor(EnumAuthor.CHARLES_DICKENS.getLitePalAuthor())
+                        .setLitePalAuthor(EnumAuthor.CHARLES_DARWIN.getLitePalAuthor())
                         .addLitePalQuotes(new LitePalDataBuilder.LitePalQuoteBuilder()
                                 .setLitePalQuote(new LitePalQuote("A moral being is one who is capable of reflecting on his past actions and their motives - of approving of some and disapproving of others.", false, true))
                                 .addLitePalTags(EnumTag.PAST.getLitePalTag())

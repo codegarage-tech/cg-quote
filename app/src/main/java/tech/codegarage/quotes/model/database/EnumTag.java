@@ -546,7 +546,6 @@ public enum EnumTag {
     TRIED("Tried"),
 
 
-
     SAVING("Saving"),
     OPTIMISM("Optimism"),
     MADNESS("Madness"),
