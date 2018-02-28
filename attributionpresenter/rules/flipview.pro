@@ -1,0 +1,1 @@
+-keep class se.emilsjolander.flipview.** { *; }

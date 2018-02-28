@@ -34,8 +34,14 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            minifyEnabled true
+//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+            //For single file
+//            proguardFile 'project.pro'
+
+            //For all files
+            proguardFiles fileTree(dir: "rules", include: ["*.pro"]).asList().toArray()
         }
     }
 

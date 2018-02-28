@@ -1,0 +1,2 @@
+-keep class com.eggheadgames.aboutbox.** { *; }
+-keep class com.danielstone.materialaboutlibrary.** { *; }

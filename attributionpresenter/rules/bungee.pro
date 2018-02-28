@@ -1,0 +1,1 @@
+-keep class spencerstudios.com.bungeelib.** { *; }
