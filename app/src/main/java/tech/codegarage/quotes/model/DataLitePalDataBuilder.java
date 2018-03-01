@@ -1,4 +1,4 @@
-package tech.codegarage.quotes.model.database;
+package tech.codegarage.quotes.model;
 
 import com.google.gson.Gson;
 

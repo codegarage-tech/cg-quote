@@ -16,8 +16,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import tech.codegarage.quotes.R;
-import tech.codegarage.quotes.model.database.LitePalDataBuilder;
-import tech.codegarage.quotes.model.database.QuoteOfTheDay;
+import tech.codegarage.quotes.model.LitePalDataBuilder;
+import tech.codegarage.quotes.model.QuoteOfTheDay;
 
 /**
  * Created by Rashed on 03-Oct-17.

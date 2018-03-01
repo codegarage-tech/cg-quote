@@ -32,11 +32,11 @@
     	</list>
     -->
     <list>
-        <mapping class="tech.codegarage.quotes.model.database.LitePalLanguage" />
-        <mapping class="tech.codegarage.quotes.model.database.LitePalAuthor" />
-        <mapping class="tech.codegarage.quotes.model.database.LitePalQuote" />
-        <mapping class="tech.codegarage.quotes.model.database.LitePalTag" />
-        <mapping class="tech.codegarage.quotes.model.database.LitePalQuoteLanguageAuthorTag" />
+        <mapping class="tech.codegarage.quotes.model.LitePalLanguage" />
+        <mapping class="tech.codegarage.quotes.model.LitePalAuthor" />
+        <mapping class="tech.codegarage.quotes.model.LitePalQuote" />
+        <mapping class="tech.codegarage.quotes.model.LitePalTag" />
+        <mapping class="tech.codegarage.quotes.model.LitePalQuoteLanguageAuthorTag" />
     </list>
 
     <!--
@@ -65,6 +65,6 @@
         <storage value="external"></storage>
     -->
 
-    <storage value="external" />
+    <storage value="internal" />
 
 </litepal>

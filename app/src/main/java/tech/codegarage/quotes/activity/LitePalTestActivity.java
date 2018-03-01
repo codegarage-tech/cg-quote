@@ -5,8 +5,8 @@
 //import android.support.v7.app.AppCompatActivity;
 //import android.util.Log;
 //
-//import tech.codegarage.quotes.model.database.LitePalAuthor;
-//import tech.codegarage.quotes.model.database.LitePalDataHandler;
+//import tech.codegarage.quotes.model.LitePalAuthor;
+//import tech.codegarage.quotes.model.LitePalDataHandler;
 //
 //import org.litepal.crud.DataSupport;
 //

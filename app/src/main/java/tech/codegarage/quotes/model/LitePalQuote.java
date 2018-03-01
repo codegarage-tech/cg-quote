@@ -1,4 +1,4 @@
-package tech.codegarage.quotes.model.database;
+package tech.codegarage.quotes.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;

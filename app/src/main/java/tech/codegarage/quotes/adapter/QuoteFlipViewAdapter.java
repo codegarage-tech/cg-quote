@@ -13,7 +13,7 @@ import java.util.List;
 import se.emilsjolander.flipview.FlipView;
 import tech.codegarage.quotes.R;
 import tech.codegarage.quotes.activity.HomeActivity;
-import tech.codegarage.quotes.model.database.LitePalDataBuilder.LitePalQuoteBuilder;
+import tech.codegarage.quotes.model.LitePalDataBuilder.LitePalQuoteBuilder;
 import tech.codegarage.quotes.util.AppUtils;
 
 public class QuoteFlipViewAdapter extends BaseAdapter {

@@ -5,7 +5,7 @@ import android.widget.TextView;
 
 import com.jude.easyrecyclerview.adapter.BaseViewHolder;
 import tech.codegarage.quotes.R;
-import tech.codegarage.quotes.model.database.LitePalDataBuilder;
+import tech.codegarage.quotes.model.LitePalDataBuilder;
 
 /**
  * @author Md. Rashadul Alam

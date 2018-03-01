@@ -25,12 +25,12 @@ import io.armcha.ribble.presentation.widget.ArcView;
 import spencerstudios.com.bungeelib.Bungee;
 import tech.codegarage.quotes.R;
 import tech.codegarage.quotes.factory.TextViewFactory;
-import tech.codegarage.quotes.model.database.LitePalDataBuilder;
-import tech.codegarage.quotes.model.database.LitePalDataHandler;
+import tech.codegarage.quotes.model.LitePalDataBuilder;
+import tech.codegarage.quotes.model.LitePalDataHandler;
 import tech.codegarage.quotes.util.AllConstants;
 
-import static tech.codegarage.quotes.model.database.LitePalDataHandler.getAllQuotes;
-import static tech.codegarage.quotes.model.database.LitePalDataHandler.getAuthorData;
+import static tech.codegarage.quotes.model.LitePalDataHandler.getAllQuotes;
+import static tech.codegarage.quotes.model.LitePalDataHandler.getAuthorData;
 
 //import static DataHandler.mAllMappedQuotes;
 

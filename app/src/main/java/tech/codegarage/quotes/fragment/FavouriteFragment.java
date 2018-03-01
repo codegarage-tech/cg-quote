@@ -28,8 +28,8 @@ import tech.codegarage.quotes.R;
 import tech.codegarage.quotes.activity.FavouriteQuoteDetailActivity;
 import tech.codegarage.quotes.adapter.AuthorAdapter;
 import tech.codegarage.quotes.interfaces.OnFragmentBackPressedListener;
-import tech.codegarage.quotes.model.database.LitePalDataBuilder;
-import tech.codegarage.quotes.model.database.LitePalDataHandler;
+import tech.codegarage.quotes.model.LitePalDataBuilder;
+import tech.codegarage.quotes.model.LitePalDataHandler;
 import tech.codegarage.quotes.util.AllConstants;
 
 import static android.app.Activity.RESULT_OK;

@@ -6,7 +6,7 @@ import android.view.ViewGroup;
 import tech.codegarage.quotes.viewholder.AdvertiseAuthorViewHolder;
 import com.jude.easyrecyclerview.adapter.BaseViewHolder;
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
-import tech.codegarage.quotes.model.database.LitePalDataBuilder;
+import tech.codegarage.quotes.model.LitePalDataBuilder;
 import tech.codegarage.quotes.viewholder.AuthorViewHolder;
 
 import java.security.InvalidParameterException;

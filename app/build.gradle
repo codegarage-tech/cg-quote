@@ -44,13 +44,26 @@ android {
     }
 
     buildTypes {
+        debug {
+            shrinkResources false
+            minifyEnabled false
+            debuggable true
+
+            //For single file
+//            proguardFile 'litepal.pro'
+
+            //For all files
+//            proguardFiles fileTree(dir: "rules", include: ["*.pro"]).asList().toArray()
+
+//            signingConfig signingConfigs.releaseConfig
+        }
         release {
             shrinkResources true
             minifyEnabled true
             debuggable false
 
             //For single file
-            proguardFile 'litepal.pro'
+//            proguardFile 'litepal.pro'
 
             //For all files
 //            proguardFiles fileTree(dir: "rules", include: ["*.pro"]).asList().toArray()

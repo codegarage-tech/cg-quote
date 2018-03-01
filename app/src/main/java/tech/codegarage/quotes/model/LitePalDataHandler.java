@@ -1,4 +1,4 @@
-package tech.codegarage.quotes.model.database;
+package tech.codegarage.quotes.model;
 
 import android.util.Log;
 
@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import tech.codegarage.quotes.R;
+import tech.codegarage.quotes.interfaces.DataInputListener;
 
 import static tech.codegarage.quotes.application.QuoteApp.getGlobalContext;
 import static tech.codegarage.quotes.util.AllConstants.SESSION_DATA_DATA_BUILDER;

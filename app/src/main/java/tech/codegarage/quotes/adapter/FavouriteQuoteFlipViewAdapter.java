@@ -14,7 +14,7 @@ import se.emilsjolander.flipview.FlipView;
 import tech.codegarage.quotes.R;
 import tech.codegarage.quotes.activity.FavouriteQuoteDetailActivity;
 import tech.codegarage.quotes.activity.HomeActivity;
-import tech.codegarage.quotes.model.database.LitePalDataBuilder;
+import tech.codegarage.quotes.model.LitePalDataBuilder;
 import tech.codegarage.quotes.util.AppUtils;
 
 public class FavouriteQuoteFlipViewAdapter extends BaseAdapter {
