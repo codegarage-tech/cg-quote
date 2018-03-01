@@ -1,5 +1,4 @@
 <resources>
-    <string name="app_name">AttributionPresenter</string>
     <string name="title_activity_third_party_notice">Hinweis Dritter</string>
 
     <!--Arc view-->
