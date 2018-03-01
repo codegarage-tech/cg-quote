@@ -14,6 +14,19 @@ repositories {
 
 android {
 
+    signingConfigs {
+        releaseConfig {
+            try {
+                keyAlias 'keydata.keystore'
+                keyPassword KEY_PASSWORD
+                storeFile file('../misc/keydata.keystore')
+                storePassword KEYSTORE_PASSWORD
+            } catch (ex) {
+                throw new InvalidUserDataException("You should define KEYSTORE_PASSWORD and KEY_PASSWORD in gradle.properties.")
+            }
+        }
+    }
+
     compileSdkVersion appCompileSdkVersion
     buildToolsVersion appBuildToolsVersion
 
@@ -24,32 +37,70 @@ android {
         versionCode appVersionCode
         versionName appVersionName
 
-        //For resolving multidex problem
         multiDexEnabled  true
-
         vectorDrawables.useSupportLibrary = true
 
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+//        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
         release {
+            shrinkResources true
             minifyEnabled true
-//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            debuggable false
 
             //For single file
-//            proguardFile 'project.pro'
+            proguardFile 'litepal.pro'
 
             //For all files
-            proguardFiles fileTree(dir: "rules", include: ["*.pro"]).asList().toArray()
+//            proguardFiles fileTree(dir: "rules", include: ["*.pro"]).asList().toArray()
+
+            signingConfig signingConfigs.releaseConfig
         }
     }
 
     lintOptions {
-        checkReleaseBuilds false
-        // Or, if you prefer, you can continue to check for errors in release builds,
-        // but continue the build even when errors are found:
+        disable 'MissingTranslation'
+        disable "ResourceType"
         abortOnError false
+    }
+
+    flavorDimensions "default"
+    productFlavors {
+        stage {
+            applicationId "tech.codegarage.quotes"
+            minSdkVersion appMinSdkVersion
+            targetSdkVersion appTargetSdkVersion
+            versionCode appVersionCode
+            versionName appVersionName
+
+            multiDexEnabled  true
+            vectorDrawables.useSupportLibrary = true
+
+            signingConfig signingConfigs.releaseConfig
+        }
+        pro {
+            applicationId "tech.codegarage.quotes"
+            minSdkVersion appMinSdkVersion
+            targetSdkVersion appTargetSdkVersion
+            versionCode appVersionCode
+            versionName appVersionName
+
+            multiDexEnabled  true
+            vectorDrawables.useSupportLibrary = true
+
+            signingConfig signingConfigs.releaseConfig
+        }
+    }
+
+    applicationVariants.all { variant ->
+        variant.outputs.all { output ->
+            def project = "Quote"
+            def SEP = "_"
+            def version = variant.versionName
+            def newApkName = project + SEP + version + ".apk"
+            outputFileName = newApkName
+        }
     }
 }
 
@@ -57,10 +108,10 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
 
     //test libraries
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    })
-    testCompile 'junit:junit:4.12'
+//    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+//        exclude group: 'com.android.support', module: 'support-annotations'
+//    })
+//    testCompile 'junit:junit:4.12'
 
     //gradle libraries
     compile "com.android.support:appcompat-v7:$supportlibraryVersion"

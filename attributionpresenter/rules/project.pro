@@ -18,18 +18,11 @@
 -keep class javax.mail.**               { *; }
 -keep class javax.activation.**
 
--keep class com.google.android.gms.**               { *; }
-
 -keep class com.reversecoder.library.**               { *; }
-
--keep class com.android.support.v7.**               { *; }
 
 -keep class android.support.v8.renderscript.** { *; }
 
 -keep class com.android.support.annotation.**               { *; }
--keep class com.android.support.v4.**               { *; }
--keep class android.support.v4.** { *; }
--keep interface android.support.v4.** { *; }
 
 -keep class org.apache.**               { *; }
 -keep class android.net.**               { *; }
