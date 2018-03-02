@@ -261,7 +261,7 @@ public enum EnumAuthor {
 
     SOCRATES("Socrates", "469 BC", "399 BC", "Philosopher", "Greek", AppUtils.getDrawableResourceId(R.drawable.socrates), true),
 
-    SAINT_AUGUSTINE("Saint Augustine", "354", "430", "", "", AppUtils.getDrawableResourceId(R.drawable.saint_augustin), true),
+    SAINT_AUGUSTINE("Saint Augustine", "354", "430", "Saint", "", AppUtils.getDrawableResourceId(R.drawable.saint_augustin), true),
 
     SIGMUND_FREUD("Sigmund Freud", "May 6, 1856", "September 23, 1939", "Psychologist", "Austrian", AppUtils.getDrawableResourceId(R.drawable.sigmund_freud), true),
 
