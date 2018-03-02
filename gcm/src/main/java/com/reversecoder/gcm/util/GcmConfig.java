@@ -32,7 +32,7 @@ public class GcmConfig {
 //                .addJSONParam("state", (isNullOrEmpty(state) ? "" : state))
 //                .addJSONParam("city", (isNullOrEmpty(city) ? "" : city))
                 .getJSONParam();
-        Log.d(TAG, "getUpdateUserParameters: " + params.toString());
+        Log.d(TAG, "getRegisterDeviceParameters: " + params.toString());
         return params;
     }
 

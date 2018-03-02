@@ -18,6 +18,12 @@ public class RegisterApp implements Parcelable {
     public RegisterApp() {
     }
 
+    public RegisterApp(String id, String push_id, String unique_id) {
+        this.id = id;
+        this.push_id = push_id;
+        this.unique_id = unique_id;
+    }
+
     public String getId() {
         return id;
     }
@@ -40,6 +46,26 @@ public class RegisterApp implements Parcelable {
 
     public void setUnique_id(String unique_id) {
         this.unique_id = unique_id;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof RegisterApp)) return false;
+
+        RegisterApp that = (RegisterApp) o;
+
+        if (!getId().equals(that.getId())) return false;
+        if (!getPush_id().equals(that.getPush_id())) return false;
+        return getUnique_id().equals(that.getUnique_id());
+    }
+
+    @Override
+    public int hashCode() {
+        int result = getId().hashCode();
+        result = 31 * result + getPush_id().hashCode();
+        result = 31 * result + getUnique_id().hashCode();
+        return result;
     }
 
     @Override

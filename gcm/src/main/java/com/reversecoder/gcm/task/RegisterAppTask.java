@@ -13,6 +13,7 @@ import com.reversecoder.gcm.util.HttpRequestManager;
 import com.reversecoder.gcm.util.UniqueIdManager;
 
 import static com.reversecoder.gcm.util.GcmConfig.GCM_SENDER_ID;
+import static com.reversecoder.gcm.util.GcmConfig.SESSION_GCM_REGISTER_DATA;
 
 /**
  * @author Md. Rashadul Alam
@@ -48,6 +49,22 @@ public class RegisterAppTask extends AsyncTask<String, String, HttpRequestManage
             //Get GCM unique id for each device
             String mUniqueId = UniqueIdManager.getAndroidId(mContext);
             Log.d(TAG, "mUniqueId: " + mUniqueId);
+
+            //Check if same data
+            if (!GcmConfig.isNullOrEmpty(GcmConfig.getStringSetting(mContext, SESSION_GCM_REGISTER_DATA))) {
+                //Session data
+                RegisterApp registerApp = RegisterApp.convertFromStringToObject(GcmConfig.getStringSetting(mContext, SESSION_GCM_REGISTER_DATA), RegisterApp.class);
+                if (registerApp != null) {
+                    Log.d(TAG, "Session data: " + registerApp.toString());
+                    //Current data
+                    RegisterApp mRegisterApp = new RegisterApp(registerApp.getId(), mPushId, mUniqueId);
+                    Log.d(TAG, "New data: " + registerApp.toString());
+                    if (registerApp.equals(mRegisterApp)) {
+                        Log.d(TAG, "Stopping registering device due to same push id.");
+                        return response;
+                    }
+                }
+            }
 
             //Send response to the server
             response = HttpRequestManager.doRestPostRequest(GcmConfig.getRegisterDeviceUrl(), GcmConfig.getRegisterDeviceParameters(mUniqueId, mPushId, "", "", ""), null);
