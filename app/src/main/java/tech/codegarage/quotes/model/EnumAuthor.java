@@ -217,7 +217,7 @@ public enum EnumAuthor {
 
     NEIL_ARMSTRONG("Neil Armstrong", "August 5, 1930", "August 25, 2012", "Astronaut", "American", AppUtils.getDrawableResourceId(R.drawable.neil_armstrong), true),
 
-    NEIL_DEGRASSE("Neil deGrasse", "October 5, 1958", "", "Scientist", "American", AppUtils.getDrawableResourceId(R.drawable.neil_de_grasse), true),
+    NEIL_DEGRASSE_TYSON("Neil deGrasse Tyson", "October 5, 1958", "", "Scientist", "American", AppUtils.getDrawableResourceId(R.drawable.neil_de_grasse_tyson), true),
 
     OSCAR_WILDE("Oscar Wilde", "October 16, 1854", "November 30, 1900", "Dramatist", "Irish", AppUtils.getDrawableResourceId(R.drawable.oscar_wilde), true),
 
