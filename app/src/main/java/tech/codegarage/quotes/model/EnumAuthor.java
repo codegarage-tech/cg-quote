@@ -199,7 +199,7 @@ public enum EnumAuthor {
 
     LIL_UZI_VERT("Lil Uzi Vert", "July 31, 1994", "", "Musician", "American", AppUtils.getDrawableResourceId(R.drawable.lil_uzi_vert), true),
 
-    MALCOIM_X("Malcolm X", "May 19, 1925", "February 21, 1965", "Activist", "American", AppUtils.getDrawableResourceId(R.drawable.malcolm_x), true),
+    MALCOLM_X("Malcolm X", "May 19, 1925", "February 21, 1965", "Activist", "American", AppUtils.getDrawableResourceId(R.drawable.malcolm_x), true),
 
     MOTHER_TERESA("Mother Teresa", "August 26, 1910", "September 5, 1997", "Saint", "Albanian", AppUtils.getDrawableResourceId(R.drawable.mother_teresa), true),
 
