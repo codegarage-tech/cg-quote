@@ -155,7 +155,7 @@ public enum EnumAuthor {
 
     INDIRA_GANDHI("Indira Gandhi", "November 19, 1917", "October 31, 1984", "Statesman", "Indian", AppUtils.getDrawableResourceId(R.drawable.indira_gandhi), true),
 
-    INDIRA_NOOYI("Indra Nooyi", "October 28, 1955", "", "Businesswoman", "Indian", AppUtils.getDrawableResourceId(R.drawable.indra_nooyi), true),
+    INDRA_NOOYI("Indra Nooyi", "October 28, 1955", "", "Businesswoman", "Indian", AppUtils.getDrawableResourceId(R.drawable.indra_nooyi), true),
 
     IRIS_APFEL("Iris Apfel", "August 29, 1921", "", "Businesswoman", "American", AppUtils.getDrawableResourceId(R.drawable.iris_apfel), true),
 
