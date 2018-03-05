@@ -165,7 +165,7 @@ public enum EnumAuthor {
 
     JESUS_CHRIST("Jesus Christ", "", "", "Leader", "", AppUtils.getDrawableResourceId(R.drawable.jesus_christ), true),
 
-    JK_ROWLING("J. K. Rowling", "July 31, 1965", "Present", "Author", "English", AppUtils.getDrawableResourceId(R.drawable.j_k_rowling), true),
+    J_K_ROWLING("J. K. Rowling", "July 31, 1965", "Present", "Author", "English", AppUtils.getDrawableResourceId(R.drawable.j_k_rowling), true),
 
     JANE_AUSTEN("Jane Austen", "December 16, 1775", "July 28, 1817", "Writer", "British", AppUtils.getDrawableResourceId(R.drawable.jane_austen), true),
 
