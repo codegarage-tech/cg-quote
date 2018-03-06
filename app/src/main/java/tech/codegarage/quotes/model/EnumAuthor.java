@@ -133,9 +133,9 @@ public enum EnumAuthor {
 
     H_JACKSON_BROWN_JR("H. Jackson Brown, Jr.", "1940", "", "Author", "Author", AppUtils.getDrawableResourceId(R.drawable.jackson_brown_jr), true),
 
-    HL_MENCKEN("H. L. Mencken", "September 12, 1880", "January 29, 1956", "Writer", "American", AppUtils.getDrawableResourceId(R.drawable.hl_mencken), true),
+    H_L_MENCKEN("H. L. Mencken", "September 12, 1880", "January 29, 1956", "Writer", "American", AppUtils.getDrawableResourceId(R.drawable.hl_mencken), true),
 
-    HP_LOVECRAFT("H. P. Lovecraft", "August 20, 1890", "March 15, 1937", "Novelist", "American", AppUtils.getDrawableResourceId(R.drawable.h_p_lovecraft), true),
+    H_P_LOVECRAFT("H. P. Lovecraft", "August 20, 1890", "March 15, 1937", "Novelist", "American", AppUtils.getDrawableResourceId(R.drawable.h_p_lovecraft), true),
 
     HARRIET_TUBMAN("Harriet Tubman", "1820", "1913", "Activist", "American", AppUtils.getDrawableResourceId(R.drawable.harriet_tubman), true),
 
