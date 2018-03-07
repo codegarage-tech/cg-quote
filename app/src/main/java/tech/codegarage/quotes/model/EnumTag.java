@@ -550,6 +550,41 @@ public enum EnumTag {
 
 
 
+
+
+
+
+
+    BRIGHT("Bright"),
+    SKELETON("Skeleton"),
+    MAKING_MISTAKES("Making Mistakes"),
+    BEWARE("Beware"),
+    RESPONSIBILITY("Responsibility"),
+    FINDING_YOURSELF("Finding Yourself"),
+    DEMONSTRATIONS("Demonstrations"),
+    PROVED("Proved"),
+    INFINITE("Infinite"),
+    FORGO("Forgo"),
+    MEASURABLE("Measurable"),
+    HUMBLE("Humble"),
+    SINGLE("Single"),
+    ADVICE("Advice"),
+    WEATHER("Weather"),
+    TONIGHT("Tonight"),
+    MOON("Moon"),
+    NIGHTS("Nights"),
+    CONFUSED("Confused"),
+    CAUSE("Cause"),
+    SWEAT("Sweat"),
+    SWEATY("Sweaty"),
+    INSIDE("Inside"),
+    DISAPPOINTED("Disappointed"),
+    LIGHTNING("Lightning"),
+    ROOF("Roof"),
+    ACCEPTANCE("Acceptance"),
+    CONTROLS("Controls"),
+    RESPECTABLE("Respectable"),
+    BEING_HUMAN("Being Human"),
     VIOLENTLY("Violently"),
     DIED("Died"),
     ESSENCE("Essence"),
