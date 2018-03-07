@@ -99,7 +99,7 @@ public enum EnumAuthor {
 
     FRANCIS_OF_ASSISI("Francis of Assisi", "1182", "1226", "Saint", "Italian", AppUtils.getDrawableResourceId(R.drawable.francis_of_assisi), true),
 
-    FRANK_LIOYD_WRIGHT("Frank Lloyd Wright", "June 8, 1867", "April 9, 1959", "Architect", "American", AppUtils.getDrawableResourceId(R.drawable.frank_lloyd_wright), true),
+    FRANK_LLOYD_WRIGHT("Frank Lloyd Wright", "June 8, 1867", "April 9, 1959", "Architect", "American", AppUtils.getDrawableResourceId(R.drawable.frank_lloyd_wright), true),
 
     FRANK_SINATRA("Frank Sinatra", "December 12, 1915", "May 14, 1998", "Musician", "American", AppUtils.getDrawableResourceId(R.drawable.frank_sinatra), true),
 
