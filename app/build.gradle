@@ -37,7 +37,7 @@ android {
         versionCode appVersionCode
         versionName appVersionName
 
-        multiDexEnabled  true
+        multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
 
 //        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -45,6 +45,8 @@ android {
 
     buildTypes {
         debug {
+            applicationIdSuffix ".debug"
+
             shrinkResources false
             minifyEnabled false
             debuggable true
@@ -80,26 +82,26 @@ android {
 
     flavorDimensions "default"
     productFlavors {
-        stage {
-            applicationId "tech.codegarage.quotes"
+        english {
+            applicationIdSuffix ".en"
             minSdkVersion appMinSdkVersion
             targetSdkVersion appTargetSdkVersion
             versionCode appVersionCode
             versionName appVersionName
 
-            multiDexEnabled  true
+            multiDexEnabled true
             vectorDrawables.useSupportLibrary = true
 
             signingConfig signingConfigs.releaseConfig
         }
-        pro {
-            applicationId "tech.codegarage.quotes"
+        deutsch {
+            applicationIdSuffix ".de"
             minSdkVersion appMinSdkVersion
             targetSdkVersion appTargetSdkVersion
             versionCode appVersionCode
             versionName appVersionName
 
-            multiDexEnabled  true
+            multiDexEnabled true
             vectorDrawables.useSupportLibrary = true
 
             signingConfig signingConfigs.releaseConfig
@@ -108,11 +110,18 @@ android {
 
     applicationVariants.all { variant ->
         variant.outputs.all { output ->
-            def project = "Quote"
-            def SEP = "_"
+
+            def stringsFile = android.sourceSets.main.res.sourceFiles.find {
+                it.name.equals 'strings.xml'
+            }
+            def appName = "Quote"
+//            def appName = new XmlParser().parse(stringsFile).string.find { it.@name.equals 'app_name' }.text()
+            def separator = "_"
+            def flavor = variant.getFlavorName().substring(0, 2)
             def version = variant.versionName
-            def newApkName = project + SEP + version + ".apk"
-            outputFileName = newApkName
+            def buildType = variant.baseName.split("-")[1]
+            def releaseApkName = appName + separator + flavor + separator + version + separator + buildType + ".apk"
+            outputFileName = releaseApkName
         }
     }
 }
