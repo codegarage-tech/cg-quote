@@ -31,6 +31,18 @@ public class LitePalDataHandler {
         dataInputListener = dbInputListener;
         ArrayList<LitePalDataBuilder> litePalDataBuilders = new ArrayList<>();
 
+        litePalDataBuilders.addAll(inputQuoteAtoI());
+        litePalDataBuilders.addAll(inputQuoteJtoZ());
+
+        DataLitePalDataBuilder dataLitePalDataBuilder = new DataLitePalDataBuilder(litePalDataBuilders);
+        SessionManager.setStringSetting(getGlobalContext(), SESSION_DATA_DATA_BUILDER, DataLitePalDataBuilder.convertFromObjectToString(dataLitePalDataBuilder));
+
+        return litePalDataBuilders;
+    }
+
+    private static ArrayList<LitePalDataBuilder> inputQuoteAtoI() {
+        ArrayList<LitePalDataBuilder> litePalDataBuilders = new ArrayList<LitePalDataBuilder>();
+
         litePalDataBuilders.add(
                 new LitePalDataBuilder()
                         .setDataInputListener(dataInputListener)
@@ -107,7 +119,6 @@ public class LitePalDataHandler {
                         )
                         .buildAuthor()
         );
-
         litePalDataBuilders.add(
                 new LitePalDataBuilder()
                         .setDataInputListener(dataInputListener)
@@ -186,7 +197,6 @@ public class LitePalDataHandler {
                         )
                         .buildAuthor()
         );
-
         litePalDataBuilders.add(
                 new LitePalDataBuilder()
                         .setDataInputListener(dataInputListener)
@@ -264,7 +274,6 @@ public class LitePalDataHandler {
                         )
                         .buildAuthor()
         );
-
         litePalDataBuilders.add(
                 new LitePalDataBuilder()
                         .setDataInputListener(dataInputListener)
@@ -341,7 +350,6 @@ public class LitePalDataHandler {
                         )
                         .buildAuthor()
         );
-
         litePalDataBuilders.add(
                 new LitePalDataBuilder()
                         .setDataInputListener(dataInputListener)
@@ -6054,6 +6062,12 @@ public class LitePalDataHandler {
                         )
                         .buildAuthor()
         );
+        return litePalDataBuilders;
+    }
+
+    private static ArrayList<LitePalDataBuilder> inputQuoteJtoZ() {
+        ArrayList<LitePalDataBuilder> litePalDataBuilders = new ArrayList<LitePalDataBuilder>();
+
         litePalDataBuilders.add(
                 new LitePalDataBuilder()
                         .setDataInputListener(dataInputListener)
@@ -11809,14 +11823,6 @@ public class LitePalDataHandler {
                         )
                         .buildAuthor()
         );
-
-        /************************
-         * New added quotes end *
-         ************************/
-
-        DataLitePalDataBuilder dataLitePalDataBuilder = new DataLitePalDataBuilder(litePalDataBuilders);
-        SessionManager.setStringSetting(getGlobalContext(), SESSION_DATA_DATA_BUILDER, DataLitePalDataBuilder.convertFromObjectToString(dataLitePalDataBuilder));
-
         return litePalDataBuilders;
     }
 

@@ -188,8 +188,7 @@ public class SplashActivity extends BaseActivity {
         }
 
         protected void onProgressUpdate(Object... progress) {
-            //Used this logic as a temporary basis,
-            //after getting all input count can be decide the final logic
+
             if (progress[0] != null) {
 
                 //assigning message
@@ -223,7 +222,8 @@ public class SplashActivity extends BaseActivity {
                 tvRightFirstBrace.setText(")");
 
                 //set progress
-                if (mCounter == 20) {
+                //As total input is 7885, that's why progress is percentage is 7885/100
+                if (mCounter == 79) {
                     mProgress++;
                     float finalProgress = ((float) mProgress / (float) 100);
                     if (!progressLayout.isPlaying()) {
@@ -240,6 +240,7 @@ public class SplashActivity extends BaseActivity {
 
         @Override
         protected void onPostExecute(ArrayList<LitePalDataBuilder> result) {
+
             if (result != null && result.size() > 0) {
                 if (SessionManager.getBooleanSetting(SplashActivity.this, SESSION_IS_FIRST_TIME, true)) {
                     Intent intentAppIntro = new Intent(SplashActivity.this, AppIntroActivity.class);
