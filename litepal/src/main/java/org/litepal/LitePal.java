@@ -27,9 +27,9 @@ import org.litepal.parser.LitePalConfig;
 import org.litepal.parser.LitePalParser;
 import org.litepal.tablemanager.Connector;
 import org.litepal.util.BaseUtility;
-import org.litepal.util.cipher.CipherUtil;
 import org.litepal.util.Const;
 import org.litepal.util.SharedUtil;
+import org.litepal.util.cipher.CipherUtil;
 
 import java.io.File;
 
@@ -45,17 +45,30 @@ import java.io.File;
 public class LitePal {
 
     private static Handler handler = new Handler(Looper.getMainLooper());
+    public static LitePalConfig mLitePalConfig;
 
     /**
      * Initialize to make LitePal ready to work. If you didn't configure LitePalApplication
      * in the AndroidManifest.xml, make sure you call this method as soon as possible. In
      * Application's onCreate() method will be fine.
      *
-     * @param context
-     * 		Application context.
+     * @param context Application context.
      */
     public static void initialize(Context context) {
         LitePalApplication.sContext = context;
+    }
+
+    /**
+     * Initialize to make LitePal ready to work. If you didn't configure LitePalApplication
+     * in the AndroidManifest.xml, make sure you call this method as soon as possible. In
+     * Application's onCreate() method will be fine.
+     *
+     * @param context Application context.
+     * @param litePalConfig DB configuration.
+     */
+    public static void initialize(Context context, LitePalConfig litePalConfig) {
+        LitePalApplication.sContext = context;
+        mLitePalConfig = litePalConfig;
     }
 
     /**
@@ -69,6 +82,7 @@ public class LitePal {
 
     /**
      * Get the main thread handler. You don't need this method. It's used by framework only.
+     *
      * @return Main thread handler.
      */
     public static Handler getHandler() {
@@ -77,8 +91,8 @@ public class LitePal {
 
     /**
      * Switch the using database to the one specified by parameter.
-     * @param litePalDB
-     *          The database to switch to.
+     *
+     * @param litePalDB The database to switch to.
      */
     public static void use(LitePalDB litePalDB) {
         LitePalAttr litePalAttr = LitePalAttr.getInstance();
@@ -104,8 +118,8 @@ public class LitePal {
 
     /**
      * Delete the specified database.
-     * @param dbName
-     *          Name of database to delete.
+     *
+     * @param dbName Name of database to delete.
      * @return True if delete success, false otherwise.
      */
     public static boolean deleteDatabase(String dbName) {
@@ -140,8 +154,8 @@ public class LitePal {
 
     /**
      * Remove the database version in SharedPreferences file.
-     * @param dbName
-     *          Name of database to delete.
+     *
+     * @param dbName Name of database to delete.
      */
     private static void removeVersionInSharedPreferences(String dbName) {
         if (isDefaultDatabase(dbName)) {
@@ -154,23 +168,26 @@ public class LitePal {
     /**
      * Check the dbName is default database or not. If it's same as dbName in litepal.xml, then it is
      * default database.
-     * @param dbName
-     *          Name of database to check.
+     *
+     * @param dbName Name of database to check.
      * @return True if it's default database, false otherwise.
      */
     private static boolean isDefaultDatabase(String dbName) {
-        if (BaseUtility.isLitePalXMLExists()) {
-            if (!dbName.endsWith(Const.Config.DB_NAME_SUFFIX)) {
-                dbName = dbName + Const.Config.DB_NAME_SUFFIX;
-            }
-            LitePalConfig config = LitePalParser.parseLitePalConfiguration();
-            String defaultDbName = config.getDbName();
-            if (!defaultDbName.endsWith(Const.Config.DB_NAME_SUFFIX)) {
-                defaultDbName = defaultDbName + Const.Config.DB_NAME_SUFFIX;
-            }
-            return dbName.equalsIgnoreCase(defaultDbName);
-        }
-        return false;
-    }
+        LitePalConfig config;
 
+        if (!dbName.endsWith(Const.Config.DB_NAME_SUFFIX)) {
+            dbName = dbName + Const.Config.DB_NAME_SUFFIX;
+        }
+        if (BaseUtility.isLitePalXMLExists()) {
+            config = LitePalParser.parseLitePalConfiguration();
+        } else {
+            config = mLitePalConfig;
+        }
+        String defaultDbName = config.getDbName();
+        if (!defaultDbName.endsWith(Const.Config.DB_NAME_SUFFIX)) {
+            defaultDbName = defaultDbName + Const.Config.DB_NAME_SUFFIX;
+        }
+
+        return dbName.equalsIgnoreCase(defaultDbName);
+    }
 }

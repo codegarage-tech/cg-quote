@@ -52,6 +52,17 @@ public class LitePalConfig {
      */
     private List<String> classNames;
 
+    public LitePalConfig() {
+    }
+
+    public LitePalConfig(int version, String dbName, String cases, String storage, List<String> classNames) {
+        this.version = version;
+        this.dbName = dbName;
+        this.cases = cases;
+        this.storage = storage;
+        this.classNames = classNames;
+    }
+
     public int getVersion() {
         return version;
     }

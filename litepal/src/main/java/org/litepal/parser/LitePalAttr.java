@@ -19,6 +19,7 @@ package org.litepal.parser;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.litepal.LitePal;
 import org.litepal.exceptions.InvalidAttributesException;
 import org.litepal.util.BaseUtility;
 import org.litepal.util.Const;
@@ -87,22 +88,26 @@ public final class LitePalAttr {
 			synchronized (LitePalAttr.class) {
 				if (litePalAttr == null) {
 					litePalAttr = new LitePalAttr();
-                    loadLitePalXMLConfiguration();
+                    loadLitePalConfiguration();
 				}
 			}
 		}
 		return litePalAttr;
 	}
 
-	private static void loadLitePalXMLConfiguration() {
+	private static void loadLitePalConfiguration() {
+		LitePalConfig config;
+
         if (BaseUtility.isLitePalXMLExists()) {
-            LitePalConfig config = LitePalParser.parseLitePalConfiguration();
-            litePalAttr.setDbName(config.getDbName());
-            litePalAttr.setVersion(config.getVersion());
-            litePalAttr.setClassNames(config.getClassNames());
-            litePalAttr.setCases(config.getCases());
-            litePalAttr.setStorage(config.getStorage());
-        }
+			config = LitePalParser.parseLitePalConfiguration();
+        }else{
+			config = LitePal.mLitePalConfig;
+		}
+		litePalAttr.setDbName(config.getDbName());
+		litePalAttr.setVersion(config.getVersion());
+		litePalAttr.setClassNames(config.getClassNames());
+		litePalAttr.setCases(config.getCases());
+		litePalAttr.setStorage(config.getStorage());
     }
 
 	/**
@@ -192,7 +197,7 @@ public final class LitePalAttr {
 	 */
 	public void checkSelfValid() {
 		if (TextUtils.isEmpty(dbName)) {
-            loadLitePalXMLConfiguration();
+            loadLitePalConfiguration();
             if (TextUtils.isEmpty(dbName)) {
                 throw new InvalidAttributesException(
                         InvalidAttributesException.DBNAME_IS_EMPTY_OR_NOT_DEFINED);

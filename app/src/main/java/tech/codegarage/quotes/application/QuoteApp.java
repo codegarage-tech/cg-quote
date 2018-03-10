@@ -18,7 +18,9 @@ import com.singhajit.sherlock.core.investigation.AppInfoProvider;
 import com.singhajit.sherlock.util.AppInfoUtil;
 
 import org.litepal.LitePal;
+import org.litepal.parser.LitePalConfig;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -26,6 +28,11 @@ import tech.codegarage.quotes.BuildConfig;
 import tech.codegarage.quotes.R;
 import tech.codegarage.quotes.activity.AmazingTodayActivity;
 import tech.codegarage.quotes.activity.GcmDetailActivity;
+import tech.codegarage.quotes.model.LitePalAuthor;
+import tech.codegarage.quotes.model.LitePalLanguage;
+import tech.codegarage.quotes.model.LitePalQuote;
+import tech.codegarage.quotes.model.LitePalQuoteLanguageAuthorTag;
+import tech.codegarage.quotes.model.LitePalTag;
 import tech.codegarage.scheduler.Scheduler;
 
 import static com.reversecoder.localechanger.data.Locales.getAllLocales;
@@ -61,7 +68,13 @@ public class QuoteApp extends Application {
         Scheduler.initSchedule(mContext, new Scheduler.ScheduleBuilder().setContentClass(AmazingTodayActivity.class).buildSchedule());
 
         //Initialize litepal database
-        LitePal.initialize(mContext);
+        LitePal.initialize(mContext, new LitePalConfig(1, "quote","","internal", new ArrayList<String>(){{
+            add(LitePalLanguage.class.getName());
+            add(LitePalAuthor.class.getName());
+            add(LitePalQuote.class.getName());
+            add(LitePalTag.class.getName());
+            add(LitePalQuoteLanguageAuthorTag.class.getName());
+        }}));
 
         //initialize crash log handler
         Sherlock.init(this);

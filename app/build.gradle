@@ -60,12 +60,12 @@ android {
 //            signingConfig signingConfigs.releaseConfig
         }
         release {
-            shrinkResources true
-            minifyEnabled true
+            shrinkResources false
+            minifyEnabled false
             debuggable false
 
             //For single file
-//            proguardFile 'litepal.pro'
+            proguardFile 'litepal.pro'
 
             //For all files
 //            proguardFiles fileTree(dir: "rules", include: ["*.pro"]).asList().toArray()
