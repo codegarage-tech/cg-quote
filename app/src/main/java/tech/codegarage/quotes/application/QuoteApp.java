@@ -36,6 +36,9 @@ import tech.codegarage.quotes.model.LitePalTag;
 import tech.codegarage.scheduler.Scheduler;
 
 import static com.reversecoder.localechanger.data.Locales.getAllLocales;
+import static tech.codegarage.quotes.util.AllConstants.DB_NAME;
+import static tech.codegarage.quotes.util.AllConstants.DB_STORAGE;
+import static tech.codegarage.quotes.util.AllConstants.DB_VERSION;
 import static tech.codegarage.quotes.util.AllConstants.SESSION_FREE_APP;
 import static tech.codegarage.quotes.util.AllConstants.SESSION_SELECTED_LANGUAGE;
 
@@ -68,7 +71,7 @@ public class QuoteApp extends Application {
         Scheduler.initSchedule(mContext, new Scheduler.ScheduleBuilder().setContentClass(AmazingTodayActivity.class).buildSchedule());
 
         //Initialize litepal database
-        LitePal.initialize(mContext, new LitePalConfig(1, "quote","","internal", new ArrayList<String>(){{
+        LitePal.initialize(mContext, new LitePalConfig(DB_VERSION, DB_NAME, "", DB_STORAGE, new ArrayList<String>() {{
             add(LitePalLanguage.class.getName());
             add(LitePalAuthor.class.getName());
             add(LitePalQuote.class.getName());

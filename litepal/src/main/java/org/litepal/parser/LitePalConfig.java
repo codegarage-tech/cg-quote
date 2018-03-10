@@ -16,11 +16,14 @@
 
 package org.litepal.parser;
 
+import com.google.gson.Gson;
+
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Model for litepal.xml configuration file.
+ *
  * @author guolin
  * @since 2016/11/10
  */
@@ -105,8 +108,7 @@ public class LitePalConfig {
     /**
      * Add a class name into the current mapping model list.
      *
-     * @param className
-     *            Full package class name.
+     * @param className Full package class name.
      */
     public void addClassName(String className) {
         getClassNames().add(className);
@@ -124,4 +126,27 @@ public class LitePalConfig {
         this.cases = cases;
     }
 
+    @Override
+    public String toString() {
+        return "{" +
+                "version=" + version +
+                ", dbName='" + dbName + '\'' +
+                ", cases='" + cases + '\'' +
+                ", storage='" + storage + '\'' +
+                ", classNames=" + classNames +
+                '}';
+    }
+
+    /**************************
+     * Methods for convertion *
+     **************************/
+    public static <T> T convertFromStringToObject(String jsonString, Class<T> clazz) {
+        Gson gson = new Gson();
+        return gson.fromJson(jsonString, clazz);
+    }
+
+    public static <T> String convertFromObjectToString(T object) {
+        Gson gson = new Gson();
+        return gson.toJson(object);
+    }
 }

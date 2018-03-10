@@ -45,7 +45,6 @@ import java.io.File;
 public class LitePal {
 
     private static Handler handler = new Handler(Looper.getMainLooper());
-    public static LitePalConfig mLitePalConfig;
 
     /**
      * Initialize to make LitePal ready to work. If you didn't configure LitePalApplication
@@ -63,12 +62,12 @@ public class LitePal {
      * in the AndroidManifest.xml, make sure you call this method as soon as possible. In
      * Application's onCreate() method will be fine.
      *
-     * @param context Application context.
+     * @param context       Application context.
      * @param litePalConfig DB configuration.
      */
     public static void initialize(Context context, LitePalConfig litePalConfig) {
         LitePalApplication.sContext = context;
-        mLitePalConfig = litePalConfig;
+        SharedUtil.setLitePalConfig(litePalConfig);
     }
 
     /**
@@ -181,7 +180,7 @@ public class LitePal {
         if (BaseUtility.isLitePalXMLExists()) {
             config = LitePalParser.parseLitePalConfiguration();
         } else {
-            config = mLitePalConfig;
+            config = SharedUtil.getLitePalConfig();
         }
         String defaultDbName = config.getDbName();
         if (!defaultDbName.endsWith(Const.Config.DB_NAME_SUFFIX)) {

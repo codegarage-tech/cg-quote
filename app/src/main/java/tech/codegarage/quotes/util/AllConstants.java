@@ -30,4 +30,9 @@ public class AllConstants {
 
     //Request code
     public static final int REQUEST_CODE_FAVOURITE_FRAGMENT = 420;
+
+    //Database config
+    public static int DB_VERSION = 1;
+    public static String DB_NAME = "quote";
+    public static String DB_STORAGE = "internal";
 }
