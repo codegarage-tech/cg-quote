@@ -82,11 +82,14 @@ public class RegisterAppTask extends AsyncTask<String, String, HttpRequestManage
 
             if (result.isSuccess() && !GcmConfig.isNullOrEmpty(result.getResult().toString())) {
 
+                Log.d(TAG, "success response(web): " + result.toString());
+
                 ResponseRegisterApp responseRegisterApp = ResponseRegisterApp.convertFromStringToObject(result.getResult().toString(), ResponseRegisterApp.class);
 
                 if (responseRegisterApp.getStatus().equalsIgnoreCase("1") && responseRegisterApp.getData() != null) {
 
-                    Log.d(TAG, "success response: " + responseRegisterApp.toString());
+                    Log.d(TAG, "success response(object): " + responseRegisterApp.toString());
+
                     GcmConfig.setStringSetting(mContext, GcmConfig.SESSION_GCM_REGISTER_DATA, RegisterApp.convertFromObjectToString(responseRegisterApp.getData()));
                     //Send response to the parent activity
                     mRegisterAppListener.registerApp(result);

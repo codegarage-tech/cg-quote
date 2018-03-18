@@ -1,11 +1,9 @@
-<manifest package="org.litepal"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="org.litepal">
 
-<!--
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
--->
 
-    <application/>
+    <application />
 
 </manifest>

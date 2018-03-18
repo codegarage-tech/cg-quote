@@ -55,20 +55,21 @@ android {
 //            proguardFile 'litepal.pro'
 
             //For all files
-//            proguardFiles fileTree(dir: "rules", include: ["*.pro"]).asList().toArray()
+            proguardFiles fileTree(dir: "rules", include: ["*.pro"]).asList().toArray()
 
 //            signingConfig signingConfigs.releaseConfig
         }
         release {
-            shrinkResources false
-            minifyEnabled false
+            shrinkResources true
+            minifyEnabled true
             debuggable false
 
             //For single file
-            proguardFile 'litepal.pro'
+//            proguardFile 'litepal.pro'
+
 
             //For all files
-//            proguardFiles fileTree(dir: "rules", include: ["*.pro"]).asList().toArray()
+            proguardFiles fileTree(dir: "rules", include: ["*.pro"]).asList().toArray()
 
             signingConfig signingConfigs.releaseConfig
         }
@@ -106,6 +107,18 @@ android {
 
             signingConfig signingConfigs.releaseConfig
         }
+        bengali {
+            applicationIdSuffix ".bn"
+            minSdkVersion appMinSdkVersion
+            targetSdkVersion appTargetSdkVersion
+            versionCode appVersionCode
+            versionName appVersionName
+
+            multiDexEnabled true
+            vectorDrawables.useSupportLibrary = true
+
+            signingConfig signingConfigs.releaseConfig
+        }
     }
 
     applicationVariants.all { variant ->
@@ -117,7 +130,7 @@ android {
             def appName = "Quote"
 //            def appName = new XmlParser().parse(stringsFile).string.find { it.@name.equals 'app_name' }.text()
             def separator = "_"
-            def flavor = variant.getFlavorName().substring(0, 2)
+            def flavor = variant.getFlavorName().equalsIgnoreCase("bengali") ? "bn" : variant.getFlavorName().substring(0, 2)
             def version = variant.versionName
             def buildType = variant.baseName.split("-")[1]
             def releaseApkName = appName + separator + flavor + separator + version + separator + buildType + ".apk"

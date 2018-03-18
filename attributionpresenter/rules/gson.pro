@@ -15,8 +15,4 @@
 -keep class * implements com.google.gson.TypeAdapterFactory
 -keep class * implements com.google.gson.JsonSerializer
 -keep class * implements com.google.gson.JsonDeserializer
-
-# Application classes that will be serialized/deserialized over Gson
--keep class tech.codegarage.quotes.model.database.** { *; }
-
 ##---------------End: proguard configuration for Gson  ----------

@@ -10,7 +10,6 @@ android {
         targetSdkVersion appTargetSdkVersion
         versionCode appVersionCode
         versionName appVersionName
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
@@ -30,5 +29,4 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    testCompile 'junit:junit:4.12'
 }

@@ -18,8 +18,6 @@
 -keep class javax.mail.**               { *; }
 -keep class javax.activation.**
 
--keep class com.reversecoder.library.**               { *; }
-
 -keep class android.support.v8.renderscript.** { *; }
 
 -keep class com.android.support.annotation.**               { *; }
