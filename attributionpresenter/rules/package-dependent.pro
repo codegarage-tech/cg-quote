@@ -4,8 +4,10 @@
 
 # Litepal
 # Ensures entities remain un-obfuscated so table and columns are named correctly
--keep public class tech.codegarage.quotes.en.model.** { *; }
-
 # GSON
 # Application classes that will be serialized/deserialized over Gson
--keep public class tech.codegarage.quotes.en.model.** { *; }
+-keep class tech.codegarage.quotes.en.model.** { *; }
+-keepnames class tech.codegarage.quotes.en.model.** { *; }
+
+# Keep the BuildConfig
+-keep class tech.codegarage.quotes.en.BuildConfig { *; }

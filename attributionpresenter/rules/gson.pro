@@ -15,4 +15,14 @@
 -keep class * implements com.google.gson.TypeAdapterFactory
 -keep class * implements com.google.gson.JsonSerializer
 -keep class * implements com.google.gson.JsonDeserializer
+
+-keep class com.google.gson.** { *; }
+-keep class com.google.gson.stream.** { *; }
+-keep class sum.misc.Unsafe { *; }
+-keepattributes Expose
+-keepattributes SerializedName
+-keepattributes Since
+-keepattributes Until
+-keepclasseswithmembers class * { @com.google.gson.annotations.Expose <fields>; }
+
 ##---------------End: proguard configuration for Gson  ----------

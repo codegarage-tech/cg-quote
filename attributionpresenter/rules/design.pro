@@ -1,3 +1,4 @@
+-dontwarn android.support.**
 -dontwarn android.support.design.**
 -keep class android.support.design.** { *; }
 -keep interface android.support.design.** { *; }
