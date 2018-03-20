@@ -17,7 +17,7 @@ public class AboutConfig {
     public String twitterUserName;
     public String webHomePage;
     public String guideHtmlPath;
-    public String appPublisher;
+    public String appPublisherId;
     public String companyHtmlPath;
     public String privacyHtmlPath;
     public String acknowledgmentHtmlPath;

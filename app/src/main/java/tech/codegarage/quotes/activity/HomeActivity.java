@@ -425,7 +425,7 @@ public class HomeActivity extends BaseActivity {
         aboutConfig.webHomePage = getString(R.string.app_publisher_profile_website);
 
         // app publisher for "Try Other Apps" item
-        aboutConfig.appPublisher = getString(R.string.app_publisher);
+        aboutConfig.appPublisherId = getString(R.string.app_publisher_id);
 
         // if pages are stored locally, then you need to override aboutConfig.dialog to be able use custom WebView
         aboutConfig.companyHtmlPath = getString(R.string.app_publisher_company_html_path);

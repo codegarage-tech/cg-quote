@@ -13,10 +13,10 @@ import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 import com.google.android.gms.gcm.GoogleCloudMessaging;
-import com.reversecoder.gcm.GcmManager;
 import com.reversecoder.gcm.R;
 import com.reversecoder.gcm.broadcast.GcmBroadcastReceiver;
 import com.reversecoder.gcm.model.GcmData;
+import com.reversecoder.gcm.util.GcmUtils;
 
 import static com.reversecoder.gcm.util.GcmConfig.INTENT_KEY_GCM_DATA_CONTENT_INTENT;
 
@@ -78,14 +78,22 @@ public class GcmIntentService extends IntentService {
     }
 
     private void sendNotification(Context context, GcmData gcmData) {
-        Intent intentGcmDetail = new Intent(context, GcmManager.getContentClass());
-        intentGcmDetail.putExtra(INTENT_KEY_GCM_DATA_CONTENT_INTENT, gcmData);
-//        TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
-//        stackBuilder.addParentStack(Scheduler.getContentClass());
-//        stackBuilder.addNextIntent(result);
-//        PendingIntent clicked = stackBuilder.getPendingIntent(scheduleItem.getId(), PendingIntent.FLAG_UPDATE_CURRENT);
 
-        intentGcmDetail.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        Intent intentGcmDetail;
+
+        //Open other app from google play store on notification click
+//        GcmUtils.openPublisher(context, GcmUtils.BuildType.GOOGLE,
+//                context.getString(R.string.gcm_app_publisher_id), context.getApplicationContext().getPackageName());
+
+        //Leave review in google play store on notification click
+        intentGcmDetail = new Intent(Intent.ACTION_VIEW);
+        intentGcmDetail.setData(GcmUtils.getPlayStoreUri(context));
+
+        //Open new activity on notification click
+//        intentGcmDetail = new Intent(context, GcmManager.getContentClass());
+//        intentGcmDetail.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+//        intentGcmDetail.putExtra(INTENT_KEY_GCM_DATA_CONTENT_INTENT, gcmData);
+
         PendingIntent pendingIntentGcm = PendingIntent.getActivity(context, gcmData.getId(), intentGcmDetail, PendingIntent.FLAG_UPDATE_CURRENT);
 
         NotificationCompat.BigTextStyle bigStyle = new NotificationCompat.BigTextStyle();

@@ -179,13 +179,13 @@ public class AboutActivity extends MaterialAboutActivity {
     @NonNull
     private MaterialAboutCard buildAboutCard(final AboutConfig config) {
         MaterialAboutCard.Builder card = new MaterialAboutCard.Builder();
-        if (config.buildType != null && !TextUtils.isEmpty(config.appPublisher) && !TextUtils.isEmpty(config.packageName)) {
+        if (config.buildType != null && !TextUtils.isEmpty(config.appPublisherId) && !TextUtils.isEmpty(config.packageName)) {
             card.addItem(itemHelper(R.string.egab_try_other_apps, R.drawable.ic_try_other_apps,
                     new MaterialAboutItemOnClickAction() {
                         @Override
                         public void onClick() {
                             AboutBoxUtils.openPublisher(AboutActivity.this, config.buildType,
-                                    config.appPublisher, config.packageName);
+                                    config.appPublisherId, config.packageName);
                             logUIEventName(config.analytics, config.logUiEventName, getString(R.string.egab_try_other_app_log_event));
                         }
                     }));

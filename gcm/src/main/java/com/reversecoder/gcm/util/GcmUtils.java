@@ -1,4 +1,4 @@
-package com.eggheadgames.aboutbox;
+package com.reversecoder.gcm.util;
 
 import android.content.ActivityNotFoundException;
 import android.content.Context;
@@ -6,12 +6,16 @@ import android.content.Intent;
 import android.net.Uri;
 import android.widget.Toast;
 
-public final class AboutBoxUtils {
+import com.reversecoder.gcm.R;
+
+public final class GcmUtils {
+
+    public enum BuildType {AMAZON, GOOGLE}
 
     public final static String playStoreAppURI = "https://play.google.com/store/apps/details?id=";
     public final static String amznStoreAppURI = "https://www.amazon.com/gp/mas/dl/android?p=";
 
-    private AboutBoxUtils() {
+    private GcmUtils() {
         //nothing
     }
 
@@ -25,7 +29,7 @@ public final class AboutBoxUtils {
                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.facebook.com/" + name));
                 context.startActivity(intent);
             } catch (Exception e1) {
-                Toast.makeText(context, R.string.egab_can_not_open, Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, R.string.gcm_can_not_open, Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -41,12 +45,12 @@ public final class AboutBoxUtils {
                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://twitter.com/" + name));
                 context.startActivity(intent);
             } catch (Exception e1) {
-                Toast.makeText(context, R.string.egab_can_not_open, Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, R.string.gcm_can_not_open, Toast.LENGTH_SHORT).show();
             }
         }
     }
 
-    public static void openApp(Context context, AboutConfig.BuildType buildType, String packageName) {
+    public static void openApp(Context context, BuildType buildType, String packageName) {
         String appURI = null;
         String webURI = null;
         switch (buildType) {
@@ -64,7 +68,7 @@ public final class AboutBoxUtils {
         openApplication(context, appURI, webURI);
     }
 
-    public static void openPublisher(Context context, AboutConfig.BuildType buildType, String publisher, String packageName) {
+    public static void openPublisher(Context context, BuildType buildType, String publisher, String packageName) {
         String appURI = null;
         String webURI = null;
         switch (buildType) {
@@ -98,7 +102,7 @@ public final class AboutBoxUtils {
             try {
                 openHTMLPage(context, webURI);
             } catch (ActivityNotFoundException e2) {
-                Toast.makeText(context, R.string.egab_can_not_open, Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, R.string.gcm_can_not_open, Toast.LENGTH_SHORT).show();
             }
         }
     }

@@ -19,7 +19,7 @@ public class GcmConfig {
     public static final String INTENT_KEY_GCM_DATA_CONTENT_INTENT = "INTENT_KEY_GCM_DATA_CONTENT_INTENT";
 
     public static String getRegisterDeviceUrl() {
-        String url = "http://codegarage.tech/quote/registration.php";
+        String url = "http://codegarage.tech/warehouse/quote/registration.php";
         Log.d(TAG, "getRegisterDeviceUrl: " + url);
         return url;
     }

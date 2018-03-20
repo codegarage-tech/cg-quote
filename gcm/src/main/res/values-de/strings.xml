@@ -1,3 +1,5 @@
 <resources>
     <string name="txt_tap_for_more_details">Tap for more details.</string>
+    <string name="gcm_can_not_open">You don\'t have any app that can open this link</string>
+    <string name="gcm_app_publisher_id">8721116055633300205</string>
 </resources>
