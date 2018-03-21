@@ -20,7 +20,6 @@ public class AppDataBuilder implements Parcelable {
         this.language = null;
         this.author = null;
         this.dataInputListener = null;
-
         Log.d(AppDataBuilder.class.getSimpleName(), "TAG-AppDataBuilder-1");
     }
 

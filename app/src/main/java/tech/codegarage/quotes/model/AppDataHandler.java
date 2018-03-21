@@ -12072,6 +12072,7 @@ public class AppDataHandler {
 
             return savedLanguage;
         } else {
+            Log.d(TAG, "TAG-got null language");
             Log.d(TAG, "TAG-insetLanguage-7");
             if (language.save()) {
                 Log.d(TAG, "TAG-insetLanguage-8");

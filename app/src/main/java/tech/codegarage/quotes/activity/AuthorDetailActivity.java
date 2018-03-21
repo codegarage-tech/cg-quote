@@ -32,8 +32,6 @@ import tech.codegarage.quotes.util.AllConstants;
 import static tech.codegarage.quotes.model.AppDataHandler.getAllQuotes;
 import static tech.codegarage.quotes.model.AppDataHandler.getAuthorData;
 
-//import static DataHandler.mAllMappedQuotes;
-
 public class AuthorDetailActivity extends BaseActivity implements FragmentItemClickListener {
 
     AppDataBuilder mAppDataBuilder;
