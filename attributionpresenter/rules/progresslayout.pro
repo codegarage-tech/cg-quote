@@ -1,1 +1,1 @@
--keep class co.mobiwise.library.** { *; }
+-keep public class co.mobiwise.library.** { *; }

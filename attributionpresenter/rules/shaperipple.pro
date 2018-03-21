@@ -1,1 +1,1 @@
--keep class com.rodolfonavalon.shaperipplelibrary.** { *; }
+-keep public class com.rodolfonavalon.shaperipplelibrary.ShapeRipple

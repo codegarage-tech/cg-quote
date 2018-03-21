@@ -1661,7 +1661,7 @@ public enum EnumTag {
     INDIVIDUAL("Individual"),
     AVERAGE("Average");
 
-    private Tag tag;
+    private Tag tag = null;
 
     EnumTag(String tagName) {
         tag = AppDataHandler.insetTag(new Tag(tagName), AppDataHandler.mDataInputListener);

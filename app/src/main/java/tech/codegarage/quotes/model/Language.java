@@ -10,7 +10,6 @@ import org.litepal.crud.DataSupport;
 
 public class Language extends DataSupport implements Parcelable {
 
-
     private long id;
     @Column(unique = true)
     private String languageName = "";

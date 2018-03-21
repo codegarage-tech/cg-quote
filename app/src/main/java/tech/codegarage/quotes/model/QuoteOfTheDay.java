@@ -7,8 +7,8 @@ import com.google.gson.Gson;
 
 public class QuoteOfTheDay implements Parcelable {
 
-    private AppDataBuilder appDataBuilder;
-    private AppDataBuilder.QuoteBuilder quoteBuilder;
+    private AppDataBuilder appDataBuilder = null;
+    private AppDataBuilder.QuoteBuilder quoteBuilder = null;
     private String today = "";
 
     public QuoteOfTheDay(AppDataBuilder appDataBuilder, AppDataBuilder.QuoteBuilder quoteBuilder, String today) {

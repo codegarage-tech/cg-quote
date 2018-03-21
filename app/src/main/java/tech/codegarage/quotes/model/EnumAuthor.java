@@ -329,7 +329,7 @@ public enum EnumAuthor {
 
     ZYGMUNT_BAUMAN("Zygmunt Bauman", "November 19, 1925", "January 9, 2017", "Sociologist", "Polish", AppUtils.getDrawableResourceId(R.drawable.zigmunt_bauman), true);
 
-    private Author author;
+    private Author author = null;
 
     EnumAuthor(String authorName, String birthDate, String deathDate, String occupation, String nationality, int profileImage, boolean isAuthor) {
         this.author = AppDataHandler.insetAuthor(new Author(authorName, birthDate, deathDate, occupation, nationality, profileImage, isAuthor), AppDataHandler.mDataInputListener);

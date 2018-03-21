@@ -13,17 +13,23 @@ public class AppDataBuilder implements Parcelable {
     private Language language;
     private Author author;
     private ArrayList<QuoteBuilder> quoteBuilders = new ArrayList<>();
-    private boolean isLitePalData = true;
+    private boolean isData = true;
     private transient DataInputListener dataInputListener;
 
     public AppDataBuilder() {
+        this.language = null;
+        this.author = null;
+        this.dataInputListener = null;
+
+        Log.d(AppDataBuilder.class.getSimpleName(), "TAG-AppDataBuilder-1");
     }
 
-    public AppDataBuilder(Language language, Author author, ArrayList<QuoteBuilder> quoteBuilders, boolean isLitePalData) {
+    public AppDataBuilder(Language language, Author author, ArrayList<QuoteBuilder> quoteBuilders, boolean isData) {
         this.language = language;
         this.author = author;
         this.quoteBuilders = quoteBuilders;
-        this.isLitePalData = isLitePalData;
+        this.isData = isData;
+        this.dataInputListener = null;
     }
 
     public Language getLanguage() {
@@ -32,6 +38,7 @@ public class AppDataBuilder implements Parcelable {
 
     public AppDataBuilder setLanguage(Language language) {
         this.language = language;
+        Log.d(AppDataBuilder.class.getSimpleName(), "TAG-AppDataBuilder-3");
         return this;
     }
 
@@ -41,6 +48,7 @@ public class AppDataBuilder implements Parcelable {
 
     public AppDataBuilder setAuthor(Author author) {
         this.author = author;
+        Log.d(AppDataBuilder.class.getSimpleName(), "TAG-AppDataBuilder-4");
         return this;
     }
 
@@ -55,26 +63,30 @@ public class AppDataBuilder implements Parcelable {
 
     public AppDataBuilder addLitePalQuotes(QuoteBuilder quoteBuilder) {
         this.quoteBuilders.add(quoteBuilder);
+        Log.d(AppDataBuilder.class.getSimpleName(), "TAG-AppDataBuilder-5");
         return this;
     }
 
-    public boolean isLitePalData() {
-        return isLitePalData;
+    public boolean isData() {
+        return isData;
     }
 
-    public AppDataBuilder setLitePalData(boolean litePalData) {
-        isLitePalData = litePalData;
+    public AppDataBuilder setData(boolean data) {
+        isData = data;
         return this;
     }
 
     public AppDataBuilder setDataInputListener(DataInputListener dataInputListener) {
         this.dataInputListener = dataInputListener;
+        Log.d(AppDataBuilder.class.getSimpleName(), "TAG-AppDataBuilder-2");
         return this;
     }
 
     public AppDataBuilder buildAuthor() {
         if (language != null && author != null && getQuoteBuilders().size() > 0) {
+            Log.d(AppDataBuilder.class.getSimpleName(), "TAG-AppDataBuilder-6");
             AppDataHandler.insertQuoteLanguageAuthorTag(this, ((dataInputListener != null) ? dataInputListener : null));
+            Log.d(AppDataBuilder.class.getSimpleName(), "TAG-AppDataBuilder-7");
         }
         Log.d(AppDataBuilder.class.getSimpleName(), toString());
         return this;
@@ -102,7 +114,7 @@ public class AppDataBuilder implements Parcelable {
         dest.writeParcelable(language, flags);
         dest.writeParcelable(author, flags);
         dest.writeList(quoteBuilders);
-        dest.writeInt(isLitePalData ? 1 : 0);
+        dest.writeInt(isData ? 1 : 0);
     }
 
     // Creator
@@ -122,7 +134,7 @@ public class AppDataBuilder implements Parcelable {
         this.language = in.readParcelable(Language.class.getClassLoader());
         this.author = in.readParcelable(Author.class.getClassLoader());
         this.quoteBuilders = in.readArrayList(QuoteBuilder.class.getClassLoader());
-        this.isLitePalData = (in.readInt() == 0) ? false : true;
+        this.isData = (in.readInt() == 0) ? false : true;
     }
 
     public static class QuoteBuilder implements Parcelable {
@@ -132,6 +144,8 @@ public class AppDataBuilder implements Parcelable {
 //        private transient DataInputListener dataInputListener;
 
         public QuoteBuilder() {
+            Quote quote = null;
+            Log.d(QuoteBuilder.class.getSimpleName(), "TAG-QuoteBuilder-1");
         }
 
         public QuoteBuilder(Quote quote, ArrayList<Tag> tags) {
@@ -169,7 +183,10 @@ public class AppDataBuilder implements Parcelable {
 
         public QuoteBuilder buildQuotes() {
             if (quote != null) {
+                Log.d(QuoteBuilder.class.getSimpleName(), "TAG-QuoteBuilder-2");
                 quote = AppDataHandler.insertQuote(quote, ((AppDataHandler.mDataInputListener != null) ? AppDataHandler.mDataInputListener : null));
+
+                Log.d(QuoteBuilder.class.getSimpleName(), "TAG-QuoteBuilder-3");
             }
             return this;
         }

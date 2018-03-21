@@ -1,1 +1,1 @@
--keep class com.lombokcyberlab.android.multicolortextview.** { *; }
+-keep public class com.lombokcyberlab.android.multicolortextview.MultiColorTextView

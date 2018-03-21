@@ -22,26 +22,33 @@ import static tech.codegarage.quotes.util.AllConstants.SESSION_QUOTE_OF_THE_DAY;
 public class AppDataHandler {
 
     private static String TAG = AppDataHandler.class.getSimpleName();
-    public static DataInputListener mDataInputListener;
+    public static DataInputListener mDataInputListener = null;
 
     /**************
      * Data input *
      **************/
     public static ArrayList<AppDataBuilder> initAllQuotes(DataInputListener dataInputListener) {
+        Log.d(TAG, "TAG-initAllQuotes-1");
         mDataInputListener = dataInputListener;
         ArrayList<AppDataBuilder> appDataBuilders = new ArrayList<>();
+        Log.d(TAG, "TAG-initAllQuotes-2");
 
-        appDataBuilders.addAll(inputQuoteAtoI(dataInputListener));
-        appDataBuilders.addAll(inputQuoteJtoZ(dataInputListener));
+        appDataBuilders.addAll(inputQuoteAtoI(mDataInputListener));
+        Log.d(TAG, "TAG-initAllQuotes-3");
+        appDataBuilders.addAll(inputQuoteJtoZ(mDataInputListener));
+        Log.d(TAG, "TAG-initAllQuotes-4");
 
         DataAppDataBuilder dataAppDataBuilder = new DataAppDataBuilder(appDataBuilders);
+        Log.d(TAG, "TAG-initAllQuotes-5");
         SessionManager.setStringSetting(getGlobalContext(), SESSION_DATA_APP_DATA_BUILDER, DataAppDataBuilder.convertFromObjectToString(dataAppDataBuilder));
+        Log.d(TAG, "TAG-initAllQuotes-6");
 
         return appDataBuilders;
     }
 
     private static ArrayList<AppDataBuilder> inputQuoteAtoI(DataInputListener dataInputListener) {
         ArrayList<AppDataBuilder> appDataBuilders = new ArrayList<AppDataBuilder>();
+        Log.d(TAG, "TAG-inputQuoteAtoI-1");
 
         appDataBuilders.add(
                 new AppDataBuilder()
@@ -119,6 +126,7 @@ public class AppDataHandler {
                         )
                         .buildAuthor()
         );
+        Log.d(TAG, "TAG-inputQuoteAtoI-2");
         appDataBuilders.add(
                 new AppDataBuilder()
                         .setDataInputListener(dataInputListener)
@@ -11915,13 +11923,13 @@ public class AppDataHandler {
 
             quote = appDataBuilders.get(i);
             glazyCard = new GlazyCard()
-                    .withTitle(quote.isLitePalData() ? quote.getAuthor().getAuthorName() : "Advertise")
-                    .withSubTitle(quote.isLitePalData() ? quote.getAuthor().getOccupation() : "")
-                    .withOccupation(quote.isLitePalData() ? quote.getAuthor().getOccupation() : "")
-                    .withNationality(quote.isLitePalData() ? quote.getAuthor().getNationality() : "")
-                    .withBirthDate(quote.isLitePalData() ? quote.getAuthor().getBirthDate() : "")
-                    .withDeathDate(quote.isLitePalData() ? quote.getAuthor().getDeathDate() : "")
-                    .withDescription(quote.isLitePalData() ? (quote.getQuoteBuilders().size() > 0 ? quote.getQuoteBuilders().get(0).getQuote().getQuoteDescription() : "") : "")
+                    .withTitle(quote.isData() ? quote.getAuthor().getAuthorName() : "Advertise")
+                    .withSubTitle(quote.isData() ? quote.getAuthor().getOccupation() : "")
+                    .withOccupation(quote.isData() ? quote.getAuthor().getOccupation() : "")
+                    .withNationality(quote.isData() ? quote.getAuthor().getNationality() : "")
+                    .withBirthDate(quote.isData() ? quote.getAuthor().getBirthDate() : "")
+                    .withDeathDate(quote.isData() ? quote.getAuthor().getDeathDate() : "")
+                    .withDescription(quote.isData() ? (quote.getQuoteBuilders().size() > 0 ? quote.getQuoteBuilders().get(0).getQuote().getQuoteDescription() : "") : "")
                     .withImageRes((quote.getAuthor().getProfileImage() != -1) ? quote.getAuthor().getProfileImage() : R.drawable.avatar_male)
                     .withImageCutType(lastTransitionType)
                     .withImageCutHeightDP(50);
@@ -12048,21 +12056,39 @@ public class AppDataHandler {
      * Methods for Language *
      ************************/
     public static Language insetLanguage(Language language, DataInputListener dataInputListener) {
+        Log.d(TAG, "TAG-insetLanguage-1");
         Language savedLanguage = getLanguage(language.getLanguageName());
+        Log.d(TAG, "TAG-insetLanguage-2");
+
         if (savedLanguage != null) {
             Log.d(TAG, "insetLanguage(Existing): " + savedLanguage.toString());
+            Log.d(TAG, "TAG-insetLanguage-3");
             if (dataInputListener != null) {
+                Log.d(TAG, "TAG-insetLanguage-4");
                 dataInputListener.InputListener(savedLanguage);
+                Log.d(TAG, "TAG-insetLanguage-5");
             }
+            Log.d(TAG, "TAG-insetLanguage-6");
+
             return savedLanguage;
         } else {
+            Log.d(TAG, "TAG-insetLanguage-7");
             if (language.save()) {
+                Log.d(TAG, "TAG-insetLanguage-8");
                 Language mSavedLanguage = getLanguage(language.getLanguageName());
+                Log.d(TAG, "TAG-insetLanguage-9");
+
                 if (mSavedLanguage != null) {
+                    Log.d(TAG, "TAG-insetLanguage-10");
                     Log.d(TAG, "insetLanguage(new): " + language.toString());
+
                     if (dataInputListener != null) {
+                        Log.d(TAG, "TAG-insetLanguage-11");
                         dataInputListener.InputListener(mSavedLanguage);
+                        Log.d(TAG, "TAG-insetLanguage-12");
                     }
+                    Log.d(TAG, "TAG-insetLanguage-13");
+
                     return mSavedLanguage;
                 }
             }
@@ -12071,7 +12097,10 @@ public class AppDataHandler {
     }
 
     public static Language getLanguage(String languageName) {
+        Log.d(TAG, "TAG-getLanguage-1");
         List<Language> savedLanguage = DataSupport.where("languageName = ?", languageName).find(Language.class);
+        Log.d(TAG, "TAG-getLanguage-2");
+
         if (savedLanguage != null && savedLanguage.size() == 1) {
             Log.d(TAG, "getLanguage: " + savedLanguage.get(0).toString());
             return savedLanguage.get(0);
