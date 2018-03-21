@@ -2,7 +2,7 @@
     <string name="app_name">Zitat</string>
     <string name="app_name_capital">ZITAT</string>
     <string name="app_version_text">Version</string>
-    <string name="app_version_name">1.0.0</string>
+    <string name="app_version_name">1.0.1</string>
     <string name="app_author">CodeGarage Team</string>
     <string name="app_author_email">codegarage.tech.us@gmail.com</string>
     <string name="app_contact_subject">"Contact Support"</string>
@@ -12,8 +12,8 @@
     <string name="app_publisher_twitter_id">codegarage_tech</string>
     <string name="app_publisher_profile_website">http://www.codegarage.tech/</string>
     <string name="app_publisher_company_html_path">http://www.codegarage.tech/</string>
-    <string name="app_publisher_privacy_html_path">http://www.codegarage.tech/</string>
-    <string name="app_publisher_acknowledgment_html_path">http://www.codegarage.tech/</string>
+    <string name="app_publisher_privacy_html_path">http://codegarage.tech/privacy_and_policy.html</string>
+    <string name="app_publisher_acknowledgment_html_path">http://codegarage.tech/terms_and_conditions.html</string>
 
     <!-- Activity title -->
     <string name="title_activity_author">Zuhause</string>

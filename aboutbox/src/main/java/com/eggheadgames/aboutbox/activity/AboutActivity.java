@@ -266,27 +266,25 @@ public class AboutActivity extends MaterialAboutActivity {
                     new MaterialAboutItemOnClickAction() {
                         @Override
                         public void onClick() {
-                            if (config.dialog == null) {
-                                AboutBoxUtils.openHTMLPage(AboutActivity.this, config.privacyHtmlPath);
-                            } else {
-                                config.dialog.open(AboutActivity.this, config.privacyHtmlPath, getString(R.string.egab_privacy_policy));
-                            }
-
+//                            if (config.dialog == null) {
+                            AboutBoxUtils.openHTMLPage(AboutActivity.this, config.privacyHtmlPath);
+//                            } else {
+//                                config.dialog.open(AboutActivity.this, config.privacyHtmlPath, getString(R.string.egab_privacy_policy));
+//                            }
                             logUIEventName(config.analytics, config.logUiEventName, getString(R.string.egab_privacy_log_event));
                         }
-                    })
-            );
+                    }));
         }
         if (!TextUtils.isEmpty(config.acknowledgmentHtmlPath)) {
             card.addItem(itemHelper(R.string.egab_acknowledgements, R.drawable.ic_acknowledgements,
                     new MaterialAboutItemOnClickAction() {
                         @Override
                         public void onClick() {
-                            if (config.dialog == null) {
-                                AboutBoxUtils.openHTMLPage(AboutActivity.this, config.acknowledgmentHtmlPath);
-                            } else {
-                                config.dialog.open(AboutActivity.this, config.acknowledgmentHtmlPath, getString(R.string.egab_acknowledgements));
-                            }
+//                            if (config.dialog == null) {
+                            AboutBoxUtils.openHTMLPage(AboutActivity.this, config.acknowledgmentHtmlPath);
+//                            } else {
+//                                config.dialog.open(AboutActivity.this, config.acknowledgmentHtmlPath, getString(R.string.egab_acknowledgements));
+//                            }
                             logUIEventName(config.analytics, config.logUiEventName, getString(R.string.egab_acknowledgements_log_event));
                         }
                     })
@@ -310,7 +308,6 @@ public class AboutActivity extends MaterialAboutActivity {
                 .setOnClickAction(clickAction)
                 .build();
     }
-
 
     @Override
     protected CharSequence getActivityTitle() {
