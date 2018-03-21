@@ -8,7 +8,7 @@ import com.google.gson.Gson;
 import org.litepal.annotation.Column;
 import org.litepal.crud.DataSupport;
 
-public class LitePalAuthor extends DataSupport implements Parcelable {
+public class Author extends DataSupport implements Parcelable {
 
     private long id;
     @Column(unique = true)
@@ -20,10 +20,10 @@ public class LitePalAuthor extends DataSupport implements Parcelable {
     private int profileImage = -1;
     private boolean isAuthor = true;
 
-    public LitePalAuthor() {
+    public Author() {
     }
 
-    public LitePalAuthor(String authorName, String birthDate, String deathDate, String occupation, String nationality, int profileImage, boolean isAuthor) {
+    public Author(String authorName, String birthDate, String deathDate, String occupation, String nationality, int profileImage, boolean isAuthor) {
         this.authorName = authorName;
         this.birthDate = birthDate;
         this.deathDate = deathDate;
@@ -130,17 +130,17 @@ public class LitePalAuthor extends DataSupport implements Parcelable {
     // Creator
     public static final Creator CREATOR
             = new Creator() {
-        public LitePalAuthor createFromParcel(Parcel in) {
-            return new LitePalAuthor(in);
+        public Author createFromParcel(Parcel in) {
+            return new Author(in);
         }
 
-        public LitePalAuthor[] newArray(int size) {
-            return new LitePalAuthor[size];
+        public Author[] newArray(int size) {
+            return new Author[size];
         }
     };
 
     // "De-parcel object
-    public LitePalAuthor(Parcel in) {
+    public Author(Parcel in) {
         id = in.readLong();
         authorName = in.readString();
         birthDate = in.readString();

@@ -14,7 +14,7 @@ import se.emilsjolander.flipview.FlipView;
 import tech.codegarage.quotes.R;
 import tech.codegarage.quotes.activity.FavouriteQuoteDetailActivity;
 import tech.codegarage.quotes.activity.HomeActivity;
-import tech.codegarage.quotes.model.LitePalDataBuilder;
+import tech.codegarage.quotes.model.AppDataBuilder;
 import tech.codegarage.quotes.util.AppUtils;
 
 public class FavouriteQuoteFlipViewAdapter extends BaseAdapter {
@@ -25,22 +25,22 @@ public class FavouriteQuoteFlipViewAdapter extends BaseAdapter {
 
     private LayoutInflater inflater;
     private Callback callback;
-    private List<LitePalDataBuilder.LitePalQuoteBuilder> mData;
+    private List<AppDataBuilder.QuoteBuilder> mData;
     private Context mContext;
     private FlipView mFlipView;
 
     public FavouriteQuoteFlipViewAdapter(Context context) {
         mContext = context;
         inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        mData = new ArrayList<LitePalDataBuilder.LitePalQuoteBuilder>();
+        mData = new ArrayList<AppDataBuilder.QuoteBuilder>();
     }
 
-    public void setData(List<LitePalDataBuilder.LitePalQuoteBuilder> mData) {
+    public void setData(List<AppDataBuilder.QuoteBuilder> mData) {
         this.mData = mData;
         notifyDataSetChanged();
     }
 
-    public List<LitePalDataBuilder.LitePalQuoteBuilder> getData() {
+    public List<AppDataBuilder.QuoteBuilder> getData() {
         return mData;
     }
 
@@ -54,33 +54,33 @@ public class FavouriteQuoteFlipViewAdapter extends BaseAdapter {
     }
 
     @Override
-    public LitePalDataBuilder.LitePalQuoteBuilder getItem(int position) {
+    public AppDataBuilder.QuoteBuilder getItem(int position) {
         return mData.get(position);
     }
 
-    public int getItemPosition(LitePalDataBuilder.LitePalQuoteBuilder item) {
+    public int getItemPosition(AppDataBuilder.QuoteBuilder item) {
         for (int i = 0; i < mData.size(); i++) {
-            if ((mData.get(i)).getLitePalQuote().getId() == item.getLitePalQuote().getId()) {
+            if ((mData.get(i)).getQuote().getId() == item.getQuote().getId()) {
                 return i;
             }
         }
         return -1;
     }
 
-    public void updateItem(LitePalDataBuilder.LitePalQuoteBuilder item) {
+    public void updateItem(AppDataBuilder.QuoteBuilder item) {
         int position = getItemPosition(item);
         mData.remove(position);
         mData.add(position, item);
         notifyDataSetChanged();
     }
 
-    public void updateItem(int position, LitePalDataBuilder.LitePalQuoteBuilder item) {
+    public void updateItem(int position, AppDataBuilder.QuoteBuilder item) {
         mData.remove(position);
         mData.add(position, item);
         notifyDataSetChanged();
     }
 
-    public void removeItem(LitePalDataBuilder.LitePalQuoteBuilder item) {
+    public void removeItem(AppDataBuilder.QuoteBuilder item) {
         int mPosition = getItemPosition(item);
 
         if (mPosition < getCount() - 1) {
@@ -90,7 +90,7 @@ public class FavouriteQuoteFlipViewAdapter extends BaseAdapter {
             if ((mFlipView.getCurrentPage() == (getCount() - 1)) && (getCount() > 1)) {
                 mFlipView.smoothFlipTo(0);
             } else if (getCount() == 1) {
-                if (mData.get(0).getLitePalQuote().getQuoteDescription().equalsIgnoreCase(mContext.getString(R.string.txt_dummy_quote))) {
+                if (mData.get(0).getQuote().getQuoteDescription().equalsIgnoreCase(mContext.getString(R.string.txt_dummy_quote))) {
                     mFlipView.setAdapter(null);
                     mData.clear();
                     //invisible context menu for no item, as it is empty.
@@ -101,7 +101,7 @@ public class FavouriteQuoteFlipViewAdapter extends BaseAdapter {
         }
     }
 
-    public void removeItem(int position, LitePalDataBuilder.LitePalQuoteBuilder item) {
+    public void removeItem(int position, AppDataBuilder.QuoteBuilder item) {
         int mPosition = position;
 
         if (mPosition < getCount() - 1) {
@@ -111,7 +111,7 @@ public class FavouriteQuoteFlipViewAdapter extends BaseAdapter {
             if ((mFlipView.getCurrentPage() == (getCount() - 1)) && (getCount() > 1)) {
                 mFlipView.smoothFlipTo(0);
             } else if (getCount() == 1) {
-                if (mData.get(0).getLitePalQuote().getQuoteDescription().equalsIgnoreCase(mContext.getString(R.string.txt_dummy_quote))) {
+                if (mData.get(0).getQuote().getQuoteDescription().equalsIgnoreCase(mContext.getString(R.string.txt_dummy_quote))) {
                     mFlipView.setAdapter(null);
                     mData.clear();
                     //invisible context menu for no item, as it is empty.
@@ -124,7 +124,7 @@ public class FavouriteQuoteFlipViewAdapter extends BaseAdapter {
 
     @Override
     public long getItemId(int position) {
-        return getItem(position).getLitePalQuote().getId();
+        return getItem(position).getQuote().getId();
     }
 
     @Override
@@ -140,13 +140,13 @@ public class FavouriteQuoteFlipViewAdapter extends BaseAdapter {
             mFlipView = (FlipView) parent.findViewById(R.id.flipview_favourite_quote_detail);
         }
 
-        final LitePalDataBuilder.LitePalQuoteBuilder mItem = getItem(position);
+        final AppDataBuilder.QuoteBuilder mItem = getItem(position);
 
         TextView text = (TextView) vi.findViewById(R.id.tv_quote);
-        if (mItem.getLitePalQuote().getQuoteDescription().equalsIgnoreCase("420")) {
+        if (mItem.getQuote().getQuoteDescription().equalsIgnoreCase("420")) {
             text.setText("END");
         } else {
-            text.setText("\"" + mItem.getLitePalQuote().getQuoteDescription() + "\"");
+            text.setText("\"" + mItem.getQuote().getQuoteDescription() + "\"");
         }
 
         vi.setBackgroundColor(AppUtils.getRandomPastelColor());

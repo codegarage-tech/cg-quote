@@ -28,10 +28,10 @@ import tech.codegarage.quotes.activity.AuthorDetailActivity;
 import tech.codegarage.quotes.adapter.AuthorAdapter;
 import tech.codegarage.quotes.interfaces.OnFragmentBackPressedListener;
 import tech.codegarage.quotes.interfaces.RecyclerViewOnItemClickListener;
-import tech.codegarage.quotes.model.LitePalDataBuilder;
+import tech.codegarage.quotes.model.AppDataBuilder;
 import tech.codegarage.quotes.util.AllConstants;
 
-import static tech.codegarage.quotes.model.LitePalDataHandler.getAllQuotes;
+import static tech.codegarage.quotes.model.AppDataHandler.getAllQuotes;
 //import static DataHandler.mAllMappedQuotes;
 
 /**
@@ -88,21 +88,21 @@ public class AuthorFragment extends Fragment implements OnFragmentBackPressedLis
         recyclerViewPersonInfo.setAdapter(personAdapter);
     }
 
-    private void initData(ArrayList<LitePalDataBuilder> litePalDataBuilders) {
+    private void initData(ArrayList<AppDataBuilder> appDataBuilders) {
         personAdapter.clear();
-        personAdapter.addAll(litePalDataBuilders);
+        personAdapter.addAll(appDataBuilders);
         personAdapter.notifyDataSetChanged();
 
         //sticky header
-        setStickyIndex(litePalDataBuilders);
+        setStickyIndex(appDataBuilders);
 
         //waveside bar
-        setWaveSideBar(litePalDataBuilders);
+        setWaveSideBar(appDataBuilders);
 
         initActions();
     }
 
-    private void setStickyIndex(ArrayList<LitePalDataBuilder> stickyIndexes) {
+    private void setStickyIndex(ArrayList<AppDataBuilder> stickyIndexes) {
         if (stickyIndexes.size() > 1) {
             indexContainer.setDataSet(getIndexList(stickyIndexes));
             indexContainer.setOnScrollListener(recyclerViewPersonInfo);
@@ -111,13 +111,13 @@ public class AuthorFragment extends Fragment implements OnFragmentBackPressedLis
         }
     }
 
-    private void setWaveSideBar(final ArrayList<LitePalDataBuilder> waveSideBar) {
+    private void setWaveSideBar(final ArrayList<AppDataBuilder> waveSideBar) {
         if (waveSideBar.size() > 0) {
             mSideBarView.setOnTouchLetterChangeListener(new WaveSideBarView.OnTouchLetterChangeListener() {
                 @Override
                 public void onLetterChange(String letter) {
                     for (int i = 0; i < waveSideBar.size(); i++) {
-                        if (String.valueOf(waveSideBar.get(i).getLitePalAuthor().getAuthorName().charAt(0)).equals(letter)) {
+                        if (String.valueOf(waveSideBar.get(i).getAuthor().getAuthorName().charAt(0)).equals(letter)) {
                             ((LinearLayoutManager) recyclerViewPersonInfo.getLayoutManager()).scrollToPositionWithOffset(i, 0);
                             return;
                         }
@@ -134,11 +134,11 @@ public class AuthorFragment extends Fragment implements OnFragmentBackPressedLis
     /*****************
      * Sticky header *
      *****************/
-    public static char[] getIndexList(ArrayList<LitePalDataBuilder> list) {
+    public static char[] getIndexList(ArrayList<AppDataBuilder> list) {
         char[] result = new char[list.size()];
         int i = 0;
-        for (LitePalDataBuilder c : list) {
-            result[i] = Character.toUpperCase(c.getLitePalAuthor().getAuthorName().charAt(0));
+        for (AppDataBuilder c : list) {
+            result[i] = Character.toUpperCase(c.getAuthor().getAuthorName().charAt(0));
             i++;
         }
         return result;
@@ -162,10 +162,10 @@ public class AuthorFragment extends Fragment implements OnFragmentBackPressedLis
                 new RecyclerViewOnItemClickListener.OnItemClickListener() {
                     @Override
                     public void onItemClick(View view, int position) {
-                        LitePalDataBuilder litePalDataBuilder = ((AuthorAdapter) recyclerViewPersonInfo.getAdapter()).getItem(position);
-                        if (litePalDataBuilder.getLitePalAuthor().isAuthor()) {
+                        AppDataBuilder appDataBuilder = ((AuthorAdapter) recyclerViewPersonInfo.getAdapter()).getItem(position);
+                        if (appDataBuilder.getAuthor().isAuthor()) {
                             Intent intentQuoteList = new Intent(getActivity(), AuthorDetailActivity.class);
-                            intentQuoteList.putExtra(AllConstants.INTENT_KEY_AUTHOR, litePalDataBuilder);
+                            intentQuoteList.putExtra(AllConstants.INTENT_KEY_AUTHOR, appDataBuilder);
                             intentQuoteList.putExtra(AllConstants.INTENT_KEY_AUTHOR_POSITION, position);
                             getActivity().startActivity(intentQuoteList);
                             Bungee.slideUp(getActivity());
@@ -177,7 +177,7 @@ public class AuthorFragment extends Fragment implements OnFragmentBackPressedLis
     /******************************
      * Methods for database input *
      ******************************/
-    public class InputData extends AsyncTask<String, String, ArrayList<LitePalDataBuilder>> {
+    public class InputData extends AsyncTask<String, String, ArrayList<AppDataBuilder>> {
 
         @Override
         protected void onPreExecute() {
@@ -187,7 +187,7 @@ public class AuthorFragment extends Fragment implements OnFragmentBackPressedLis
         }
 
         @Override
-        protected ArrayList<LitePalDataBuilder> doInBackground(String... params) {
+        protected ArrayList<AppDataBuilder> doInBackground(String... params) {
 //            if (AllSettingsManager.isNullOrEmpty(SessionManager.getStringSetting(getGlobalContext(), SESSION_DATA_DATA_BUILDER))) {
 //                return initAllQuotes(null);
 //            } else {
@@ -197,7 +197,7 @@ public class AuthorFragment extends Fragment implements OnFragmentBackPressedLis
         }
 
         @Override
-        protected void onPostExecute(ArrayList<LitePalDataBuilder> result) {
+        protected void onPostExecute(ArrayList<AppDataBuilder> result) {
 
             if (result != null && result.size() > 0) {
                 //This checking for avoiding "Fragment not attached to Activity when finish AsyncTask & Fragment"

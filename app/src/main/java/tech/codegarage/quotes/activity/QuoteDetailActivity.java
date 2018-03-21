@@ -30,10 +30,10 @@ import spencerstudios.com.bungeelib.Bungee;
 import tech.codegarage.quotes.R;
 import tech.codegarage.quotes.adapter.QuoteFlipViewAdapter;
 import tech.codegarage.quotes.factory.TextViewFactory;
-import tech.codegarage.quotes.model.LitePalDataBuilder;
-import tech.codegarage.quotes.model.LitePalDataHandler;
-import tech.codegarage.quotes.model.LitePalQuote;
-import tech.codegarage.quotes.model.LitePalTag;
+import tech.codegarage.quotes.model.AppDataBuilder;
+import tech.codegarage.quotes.model.AppDataHandler;
+import tech.codegarage.quotes.model.Quote;
+import tech.codegarage.quotes.model.Tag;
 import tech.codegarage.quotes.util.AllConstants;
 import tech.codegarage.quotes.util.AppUtils;
 import tech.codegarage.quotes.util.ClipboardHandler;
@@ -45,10 +45,10 @@ import static tech.codegarage.quotes.util.AllConstants.FLASHING_DEFAULT_DELAY;
 
 public class QuoteDetailActivity extends BaseActivity {
 
-    LitePalDataBuilder mLitePalDataBuilder;
+    AppDataBuilder mAppDataBuilder;
     GetQuoteTask getQuoteTask;
     int mSelectedPosition = -1;
-    private ArrayList<LitePalDataBuilder.LitePalQuoteBuilder> mAllQuotes = new ArrayList<LitePalDataBuilder.LitePalQuoteBuilder>();
+    private ArrayList<AppDataBuilder.QuoteBuilder> mAllQuotes = new ArrayList<AppDataBuilder.QuoteBuilder>();
     private String TAG = QuoteDetailActivity.class.getSimpleName();
     TextSwitcher tsQuoteCounter;
 
@@ -116,9 +116,9 @@ public class QuoteDetailActivity extends BaseActivity {
         imageViewContextMenu.setOnClickListener(new OnSingleClickListener() {
             @Override
             public void onSingleClick(View view) {
-                LitePalDataBuilder.LitePalQuoteBuilder quote = mQuoteAdapter.getItem(mQuoteFlipView.getCurrentPage());
-                if (quote.getLitePalQuote().isQuote()) {
-                    initMenuFragment(quote.getLitePalQuote().isFavourite());
+                AppDataBuilder.QuoteBuilder quote = mQuoteAdapter.getItem(mQuoteFlipView.getCurrentPage());
+                if (quote.getQuote().isQuote()) {
+                    initMenuFragment(quote.getQuote().isFavourite());
                     mMenuDialogFragment.show(fragmentManager, ContextMenuDialogFragment.TAG);
                 }
             }
@@ -149,7 +149,7 @@ public class QuoteDetailActivity extends BaseActivity {
         fragmentManager = getSupportFragmentManager();
     }
 
-    public class GetQuoteTask extends AsyncTask<String, String, ArrayList<LitePalDataBuilder.LitePalQuoteBuilder>> {
+    public class GetQuoteTask extends AsyncTask<String, String, ArrayList<AppDataBuilder.QuoteBuilder>> {
 
         private Context mContext;
         private Intent mIntent;
@@ -162,19 +162,19 @@ public class QuoteDetailActivity extends BaseActivity {
         @Override
         protected void onPreExecute() {
             mSelectedPosition = mIntent.getIntExtra(AllConstants.INTENT_KEY_AUTHOR_POSITION, -1);
-            mLitePalDataBuilder = mIntent.getParcelableExtra(AllConstants.INTENT_KEY_AUTHOR);
+            mAppDataBuilder = mIntent.getParcelableExtra(AllConstants.INTENT_KEY_AUTHOR);
 
-            if (mLitePalDataBuilder != null) {
-                toolbarTitle.setAnimatedText(mLitePalDataBuilder.getLitePalAuthor().getAuthorName(), 0L);
+            if (mAppDataBuilder != null) {
+                toolbarTitle.setAnimatedText(mAppDataBuilder.getAuthor().getAuthorName(), 0L);
             }
         }
 
         @Override
-        protected ArrayList<LitePalDataBuilder.LitePalQuoteBuilder> doInBackground(String... params) {
-            if (mLitePalDataBuilder != null) {
-                if (mLitePalDataBuilder.getLitePalQuoteBuilders().size() > 0) {
+        protected ArrayList<AppDataBuilder.QuoteBuilder> doInBackground(String... params) {
+            if (mAppDataBuilder != null) {
+                if (mAppDataBuilder.getQuoteBuilders().size() > 0) {
                     //Need to read from session due to getting previous update
-                    mAllQuotes = mLitePalDataBuilder.getLitePalQuoteBuilders();
+                    mAllQuotes = mAppDataBuilder.getQuoteBuilders();
                 }
             }
 
@@ -182,7 +182,7 @@ public class QuoteDetailActivity extends BaseActivity {
         }
 
         @Override
-        protected void onPostExecute(ArrayList<LitePalDataBuilder.LitePalQuoteBuilder> result) {
+        protected void onPostExecute(ArrayList<AppDataBuilder.QuoteBuilder> result) {
             if (result != null && result.size() > 0) {
                 initQuoteDetailFlipView(result);
             }
@@ -202,7 +202,7 @@ public class QuoteDetailActivity extends BaseActivity {
             @Override
             public void onMenuItemClick(View clickedView, int position) {
 
-                LitePalDataBuilder.LitePalQuoteBuilder quote = mQuoteAdapter.getItem(mQuoteFlipView.getCurrentPage());
+                AppDataBuilder.QuoteBuilder quote = mQuoteAdapter.getItem(mQuoteFlipView.getCurrentPage());
                 Log.d(TAG, "FoldableItemPosition: " + mQuoteFlipView.getCurrentPage() + "");
                 Log.d(TAG, "FoldableItem: " + quote.toString());
 
@@ -212,21 +212,21 @@ public class QuoteDetailActivity extends BaseActivity {
                         break;
 
                     case 1: {
-                        if (quote.getLitePalQuote().isFavourite()) {
-                            quote.getLitePalQuote().setFavourite(false);
+                        if (quote.getQuote().isFavourite()) {
+                            quote.getQuote().setFavourite(false);
                         } else {
-                            quote.getLitePalQuote().setFavourite(true);
+                            quote.getQuote().setFavourite(true);
                         }
                         new UpdateQuoteIntoDatabase(QuoteDetailActivity.this, quote).execute();
                         break;
                     }
 
                     case 2:
-                        ClipboardHandler.copyToClipboard(QuoteDetailActivity.this, quote.getLitePalQuote().getQuoteDescription());
+                        ClipboardHandler.copyToClipboard(QuoteDetailActivity.this, quote.getQuote().getQuoteDescription());
                         break;
 
                     case 3:
-                        IntentManager.shareToAllAvailableApps(QuoteDetailActivity.this, "", AppUtils.getSharedQuote(QuoteDetailActivity.this, mLitePalDataBuilder, quote));
+                        IntentManager.shareToAllAvailableApps(QuoteDetailActivity.this, "", AppUtils.getSharedQuote(QuoteDetailActivity.this, mAppDataBuilder, quote));
                         break;
 
                     default:
@@ -292,7 +292,7 @@ public class QuoteDetailActivity extends BaseActivity {
     /****************************
      * FlipView methods *
      ****************************/
-    private void initQuoteDetailFlipView(ArrayList<LitePalDataBuilder.LitePalQuoteBuilder> data) {
+    private void initQuoteDetailFlipView(ArrayList<AppDataBuilder.QuoteBuilder> data) {
 
         mQuoteFlipView = (FlipView) findViewById(R.id.flipview_quote_detail);
         mQuoteAdapter = new QuoteFlipViewAdapter(QuoteDetailActivity.this);
@@ -334,31 +334,31 @@ public class QuoteDetailActivity extends BaseActivity {
         switchCounter(mQuoteFlipView.getCurrentPage(), (mQuoteAdapter.getCount() - 1));
     }
 
-    private ArrayList<LitePalDataBuilder.LitePalQuoteBuilder> getModifiedQuotes(ArrayList<LitePalDataBuilder.LitePalQuoteBuilder> quotes) {
+    private ArrayList<AppDataBuilder.QuoteBuilder> getModifiedQuotes(ArrayList<AppDataBuilder.QuoteBuilder> quotes) {
         boolean isDummyDataFound = false;
-        for (LitePalDataBuilder.LitePalQuoteBuilder quote : quotes) {
-            if (quote.getLitePalQuote().getQuoteDescription().equalsIgnoreCase(getString(R.string.txt_dummy_quote))) {
+        for (AppDataBuilder.QuoteBuilder quote : quotes) {
+            if (quote.getQuote().getQuoteDescription().equalsIgnoreCase(getString(R.string.txt_dummy_quote))) {
                 isDummyDataFound = true;
                 break;
             }
         }
 
         if (!isDummyDataFound) {
-            LitePalQuote litePalQuote = new LitePalQuote(getString(R.string.txt_dummy_quote), false, false);
-            litePalQuote.setId(4200000L);
-            LitePalDataBuilder.LitePalQuoteBuilder dummyQuote = new LitePalDataBuilder.LitePalQuoteBuilder(litePalQuote, new ArrayList<LitePalTag>());
+            Quote quote = new Quote(getString(R.string.txt_dummy_quote), false, false);
+            quote.setId(4200000L);
+            AppDataBuilder.QuoteBuilder dummyQuote = new AppDataBuilder.QuoteBuilder(quote, new ArrayList<Tag>());
             quotes.add(dummyQuote);
         }
 
         return quotes;
     }
 
-    class UpdateQuoteIntoDatabase extends AsyncTask<String, String, LitePalDataBuilder.LitePalQuoteBuilder> {
+    class UpdateQuoteIntoDatabase extends AsyncTask<String, String, AppDataBuilder.QuoteBuilder> {
 
         private Context mContext;
-        private LitePalDataBuilder.LitePalQuoteBuilder mQuote;
+        private AppDataBuilder.QuoteBuilder mQuote;
 
-        UpdateQuoteIntoDatabase(Context context, LitePalDataBuilder.LitePalQuoteBuilder updatedQuote) {
+        UpdateQuoteIntoDatabase(Context context, AppDataBuilder.QuoteBuilder updatedQuote) {
             mContext = context;
             mQuote = updatedQuote;
         }
@@ -368,9 +368,9 @@ public class QuoteDetailActivity extends BaseActivity {
         }
 
         @Override
-        protected LitePalDataBuilder.LitePalQuoteBuilder doInBackground(String... params) {
+        protected AppDataBuilder.QuoteBuilder doInBackground(String... params) {
             //Update quote into database and session
-            LitePalDataBuilder.LitePalQuoteBuilder updatedQuote = LitePalDataHandler.updateQuote(mLitePalDataBuilder, mQuote);
+            AppDataBuilder.QuoteBuilder updatedQuote = AppDataHandler.updateQuote(mAppDataBuilder, mQuote);
             if (updatedQuote != null) {
                 return updatedQuote;
             }
@@ -379,7 +379,7 @@ public class QuoteDetailActivity extends BaseActivity {
         }
 
         @Override
-        protected void onPostExecute(LitePalDataBuilder.LitePalQuoteBuilder result) {
+        protected void onPostExecute(AppDataBuilder.QuoteBuilder result) {
             if (result != null) {
                 mQuoteAdapter.updateItem(mQuoteFlipView.getCurrentPage(), result);
             }

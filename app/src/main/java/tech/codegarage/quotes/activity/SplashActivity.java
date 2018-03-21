@@ -26,15 +26,15 @@ import spencerstudios.com.bungeelib.Bungee;
 import tech.codegarage.quotes.R;
 import tech.codegarage.quotes.application.QuoteApp;
 import tech.codegarage.quotes.interfaces.DataInputListener;
-import tech.codegarage.quotes.model.LitePalAuthor;
-import tech.codegarage.quotes.model.LitePalDataBuilder;
-import tech.codegarage.quotes.model.LitePalDataHandler;
-import tech.codegarage.quotes.model.LitePalLanguage;
-import tech.codegarage.quotes.model.LitePalQuote;
-import tech.codegarage.quotes.model.LitePalQuoteLanguageAuthorTag;
-import tech.codegarage.quotes.model.LitePalTag;
+import tech.codegarage.quotes.model.AppDataBuilder;
+import tech.codegarage.quotes.model.Author;
+import tech.codegarage.quotes.model.AppDataHandler;
+import tech.codegarage.quotes.model.Language;
+import tech.codegarage.quotes.model.Quote;
+import tech.codegarage.quotes.model.QuoteLanguageAuthorTag;
+import tech.codegarage.quotes.model.Tag;
 
-import static tech.codegarage.quotes.util.AllConstants.SESSION_DATA_DATA_BUILDER;
+import static tech.codegarage.quotes.util.AllConstants.SESSION_DATA_APP_DATA_BUILDER;
 import static tech.codegarage.quotes.util.AllConstants.SESSION_IS_FIRST_TIME;
 
 /**
@@ -120,7 +120,7 @@ public class SplashActivity extends BaseActivity {
     /******************************
      * Methods for database input *
      ******************************/
-    public class InputData extends AsyncTask<String, Object, ArrayList<LitePalDataBuilder>> {
+    public class InputData extends AsyncTask<String, Object, ArrayList<AppDataBuilder>> {
 
         int mCounter, mProgress;
 
@@ -134,9 +134,9 @@ public class SplashActivity extends BaseActivity {
         }
 
         @Override
-        protected ArrayList<LitePalDataBuilder> doInBackground(String... params) {
+        protected ArrayList<AppDataBuilder> doInBackground(String... params) {
 
-            if (!AllSettingsManager.isNullOrEmpty(SessionManager.getStringSetting(QuoteApp.getGlobalContext(), SESSION_DATA_DATA_BUILDER))) {
+            if (!AllSettingsManager.isNullOrEmpty(SessionManager.getStringSetting(QuoteApp.getGlobalContext(), SESSION_DATA_APP_DATA_BUILDER))) {
 
                 try {
                     Thread.sleep(2 * interval);
@@ -174,14 +174,14 @@ public class SplashActivity extends BaseActivity {
 //                }
 
                 publishProgress(mCounter);
-                ArrayList<LitePalDataBuilder> litePalDataBuilders = LitePalDataHandler.initAllQuotes(new DataInputListener<Object>() {
+                ArrayList<AppDataBuilder> appDataBuilders = AppDataHandler.initAllQuotes(new DataInputListener<Object>() {
                     @Override
                     public void InputListener(Object insertedData) {
                         publishProgress(insertedData);
                     }
                 });
 
-                return litePalDataBuilders;
+                return appDataBuilders;
             }
 
             return null;
@@ -193,26 +193,26 @@ public class SplashActivity extends BaseActivity {
 
                 //assigning message
                 String progressMessage = "", progressStatus = "";
-                if (progress[0] instanceof LitePalQuote) {
-                    Log.d(TAG, "input(LitePalQuote): " + ((LitePalQuote) progress[0]).toString());
+                if (progress[0] instanceof Quote) {
+                    Log.d(TAG, "input(Quote): " + ((Quote) progress[0]).toString());
                     progressStatus = getString(R.string.txt_setting_quote);
-                    progressMessage = ((LitePalQuote) progress[0]).getQuoteDescription();
-                } else if (progress[0] instanceof LitePalQuoteLanguageAuthorTag) {
-                    Log.d(TAG, "input(LitePalQuoteLanguageAuthorTag): " + ((LitePalQuoteLanguageAuthorTag) progress[0]).toString());
+                    progressMessage = ((Quote) progress[0]).getQuoteDescription();
+                } else if (progress[0] instanceof QuoteLanguageAuthorTag) {
+                    Log.d(TAG, "input(QuoteLanguageAuthorTag): " + ((QuoteLanguageAuthorTag) progress[0]).toString());
                     progressStatus = getString(R.string.txt_setting_tag);
                     progressMessage = getString(R.string.txt_linking_quote_with_tag);
-                } else if (progress[0] instanceof LitePalAuthor) {
-                    Log.d(TAG, "input(LitePalAuthor): " + ((LitePalAuthor) progress[0]).toString());
+                } else if (progress[0] instanceof Author) {
+                    Log.d(TAG, "input(Author): " + ((Author) progress[0]).toString());
                     progressStatus = getString(R.string.txt_setting_author);
-                    progressMessage = ((LitePalAuthor) progress[0]).getAuthorName();
-                } else if (progress[0] instanceof LitePalTag) {
-                    Log.d(TAG, "input(LitePalTag): " + ((LitePalTag) progress[0]).toString());
+                    progressMessage = ((Author) progress[0]).getAuthorName();
+                } else if (progress[0] instanceof Tag) {
+                    Log.d(TAG, "input(Tag): " + ((Tag) progress[0]).toString());
                     progressStatus = getString(R.string.txt_setting_tag);
-                    progressMessage = ((LitePalTag) progress[0]).getTagName();
-                } else if (progress[0] instanceof LitePalLanguage) {
-                    Log.d(TAG, "input(LitePalLanguage): " + ((LitePalLanguage) progress[0]).toString());
+                    progressMessage = ((Tag) progress[0]).getTagName();
+                } else if (progress[0] instanceof Language) {
+                    Log.d(TAG, "input(Language): " + ((Language) progress[0]).toString());
                     progressStatus = getString(R.string.txt_setting_language);
-                    progressMessage = ((LitePalLanguage) progress[0]).getLanguageName();
+                    progressMessage = ((Language) progress[0]).getLanguageName();
                 }
 
                 //setting message
@@ -239,7 +239,7 @@ public class SplashActivity extends BaseActivity {
         }
 
         @Override
-        protected void onPostExecute(ArrayList<LitePalDataBuilder> result) {
+        protected void onPostExecute(ArrayList<AppDataBuilder> result) {
 
             if (result != null && result.size() > 0) {
                 if (SessionManager.getBooleanSetting(SplashActivity.this, SESSION_IS_FIRST_TIME, true)) {

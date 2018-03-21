@@ -8,7 +8,7 @@ import com.google.gson.Gson;
 import org.litepal.annotation.Column;
 import org.litepal.crud.DataSupport;
 
-public class LitePalQuote extends DataSupport implements Parcelable {
+public class Quote extends DataSupport implements Parcelable {
 
     private long id;
     @Column(unique = true)
@@ -16,10 +16,10 @@ public class LitePalQuote extends DataSupport implements Parcelable {
     private boolean isFavourite = false;
     private boolean isQuote = false;
 
-    public LitePalQuote() {
+    public Quote() {
     }
 
-    public LitePalQuote(String quoteDescription, boolean isFavourite, boolean isQuote) {
+    public Quote(String quoteDescription, boolean isFavourite, boolean isQuote) {
         this.quoteDescription = quoteDescription;
         this.isFavourite = isFavourite;
         this.isQuote = isQuote;
@@ -86,17 +86,17 @@ public class LitePalQuote extends DataSupport implements Parcelable {
     // Creator
     public static final Creator CREATOR
             = new Creator() {
-        public LitePalQuote createFromParcel(Parcel in) {
-            return new LitePalQuote(in);
+        public Quote createFromParcel(Parcel in) {
+            return new Quote(in);
         }
 
-        public LitePalQuote[] newArray(int size) {
-            return new LitePalQuote[size];
+        public Quote[] newArray(int size) {
+            return new Quote[size];
         }
     };
 
     // "De-parcel object
-    public LitePalQuote(Parcel in) {
+    public Quote(Parcel in) {
         id = in.readLong();
         this.quoteDescription = in.readString();
         this.isFavourite = (in.readInt() == 0) ? false : true;

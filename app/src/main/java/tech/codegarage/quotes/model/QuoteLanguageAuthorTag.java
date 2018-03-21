@@ -7,7 +7,7 @@ import org.litepal.crud.DataSupport;
 
 import static tech.codegarage.quotes.util.AppUtils.getMD5String;
 
-public class LitePalQuoteLanguageAuthorTag extends DataSupport {
+public class QuoteLanguageAuthorTag extends DataSupport {
 
     private long id;
     private long quoteId;
@@ -17,7 +17,7 @@ public class LitePalQuoteLanguageAuthorTag extends DataSupport {
     @Column(unique = true)
     private String md5 = "";
 
-    public LitePalQuoteLanguageAuthorTag(long quoteId, long languageId, long authorId, long tagId) {
+    public QuoteLanguageAuthorTag(long quoteId, long languageId, long authorId, long tagId) {
         this.quoteId = quoteId;
         this.languageId = languageId;
         this.authorId = authorId;

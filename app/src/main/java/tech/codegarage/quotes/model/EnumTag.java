@@ -1661,13 +1661,13 @@ public enum EnumTag {
     INDIVIDUAL("Individual"),
     AVERAGE("Average");
 
-    private LitePalTag litePalTag;
+    private Tag tag;
 
     EnumTag(String tagName) {
-        litePalTag = LitePalDataHandler.insetTag(new LitePalTag(tagName), LitePalDataHandler.dataInputListener);
+        tag = AppDataHandler.insetTag(new Tag(tagName), AppDataHandler.mDataInputListener);
     }
 
-    public LitePalTag getLitePalTag() {
-        return litePalTag;
+    public Tag getTag() {
+        return tag;
     }
 }

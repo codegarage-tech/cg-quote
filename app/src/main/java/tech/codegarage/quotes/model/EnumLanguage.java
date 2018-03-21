@@ -5,13 +5,13 @@ public enum EnumLanguage {
     ENGLISH("English"),
     BENGALI("Bengali");
 
-    private LitePalLanguage litePalLanguage;
+    private Language language;
 
     EnumLanguage(String languageName) {
-        litePalLanguage = LitePalDataHandler.insetLanguage(new LitePalLanguage(languageName), LitePalDataHandler.dataInputListener);
+        language = AppDataHandler.insetLanguage(new Language(languageName), AppDataHandler.mDataInputListener);
     }
 
-    public LitePalLanguage getLitePalLanguage() {
-        return litePalLanguage;
+    public Language getLanguage() {
+        return language;
     }
 }

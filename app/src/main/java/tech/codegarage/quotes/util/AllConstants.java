@@ -21,11 +21,7 @@ public class AllConstants {
     public static final String SESSION_SELECTED_RIBBLE_MENU = "SESSION_SELECTED_RIBBLE_MENU";
     public static final String SESSION_SELECTED_LANGUAGE = "SESSION_SELECTED_LANGUAGE";
     public static final String SESSION_FREE_APP = "SESSION_FREE_APP";
-    public static final String SESSION_DATA_LANGUAGES = "SESSION_DATA_LANGUAGES";
-    public static final String SESSION_DATA_AUTHORS = "SESSION_DATA_AUTHORS";
-    public static final String SESSION_DATA_QUOTES = "SESSION_DATA_QUOTES";
-    public static final String SESSION_DATA_MAPPED_QUOTES = "SESSION_DATA_MAPPED_QUOTES";
-    public static final String SESSION_DATA_DATA_BUILDER = "SESSION_DATA_DATA_BUILDER";
+    public static final String SESSION_DATA_APP_DATA_BUILDER = "SESSION_DATA_APP_DATA_BUILDER";
     public static final String SESSION_QUOTE_OF_THE_DAY = "SESSION_QUOTE_OF_THE_DAY";
 
     //Request code

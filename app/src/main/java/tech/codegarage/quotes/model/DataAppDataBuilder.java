@@ -7,26 +7,26 @@ import java.util.ArrayList;
 /**
  * Md. Rashadul Alam
  */
-public class DataLitePalDataBuilder {
+public class DataAppDataBuilder {
 
-    ArrayList<LitePalDataBuilder> litePalDataBuilders = new ArrayList<>();
+    ArrayList<AppDataBuilder> appDataBuilders = new ArrayList<>();
 
-    public DataLitePalDataBuilder(ArrayList<LitePalDataBuilder> litePalDataBuilders) {
-        this.litePalDataBuilders = litePalDataBuilders;
+    public DataAppDataBuilder(ArrayList<AppDataBuilder> appDataBuilders) {
+        this.appDataBuilders = appDataBuilders;
     }
 
-    public ArrayList<LitePalDataBuilder> getLitePalDataBuilders() {
-        return litePalDataBuilders;
+    public ArrayList<AppDataBuilder> getAppDataBuilders() {
+        return appDataBuilders;
     }
 
-    public void setLitePalDataBuilders(ArrayList<LitePalDataBuilder> litePalDataBuilders) {
-        this.litePalDataBuilders = litePalDataBuilders;
+    public void setAppDataBuilders(ArrayList<AppDataBuilder> appDataBuilders) {
+        this.appDataBuilders = appDataBuilders;
     }
 
     @Override
     public String toString() {
         return "{" +
-                "litePalDataBuilders=" + litePalDataBuilders +
+                "appDataBuilders=" + appDataBuilders +
                 '}';
     }
 

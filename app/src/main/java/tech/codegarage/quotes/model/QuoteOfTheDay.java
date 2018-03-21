@@ -7,30 +7,30 @@ import com.google.gson.Gson;
 
 public class QuoteOfTheDay implements Parcelable {
 
-    private LitePalDataBuilder litePalDataBuilder;
-    private LitePalDataBuilder.LitePalQuoteBuilder litePalQuoteBuilder;
+    private AppDataBuilder appDataBuilder;
+    private AppDataBuilder.QuoteBuilder quoteBuilder;
     private String today = "";
 
-    public QuoteOfTheDay(LitePalDataBuilder litePalDataBuilder, LitePalDataBuilder.LitePalQuoteBuilder litePalQuoteBuilder, String today) {
-        this.litePalDataBuilder = litePalDataBuilder;
-        this.litePalQuoteBuilder = litePalQuoteBuilder;
+    public QuoteOfTheDay(AppDataBuilder appDataBuilder, AppDataBuilder.QuoteBuilder quoteBuilder, String today) {
+        this.appDataBuilder = appDataBuilder;
+        this.quoteBuilder = quoteBuilder;
         this.today = today;
     }
 
-    public LitePalDataBuilder getLitePalDataBuilder() {
-        return litePalDataBuilder;
+    public AppDataBuilder getAppDataBuilder() {
+        return appDataBuilder;
     }
 
-    public void setLitePalDataBuilder(LitePalDataBuilder litePalDataBuilder) {
-        this.litePalDataBuilder = litePalDataBuilder;
+    public void setAppDataBuilder(AppDataBuilder appDataBuilder) {
+        this.appDataBuilder = appDataBuilder;
     }
 
-    public LitePalDataBuilder.LitePalQuoteBuilder getLitePalQuoteBuilder() {
-        return litePalQuoteBuilder;
+    public AppDataBuilder.QuoteBuilder getQuoteBuilder() {
+        return quoteBuilder;
     }
 
-    public void setLitePalQuoteBuilder(LitePalDataBuilder.LitePalQuoteBuilder litePalQuoteBuilder) {
-        this.litePalQuoteBuilder = litePalQuoteBuilder;
+    public void setQuoteBuilder(AppDataBuilder.QuoteBuilder quoteBuilder) {
+        this.quoteBuilder = quoteBuilder;
     }
 
     public String getToday() {
@@ -44,8 +44,8 @@ public class QuoteOfTheDay implements Parcelable {
     @Override
     public String toString() {
         return "{" +
-                "litePalDataBuilder=" + litePalDataBuilder +
-                ", litePalQuoteBuilder=" + litePalQuoteBuilder +
+                "appDataBuilder=" + appDataBuilder +
+                ", quoteBuilder=" + quoteBuilder +
                 ", today=" + today +
                 '}';
     }
@@ -60,10 +60,10 @@ public class QuoteOfTheDay implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeParcelable(litePalDataBuilder, flags);
+        dest.writeParcelable(appDataBuilder, flags);
 //        dest.writeParcelable(litePalLanguage, flags);
 //        dest.writeParcelable(litePalAuthor, flags);
-        dest.writeParcelable(litePalQuoteBuilder, flags);
+        dest.writeParcelable(quoteBuilder, flags);
         dest.writeString(today);
     }
 
@@ -81,10 +81,10 @@ public class QuoteOfTheDay implements Parcelable {
 
     // "De-parcel object
     public QuoteOfTheDay(Parcel in) {
-        this.litePalDataBuilder = in.readParcelable(LitePalDataBuilder.class.getClassLoader());
-//        this.litePalLanguage = in.readParcelable(LitePalLanguage.class.getClassLoader());
-//        this.litePalAuthor = in.readParcelable(LitePalAuthor.class.getClassLoader());
-        this.litePalQuoteBuilder = in.readParcelable(LitePalDataBuilder.LitePalQuoteBuilder.class.getClassLoader());
+        this.appDataBuilder = in.readParcelable(AppDataBuilder.class.getClassLoader());
+//        this.litePalLanguage = in.readParcelable(Language.class.getClassLoader());
+//        this.litePalAuthor = in.readParcelable(Author.class.getClassLoader());
+        this.quoteBuilder = in.readParcelable(AppDataBuilder.QuoteBuilder.class.getClassLoader());
         this.today = in.readString();
     }
 

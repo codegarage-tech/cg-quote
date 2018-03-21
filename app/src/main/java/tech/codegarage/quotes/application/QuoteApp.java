@@ -28,11 +28,11 @@ import tech.codegarage.quotes.BuildConfig;
 import tech.codegarage.quotes.R;
 import tech.codegarage.quotes.activity.AmazingTodayActivity;
 import tech.codegarage.quotes.activity.GcmDetailActivity;
-import tech.codegarage.quotes.model.LitePalAuthor;
-import tech.codegarage.quotes.model.LitePalLanguage;
-import tech.codegarage.quotes.model.LitePalQuote;
-import tech.codegarage.quotes.model.LitePalQuoteLanguageAuthorTag;
-import tech.codegarage.quotes.model.LitePalTag;
+import tech.codegarage.quotes.model.Author;
+import tech.codegarage.quotes.model.Language;
+import tech.codegarage.quotes.model.Quote;
+import tech.codegarage.quotes.model.QuoteLanguageAuthorTag;
+import tech.codegarage.quotes.model.Tag;
 import tech.codegarage.scheduler.Scheduler;
 
 import static com.reversecoder.localechanger.data.Locales.getAllLocales;
@@ -72,11 +72,11 @@ public class QuoteApp extends Application {
 
         //Initialize litepal database
         LitePal.initialize(mContext, new LitePalConfig(DB_VERSION, DB_NAME, "", DB_STORAGE, new ArrayList<String>() {{
-            add(LitePalLanguage.class.getName());
-            add(LitePalAuthor.class.getName());
-            add(LitePalQuote.class.getName());
-            add(LitePalTag.class.getName());
-            add(LitePalQuoteLanguageAuthorTag.class.getName());
+            add(Language.class.getName());
+            add(Author.class.getName());
+            add(Quote.class.getName());
+            add(Tag.class.getName());
+            add(QuoteLanguageAuthorTag.class.getName());
         }}));
 
         //initialize crash log handler

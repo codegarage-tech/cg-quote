@@ -16,7 +16,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import tech.codegarage.quotes.R;
-import tech.codegarage.quotes.model.LitePalDataBuilder;
+import tech.codegarage.quotes.model.AppDataBuilder;
 import tech.codegarage.quotes.model.QuoteOfTheDay;
 
 /**
@@ -82,9 +82,9 @@ public class AppUtils {
 //        return shareQuote;
 //    }
 
-    public static String getSharedQuote(Context context, LitePalDataBuilder litePalDataBuilder, LitePalDataBuilder.LitePalQuoteBuilder quote) {
-        String shareQuote = "\"" + quote.getLitePalQuote().getQuoteDescription() +
-                "\"\n--- " + litePalDataBuilder.getLitePalAuthor().getAuthorName() +
+    public static String getSharedQuote(Context context, AppDataBuilder appDataBuilder, AppDataBuilder.QuoteBuilder quote) {
+        String shareQuote = "\"" + quote.getQuote().getQuoteDescription() +
+                "\"\n--- " + appDataBuilder.getAuthor().getAuthorName() +
                 "\n\n     <<*=*=*=*=*>>     " +
                 "\n" + context.getString(R.string.txt_quote_is_shared_by_the_app) +
                 "\nhttps://play.google.com/store/apps/details?id=" + context.getApplicationContext().getPackageName() + "&hl=en";
@@ -93,8 +93,8 @@ public class AppUtils {
     }
 
     public static String getSharedQuote(Context context, QuoteOfTheDay quoteOfTheDay) {
-        String shareQuote = "\"" + quoteOfTheDay.getLitePalQuoteBuilder().getLitePalQuote().getQuoteDescription() +
-                "\"\n--- " + quoteOfTheDay.getLitePalDataBuilder().getLitePalAuthor().getAuthorName() +
+        String shareQuote = "\"" + quoteOfTheDay.getQuoteBuilder().getQuote().getQuoteDescription() +
+                "\"\n--- " + quoteOfTheDay.getAppDataBuilder().getAuthor().getAuthorName() +
                 "\n\n     <<*=*=*=*=*>>     " +
                 "\n" + context.getString(R.string.txt_quote_is_shared_by_the_app) +
                 "\nhttps://play.google.com/store/apps/details?id=" + context.getApplicationContext().getPackageName() + "&hl=en";

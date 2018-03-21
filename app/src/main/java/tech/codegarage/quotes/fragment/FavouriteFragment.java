@@ -28,8 +28,8 @@ import tech.codegarage.quotes.R;
 import tech.codegarage.quotes.activity.FavouriteQuoteDetailActivity;
 import tech.codegarage.quotes.adapter.AuthorAdapter;
 import tech.codegarage.quotes.interfaces.OnFragmentBackPressedListener;
-import tech.codegarage.quotes.model.LitePalDataBuilder;
-import tech.codegarage.quotes.model.LitePalDataHandler;
+import tech.codegarage.quotes.model.AppDataBuilder;
+import tech.codegarage.quotes.model.AppDataHandler;
 import tech.codegarage.quotes.util.AllConstants;
 
 import static android.app.Activity.RESULT_OK;
@@ -90,21 +90,21 @@ public class FavouriteFragment extends Fragment implements OnFragmentBackPressed
         recyclerViewFavouriteAuthor.setAdapter(favouriteAuthorAdapter);
     }
 
-    private void initData(ArrayList<LitePalDataBuilder> litePalDataBuilders) {
+    private void initData(ArrayList<AppDataBuilder> appDataBuilders) {
         favouriteAuthorAdapter.clear();
-        favouriteAuthorAdapter.addAll(litePalDataBuilders);
+        favouriteAuthorAdapter.addAll(appDataBuilders);
         favouriteAuthorAdapter.notifyDataSetChanged();
 
         //sticky header
-        setStickyIndex(litePalDataBuilders);
+        setStickyIndex(appDataBuilders);
 
         //waveside bar
-        setWaveSideBar(litePalDataBuilders);
+        setWaveSideBar(appDataBuilders);
 
         initActions();
     }
 
-    private void setStickyIndex(ArrayList<LitePalDataBuilder> stickyIndexes) {
+    private void setStickyIndex(ArrayList<AppDataBuilder> stickyIndexes) {
         if (stickyIndexes.size() > 1) {
             indexContainer.setDataSet(getIndexList(stickyIndexes));
             indexContainer.setOnScrollListener(recyclerViewFavouriteAuthor);
@@ -113,13 +113,13 @@ public class FavouriteFragment extends Fragment implements OnFragmentBackPressed
         }
     }
 
-    private void setWaveSideBar(final ArrayList<LitePalDataBuilder> waveSideBar) {
+    private void setWaveSideBar(final ArrayList<AppDataBuilder> waveSideBar) {
         if (waveSideBar.size() > 0) {
             mSideBarView.setOnTouchLetterChangeListener(new WaveSideBarView.OnTouchLetterChangeListener() {
                 @Override
                 public void onLetterChange(String letter) {
                     for (int i = 0; i < waveSideBar.size(); i++) {
-                        if (String.valueOf(waveSideBar.get(i).getLitePalAuthor().getAuthorName().charAt(0)).equals(letter)) {
+                        if (String.valueOf(waveSideBar.get(i).getAuthor().getAuthorName().charAt(0)).equals(letter)) {
                             ((LinearLayoutManager) recyclerViewFavouriteAuthor.getLayoutManager()).scrollToPositionWithOffset(i, 0);
                             return;
                         }
@@ -136,14 +136,14 @@ public class FavouriteFragment extends Fragment implements OnFragmentBackPressed
     /*****************
      * Sticky header *
      *****************/
-    public static char[] getIndexList(ArrayList<LitePalDataBuilder> list) {
+    public static char[] getIndexList(ArrayList<AppDataBuilder> list) {
         char[] result = new char[0];
         if (list.size() > 0) {
             Log.d(TAG, "List size: " + list.size());
             result = new char[list.size()];
             Log.d(TAG, "result size: " + result.length);
             for (int i = 0; i < list.size(); i++) {
-                result[i] = Character.toUpperCase(list.get(i).getLitePalAuthor().getAuthorName().charAt(0));
+                result[i] = Character.toUpperCase(list.get(i).getAuthor().getAuthorName().charAt(0));
                 Log.d(TAG, "result " + i + " is: " + result[i]);
             }
             Log.d(TAG, "result size final : " + result.length);
@@ -171,11 +171,11 @@ public class FavouriteFragment extends Fragment implements OnFragmentBackPressed
             public void onItemClick(View view, int position) {
                 //set selected items info globally
                 mLastSelectedAuthor = position;
-                LitePalDataBuilder litePalDataBuilder = favouriteAuthorAdapter.getItem(mLastSelectedAuthor);
+                AppDataBuilder appDataBuilder = favouriteAuthorAdapter.getItem(mLastSelectedAuthor);
 
                 Intent intentFavouriteQuoteDetail = new Intent(getActivity(), FavouriteQuoteDetailActivity.class);
                 intentFavouriteQuoteDetail.putExtra(AllConstants.INTENT_KEY_FAVOURITE_AUTHOR_POSITION, mLastSelectedAuthor);
-                intentFavouriteQuoteDetail.putExtra(AllConstants.INTENT_KEY_FAVOURITE_AUTHOR, litePalDataBuilder);
+                intentFavouriteQuoteDetail.putExtra(AllConstants.INTENT_KEY_FAVOURITE_AUTHOR, appDataBuilder);
                 startActivityForResult(intentFavouriteQuoteDetail, REQUEST_CODE_FAVOURITE_FRAGMENT);
 
                 Bungee.slideUp(getActivity());
@@ -194,7 +194,7 @@ public class FavouriteFragment extends Fragment implements OnFragmentBackPressed
                 if (data != null && resultCode == RESULT_OK) {
                     Log.d(TAG, "RESULT_OK");
 
-                    ArrayList<LitePalDataBuilder.LitePalQuoteBuilder> tempUpdatedQuoted = data.getParcelableArrayListExtra(INTENT_KEY_FAVOURITE_UPDATED_QUOTES);
+                    ArrayList<AppDataBuilder.QuoteBuilder> tempUpdatedQuoted = data.getParcelableArrayListExtra(INTENT_KEY_FAVOURITE_UPDATED_QUOTES);
                     if (tempUpdatedQuoted != null) {
                         if (tempUpdatedQuoted.size() > 0) {
                             for (int i = 0; i < tempUpdatedQuoted.size(); i++) {
@@ -202,14 +202,14 @@ public class FavouriteFragment extends Fragment implements OnFragmentBackPressed
                             }
 
                             //set updated favourite quote into the author list
-                            favouriteAuthorAdapter.getItem(mLastSelectedAuthor).setLitePalQuoteBuilders(tempUpdatedQuoted);
+                            favouriteAuthorAdapter.getItem(mLastSelectedAuthor).setQuoteBuilders(tempUpdatedQuoted);
                         } else if (tempUpdatedQuoted.size() == 0) {
                             //remove author if there is no favourite quotes
                             favouriteAuthorAdapter.remove(mLastSelectedAuthor);
                             favouriteAuthorAdapter.notifyDataSetChanged();
 
                             //Refresh author listview
-                            ArrayList<LitePalDataBuilder> tempMappedQuotes = new ArrayList<>(favouriteAuthorAdapter.getAllData());
+                            ArrayList<AppDataBuilder> tempMappedQuotes = new ArrayList<>(favouriteAuthorAdapter.getAllData());
                             initData(tempMappedQuotes);
 
                             //show empty author list if there is not author
@@ -233,7 +233,7 @@ public class FavouriteFragment extends Fragment implements OnFragmentBackPressed
     /******************************
      * Methods for database input *
      ******************************/
-    public class InputData extends AsyncTask<String, String, ArrayList<LitePalDataBuilder>> {
+    public class InputData extends AsyncTask<String, String, ArrayList<AppDataBuilder>> {
 
         @Override
         protected void onPreExecute() {
@@ -243,13 +243,13 @@ public class FavouriteFragment extends Fragment implements OnFragmentBackPressed
         }
 
         @Override
-        protected ArrayList<LitePalDataBuilder> doInBackground(String... params) {
+        protected ArrayList<AppDataBuilder> doInBackground(String... params) {
 //            return DataHandler.initAllFavouriteData();
-            return LitePalDataHandler.getAllFavouriteQuotes();
+            return AppDataHandler.getAllFavouriteQuotes();
         }
 
         @Override
-        protected void onPostExecute(ArrayList<LitePalDataBuilder> result) {
+        protected void onPostExecute(ArrayList<AppDataBuilder> result) {
 
             if (result != null && result.size() > 0) {
                 //This checking for avoiding "Fragment not attached to Activity when finish AsyncTask & Fragment"

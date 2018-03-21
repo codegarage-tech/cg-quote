@@ -5,8 +5,8 @@
 //import android.support.v7.app.AppCompatActivity;
 //import android.util.Log;
 //
-//import tech.codegarage.quotes.model.LitePalAuthor;
-//import tech.codegarage.quotes.model.LitePalDataHandler;
+//import tech.codegarage.quotes.model.Author;
+//import tech.codegarage.quotes.model.AppDataHandler;
 //
 //import org.litepal.crud.DataSupport;
 //
@@ -22,7 +22,7 @@
 //    protected void onCreate(Bundle savedInstanceState) {
 //        super.onCreate(savedInstanceState);
 //
-//        LitePalDataHandler.initAllQuotes();
+//        AppDataHandler.initAllQuotes();
 //
 //        getAllData();
 //    }
@@ -30,7 +30,7 @@
 //    private void getAllData() {
 //        Cursor cursor = DataSupport.findBySQL("select * from litepalquotelanguageauthortag where authorid = ?", "2");
 //        while (cursor.moveToNext()) {
-//            Log.d(TAG, "CursorData: " + DataSupport.find(LitePalAuthor.class, cursor.getLong(cursor.getColumnIndex("authorid"))));
+//            Log.d(TAG, "CursorData: " + DataSupport.find(Author.class, cursor.getLong(cursor.getColumnIndex("authorid"))));
 //        }
 //    }
 //}

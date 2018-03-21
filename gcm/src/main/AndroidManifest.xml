@@ -3,6 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.reversecoder.gcm">
 
+    <!-- For getting location -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
     <!-- Unique id -->
     <uses-permission
         android:name="android.permission.READ_PHONE_STATE"

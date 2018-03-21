@@ -329,13 +329,13 @@ public enum EnumAuthor {
 
     ZYGMUNT_BAUMAN("Zygmunt Bauman", "November 19, 1925", "January 9, 2017", "Sociologist", "Polish", AppUtils.getDrawableResourceId(R.drawable.zigmunt_bauman), true);
 
-    private LitePalAuthor litePalAuthor;
+    private Author author;
 
     EnumAuthor(String authorName, String birthDate, String deathDate, String occupation, String nationality, int profileImage, boolean isAuthor) {
-        this.litePalAuthor = LitePalDataHandler.insetAuthor(new LitePalAuthor(authorName, birthDate, deathDate, occupation, nationality, profileImage, isAuthor), LitePalDataHandler.dataInputListener);
+        this.author = AppDataHandler.insetAuthor(new Author(authorName, birthDate, deathDate, occupation, nationality, profileImage, isAuthor), AppDataHandler.mDataInputListener);
     }
 
-    public LitePalAuthor getLitePalAuthor() {
-        return litePalAuthor;
+    public Author getAuthor() {
+        return author;
     }
 }

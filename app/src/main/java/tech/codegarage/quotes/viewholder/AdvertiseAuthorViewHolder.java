@@ -5,13 +5,13 @@ import android.widget.TextView;
 
 import com.jude.easyrecyclerview.adapter.BaseViewHolder;
 import tech.codegarage.quotes.R;
-import tech.codegarage.quotes.model.LitePalDataBuilder;
+import tech.codegarage.quotes.model.AppDataBuilder;
 
 /**
  * @author Md. Rashadul Alam
  *         Email: rashed.droid@gmail.com
  */
-public class AdvertiseAuthorViewHolder extends BaseViewHolder<LitePalDataBuilder> {
+public class AdvertiseAuthorViewHolder extends BaseViewHolder<AppDataBuilder> {
 
     public TextView txtAdvertiseName;
 
@@ -22,7 +22,7 @@ public class AdvertiseAuthorViewHolder extends BaseViewHolder<LitePalDataBuilder
     }
 
     @Override
-    public void setData(final LitePalDataBuilder data) {
+    public void setData(final AppDataBuilder data) {
 //        txtAdvertiseName.setText(data.getAuthorName());
     }
 }

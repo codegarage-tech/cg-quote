@@ -25,16 +25,16 @@ import io.armcha.ribble.presentation.widget.AnimatedTextView;
 import io.armcha.ribble.presentation.widget.ArcView;
 import spencerstudios.com.bungeelib.Bungee;
 import tech.codegarage.quotes.R;
-import tech.codegarage.quotes.model.LitePalDataBuilder;
-import tech.codegarage.quotes.model.LitePalDataHandler;
+import tech.codegarage.quotes.model.AppDataBuilder;
+import tech.codegarage.quotes.model.AppDataHandler;
 import tech.codegarage.quotes.model.QuoteOfTheDay;
 import tech.codegarage.quotes.util.AppUtils;
 import tech.codegarage.quotes.util.ClipboardHandler;
 import tech.codegarage.quotes.util.IntentManager;
 import tech.codegarage.quotes.view.CanaroTextView;
 
-import static tech.codegarage.quotes.model.LitePalDataHandler.getAllQuotes;
-import static tech.codegarage.quotes.model.LitePalDataHandler.getQuotePosition;
+import static tech.codegarage.quotes.model.AppDataHandler.getAllQuotes;
+import static tech.codegarage.quotes.model.AppDataHandler.getQuotePosition;
 import static tech.codegarage.quotes.util.AllConstants.SESSION_QUOTE_OF_THE_DAY;
 import static tech.codegarage.quotes.util.AppUtils.isDateEqual;
 import static tech.codegarage.scheduler.util.AllConstants.DATE_FORMAT_DD_MM_YY;
@@ -81,10 +81,10 @@ public class AmazingTodayActivity extends BaseActivity {
     private void setViewData(QuoteOfTheDay quoteOfTheDay) {
         mQuoteOfTheDay = quoteOfTheDay;
 
-        tvQuote.setText("\"" + mQuoteOfTheDay.getLitePalQuoteBuilder().getLitePalQuote().getQuoteDescription() + "\"");
-        tvAuthor.setText("--- " + mQuoteOfTheDay.getLitePalDataBuilder().getLitePalAuthor().getAuthorName());
+        tvQuote.setText("\"" + mQuoteOfTheDay.getQuoteBuilder().getQuote().getQuoteDescription() + "\"");
+        tvAuthor.setText("--- " + mQuoteOfTheDay.getAppDataBuilder().getAuthor().getAuthorName());
 
-        if (mQuoteOfTheDay.getLitePalQuoteBuilder().getLitePalQuote().isFavourite()) {
+        if (mQuoteOfTheDay.getQuoteBuilder().getQuote().isFavourite()) {
             cycleMenuWidget.setMenuRes(R.menu.menu_cycle_favourite);
         } else {
             cycleMenuWidget.setMenuRes(R.menu.menu_cycle_unfavourite);
@@ -100,14 +100,14 @@ public class AmazingTodayActivity extends BaseActivity {
                         IntentManager.shareToAllAvailableApps(AmazingTodayActivity.this, "", AppUtils.getSharedQuote(AmazingTodayActivity.this, mQuoteOfTheDay));
                         break;
                     case 1:
-                        ClipboardHandler.copyToClipboard(AmazingTodayActivity.this, mQuoteOfTheDay.getLitePalQuoteBuilder().getLitePalQuote().getQuoteDescription());
+                        ClipboardHandler.copyToClipboard(AmazingTodayActivity.this, mQuoteOfTheDay.getQuoteBuilder().getQuote().getQuoteDescription());
                         break;
                     case 2:
-                        QuoteOfTheDay proposedQuoteOfTheDay = new QuoteOfTheDay(mQuoteOfTheDay.getLitePalDataBuilder(), mQuoteOfTheDay.getLitePalQuoteBuilder(), mQuoteOfTheDay.getToday());
-                        if (proposedQuoteOfTheDay.getLitePalQuoteBuilder().getLitePalQuote().isFavourite()) {
-                            proposedQuoteOfTheDay.getLitePalQuoteBuilder().getLitePalQuote().setFavourite(false);
+                        QuoteOfTheDay proposedQuoteOfTheDay = new QuoteOfTheDay(mQuoteOfTheDay.getAppDataBuilder(), mQuoteOfTheDay.getQuoteBuilder(), mQuoteOfTheDay.getToday());
+                        if (proposedQuoteOfTheDay.getQuoteBuilder().getQuote().isFavourite()) {
+                            proposedQuoteOfTheDay.getQuoteBuilder().getQuote().setFavourite(false);
                         } else {
-                            proposedQuoteOfTheDay.getLitePalQuoteBuilder().getLitePalQuote().setFavourite(true);
+                            proposedQuoteOfTheDay.getQuoteBuilder().getQuote().setFavourite(true);
                         }
                         new UpdateQuoteIntoDatabase(AmazingTodayActivity.this, proposedQuoteOfTheDay).execute();
 
@@ -154,23 +154,23 @@ public class AmazingTodayActivity extends BaseActivity {
         });
     }
 
-    public class GetTodayData extends AsyncTask<String, String, LitePalDataBuilder> {
+    public class GetTodayData extends AsyncTask<String, String, AppDataBuilder> {
 
         @Override
         protected void onPreExecute() {
         }
 
         @Override
-        protected LitePalDataBuilder doInBackground(String... params) {
-            ArrayList<LitePalDataBuilder> litePalDataBuilders = getAllQuotes();
-            if (litePalDataBuilders.size() > 0) {
-                return litePalDataBuilders.get(RandomManager.getRandom(litePalDataBuilders.size()));
+        protected AppDataBuilder doInBackground(String... params) {
+            ArrayList<AppDataBuilder> appDataBuilders = getAllQuotes();
+            if (appDataBuilders.size() > 0) {
+                return appDataBuilders.get(RandomManager.getRandom(appDataBuilders.size()));
             }
             return null;
         }
 
         @Override
-        protected void onPostExecute(LitePalDataBuilder result) {
+        protected void onPostExecute(AppDataBuilder result) {
             if (result != null) {
                 String today = DATE_FORMAT_DD_MM_YY.format(new Date());
                 QuoteOfTheDay quoteOfTheDay;
@@ -182,8 +182,8 @@ public class AmazingTodayActivity extends BaseActivity {
                     Log.d(TAG, "Session data(quoteOfTheDay.getToday()): " + quoteOfTheDay.getToday());
                     if (!isDateEqual(today, quoteOfTheDay.getToday(), DATE_FORMAT_YYYY_MM_DD_STRING)) {
                         Log.d(TAG, "Session data didn't match");
-                        LitePalDataBuilder.LitePalQuoteBuilder litePalQuoteBuilder = result.getLitePalQuoteBuilders().get(RandomManager.getRandom(result.getLitePalQuoteBuilders().size()));
-                        quoteOfTheDay = new QuoteOfTheDay(result, litePalQuoteBuilder, today);
+                        AppDataBuilder.QuoteBuilder quoteBuilder = result.getQuoteBuilders().get(RandomManager.getRandom(result.getQuoteBuilders().size()));
+                        quoteOfTheDay = new QuoteOfTheDay(result, quoteBuilder, today);
                         SessionManager.setStringSetting(AmazingTodayActivity.this, SESSION_QUOTE_OF_THE_DAY, QuoteOfTheDay.convertFromObjectToString(quoteOfTheDay));
                         Log.d(TAG, "Session data: " + quoteOfTheDay.toString());
                     } else {
@@ -192,8 +192,8 @@ public class AmazingTodayActivity extends BaseActivity {
                     }
                 } else {
                     Log.d(TAG, "Session data is not found");
-                    LitePalDataBuilder.LitePalQuoteBuilder litePalQuoteBuilder = result.getLitePalQuoteBuilders().get(RandomManager.getRandom(result.getLitePalQuoteBuilders().size()));
-                    quoteOfTheDay = new QuoteOfTheDay(result, litePalQuoteBuilder, today);
+                    AppDataBuilder.QuoteBuilder quoteBuilder = result.getQuoteBuilders().get(RandomManager.getRandom(result.getQuoteBuilders().size()));
+                    quoteOfTheDay = new QuoteOfTheDay(result, quoteBuilder, today);
                     SessionManager.setStringSetting(AmazingTodayActivity.this, SESSION_QUOTE_OF_THE_DAY, QuoteOfTheDay.convertFromObjectToString(quoteOfTheDay));
                     Log.d(TAG, "Session data: " + quoteOfTheDay.toString());
                 }
@@ -203,7 +203,7 @@ public class AmazingTodayActivity extends BaseActivity {
         }
     }
 
-    private class UpdateQuoteIntoDatabase extends AsyncTask<String, String, LitePalDataBuilder.LitePalQuoteBuilder> {
+    private class UpdateQuoteIntoDatabase extends AsyncTask<String, String, AppDataBuilder.QuoteBuilder> {
 
         private Context mContext;
         private QuoteOfTheDay quoteOfTheDay;
@@ -218,9 +218,9 @@ public class AmazingTodayActivity extends BaseActivity {
         }
 
         @Override
-        protected LitePalDataBuilder.LitePalQuoteBuilder doInBackground(String... params) {
+        protected AppDataBuilder.QuoteBuilder doInBackground(String... params) {
             //Update quote into database and session
-            LitePalDataBuilder.LitePalQuoteBuilder updatedQuote = LitePalDataHandler.updateQuote(quoteOfTheDay.getLitePalDataBuilder(), quoteOfTheDay.getLitePalQuoteBuilder());
+            AppDataBuilder.QuoteBuilder updatedQuote = AppDataHandler.updateQuote(quoteOfTheDay.getAppDataBuilder(), quoteOfTheDay.getQuoteBuilder());
             if (updatedQuote != null) {
                 return updatedQuote;
             }
@@ -229,10 +229,10 @@ public class AmazingTodayActivity extends BaseActivity {
         }
 
         @Override
-        protected void onPostExecute(LitePalDataBuilder.LitePalQuoteBuilder result) {
+        protected void onPostExecute(AppDataBuilder.QuoteBuilder result) {
             if (result != null) {
                 //Update cycle menu
-                if (result.getLitePalQuote().isFavourite()) {
+                if (result.getQuote().isFavourite()) {
                     Toast.makeText(AmazingTodayActivity.this, getString(R.string.txt_marked_as_favourite), Toast.LENGTH_SHORT).show();
                     cycleMenuWidget.updateMenuItem(2, new CycleMenuItem(R.id.cm_favourite, ContextCompat.getDrawable(AmazingTodayActivity.this, R.drawable.ic_vector_favourite_fill_white)));
                 } else {
@@ -241,10 +241,10 @@ public class AmazingTodayActivity extends BaseActivity {
                 }
 
                 //Update recycler view
-                int quotePosition = getQuotePosition(quoteOfTheDay.getLitePalDataBuilder().getLitePalQuoteBuilders(), result);
-                quoteOfTheDay.getLitePalDataBuilder().getLitePalQuoteBuilders().remove(quotePosition);
-                quoteOfTheDay.getLitePalDataBuilder().getLitePalQuoteBuilders().add(quotePosition, result);
-                quoteOfTheDay.setLitePalQuoteBuilder(result);
+                int quotePosition = getQuotePosition(quoteOfTheDay.getAppDataBuilder().getQuoteBuilders(), result);
+                quoteOfTheDay.getAppDataBuilder().getQuoteBuilders().remove(quotePosition);
+                quoteOfTheDay.getAppDataBuilder().getQuoteBuilders().add(quotePosition, result);
+                quoteOfTheDay.setQuoteBuilder(result);
             }
         }
     }

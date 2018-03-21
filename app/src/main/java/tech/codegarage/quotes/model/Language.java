@@ -8,36 +8,37 @@ import com.google.gson.Gson;
 import org.litepal.annotation.Column;
 import org.litepal.crud.DataSupport;
 
-public class LitePalTag extends DataSupport implements Parcelable {
+public class Language extends DataSupport implements Parcelable {
+
 
     private long id;
     @Column(unique = true)
-    private String tagName = "";
+    private String languageName = "";
 
-    public LitePalTag() {
-    }
-
-    public LitePalTag(String tagName) {
-        this.tagName = tagName;
+    public Language() {
     }
 
     public long getId() {
         return id;
     }
 
-    public String getTagName() {
-        return tagName;
+    public Language(String languageName) {
+        this.languageName = languageName;
     }
 
-    public void setTagName(String tagName) {
-        this.tagName = tagName;
+    public String getLanguageName() {
+        return languageName;
+    }
+
+    public void setLanguageName(String languageName) {
+        this.languageName = languageName;
     }
 
     @Override
     public String toString() {
         return "{" +
                 "id=" + getId() +
-                ", tagName='" + tagName + '\'' +
+                ", languageName='" + languageName + '\'' +
                 '}';
     }
 
@@ -52,25 +53,25 @@ public class LitePalTag extends DataSupport implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeLong(getId());
-        dest.writeString(tagName);
+        dest.writeString(languageName);
     }
 
     // Creator
     public static final Creator CREATOR
             = new Creator() {
-        public LitePalTag createFromParcel(Parcel in) {
-            return new LitePalTag(in);
+        public Language createFromParcel(Parcel in) {
+            return new Language(in);
         }
 
-        public LitePalTag[] newArray(int size) {
-            return new LitePalTag[size];
+        public Language[] newArray(int size) {
+            return new Language[size];
         }
     };
 
     // "De-parcel object
-    public LitePalTag(Parcel in) {
+    public Language(Parcel in) {
         id = in.readLong();
-        tagName = in.readString();
+        languageName = in.readString();
     }
 
     /**************************

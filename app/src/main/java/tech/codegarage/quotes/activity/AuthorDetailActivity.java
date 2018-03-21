@@ -25,22 +25,22 @@ import io.armcha.ribble.presentation.widget.ArcView;
 import spencerstudios.com.bungeelib.Bungee;
 import tech.codegarage.quotes.R;
 import tech.codegarage.quotes.factory.TextViewFactory;
-import tech.codegarage.quotes.model.LitePalDataBuilder;
-import tech.codegarage.quotes.model.LitePalDataHandler;
+import tech.codegarage.quotes.model.AppDataBuilder;
+import tech.codegarage.quotes.model.AppDataHandler;
 import tech.codegarage.quotes.util.AllConstants;
 
-import static tech.codegarage.quotes.model.LitePalDataHandler.getAllQuotes;
-import static tech.codegarage.quotes.model.LitePalDataHandler.getAuthorData;
+import static tech.codegarage.quotes.model.AppDataHandler.getAllQuotes;
+import static tech.codegarage.quotes.model.AppDataHandler.getAuthorData;
 
 //import static DataHandler.mAllMappedQuotes;
 
 public class AuthorDetailActivity extends BaseActivity implements FragmentItemClickListener {
 
-    LitePalDataBuilder mLitePalDataBuilder;
+    AppDataBuilder mAppDataBuilder;
     GetAuthorTask getAuthorTask;
     private static String TAG = AuthorDetailActivity.class.getSimpleName();
     int mSelectedPosition = -1;
-    private ArrayList<LitePalDataBuilder> litePalDataBuilders = new ArrayList<LitePalDataBuilder>();
+    private ArrayList<AppDataBuilder> appDataBuilders = new ArrayList<AppDataBuilder>();
 
     //Glazyviewpager
     private GlazyViewPager mPager;
@@ -117,8 +117,8 @@ public class AuthorDetailActivity extends BaseActivity implements FragmentItemCl
         tsCounter.setOutAnimation(AuthorDetailActivity.this, animH[1]);
         tsCounter.setText((currentPosition + 1) + "/" + totalCount);
 
-        if (litePalDataBuilders.size() >= currentPosition) {
-            toolbarTitle.setAnimatedText(litePalDataBuilders.get(currentPosition).getLitePalAuthor().getAuthorName(), 0L);
+        if (appDataBuilders.size() >= currentPosition) {
+            toolbarTitle.setAnimatedText(appDataBuilders.get(currentPosition).getAuthor().getAuthorName(), 0L);
         }
 
         lastPagePosition = currentPosition;
@@ -162,15 +162,15 @@ public class AuthorDetailActivity extends BaseActivity implements FragmentItemCl
         @Override
         protected void onPreExecute() {
             mSelectedPosition = mIntent.getIntExtra(AllConstants.INTENT_KEY_AUTHOR_POSITION, -1);
-            mLitePalDataBuilder = mIntent.getParcelableExtra(AllConstants.INTENT_KEY_AUTHOR);
+            mAppDataBuilder = mIntent.getParcelableExtra(AllConstants.INTENT_KEY_AUTHOR);
         }
 
         @Override
         protected ArrayList<GlazyCard> doInBackground(String... params) {
-            litePalDataBuilders = getAllQuotes();
+            appDataBuilders = getAllQuotes();
 
-            if (litePalDataBuilders.size() > 0) {
-                mAllGlazyCards = LitePalDataHandler.getAllGlazyCards(litePalDataBuilders);
+            if (appDataBuilders.size() > 0) {
+                mAllGlazyCards = AppDataHandler.getAllGlazyCards(appDataBuilders);
             }
 
             return mAllGlazyCards;
@@ -195,7 +195,7 @@ public class AuthorDetailActivity extends BaseActivity implements FragmentItemCl
     public void onFragmentItemClick(View itemView) {
         Intent intentQuoteDetail = new Intent(AuthorDetailActivity.this, QuoteDetailActivity.class);
         intentQuoteDetail.putExtra(AllConstants.INTENT_KEY_AUTHOR_POSITION, mPager.getCurrentItem());
-//        intentQuoteDetail.putExtra(AllConstants.INTENT_KEY_AUTHOR, litePalDataBuilders.get(mPager.getCurrentItem()));
+//        intentQuoteDetail.putExtra(AllConstants.INTENT_KEY_AUTHOR, appDataBuilders.get(mPager.getCurrentItem()));
         intentQuoteDetail.putExtra(AllConstants.INTENT_KEY_AUTHOR, getAuthorData(mPager.getCurrentItem()));
         startActivity(intentQuoteDetail);
         Bungee.slideUp(AuthorDetailActivity.this);
